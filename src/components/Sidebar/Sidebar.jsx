@@ -1,8 +1,8 @@
-import React from "react";
+import style from './SidebarStyle.module.css'
 // import { Outlet } from 'react-router-dom'
 
 const Sidebar = () => {
-  let estructura = <h2 className="esto">Hola Hola</h2>
+  let estructura = <h2 className="esto">SIDEBAR</h2>
 
   return (
     <>
@@ -10,7 +10,7 @@ const Sidebar = () => {
       <div className="menu-container">
         <ul className="list">
           <li className="list-item">
-            <a href="/dasboard">Cliente</a>
+            <a href="/login">Login</a>
           </li>
           {/* <li className="list-item">
             <a href="/ot">Consultar OT</a>

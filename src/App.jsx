@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LOGIN, LOGOUT, PRIVATE } from "./config/routes/paths";
+import { LOGIN, LOGOUT, PRIVATE} from "./config/routes/paths";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Private from "./views/Private";
@@ -8,6 +8,7 @@ import Logout from "./views/Logout";
 import { AuthContextProvider } from "./contexts/authContext";
 import PublicRoutes from "./components/router/PublicRoutes";
 import PrivateRoutes from "./components/router/PrivateRoutes";
+
 
 function App() {
   return (

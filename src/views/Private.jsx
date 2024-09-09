@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { LOGOUT } from "../config/routes/paths";
+import DashboardPage from "../pages/DashboardPage";
 
 const Private = () => {
   return (
     <div>
-      <h1>Ruta privada</h1>
+      <DashboardPage/>
       <Link to={LOGOUT}>Cerrar Sesión</Link>
     </div>
   );
