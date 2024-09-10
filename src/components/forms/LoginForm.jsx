@@ -24,7 +24,7 @@ const LoginForm = () => {
         navigate("/dashboard");
         console.log(data);
         return response.data;
-      } 
+      }
     } catch (error) {
       if (error.response) {
         console.error("Usuario NO autorizado:", error.response.status);
@@ -38,11 +38,19 @@ const LoginForm = () => {
       <form className={style.form_login} onSubmit={handleSubmit(onSubmit)}>
         <div className={style.uno}>
           <label>Usuario</label>
-          <input className={style.input} type="text" {...register("username")} />
+          <input
+            className={style.input}
+            type="text"
+            {...register("username")}
+          />
         </div>
         <div>
           <label>Contraseña</label>
-          <input className={style.input} type="text" {...register("password")} />
+          <input
+            className={style.input}
+            type="text"
+            {...register("password")}
+          />
         </div>
         <div>
           <input className={style.btn} type="submit" />

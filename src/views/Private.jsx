@@ -1,17 +1,14 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar/Sidebar";
+// import './Private.css';
 
 const Private = () => {
   return (
-    <>
-    <Sidebar/>
-    
-      <Outlet/>
-      {/* No renderiza el outlet del sidebar */}
-    
-    </>
-  
-);
+    <div className="container">
+      <Sidebar />
+      <Outlet />
+    </div>
+  );
 };
 
-  export default Private;
+export default Private;
