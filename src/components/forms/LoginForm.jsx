@@ -1,4 +1,4 @@
-import styles from "./FormStyle.module.css";
+import style from "./FormStyle.module.css";
 import { useAuthContext } from "../../contexts/authContext";
 import LoginService from "../../services/LoginService";
 import { useForm } from "react-hook-form";
@@ -34,18 +34,18 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+    <div className={style.form_container}>
+      <form className={style.form_login} onSubmit={handleSubmit(onSubmit)}>
+        <div className={style.uno}>
           <label>Usuario</label>
-          <input type="text" {...register("username")} />
+          <input className={style.input} type="text" {...register("username")} />
         </div>
         <div>
           <label>Contraseña</label>
-          <input type="text" {...register("password")} />
+          <input className={style.input} type="text" {...register("password")} />
         </div>
         <div>
-          <input type="submit" />
+          <input className={style.btn} type="submit" />
         </div>
       </form>
     </div>

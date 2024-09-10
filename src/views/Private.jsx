@@ -1,14 +1,17 @@
-import { Link } from "react-router-dom";
-import { LOGOUT } from "../config/routes/paths";
-import DashboardPage from "../pages/DashboardPage";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 const Private = () => {
   return (
-    <div>
-      <DashboardPage/>
-      <Link to={LOGOUT}>Cerrar Sesión</Link>
-    </div>
-  );
+    <>
+    <Sidebar/>
+    
+      <Outlet/>
+      {/* No renderiza el outlet del sidebar */}
+    
+    </>
+  
+);
 };
 
-export default Private;
+  export default Private;

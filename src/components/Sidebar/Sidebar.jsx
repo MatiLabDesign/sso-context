@@ -1,29 +1,26 @@
-import style from './SidebarStyle.module.css'
-// import { Outlet } from 'react-router-dom'
+import style from "./SidebarStyle.module.css";
+import { CLIENT, LOGOUT } from "../../config/routes/paths";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  let estructura = <h2 className="esto">SIDEBAR</h2>
-
   return (
-    <>
-      <h1>{estructura}</h1>
-      <div className="menu-container">
-        <ul className="list">
-          <li className="list-item">
-            <a href="/login">Login</a>
-          </li>
-          {/* <li className="list-item">
+    <div className={style.menu_container}>
+      <span>Sidebar</span>
+      <ul className="list">
+        <li className="list-item">
+          <Link to={CLIENT}>cliente</Link>
+          {/* no dirije bien este código */}
+        </li>
+        {/* <li className="list-item">
             <a href="/ot">Consultar OT</a>
           </li> */}
-          {/* <li className="list-item"><a href="/nuevo">Crear Cliente</a></li> */}
-          {/* <li className="list-item">
+        {/* <li className="list-item"><a href="/nuevo">Crear Cliente</a></li> */}
+        {/* <li className="list-item">
             <a href="/listar-cliente">Clientes</a>
           </li> */}
-        </ul>
-      </div>
-
-      {/* <Outlet/> */}
-    </>
+      </ul>
+      <Link to={LOGOUT}>Cerrar Sesión</Link>
+    </div>
   );
 };
 
