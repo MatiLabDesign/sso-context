@@ -25,6 +25,11 @@
     align-items: center;
 }
 
+.btn_row{
+    display: flex;
+    justify-content:center;
+}
+
 .label {
     color: #666;
     font-weight: bold;
@@ -34,10 +39,12 @@
 
 .input {
     margin: 10px 0;
-    border-radius: 8px;
+    border-radius: 5px;
     border: none;
     height: 25px;
     background-color: #e5e5e5;
+    outline: none;
+    padding-left: 10px;
 
 }
 

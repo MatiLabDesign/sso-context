@@ -3,7 +3,7 @@ import React from 'react'
 const Equipo = () => {
   return (
     <div>
-      <h2>Soy el equipo</h2>
+      <h2>Listado de Equipos</h2>
     </div>
   )
 }

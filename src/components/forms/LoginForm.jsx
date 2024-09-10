@@ -52,7 +52,7 @@ const LoginForm = () => {
             {...register("password")}
           />
         </div>
-        <div>
+        <div className={style.btn_row}>
           <input className={style.btn} type="submit" />
         </div>
       </form>
