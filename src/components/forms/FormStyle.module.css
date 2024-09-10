@@ -1,9 +1,9 @@
-.nuevo{
-    font-size:25px;
-    color:red;
+.nuevo {
+    font-size: 25px;
+    color: red;
 }
 
-.form{
+.form {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -12,24 +12,33 @@
 .form_container {
     background-color: rgba(95, 95, 95, 0.407);
     width: 500px;
-    height: 700px;
+    height: 400px;
     display: flex;
     justify-content: center;
-    margin: 50px 0 0 50px;
+    margin: 50px auto;
     border-radius: 12px;
 }
 
-.uno{
-    margin-top: 25px;
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* #label {
-    margin-top: 25px;
+.label {
+    color: #666;
+    font-weight: bold;
+    margin-right: 15px;
 
-} */
+}
 
 .input {
-    margin: 8px 0;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    height: 25px;
+    background-color: #e5e5e5;
+
 }
 
 .btn {

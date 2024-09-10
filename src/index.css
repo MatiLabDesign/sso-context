@@ -1,3 +1,20 @@
+:root{
+  font-family:Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: #e4e4e4;
+}
+a {
+  font-weight: 500;
+  color: #222222;
+  text-decoration: none;
+}
+a:hover {
+  color: #078183;
+}
+
+li{
+  list-style: none;
+}
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

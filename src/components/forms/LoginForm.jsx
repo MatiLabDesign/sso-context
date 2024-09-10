@@ -36,16 +36,16 @@ const LoginForm = () => {
   return (
     <div className={style.form_container}>
       <form className={style.form_login} onSubmit={handleSubmit(onSubmit)}>
-        <div className={style.uno}>
-          <label>Usuario</label>
+        <div className={style.row}>
+          <label className={style.label}>Usuario</label>
           <input
             className={style.input}
             type="text"
             {...register("username")}
           />
         </div>
-        <div>
-          <label>Contraseña</label>
+        <div className={style.row}>
+          <label className={style.label}>Contraseña</label>
           <input
             className={style.input}
             type="text"
