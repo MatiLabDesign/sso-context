@@ -4,12 +4,13 @@
 }
 a {
   font-weight: 500;
-  color: #222222;
+  color: #c7c7c7;
   text-decoration: none;
 }
 a:hover {
   color: #078183;
 }
+
 
 li{
   list-style: none;

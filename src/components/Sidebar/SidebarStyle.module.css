@@ -2,13 +2,14 @@
     display: grid;
     grid-row: 10% auto auto;
     height: 100vh;
-    width: 220px;
-    background-color: rgba(128, 128, 128, 0.215);
+    min-width: 220px;
+    background-color: #333f4f;
 }
 
 .img {
-    width: 60px;
-    height: 60px;
+    height: 50px;
+    margin-top: 25px;
+
 }
 
 .img_row {
@@ -18,15 +19,16 @@
 
 .list_item {
     margin-top: 25px;
+    /* color: #e2e2e2; */
     /* height: 35px; */
     /* background-color: red; */
 }
 
-.list{
+.list {
     padding-left: 30px;
 }
 
-.menu_row{
+.menu_row {
     display: flex;
     flex-direction: column;
     /* background-color: #666; */
@@ -40,8 +42,18 @@
     margin-bottom: 25px;
 }
 
-.list_item_container{
+.list_item_container {
     width: 100%;
     height: 25px;
     /* background-color: #666; */
+}
+.bbtn{
+    background-color: #eb7202;
+    color: rgb(209, 209, 209);
+    width: 150px;
+    height: 30px;
+    margin: 0 auto;
+    border: none;
+    border-radius: 5px;
+
 }
