@@ -6,7 +6,7 @@ class TipoEquipoService {
     return axios.get(TIPO_EQUIPO_URL);
   }
 
-  createTipo(tipoEquipo) {
+  createTipoEquipo(tipoEquipo) {
     return axios.post(TIPO_EQUIPO_URL, tipoEquipo);
   }
 }

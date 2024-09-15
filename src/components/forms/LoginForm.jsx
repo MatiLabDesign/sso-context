@@ -53,7 +53,7 @@ const LoginForm = () => {
           />
         </div>
         <div className={style.btn_row}>
-          <input className={style.btn} type="submit" />
+          <button className={style.btn} type="submit">Ingresar</button>
         </div>
       </form>
     </div>

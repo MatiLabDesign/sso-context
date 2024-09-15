@@ -16,7 +16,7 @@ const TipoEquipoList = () => {
       .catch((error) => {
         console.log("el error esta en el useEffect");
       });
-  }, []);
+  }, [tipoEquipos]);
 
   // Search con ternario
 
@@ -48,7 +48,7 @@ const TipoEquipoList = () => {
       </div>
 
       <div className="table-container">
-        <Link to="/nuevo-tipo">
+        <Link to="/dashboard/tipoequipo/nuevo-tipo-equipo">
           <button className="form-control-s">Crear Tipo</button>
         </Link>
         <table className="tabla">

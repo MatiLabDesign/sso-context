@@ -16,7 +16,7 @@ const ClienteList = () => {
       .catch((error) => {
         console.log("el error esta en el useEffect");
       });
-  }, []);
+  }, [clientes]);
 
   //Search con ternario
 
@@ -47,7 +47,7 @@ const ClienteList = () => {
       </div>
 
       <div className="table-container">
-        <Link to="/nuevo">
+        <Link to="nuevo">
           <button className="form-control-s">Crear Cliente</button>
         </Link>
         <table className="tabla">
