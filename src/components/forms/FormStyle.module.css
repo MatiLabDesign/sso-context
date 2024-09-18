@@ -1,3 +1,4 @@
+/* LoginFormStyle */
 .nuevo {
     font-size: 25px;
     color: red;
@@ -25,9 +26,9 @@
     align-items: center;
 }
 
-.btn_row{
+.btn_row {
     display: flex;
-    justify-content:center;
+    justify-content: center;
 }
 
 .label {
@@ -61,4 +62,82 @@
 
 .form_login {
     padding-top: 120px;
+}
+
+/* clienteFormStyle */
+
+.input_cliente {
+    margin-top: 15px;
+}
+
+.form_cliente {
+    margin-top: 70px;
+    margin-left: 200px;
+}
+
+.form_control_s {
+    margin-top: 15px;
+    /* trae un css de otro lado */
+}
+
+
+/* EquipoFormStyle */
+
+.input_equipo {
+    margin-top: 15px;
+}
+
+.form_equipo {
+    margin-top: 170px;
+    margin-left: 200px;
+}
+
+.form_control_s {
+    margin-top: 15px;
+    /* trae un css de otro lado */
+}
+
+
+/* TipoEquipoFormStyle */
+
+.input_tipo {
+    margin-top: 15px;
+}
+
+.form_tipo {
+    margin-top: 170px;
+    margin-left: 200px;
+}
+
+.form_control_s {
+    margin-top: 15px;
+    /* trae un css de otro lado */
+}
+
+.input_check{
+    box-shadow: none;
+    text-align: left;
+}
+
+
+/* OtFormStyle */
+
+.input_ot {
+    margin-top: 15px;
+}
+
+.form_ot {
+    margin-top: 170px;
+    margin-left: 200px;
+}
+
+.form_control_s {
+    margin-top: 15px;
+    background-color: #059080;
+    color: #fff;
+    width: 150px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    /* trae un css de otro lado */
 }

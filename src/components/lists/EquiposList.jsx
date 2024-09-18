@@ -16,7 +16,7 @@ const EquiposList = () => {
       .catch((error) => {
         console.log("el error esta en el useEffect");
       });
-  }, [equipos]);
+  }, []);
 
   // Search con ternario
 

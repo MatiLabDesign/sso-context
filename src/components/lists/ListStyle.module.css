@@ -1,0 +1,79 @@
+.list_container {
+    color: #666;
+    width: 80%;
+    margin-left: 60px;
+    min-height: 80vh;
+    padding-top: 50px;
+}
+
+.table_container {
+    color: #666;
+    width: 80%;
+    padding-top: 50px;
+}
+
+.search_container {
+    display: flex;
+    /* justify-content: center; */
+    min-width: 80%;
+    /* margin: 0px auto; */
+}
+
+.form_control {
+    min-width: 80%;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #99999937;
+    padding-left: 25px;
+    color: #666;
+    border: none;
+    outline: none;
+    box-shadow: inset 3px 3px 5px rgb(167, 167, 167);
+}
+
+.table_row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.titulo_lista {
+    margin-top: 25px;
+}
+
+.tabla {
+    margin-top: 25px;
+}
+
+.titulos_listas {
+    margin: 0 20px;
+
+}
+
+.titulos_listas-acciones {
+    margin: 0 20px;
+}
+
+.button {
+    width: 150px;
+    height: 40px;
+    background-color: #085734;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    border: none;
+    margin: 25px 0;
+    cursor: pointer;
+}
+
+.contenido_lista {
+    padding: 0 25px;
+}
+
+.form_control_s {
+    background-color: #059080;
+    color: #fff;
+    width: 150px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+}

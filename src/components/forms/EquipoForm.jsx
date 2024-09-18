@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import "./ClienteForm.css";
+import style from "./FormStyle.module.css";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import TipoEquipoService from "../../services/TipoEquipoService";
 import EquipoService from "../../services/EquipoService";
 
 const EquipoForm = () => {
@@ -23,8 +22,8 @@ const EquipoForm = () => {
 
   return (
     <>
-    <form onSubmit={handleSubmit(onSubmit)} className="form-cliente">
-        <div className="input-cliente">
+    <form onSubmit={handleSubmit(onSubmit)} className={style.form_equipo}>
+        <div className={style.input_equipo}>
           <label>N° de serie</label>
           <input
             type="text"
@@ -35,7 +34,7 @@ const EquipoForm = () => {
           {errors.numSerieEquipo?.type === "required" && <p>El campo es requerido</p>}
           
         </div>
-        <div className="input-cliente">
+        <div className={style.input_equipo}>
           <label>Tipo de equipo</label>
           <input
             type="text"
@@ -59,7 +58,7 @@ const EquipoForm = () => {
         </div> */}
 
         
-        <button className="form-control-s" type="submit">Guardar</button>
+        <button className={style.form_control_s} type="submit">Guardar</button>
       </form>
     
       

@@ -1,5 +1,12 @@
 import style from "./SidebarStyle.module.css";
-import { CLIENT, EQUIPO, LOGOUT, TIPOEQUIPO } from "../../config/routes/paths";
+import {
+  CLIENT,
+  EQUIPO,
+  LOGOUT,
+  OT,
+  OTLIST,
+  TIPOEQUIPO,
+} from "../../config/routes/paths";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
@@ -9,8 +16,15 @@ const Sidebar = () => {
         <img className={style.img} src="/trinoilisologo2.png" alt="logo" />
       </div>
       <div className={style.menu_row}>
-        <button className={style.bbtn}>Nueva OT</button>
+        <Link className={style.bbtn} to={OT}>
+          <button className={style.bbtn}>Nueva OT</button>
+        </Link>
         <ul className={style.list}>
+          <div className={style.list_item_container}>
+            <li className={style.list_item}>
+              <Link to={OTLIST}>Consultar OT</Link>
+            </li>
+          </div>
           <div className={style.list_item_container}>
             <li className={style.list_item}>
               <Link to={CLIENT}>Clientes</Link>

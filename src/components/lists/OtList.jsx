@@ -1,16 +1,16 @@
 import React from "react";
 import "./ClienteList.css";
-import ClienteService from "../../services/ClienteService";
+import OtService from "../../services/OtService";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-const ClienteList = () => {
-  const [clientes, setClientes] = useState([]);
+const OtList = () => {
+  const [ots, setOts] = useState([]);
 
   useEffect(() => {
-    ClienteService.getAllClientes()
+    OtService.getAllOt()
       .then((response) => {
-        setClientes(response.data);
+        setOts(response.data);
         console.log(response.data);
       })
       .catch((error) => {
@@ -28,9 +28,10 @@ const ClienteList = () => {
   };
 
   const results = !search
-    ? clientes
-    : clientes.filter((dato) =>
-        dato.razonSocial.toLowerCase().includes(search.toLocaleLowerCase())
+    ? ots
+    : ots.filter((dato) =>
+        // Ahi que poner el atributo correcto
+        dato.numot.toLowerCase().includes(search.toLocaleLowerCase())
       );
 
   //----------------------------
@@ -41,48 +42,41 @@ const ClienteList = () => {
           value={search}
           onChange={searcher}
           type="text"
-          placeholder="Filtrar Cliente por Razón Social"
+          placeholder="Filtrar OT por N°"
           className="form-control"
         />
       </div>
 
       <div className="table-container">
-        <Link to="nuevo">
+        {/* <Link to="nuevo">
           <button className="form-control-s">Crear Cliente</button>
-        </Link>
+        </Link> */}
         <table className="tabla">
           <thead>
             <tr className="table-ro">
               <th id="titulos-listas" scope="col">
-                Razón Social
+                N° OT
               </th>
               <th id="titulos-listas" scope="col">
-                Cuit
+                Cliente
               </th>
               <th id="titulos-listas" scope="col">
-                Area
+                Equipo
               </th>
               <th id="titulos-listas" scope="col">
-                Nombre
-              </th>
-              <th id="titulos-listas" scope="col">
-                Telefono
-              </th>
-              <th id="titulos-listas" scope="col">
-                Email
+                Etapa
               </th>
             </tr>
           </thead>
           <tbody className="linea-lista">
-            {results.map((cliente) => (
-              <tr key={cliente.id}>
+            {results.map((ots) => (
+              <tr key={ot.id}>
                 {/* <td id="contenido-lista">{cliente.id}</td> */}
-                <td id="contenido-lista">{cliente.razonSocial}</td>
-                <td id="contenido-lista">{cliente.cuit}</td>
-                <td id="contenido-lista">{cliente.area}</td>
-                <td id="contenido-lista">{cliente.nombreContacto}</td>
-                <td id="contenido-lista">{cliente.telefono}</td>
-                <td id="contenido-lista">{cliente.mail}</td>
+                <td id="contenido-lista">{ot.numero}</td>
+                <td id="contenido-lista">{ot.cliente}</td>
+                <td id="contenido-lista">{ot.equipo}</td>
+                <td id="contenido-lista">{ot.etapa}</td>
+
                 {/* <td>
                 <Link className="btn-enlace" to={`/editar-sede/${sede.id}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="blue"><path d="M216-216h51l375-375-51-51-375 375v51Zm-72 72v-153l498-498q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L297-144H144Zm600-549-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg>
@@ -102,4 +96,4 @@ const ClienteList = () => {
   );
 };
 
-export default ClienteList;
+export default OtList;

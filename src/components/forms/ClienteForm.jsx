@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ClienteForm.css";
+import style from "./FormStyle.module.css";
 import ClienteService from "../../services/ClienteService";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -22,8 +22,10 @@ const ClienteForm = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="form-cliente">
-        <div className="input-cliente">
+      <form onSubmit={handleSubmit(onSubmit)} className={style.form_cliente}>
+      {/* <form onSubmit={handleSubmit(onSubmit)} className="form-cliente"> */}
+        <div className={style.input_cliente}>
+        {/* <div className="input-cliente"> */}
           <label>Cuit</label>
           <input
             type="number"
@@ -35,7 +37,7 @@ const ClienteForm = () => {
           {errors.cuit?.type === "required" && <p>El campo es requerido</p>}
           {errors.cuit?.type === "maxLength" && <p>Maximo de 11 numeros</p>}
         </div>
-        <div className="input-cliente">
+        <div className={style.input_cliente}>
           <label>Razón Social</label>
           <input
             type="text"
@@ -49,7 +51,7 @@ const ClienteForm = () => {
         </div>
 
         {/* select de areas */}
-        <div className="input-cliente">
+        <div className={style.input_cliente}>
           <label>Area</label>
           <select {...register("area")}>
             <option value="sur">Sur</option>
@@ -58,7 +60,7 @@ const ClienteForm = () => {
           </select>
         </div>
 
-        <div className="input-cliente">
+        <div className={style.input_cliente}>
           <label>Nombre Fantasia</label>
           <input
             type="text"
@@ -70,7 +72,7 @@ const ClienteForm = () => {
             <p>El campo es requerido</p>
           )}
         </div>
-        <div className="input-cliente">
+        <div className={style.input_cliente}>
           <label>Contacto</label>
           <input
             type="text"
@@ -82,7 +84,7 @@ const ClienteForm = () => {
             <p>El campo es requerido</p>
           )}
         </div>
-        <div className="input-cliente">
+        <div className={style.input_cliente}>
           <label >Teléfono</label>
           <input
             type="number"
@@ -94,7 +96,7 @@ const ClienteForm = () => {
           {errors.telefono?.type === "required" && <p>El campo es requerido</p>}
           {errors.telefono?.type === "maxLength" && <p>Maximo de 10 numeros</p>}
         </div>
-        <div className="input-cliente">
+        <div className={style.input_cliente}>
           <label>Email</label>
           <input
             type="text"
@@ -106,7 +108,7 @@ const ClienteForm = () => {
           {errors.mail?.type === "required" && <p>El campo es requerido</p>}
           {errors.mail?.type === "pattern" && <p>No corresponde a un email</p>}
         </div>
-        <button className="form-control-s" type="submit">Guardar</button>
+        <button className={style.form_control_s} type="submit">Guardar</button>
       </form>
     </>
   );

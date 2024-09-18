@@ -7,3 +7,43 @@
 .container{
   display: flex;
 }
+
+/* ESTOS ESTILOS CORRESPONDEN A LOS FORMULARIOS FORMSTYLE */
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3b3b3b;
+  font-family: "Nunito Sans", sans-serif;
+  text-align: left;
+  display: block;
+  margin-left: 10px;
+}
+
+input {
+  width: 300px;
+  height: 30px;
+  background-color: #dedede;
+  border-radius: 5px;
+  border: none;
+  padding-left: 15px;
+  box-shadow: inset 3px 3px 5px rgb(201, 201, 201);
+  /* &:hover {
+      background-color: #bbbbbb;
+  } */
+}
+
+select {
+  width: 300px;
+  height: 30px;
+  background-color: #dedede;
+  border-radius: 5px;
+  border: none;
+  padding-left: 15px;
+
+  &:hover {
+      background-color: #bbbbbb;
+      /* box-shadow: 2px 1px 7px #666; */
+
+  }
+}

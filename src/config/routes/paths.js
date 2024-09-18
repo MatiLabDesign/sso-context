@@ -8,3 +8,5 @@ export const EQUIPO = 'equipo';
 export const CREATECLIENTE = '/dashboard/client/nuevo';
 export const CREATEEQUIPO = '/dashboard/equipo/nuevo-equipo';
 export const CREATETIPOEQUIPO = '/dashboard/tipoequipo/nuevo-tipo-equipo';
+export const OT = '/dashboard/ot';
+export const OTLIST = '/dashboard/listar-ot';

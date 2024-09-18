@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ClienteForm.css";
+import style from "./FormStyle.module.css";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import TipoEquipoService from "../../services/TipoEquipoService";
@@ -22,8 +22,8 @@ const TipoEquipoForm = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="form-cliente">
-        <div className="input-cliente">
+      <form onSubmit={handleSubmit(onSubmit)} className={style.form_tipo}>
+        <div className={style.input_tipo}>
           <label>Tipo de equipo</label>
           <select {...register("tipo")}>
             <option value="--">--</option>
@@ -32,7 +32,7 @@ const TipoEquipoForm = () => {
             <option value="Bomba Mecánica">Bomba Mecánica</option>
           </select>
         </div>
-        <div className="input-cliente">
+        <div className={style.input_tipo}>
           <label>Marca</label>
           <select {...register("marca")}>
             <option value="--">--</option>
@@ -41,7 +41,7 @@ const TipoEquipoForm = () => {
             <option value="MiBombita">MiBombita</option>
           </select>
         </div>
-        <div className="input-cliente">
+        <div className={style.input_tipo}>
           <label>Modelo</label>
           <select {...register("modelo")}>
             <option value="--">--</option>
@@ -86,7 +86,7 @@ const TipoEquipoForm = () => {
           {errors.modelo?.type === "required" && <p>El campo es requerido</p>}
         </div> */}
 
-        <button className="form-control-s" type="submit">
+        <button className={style.form_control_s} type="submit">
           Guardar
         </button>
       </form>
