@@ -1,8 +1,7 @@
-import React from 'react'
+import React from "react";
+// import { Outlet } from 'react-router-dom'
 
 const ProcesosHome = () => {
- 
-
   return (
     <div>
       <button className="btn2">i</button>
@@ -10,8 +9,9 @@ const ProcesosHome = () => {
       <button className="btn2">i</button>
       <button className="btn2">e</button>
       <button className="btn2">s</button>
+      <div>{/* <Outlet/> */}</div>
     </div>
-  )
-}
+  );
+};
 
-export default ProcesosHome
+export default ProcesosHome;

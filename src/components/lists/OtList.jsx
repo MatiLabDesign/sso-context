@@ -1,5 +1,5 @@
 import React from "react";
-import "./ClienteList.css";
+import style from "./ListStyle.module.css";
 import OtService from "../../services/OtService";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -30,40 +30,40 @@ const OtList = () => {
   const results = !search
     ? ots
     : ots.filter((dato) =>
-        // Ahi que poner el atributo correcto
+        // Hay que poner el atributo correcto
         dato.numot.toLowerCase().includes(search.toLocaleLowerCase())
       );
 
   //----------------------------
   return (
-    <div className="list-container">
-      <div className="search-container">
+    <div className={style.list_container}>
+      <div className={style.search_container}>
         <input
           value={search}
           onChange={searcher}
           type="text"
           placeholder="Filtrar OT por N°"
-          className="form-control"
+          className={style.form_control}
         />
       </div>
 
-      <div className="table-container">
+      <div className={style.table_container}>
         {/* <Link to="nuevo">
           <button className="form-control-s">Crear Cliente</button>
         </Link> */}
-        <table className="tabla">
+        <table className={style.tabla}>
           <thead>
-            <tr className="table-ro">
-              <th id="titulos-listas" scope="col">
+            <tr className={style.table_row}>
+              <th className={style.lists_tittles} scope="col">
                 N° OT
               </th>
-              <th id="titulos-listas" scope="col">
+              <th className={style.lists_tittles} scope="col">
                 Cliente
               </th>
-              <th id="titulos-listas" scope="col">
+              <th className={style.lists_tittles} scope="col">
                 Equipo
               </th>
-              <th id="titulos-listas" scope="col">
+              <th className={style.lists_tittles} scope="col">
                 Etapa
               </th>
             </tr>
@@ -72,10 +72,10 @@ const OtList = () => {
             {results.map((ots) => (
               <tr key={ot.id}>
                 {/* <td id="contenido-lista">{cliente.id}</td> */}
-                <td id="contenido-lista">{ot.numero}</td>
-                <td id="contenido-lista">{ot.cliente}</td>
-                <td id="contenido-lista">{ot.equipo}</td>
-                <td id="contenido-lista">{ot.etapa}</td>
+                <td className={style.list_content}>{ot.numero}</td>
+                <td className={style.list_content}>{ot.cliente}</td>
+                <td className={style.list_content}>{ot.equipo}</td>
+                <td className={style.list_content}>{ot.etapa}</td>
 
                 {/* <td>
                 <Link className="btn-enlace" to={`/editar-sede/${sede.id}`}>

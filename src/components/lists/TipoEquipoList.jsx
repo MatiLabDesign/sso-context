@@ -1,5 +1,5 @@
 import React from "react";
-import "./ClienteList.css";
+import style from "./ListStyle.module.css";
 import TipoEquipoService from "../../services/TipoEquipoService";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -36,31 +36,31 @@ const TipoEquipoList = () => {
 
   //----------------------------
   return (
-    <div className="list-container">
-      <div className="search-container">
+    <div className={style.list_container}>
+      <div className={style.search_container}>
         <input
           value={search}
           onChange={searcher}
           type="text"
           placeholder="Filtrar por Tipo de equipo"
-          className="form-control"
+          className={style.form_control}
         />
       </div>
 
-      <div className="table-container">
+      <div className={style.table_container}>
         <Link to="/dashboard/tipoequipo/nuevo-tipo-equipo">
-          <button className="form-control-s">Crear Tipo</button>
+          <button className={style.form_control_s}>Crear Tipo</button>
         </Link>
-        <table className="tabla">
+        <table className={style.tabla}>
           <thead>
-            <tr className="table-ro">
-              <th id="titulos-listas" scope="col">
+            <tr className={style.table_row}>
+              <th className={style.lists_tittles} scope="col">
                 Tipo
               </th>
-              <th id="titulos-listas" scope="col">
+              <th className={style.lists_tittles} scope="col">
                 Marca
               </th>
-              <th id="titulos-listas" scope="col">
+              <th className={style.lists_tittles} scope="col">
                 Modelo
               </th>
             </tr>
@@ -69,9 +69,9 @@ const TipoEquipoList = () => {
             {results.map((tipoEquipo) => (
               <tr key={tipoEquipo.id}>
                 {/* <td id="contenido-lista">{cliente.id}</td> */}
-                <td id="contenido-lista">{tipoEquipo.tipo}</td>
-                <td id="contenido-lista">{tipoEquipo.marca}</td>
-                <td id="contenido-lista">{tipoEquipo.modelo}</td>
+                <td className={style.list_content}>{tipoEquipo.tipo}</td>
+                <td className={style.list_content}>{tipoEquipo.marca}</td>
+                <td className={style.list_content}>{tipoEquipo.modelo}</td>
                 
                 {/* <td>
                 <Link className="btn-enlace" to={`/editar-sede/${sede.id}`}>

@@ -1,5 +1,5 @@
 import React from "react";
-import "./ClienteList.css";
+import style from "./ListStyle.module.css";
 import EquipoService from "../../services/EquipoService";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -36,31 +36,31 @@ const EquiposList = () => {
 
   //----------------------------
   return (
-    <div className="list-container">
-      <div className="search-container">
+    <div className={style.list_container}>
+      <div className={style.search_container}>
         <input
           value={search}
           onChange={searcher}
           type="text"
           placeholder="Filtrar por N° de serie"
-          className="form-control"
+          className={style.form_control}
         />
       </div>
 
-      <div className="table-container">
+      <div className={style.table_container}>
         <Link to="/dashboard/equipo/nuevo-equipo">
-          <button className="form-control-s">Crear Equipo</button>
+          <button className={style.form_control_s}>Crear Equipo</button>
         </Link>
-        <table className="tabla">
+        <table className={style.tabla}>
           <thead>
-            <tr className="table-ro">
-              <th id="titulos-listas" scope="col">
+            <tr className={style.table_row}>
+              <th className={style.lists_tittles} scope="col">
               N° de Serie
               </th>
-              <th id="titulos-listas" scope="col">
+              <th className={style.lists_tittles} scope="col">
                 Tipo de equipo
               </th>
-              <th id="titulos-listas" scope="col">
+              <th className={style.lists_tittles} scope="col">
                 Remito transporte
               </th>
             </tr>
@@ -69,7 +69,7 @@ const EquiposList = () => {
             {results.map((equipo) => (
               <tr key={equipo.id}>
                 {/* <td id="contenido-lista">{cliente.id}</td> */}
-                <td id="contenido-lista">{equipo.numSerieEquipo}</td>
+                <td className={style.list_content}>{equipo.numSerieEquipo}</td>
                 {/* <td id="contenido-lista">{equipo.marca}</td>
                 <td id="contenido-lista">{equipo.modelo}</td> */}
                 

@@ -1,5 +1,5 @@
 import React from "react";
-import "./ClienteList.css";
+import style from "./ListStyle.module.css";
 import ClienteService from "../../services/ClienteService";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -35,40 +35,40 @@ const ClienteList = () => {
 
   //----------------------------
   return (
-    <div className="list-container">
-      <div className="search-container">
+    <div className={style.list_container}>
+      <div className={style.search_container}>
         <input
           value={search}
           onChange={searcher}
           type="text"
           placeholder="Filtrar Cliente por Razón Social"
-          className="form-control"
+          className={style.form_control}
         />
       </div>
 
-      <div className="table-container">
+      <div className={style.table_container}>
         <Link to="nuevo">
-          <button className="form-control-s">Crear Cliente</button>
+          <button className={style.form_control_s}>Crear Cliente</button>
         </Link>
-        <table className="tabla">
+        <table className={style.tabla}>
           <thead>
-            <tr className="table-ro">
-              <th id="titulos-listas" scope="col">
+            <tr className={style.table_row}>
+              <th className={style.lists_tittles} scope="col">
                 Razón Social
               </th>
-              <th id="titulos-listas" scope="col">
+              <th className={style.lists_tittles} scope="col">
                 Cuit
               </th>
-              <th id="titulos-listas" scope="col">
+              <th className={style.lists_tittles} scope="col">
                 Area
               </th>
-              <th id="titulos-listas" scope="col">
+              <th className={style.lists_tittles} scope="col">
                 Nombre
               </th>
-              <th id="titulos-listas" scope="col">
+              <th className={style.lists_tittles} scope="col">
                 Telefono
               </th>
-              <th id="titulos-listas" scope="col">
+              <th className={style.lists_tittles} scope="col">
                 Email
               </th>
             </tr>
@@ -77,12 +77,12 @@ const ClienteList = () => {
             {results.map((cliente) => (
               <tr key={cliente.id}>
                 {/* <td id="contenido-lista">{cliente.id}</td> */}
-                <td id="contenido-lista">{cliente.razonSocial}</td>
-                <td id="contenido-lista">{cliente.cuit}</td>
-                <td id="contenido-lista">{cliente.area}</td>
-                <td id="contenido-lista">{cliente.nombreContacto}</td>
-                <td id="contenido-lista">{cliente.telefono}</td>
-                <td id="contenido-lista">{cliente.mail}</td>
+                <td className={style.list_content}>{cliente.razonSocial}</td>
+                <td className={style.list_content}>{cliente.cuit}</td>
+                <td className={style.list_content}>{cliente.area}</td>
+                <td className={style.list_content}>{cliente.nombreContacto}</td>
+                <td className={style.list_content}>{cliente.telefono}</td>
+                <td className={style.list_content}>{cliente.mail}</td>
                 {/* <td>
                 <Link className="btn-enlace" to={`/editar-sede/${sede.id}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="blue"><path d="M216-216h51l375-375-51-51-375 375v51Zm-72 72v-153l498-498q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L297-144H144Zm600-549-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg>
