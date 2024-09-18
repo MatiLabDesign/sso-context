@@ -75,7 +75,7 @@ const ClienteList = () => {
           </thead>
           <tbody className="linea-lista">
             {results.map((cliente) => (
-              <tr key={cliente.id}>
+              <tr className={style.table_row} key={cliente.id}>
                 {/* <td id="contenido-lista">{cliente.id}</td> */}
                 <td className={style.list_content}>{cliente.razonSocial}</td>
                 <td className={style.list_content}>{cliente.cuit}</td>
