@@ -31,7 +31,7 @@ const OtList = () => {
     ? ots
     : ots.filter((dato) =>
         // Hay que poner el atributo correcto
-        dato.numot.toLowerCase().includes(search.toLocaleLowerCase())
+        dato.numeroOT.toLowerCase().includes(search.toLocaleLowerCase())
       );
 
   //----------------------------
@@ -61,7 +61,7 @@ const OtList = () => {
                 Cliente
               </th>
               <th className={style.lists_tittles} scope="col">
-                Equipo
+                N° Serie Equipo
               </th>
               <th className={style.lists_tittles} scope="col">
                 Etapa
@@ -70,12 +70,17 @@ const OtList = () => {
           </thead>
           <tbody className="linea-lista">
             {results.map((ots) => (
-              <tr key={ot.id}>
+              <tr className={style.table_row} key={ots.id}>
+                {/* FUNCINA EL MAP. VER BIEN DONDE VA CADA ATRIBUTO */}
+                {/* ------------------------------------------------------ */}
                 {/* <td id="contenido-lista">{cliente.id}</td> */}
-                <td className={style.list_content}>{ot.numero}</td>
-                <td className={style.list_content}>{ot.cliente}</td>
-                <td className={style.list_content}>{ot.equipo}</td>
-                <td className={style.list_content}>{ot.etapa}</td>
+                {/* <Link to={ETAPA}></Link> */}
+                <td className={style.list_content}>{ots.numeroOT}</td>
+                {/* <td className={style.list_content}>{ots.fecha}</td> */}
+                <td className={style.list_content}>{ots.cliente.razonSocial}</td>
+                {/* <td className={style.list_content}>{ots.cliente.id}</td> */}
+                <td className={style.list_content}>{ots.equipo.numSerieEquipo}</td>
+                {/* <td className={style.list_content}>{ots.etapa}</td> */}
 
                 {/* <td>
                 <Link className="btn-enlace" to={`/editar-sede/${sede.id}`}>
