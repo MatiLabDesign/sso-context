@@ -4,6 +4,7 @@ import OtService from "../../services/OtService";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import EquipoService from "../../services/EquipoService";
+import { ETAPA } from "../../config/routes/paths";
 
 const OtList = () => {
   const [ots, setOts] = useState([]);
@@ -89,7 +90,9 @@ const OtList = () => {
                 {/* ------------------------------------------------------ */}
                 {/* <td id="contenido-lista">{cliente.id}</td> */}
                 {/* <Link to={ETAPA}></Link> */}
+                <Link to={ETAPA}>
                 <td className={style.list_content}>{ots.numeroOT}</td>
+                </Link>
                 {/* <td className={style.list_content}>{ots.fecha}</td> */}
                 <td className={style.list_content}>{ots.cliente.razonSocial}</td>
                 {/* <td className={style.list_content}>{ots.cliente.id}</td> */}

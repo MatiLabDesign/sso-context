@@ -10,3 +10,4 @@ export const CREATEEQUIPO = '/dashboard/equipo/nuevo-equipo';
 export const CREATETIPOEQUIPO = '/dashboard/tipoequipo/nuevo-tipo-equipo';
 export const OT = '/dashboard/ot';
 export const OTLIST = '/dashboard/listar-ot';
+export const ETAPA = '/dashboard/etapa';

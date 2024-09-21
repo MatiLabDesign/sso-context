@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { CLIENT, CREATECLIENTE, CREATEEQUIPO, CREATETIPOEQUIPO, EQUIPO, LOGIN, LOGOUT, OT, OTLIST, PRIVATE, TIPOEQUIPO } from "./config/routes/paths";
+import { CLIENT, CREATECLIENTE, CREATEEQUIPO, CREATETIPOEQUIPO, EQUIPO, ETAPA, LOGIN, LOGOUT, OT, OTLIST, PRIVATE, TIPOEQUIPO } from "./config/routes/paths";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Private from "./views/Private";
@@ -16,6 +16,7 @@ import CreateEquipo from "./views/CreateEquipo";
 import CreateTipoEquipo from "./views/CreateTipoEquipo";
 import OtForm from "./components/forms/OtForm";
 import Ot from "./views/Ot";
+import Etapas from "./components/forms/etapas/Etapas";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <Route path={CREATETIPOEQUIPO} element={<CreateTipoEquipo/>} />
               <Route path={OT} element={<OtForm/>} />
               <Route path={OTLIST} element={<Ot/>} />
+              <Route path={ETAPA} element={<Etapas/>} />
             </Route>
             <Route path={LOGOUT} element={<Logout />} />
           </Route>
