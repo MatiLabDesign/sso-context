@@ -22,6 +22,7 @@ const TipoEquipoForm = () => {
 
   return (
     <>
+    {/* ESTAN TODO LAS OPCIONES HARDCODIADAS */}
       <form onSubmit={handleSubmit(onSubmit)} className={style.form_tipo}>
         <div className={style.input_tipo}>
           <label>Tipo de equipo</label>
@@ -53,38 +54,6 @@ const TipoEquipoForm = () => {
             <option value="Torrinte">Torrinte</option>
           </select>
         </div>
-
-        {/* <div className="input-cliente">
-          <label>Tipo</label>
-          <input
-            type="text"
-            {...register("tipo", {
-              required: true,
-            })}
-          />
-          {errors.tipo?.type === "required" && <p>El campo es requerido</p>}
-        </div> */}
-        {/* <div className="input-cliente">
-          <label>Marca</label>
-          <input
-            type="text"
-            {...register("marca", {
-              required: true,
-            })}
-          />
-          {errors.marca?.type === "required" && <p>El campo es requerido</p>}
-        </div> */}
-
-        {/* <div className="input-cliente">
-          <label>Modelo</label>
-          <input
-            type="text"
-            {...register("modelo", {
-              required: true,
-            })}
-          />
-          {errors.modelo?.type === "required" && <p>El campo es requerido</p>}
-        </div> */}
 
         <button className={style.form_control_s} type="submit">
           Guardar

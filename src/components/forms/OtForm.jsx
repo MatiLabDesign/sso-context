@@ -5,7 +5,6 @@ import ClienteService from "../../services/ClienteService";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import EquipoService from "../../services/EquipoService";
-import TipoEquipo from './../../views/TipoEquipo';
 
 const OtForm = () => {
   const {
@@ -18,10 +17,21 @@ const OtForm = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    const ot = data;
-    OtService.createOt(ot);
+    const orden = {
+        numeroOT: data.numeroOT,
+        cliente: {
+          id: data.cliente_id,
+        },
+        //no trae los id, viene undefined
+        equipo: {
+          id: data.equipo_id,
+        },
+        remitoTransporte: data.remitoTransporte,
+        comentario: data.comentario
+      };
+    OtService.createOt(orden);
     navigate("/dashboard/ot");
-    console.log(ot);
+    console.log(orden);
   };
 
   const includeOtro = watch("otro");
@@ -60,8 +70,13 @@ const OtForm = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={style.form_ot}>
         <div className={style.input_ot}>
+          <label>N° OT</label>
+          <input type="text" {...register("numeroOT")} />
+        </div>
+
+        <div className={style.input_ot}>
           <label>Cliente</label>
-          <select {...register("cliente")}>
+          <select {...register("cliente_id")}>
             {clientes.map((cliente) => (
               <option key={cliente.id} value={cliente.id}>
                 {cliente.razonSocial}
@@ -71,29 +86,19 @@ const OtForm = () => {
         </div>
         <div className={style.input_ot}>
           <label>Equipos</label>
-          <select {...register("equipos")}>
+          <select {...register("equipo_id")}>
             {equipos.map((equipo) => (
               <option key={equipo.id} value={equipo.id}>
-                {equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.marca} - {equipo.tipoEquipo.modelo}
+                {equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.marca} -{" "}
+                {equipo.tipoEquipo.modelo}
               </option>
             ))}
           </select>
         </div>
 
-        {/* <div className={style.input_ot}>
-          <label>Equipo</label>
-          <input
-            type="text"
-            {...register("equipo", {
-              required: true,
-            })}
-          />
-          {errors.equipo?.type === "required" && <p>El campo es requerido</p>}
-        </div> */}
-
         <div className={style.input_ot}>
           <label>N° Rto transporte</label>
-          <input type="text" {...register("rtoTran")} />
+          <input type="text" {...register("remitoTransporte")} />
         </div>
         <div>
           <label>otro</label>
@@ -105,7 +110,7 @@ const OtForm = () => {
         </div>
         {includeOtro && (
           <div className={style.input_ot}>
-            <input type="text" {...register("campo")} />
+            <input type="text" {...register("comentario")} />
           </div>
         )}
 

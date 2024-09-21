@@ -23,9 +23,7 @@ const ClienteForm = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={style.form_cliente}>
-      {/* <form onSubmit={handleSubmit(onSubmit)} className="form-cliente"> */}
         <div className={style.input_cliente}>
-        {/* <div className="input-cliente"> */}
           <label>Cuit</label>
           <input
             type="number"
@@ -85,7 +83,7 @@ const ClienteForm = () => {
           )}
         </div>
         <div className={style.input_cliente}>
-          <label >Teléfono</label>
+          <label>Teléfono</label>
           <input
             type="number"
             {...register("telefono", {
@@ -108,7 +106,9 @@ const ClienteForm = () => {
           {errors.mail?.type === "required" && <p>El campo es requerido</p>}
           {errors.mail?.type === "pattern" && <p>No corresponde a un email</p>}
         </div>
-        <button className={style.form_control_s} type="submit">Guardar</button>
+        <button className={style.form_control_s} type="submit">
+          Guardar
+        </button>
       </form>
     </>
   );

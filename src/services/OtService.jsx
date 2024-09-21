@@ -6,8 +6,8 @@ class OtService {
     return axios.get(OT_URL);
   }
 
-  createOt(ot) {
-    return axios.post(OT_URL, ot);
+  createOt(orden) {
+    return axios.post(OT_URL, orden);
   }
 }
 

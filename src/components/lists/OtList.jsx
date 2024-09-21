@@ -3,6 +3,7 @@ import style from "./ListStyle.module.css";
 import OtService from "../../services/OtService";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import EquipoService from "../../services/EquipoService";
 
 const OtList = () => {
   const [ots, setOts] = useState([]);
@@ -18,8 +19,21 @@ const OtList = () => {
       });
   }, []);
 
-  //Search con ternario
 
+  //INTENTO DE MOSTRAR EQUIPOS > TIPO - MARCA - MODELO
+  // const [equipos, setEquipos] = useState([]);
+  // useEffect(() => {
+  //   EquipoService.getAllEquipos()
+  //     .then((response) => {
+  //       setEquipos(response.data);
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log("el error esta en el useEffect");
+  //     });
+  // }, []);
+
+  //Search con ternario
   const [search, setSearch] = useState("");
 
   const searcher = (e) => {
@@ -33,8 +47,8 @@ const OtList = () => {
         // Hay que poner el atributo correcto
         dato.numeroOT.toLowerCase().includes(search.toLocaleLowerCase())
       );
+//----------------------------
 
-  //----------------------------
   return (
     <div className={style.list_container}>
       <div className={style.search_container}>
@@ -80,6 +94,8 @@ const OtList = () => {
                 <td className={style.list_content}>{ots.cliente.razonSocial}</td>
                 {/* <td className={style.list_content}>{ots.cliente.id}</td> */}
                 <td className={style.list_content}>{ots.equipo.numSerieEquipo}</td>
+                <td className={style.list_content}>{ots.equipo.tipo}</td>
+                {/* <td className={style.list_content}>{ots.equipo.numSerieEquipo}</td> */}
                 {/* <td className={style.list_content}>{ots.etapa}</td> */}
 
                 {/* <td>

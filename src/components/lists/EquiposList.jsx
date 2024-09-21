@@ -19,7 +19,6 @@ const EquiposList = () => {
   }, []);
 
   // Search con ternario
-
   const [search, setSearch] = useState("");
 
   const searcher = (e) => {
@@ -33,8 +32,8 @@ const EquiposList = () => {
     : equipos.filter((dato) =>
         dato.numSerieEquipo.toLowerCase().includes(search.toLocaleLowerCase())
       );
-
   //----------------------------
+
   return (
     <div className={style.list_container}>
       <div className={style.search_container}>
