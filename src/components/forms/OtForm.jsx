@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import style from "./FormStyle.module.css";
 import OtService from "../../services/OtService";
+import ClienteService from "../../services/ClienteService";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import EquipoService from "../../services/EquipoService";
+import TipoEquipo from './../../views/TipoEquipo';
 
 const OtForm = () => {
   const {
@@ -23,12 +26,27 @@ const OtForm = () => {
 
   const includeOtro = watch("otro");
 
-  const [otsList, setOtsList] = useState([]);
+  const [clientes, setClientes] = useState([]);
 
   useEffect(() => {
-    OtService.getAllOt()
+    ClienteService.getAllClientes()
       .then((response) => {
-        setOtsList(response.data);
+        setClientes(response.data);
+        console.log(response.data);
+        const results = response.data;
+        return results;
+      })
+      .catch((error) => {
+        console.log("el error esta en el useEffect");
+      });
+  }, []);
+
+  const [equipos, setEquipos] = useState([]);
+
+  useEffect(() => {
+    EquipoService.getAllEquipos()
+      .then((response) => {
+        setEquipos(response.data);
         console.log(response.data);
         const results = response.data;
         return results;
@@ -44,15 +62,25 @@ const OtForm = () => {
         <div className={style.input_ot}>
           <label>Cliente</label>
           <select {...register("cliente")}>
-            {otsList.map((cliente) => (
+            {clientes.map((cliente) => (
               <option key={cliente.id} value={cliente.id}>
-                {cliente.cliente}
+                {cliente.razonSocial}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className={style.input_ot}>
+          <label>Equipos</label>
+          <select {...register("equipos")}>
+            {equipos.map((equipo) => (
+              <option key={equipo.id} value={equipo.id}>
+                {equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.marca} - {equipo.tipoEquipo.modelo}
               </option>
             ))}
           </select>
         </div>
 
-        <div className={style.input_ot}>
+        {/* <div className={style.input_ot}>
           <label>Equipo</label>
           <input
             type="text"
@@ -61,7 +89,7 @@ const OtForm = () => {
             })}
           />
           {errors.equipo?.type === "required" && <p>El campo es requerido</p>}
-        </div>
+        </div> */}
 
         <div className={style.input_ot}>
           <label>N° Rto transporte</label>
