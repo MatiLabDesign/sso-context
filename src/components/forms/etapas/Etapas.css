@@ -1,0 +1,32 @@
+.round-button{
+    border-radius:50px;
+    background-color: rgb(7, 138, 112);
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    color: #fff;
+    margin-left: 25px;
+    margin-top: 25px;
+    border: solid 8px #017e6d;
+}
+
+.etapa-name{
+    font-size:25px;
+    font-weight: bold;
+}
+
+.etapas-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.etapas-forms{
+    margin: 40px 25px;
+}
