@@ -12,6 +12,10 @@
     border: solid 8px #017e6d;
 }
 
+h1{
+    color: #999;
+}
+
 .etapa-name{
     font-size:25px;
     font-weight: bold;

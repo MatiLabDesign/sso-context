@@ -3,7 +3,6 @@ import style from "./ListStyle.module.css";
 import OtService from "../../services/OtService";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import EquipoService from "../../services/EquipoService";
 import { ETAPA } from "../../config/routes/paths";
 
 const OtList = () => {
@@ -20,20 +19,6 @@ const OtList = () => {
       });
   }, []);
 
-
-  //INTENTO DE MOSTRAR EQUIPOS > TIPO - MARCA - MODELO
-  // const [equipos, setEquipos] = useState([]);
-  // useEffect(() => {
-  //   EquipoService.getAllEquipos()
-  //     .then((response) => {
-  //       setEquipos(response.data);
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log("el error esta en el useEffect");
-  //     });
-  // }, []);
-
   //Search con ternario
   const [search, setSearch] = useState("");
 
@@ -48,7 +33,7 @@ const OtList = () => {
         // Hay que poner el atributo correcto
         dato.numeroOT.toLowerCase().includes(search.toLocaleLowerCase())
       );
-//----------------------------
+  //----------------------------
 
   return (
     <div className={style.list_container}>
@@ -63,9 +48,6 @@ const OtList = () => {
       </div>
 
       <div className={style.table_container}>
-        {/* <Link to="nuevo">
-          <button className="form-control-s">Crear Cliente</button>
-        </Link> */}
         <table className={style.tabla}>
           <thead>
             <tr className={style.table_row}>
@@ -73,10 +55,7 @@ const OtList = () => {
                 N° OT
               </th>
               <th className={style.lists_tittles} scope="col">
-                Cliente
-              </th>
-              <th className={style.lists_tittles} scope="col">
-                N° Serie Equipo
+                Tipo de Equipo
               </th>
               <th className={style.lists_tittles} scope="col">
                 Etapa
@@ -86,31 +65,13 @@ const OtList = () => {
           <tbody className="linea-lista">
             {results.map((ots) => (
               <tr className={style.table_row} key={ots.id}>
-                {/* FUNCINA EL MAP. VER BIEN DONDE VA CADA ATRIBUTO */}
-                {/* ------------------------------------------------------ */}
-                {/* <td id="contenido-lista">{cliente.id}</td> */}
-                {/* <Link to={ETAPA}></Link> */}
                 <Link to={ETAPA}>
-                <td className={style.list_content}>{ots.numeroOT}</td>
+                  <td className={style.list_content}>{ots.numeroOT}</td>
                 </Link>
-                {/* <td className={style.list_content}>{ots.fecha}</td> */}
-                <td className={style.list_content}>{ots.cliente.razonSocial}</td>
-                {/* <td className={style.list_content}>{ots.cliente.id}</td> */}
-                <td className={style.list_content}>{ots.equipo.numSerieEquipo}</td>
-                <td className={style.list_content}>{ots.equipo.tipo}</td>
-                {/* <td className={style.list_content}>{ots.equipo.numSerieEquipo}</td> */}
-                {/* <td className={style.list_content}>{ots.etapa}</td> */}
-
-                {/* <td>
-                <Link className="btn-enlace" to={`/editar-sede/${sede.id}`}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="blue"><path d="M216-216h51l375-375-51-51-375 375v51Zm-72 72v-153l498-498q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L297-144H144Zm600-549-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg>
-                </Link>
-              </td>
-              <td>
-                <Link className="btn-enlace" to={`/editar-sede/${sede.id}`}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="red"><path d="M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z"/></svg>
-                </Link>
-              </td>               */}
+                <td className={style.list_content}>
+                  {ots.equipo.tipoEquipo.tipo}
+                </td>
+                <td className={style.list_content}>{ots.equipo.etapa}</td>
               </tr>
             ))}
           </tbody>
