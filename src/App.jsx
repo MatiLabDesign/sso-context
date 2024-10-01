@@ -1,3 +1,23 @@
+// import "./App.css";
+// import { BrowserRouter, Routes } from "react-router-dom";
+// import { AuthContextProvider } from "./contexts/authContext";
+// import PublicRoutesComponent from "./routers/PublicRoutesComponent";
+// import PrivateRoutesComponent from "./routers/PrivateRoutesComponent";
+
+// function App() {
+//   return (
+//     <AuthContextProvider>
+//       <BrowserRouter>
+//         <Routes>
+//           <PublicRoutesComponent />
+//           <PrivateRoutesComponent />
+//         </Routes>
+//       </BrowserRouter>
+//     </AuthContextProvider>
+//   );
+// }
+
+// export default App;
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {

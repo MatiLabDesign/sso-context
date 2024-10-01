@@ -65,9 +65,9 @@ const OtList = () => {
           <tbody className="linea-lista">
             {results.map((ots) => (
               <tr className={style.table_row} key={ots.id}>
-                <Link to={ETAPA}>
-                  <td className={style.list_content}>{ots.numeroOT}</td>
-                </Link>
+                <td className={style.list_content}>
+                  <Link to={ETAPA}>{ots.numeroOT}</Link>
+                </td>
                 <td className={style.list_content}>
                   {ots.equipo.tipoEquipo.tipo}
                 </td>
