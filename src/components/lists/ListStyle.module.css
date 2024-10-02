@@ -1,3 +1,11 @@
+/* body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    
+} */
+
 .list_container {
     color: #666;
     width: 80%;
@@ -33,8 +41,8 @@
 
 .table_row {
     display: flex;
-    /* width: 500px; */
-    /* flex-wrap: wrap; */
+    width: 1500px;
+    flex-wrap: nowrap;
 }
 
 .titulo_lista {
@@ -49,10 +57,12 @@
 }
 
 .lists_tittles {
-    margin: 0 33px 15px 15px;
-    text-align: center;
+    /* margin: 0 33px 15px 15px; */
+    /* text-align: center; */
     display: flex;
-    justify-content:center;
+    text-align: left;
+    width: 150px;
+    padding-left: 15px;
 
 }
 
@@ -73,8 +83,9 @@
 }
 
 .list_content {
-    padding: 7px 25px;
-    /* width: 200px; */
+    padding: 3px 0px;
+    width: 150px;
+    padding-left: 15px;
 }
 
 .form_control_s {

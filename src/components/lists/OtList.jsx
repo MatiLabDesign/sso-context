@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import style from "./ListStyle.module.css";
 import OtService from "../../services/OtService";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import Renderizador from "../renderizador/Renderizador"; // Importamos el renderizador
 import { ETAPA } from "../../config/routes/paths";
 
 const OtList = () => {
   const [ots, setOts] = useState([]);
+  const [search, setSearch] = useState("");
+  const [selectedComponent, setSelectedComponent] = useState(null); // Estado para el componente seleccionado
 
   useEffect(() => {
     OtService.getAllOt()
@@ -15,12 +17,9 @@ const OtList = () => {
         console.log(response.data);
       })
       .catch((error) => {
-        console.log("el error esta en el useEffect");
+        console.log("El error está en el useEffect");
       });
   }, []);
-
-  //Search con ternario
-  const [search, setSearch] = useState("");
 
   const searcher = (e) => {
     setSearch(e.target.value);
@@ -30,10 +29,31 @@ const OtList = () => {
   const results = !search
     ? ots
     : ots.filter((dato) =>
-        // Hay que poner el atributo correcto
-        dato.numeroOT.toLowerCase().includes(search.toLocaleLowerCase())
+        dato.numeroOT.toLowerCase().includes(search.toLowerCase())
       );
-  //----------------------------
+
+  // Función para seleccionar el componente basado en la etapa actual
+  const handleComponentRender = (etapaActual) => {
+    switch (etapaActual) {
+      case "1":
+        setSelectedComponent("Component1");
+        break;
+      case "2":
+        setSelectedComponent("Component2");
+        break;
+      case "3":
+        setSelectedComponent("Component3");
+        break;
+      case "4":
+        setSelectedComponent("Component4");
+        break;
+      case "5":
+        setSelectedComponent("Component5");
+        break;
+      default:
+        setSelectedComponent(null);
+    }
+  };
 
   return (
     <div className={style.list_container}>
@@ -66,19 +86,27 @@ const OtList = () => {
             {results.map((ots) => (
               <tr className={style.table_row} key={ots.id}>
                 <td className={style.list_content}>
-                  <Link to={ETAPA}>{ots.numeroOT}</Link>
+                  <Link 
+                    onClick={() => handleComponentRender(ots.etapaAcual)}
+                  >
+                    {ots.numeroOT}
+                  </Link>
                 </td>
                 <td className={style.list_content}>
                   {ots.equipo.tipoEquipo.tipo}
                 </td>
-                <td className={style.list_content}>{ots.equipo.etapa}</td>
+                <td className={style.list_content}>{ots.etapaAcual}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Renderiza el componente adecuado según el estado */}
+      <Renderizador selectedComponent={selectedComponent} />
     </div>
   );
 };
 
 export default OtList;
+
