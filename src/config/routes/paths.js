@@ -11,8 +11,21 @@ export const CREATETIPOEQUIPO = '/dashboard/tipoequipo/nuevo-tipo-equipo';
 export const OT = '/dashboard/ot';
 export const OTLIST = '/dashboard/listar-ot';
 export const ETAPA = '/dashboard/etapa';
-export const INGRESO = '/dashboard/etapa/ingreso';
-export const RECEPCION = '/dashboard/etapa/recepcion';
-export const INSPECCION = '/dashboard/etapa/inspeccion';
-export const ENSAYO = '/dashboard/etapa/ensayo';
-export const SALIDA = '/dashboard/etapa/salida';
+
+export const INGRESOBM = '/dashboard/etapa/ingresoBM';
+export const RECEPCIONBM = '/dashboard/etapa/recepcionBM';
+export const INSPECCIONBM = '/dashboard/etapa/inspeccionBM';
+export const ENSAYOBM = '/dashboard/etapa/ensayoBM';
+export const SALIDABM = '/dashboard/etapa/salidaBM';
+
+export const INGRESOPCP = '/dashboard/etapa/ingresoPCP';
+export const RECEPCIONPCP = '/dashboard/etapa/recepcionPCP';
+export const INSPECCIONPCP = '/dashboard/etapa/inspeccionPCP';
+export const ENSAYOPCP = '/dashboard/etapa/ensayoPCP';
+export const SALIDAPCP = '/dashboard/etapa/salidaPCP';
+
+export const INGRESOUCL = '/dashboard/etapa/ingresoUCL';
+export const RECEPCIONUCL = '/dashboard/etapa/recepcionUCL';
+export const INSPECCIONUCL = '/dashboard/etapa/inspeccionUCL';
+export const ENSAYOUCL = '/dashboard/etapa/ensayoUCL';
+export const SALIDAUCL = '/dashboard/etapa/salidaUCL';

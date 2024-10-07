@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Etapas.css";
 import { Link, Outlet } from "react-router-dom";
-import { ENSAYO, INGRESO, INSPECCION, RECEPCION, SALIDA } from "../../../config/routes/paths";
+import { ENSAYOPCP, INGRESOPCP, INSPECCIONPCP, RECEPCIONPCP, SALIDAPCP } from "../../../config/routes/paths";
 import Renderizador from "../../renderizador/Renderizador";
 
 const Etapas = () => {
@@ -33,27 +33,27 @@ const Etapas = () => {
     <div className="etapas-container">
       <nav className="nav-container">
 
-    <Link to={INGRESO}>
+    <Link to={INGRESOPCP}>
       <div className="round-button">
         <span className="etapa-name">I</span>
       </div>
     </Link>
-    <Link to={RECEPCION}>
+    <Link to={RECEPCIONPCP}>
       <div className="round-button">
         <span className="etapa-name">R</span>
       </div>
     </Link>
-    <Link to={INSPECCION}>
+    <Link to={INSPECCIONPCP}>
       <div className="round-button">
         <span className="etapa-name">I</span>
       </div>
     </Link>
-    <Link to={ENSAYO}>
+    <Link to={ENSAYOPCP}>
       <div className="round-button">
         <span className="etapa-name">E</span>
       </div>
     </Link>
-    <Link to={SALIDA}>
+    <Link to={SALIDAPCP}>
       <div className="round-button">
         <span className="etapa-name">S</span>
       </div>
@@ -62,9 +62,9 @@ const Etapas = () => {
       </nav>
 
       <div className="etapas-forms">
-      <Renderizador selectedComponent={selectedComponent}/>
+      {/* <Renderizador selectedComponent={selectedComponent}/> */}
       
-        {/* <Outlet /> */}
+        <Outlet />
       </div>
     </div>
   );

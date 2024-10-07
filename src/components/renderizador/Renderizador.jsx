@@ -42,6 +42,7 @@ import PcpEnsayo from './../forms/etapas/PCPForm/PcpEnsayo';
 import PcpSalida from './../forms/etapas/PCPForm/PcpSalida';
 
 const Renderizador = ({ selectedComponent }) => {
+  console.log(selectedComponent);
   switch (selectedComponent) {
     case "Component1":
       return <PcpIngreso/>;

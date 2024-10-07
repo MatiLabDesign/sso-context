@@ -84,7 +84,7 @@ const OtList = () => {
           </thead>
           <tbody className="linea-lista">
             {results.map((ots) => (
-              <tr className={style.table_row} key={ots.id}>
+              <tr key={ots.id}>
                 <td className={style.list_content}>
                   <Link 
                     onClick={() => handleComponentRender(ots.etapaAcual)}

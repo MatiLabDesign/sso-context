@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import style from "./ListStyle.module.css";
 import OtService from "../../services/OtService";
 import { Link, useNavigate } from "react-router-dom";
-import { ENSAYO, INGRESO, INSPECCION, RECEPCION, SALIDA } from "../../config/routes/paths";
+import { ENSAYOPCP, ETAPA, INGRESOPCP, INSPECCIONPCP, RECEPCIONPCP, SALIDAPCP } from "../../config/routes/paths";
+import { ENSAYOBM, INGRESOBM, INSPECCIONBM, RECEPCIONBM, SALIDABM } from "../../config/routes/paths";
+import { ENSAYOUCL, INGRESOUCL, INSPECCIONUCL, RECEPCIONUCL, SALIDAUCL } from "../../config/routes/paths";
+import Etapas from "../forms/etapas/Etapas";
 
 const OtList = () => {
   const [ots, setOts] = useState([]);
@@ -33,65 +36,71 @@ const OtList = () => {
 
   // Función para seleccionar el componente basado en la etapa y tipo de equipo actual
   const handleComponentRender = (ot) => {
-    const { etapaAcual, tipoEquipo } = ot;
-    
+    const numOt = ot.numeroOT;
+    const etapaAcual =ot.etapaAcual;
+    const tipoEquipo = ot.equipo.tipoEquipo.tipo;
+    console.log(ETAPA)
+    console.log("este es etapa --" + etapaAcual);
+    console.log("este es tipo de equipo --" + tipoEquipo);
+    console.log("este es el numero de ot" + numOt);
+    console.log(RECEPCIONPCP)
 
-    if (ot.equipo.tipoEquipo.tipo === "PCP") {
-      switch (ot.etapaAcual) {
-        case "1":
-          navigate(INGRESO); // Redirigir a componente PCP Etapa 1
+    if (tipoEquipo === "PCP") {
+      switch (etapaAcual) {
+        case '1':
+          navigate(INGRESOPCP); // Redirigir a componente PCP Etapa 1
           break;
-        case "2":
-          navigate(RECEPCION); // Redirigir a componente PCP Etapa 2
+        case '2':
+          navigate(RECEPCIONPCP); // Redirigir a componente PCP Etapa 2
           break;
-        case "3":
-          navigate(INSPECCION); // Redirigir a componente PCP Etapa 3
+        case '3':
+          navigate(INSPECCIONPCP); // Redirigir a componente PCP Etapa 3
           break;
-        case "4":
-          navigate(ENSAYO); // Redirigir a componente PCP Etapa 4
+        case '4':
+          navigate(ENSAYOPCP); // Redirigir a componente PCP Etapa 4
           break;
-        case "5":
-          navigate(SALIDA); // Redirigir a componente PCP Etapa 5
-          break;
-        default:
-          break;
-      }
-    } else if (ot.equipo.tipoEquipo.tipo === "UCL") {
-      switch (ot.etapaAcual) {
-        case "1":
-          navigate("/ucl/etapa1"); // Redirigir a componente UCL Etapa 1
-          break;
-        case "2":
-          navigate("/ucl/etapa2"); // Redirigir a componente UCL Etapa 2
-          break;
-        case "3":
-          navigate("/ucl/etapa3"); // Redirigir a componente UCL Etapa 3
-          break;
-        case "4":
-          navigate("/ucl/etapa4"); // Redirigir a componente UCL Etapa 4
-          break;
-        case "5":
-          navigate("/ucl/etapa5"); // Redirigir a componente UCL Etapa 5
+        case '5':
+          navigate(SALIDAPCP); // Redirigir a componente PCP Etapa 5
           break;
         default:
           break;
       }
-    } else if (ot.equipo.tipoEquipo.tipo === "BM") {
-      switch (ot.etapaAcual) {
+    } else if (tipoEquipo === "UCL") {
+      switch (etapaAcual) {
         case "1":
-          navigate("/bm/etapa1"); // Redirigir a componente BM Etapa 1
+          navigate(INGRESOUCL); // Redirigir a componente UCL Etapa 1
           break;
         case "2":
-          navigate("/bm/etapa2"); // Redirigir a componente BM Etapa 2
+          navigate(RECEPCIONUCL); // Redirigir a componente UCL Etapa 2
           break;
         case "3":
-          navigate("/bm/etapa3"); // Redirigir a componente BM Etapa 3
+          navigate(INSPECCIONUCL); // Redirigir a componente UCL Etapa 3
           break;
         case "4":
-          navigate("/bm/etapa4"); // Redirigir a componente BM Etapa 4
+          navigate(ENSAYOUCL); // Redirigir a componente UCL Etapa 4
           break;
         case "5":
-          navigate("/bm/etapa5"); // Redirigir a componente BM Etapa 5
+          navigate(SALIDAUCL); // Redirigir a componente UCL Etapa 5
+          break;
+        default:
+          break;
+      }
+    } else if (tipoEquipo === "BM") {
+      switch (etapaAcual) {
+        case "1":
+          navigate(INGRESOBM); // Redirigir a componente BM Etapa 1
+          break;
+        case "2":
+          navigate(RECEPCIONBM); // Redirigir a componente BM Etapa 2
+          break;
+        case "3":
+          navigate(INSPECCIONBM); // Redirigir a componente BM Etapa 3
+          break;
+        case "4":
+          navigate(ENSAYOBM); // Redirigir a componente BM Etapa 4
+          break;
+        case "5":
+          navigate(SALIDABM); // Redirigir a componente BM Etapa 5
           break;
         default:
           break;
@@ -126,11 +135,11 @@ const OtList = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="linea-lista">
+          <tbody>
             {results.map((ot) => (
               <tr className={style.table_row} key={ot.id}>
                 <td className={style.list_content}>
-                  <Link to={() => handleComponentRender(ot)}>
+                  <Link onClick = {() => handleComponentRender(ot)}>
                     {ot.numeroOT}
                   </Link>
                 </td>

@@ -18,6 +18,7 @@
     color: #666;
     width: 80%;
     padding-top: 50px;
+    
 }
 
 .search_container {
@@ -25,6 +26,7 @@
     /* justify-content: center; */
     min-width: 80%;
     /* margin: 0px auto; */
+    
 }
 
 .form_control {
@@ -37,12 +39,14 @@
     border: none;
     outline: none;
     box-shadow: inset 3px 3px 5px rgb(167, 167, 167);
+    
 }
 
 .table_row {
     display: flex;
-    width: 1500px;
+    /* width: 100%; */
     flex-wrap: nowrap;
+    /* border: 1px solid #085734; */
 }
 
 .titulo_lista {
@@ -53,6 +57,8 @@
     margin-top: 25px;
     display: flex;
     flex-direction: column;
+    /* border: 1px solid #085734; */
+    
     
 }
 
@@ -63,6 +69,7 @@
     text-align: left;
     width: 150px;
     padding-left: 15px;
+    
 
 }
 
@@ -96,3 +103,4 @@
     border: none;
     border-radius: 5px;
 }
+

@@ -4,7 +4,7 @@
   padding: 2rem;
   text-align: center;
 } */
-.container{
+.container {
   display: flex;
 }
 
@@ -40,10 +40,33 @@ select {
   border-radius: 5px;
   border: none;
   padding-left: 15px;
+  /* appearance: none; */
+  
 
   &:hover {
-      background-color: #bbbbbb;
-      /* box-shadow: 2px 1px 7px #666; */
+    background-color: #bbbbbb;
+    /* box-shadow: 2px 1px 7px #666; */
 
   }
+
+  &:focus {
+    background-color: #c7c7c7;
+    color: #666;
+    
+
+  }
+  option:hover {
+    background-color: #f0f0f0; /* Cambia el fondo cuando se pasa el ratón */
+  }
+  /* &:hover {
+    background-color: rgb(144, 11, 11);
+    color: #9b5b5b;
+
+  } */
+  /* &:checked {
+    background-color: rgb(144, 11, 11);
+    color: #9b5b5b;
+    
+
+  } */
 }

@@ -25,18 +25,18 @@ import {
   CREATECLIENTE,
   CREATEEQUIPO,
   CREATETIPOEQUIPO,
-  ENSAYO,
+  ENSAYOPCP,
   EQUIPO,
   ETAPA,
-  INGRESO,
-  INSPECCION,
+  INGRESOPCP,
+  INSPECCIONPCP,
   LOGIN,
   LOGOUT,
   OT,
   OTLIST,
   PRIVATE,
-  RECEPCION,
-  SALIDA,
+  RECEPCIONPCP,
+  SALIDAPCP,
   TIPOEQUIPO,
 } from "./config/routes/paths";
 import Home from "./views/Home";
@@ -81,11 +81,11 @@ function App() {
               <Route path={OT} element={<OtForm />} />
               <Route path={OTLIST} element={<Ot />} />
               <Route path={ETAPA} element={<Etapas />}>
-                <Route path={INGRESO} element={<PcpIngreso />} />
-                <Route path={RECEPCION} element={<PcpRecepcion />} />
-                <Route path={INSPECCION} element={<PcpInspeccion />} />
-                <Route path={ENSAYO} element={<PcpEnsayo />} />
-                <Route path={SALIDA} element={<PcpSalida />} />
+                <Route path={INGRESOPCP} element={<PcpIngreso />} />
+                <Route path={RECEPCIONPCP} element={<PcpRecepcion />} />
+                <Route path={INSPECCIONPCP} element={<PcpInspeccion />} />
+                <Route path={ENSAYOPCP} element={<PcpEnsayo />} />
+                <Route path={SALIDAPCP} element={<PcpSalida />} />
               </Route>
             </Route>
             <Route path={LOGOUT} element={<Logout />} />
