@@ -6,6 +6,11 @@ class OtService {
     return axios.get(OT_URL);
   }
 
+  //REVISAR PARA TRAER ORDEN EN NAVEGACIÓN DE ETAPAS
+  getOtById(id) {
+    return axios.get(OT_URL + id);
+  }
+
   createOt(orden) {
     return axios.post(OT_URL, orden);
   }

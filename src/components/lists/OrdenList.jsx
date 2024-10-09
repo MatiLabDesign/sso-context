@@ -44,11 +44,14 @@ const OtList = () => {
     console.log("este es tipo de equipo --" + tipoEquipo);
     console.log("este es el numero de ot" + numOt);
     console.log(RECEPCIONPCP)
+        
 
     if (tipoEquipo === "PCP") {
+      console.log("PCP encontrado, etapa actual: " + etapaAcual);
       switch (etapaAcual) {
         case '1':
-          navigate(INGRESOPCP); // Redirigir a componente PCP Etapa 1
+          console.log("Navegando a INGRESOPCP");
+          navigate('/etapa/ingreso-pcp'); // Redirigir a componente PCP Etapa 1
           break;
         case '2':
           navigate(RECEPCIONPCP); // Redirigir a componente PCP Etapa 2
@@ -57,7 +60,9 @@ const OtList = () => {
           navigate(INSPECCIONPCP); // Redirigir a componente PCP Etapa 3
           break;
         case '4':
-          navigate(ENSAYOPCP); // Redirigir a componente PCP Etapa 4
+          console.log("Navegando a ENSAYOCP");
+          console.log(etapaAcual);
+          navigate('/dashboard/etapa/ensayoPCP'); // Redirigir a componente PCP Etapa 4
           break;
         case '5':
           navigate(SALIDAPCP); // Redirigir a componente PCP Etapa 5
@@ -105,6 +110,8 @@ const OtList = () => {
         default:
           break;
       }
+    } else {
+      console.log('no anduvo');
     }
   };
 

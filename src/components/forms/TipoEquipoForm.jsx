@@ -29,8 +29,8 @@ const TipoEquipoForm = () => {
           <select {...register("tipo")}>
             <option value="--">--</option>
             <option value="PCP">PCP</option>
-            <option value="Unidad Carrera Larga">Unidad Carrera Larga</option>
-            <option value="Bomba Mecánica">Bomba Mecánica</option>
+            <option value="UCL">Unidad Carrera Larga</option>
+            <option value="BM">Bomba Mecánica</option>
           </select>
         </div>
         <div className={style.input_tipo}>

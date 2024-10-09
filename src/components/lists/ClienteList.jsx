@@ -56,6 +56,9 @@ const ClienteList = () => {
                 Razón Social
               </th>
               <th className={style.lists_tittles} scope="col">
+                Nombre Fantasia
+              </th>
+              <th className={style.lists_tittles} scope="col">
                 Cuit
               </th>
               <th className={style.lists_tittles} scope="col">
@@ -76,6 +79,7 @@ const ClienteList = () => {
             {results.map((cliente) => (
               <tr key={cliente.id}>
                 <td className={style.list_content}>{cliente.razonSocial}</td>
+                <td className={style.list_content}>{cliente.nombreFantasia}</td>
                 <td className={style.list_content}>{cliente.cuit}</td>
                 <td className={style.list_content}>{cliente.area}</td>
                 <td className={style.list_content}>{cliente.nombreContacto}</td>

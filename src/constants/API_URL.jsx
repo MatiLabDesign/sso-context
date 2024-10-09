@@ -3,3 +3,7 @@ export const CLIENTE_URL = "http://localhost:8080/api/cliente";
 export const TIPO_EQUIPO_URL = "http://localhost:8080/api/tipoequipo";
 export const EQUIPO_URL = "http://localhost:8080/api/equipo";
 export const OT_URL = "http://localhost:8080/api/orden";
+export const RECEPCION_URL = "http://localhost:8080/api/recepcion";
+export const INSPECCION_URL = "http://localhost:8080/api/inspeccion";
+export const ENSAYO_URL = "http://localhost:8080/api/ensayo";
+export const SALIDA_URL = "http://localhost:8080/api/salida";

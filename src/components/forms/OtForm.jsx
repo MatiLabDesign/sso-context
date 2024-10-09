@@ -27,10 +27,11 @@ const OtForm = () => {
           id: data.equipo_id,
         },
         remitoTransporte: data.remitoTransporte,
-        comentario: data.comentario
+        comentario: data.comentario,
+        etapaAcual: 1
       };
     OtService.createOt(orden);
-    navigate("/dashboard/ot");
+    navigate("/dashboard/listar-ot");
     console.log(orden);
   };
 

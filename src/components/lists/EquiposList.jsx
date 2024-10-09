@@ -4,6 +4,8 @@ import EquipoService from "../../services/EquipoService";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+
+
 const EquiposList = () => {
   const [equipos, setEquipos] = useState([]);
 
