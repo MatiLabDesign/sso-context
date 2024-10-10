@@ -38,7 +38,7 @@ const OtList = () => {
 
   const handleComponentRender = (ots) => {
     const tipoEquipo = ots.equipo.tipoEquipo.tipo;
-    const etapaActual = ots.etapaAcual;
+    const etapaActual = ots.etapaActual;
     const numeroOT = ots.numeroOT;
     console.log(tipoEquipo);
     console.log(etapaActual);
@@ -148,7 +148,7 @@ const OtList = () => {
                   <td className={style.list_content}>
                     {ots.equipo.tipoEquipo.tipo}
                   </td>
-                  <td className={style.list_content}>{ots.etapaAcual}</td>
+                  <td className={style.list_content}>{ots.etapaActual}</td>
                 </tr>
               ))}
             </tbody>

@@ -37,18 +37,18 @@ const OrdenList = () => {
   // Función para seleccionar el componente basado en la etapa y tipo de equipo actual
   const handleComponentRender = (ot) => {
     const numOt = ot.numeroOT;
-    const etapaAcual =ot.etapaAcual;
+    const etapaActual =ot.etapaActual;
     const tipoEquipo = ot.equipo.tipoEquipo.tipo;
     console.log(ETAPA)
-    console.log("este es etapa --" + etapaAcual);
+    console.log("este es etapa --" + etapaActual);
     console.log("este es tipo de equipo --" + tipoEquipo);
     console.log("este es el numero de ot" + numOt);
     console.log(RECEPCIONPCP)
         
 
     if (tipoEquipo === "PCP") {
-      console.log("PCP encontrado, etapa actual: " + etapaAcual);
-      switch (etapaAcual) {
+      console.log("PCP encontrado, etapa actual: " + etapaActual);
+      switch (etapaActual) {
         case '1':
           console.log("Navegando a INGRESOPCP");
           navigate('/dashboard/etapa/ingresoPCP'); // Redirigir a componente PCP Etapa 1
@@ -61,7 +61,7 @@ const OrdenList = () => {
           break;
         case '4':
           console.log("Navegando a ENSAYOCP");
-          console.log(etapaAcual);
+          console.log(etapaActual);
           navigate("/dashboard/etapa/ensayoPCP"); // Redirigir a componente PCP Etapa 4
           break;
         case '5':
@@ -71,7 +71,7 @@ const OrdenList = () => {
           break;
       }
     } else if (tipoEquipo === "UCL") {
-      switch (etapaAcual) {
+      switch (etapaActual) {
         case "1":
           navigate(INGRESOUCL); // Redirigir a componente UCL Etapa 1
           break;
@@ -91,7 +91,7 @@ const OrdenList = () => {
           break;
       }
     } else if (tipoEquipo === "BM") {
-      switch (etapaAcual) {
+      switch (etapaActual) {
         case "1":
           navigate(INGRESOBM); // Redirigir a componente BM Etapa 1
           break;
@@ -153,7 +153,7 @@ const OrdenList = () => {
                 <td className={style.list_content}>
                   {ot.equipo.tipoEquipo.tipo}
                 </td>
-                <td className={style.list_content}>{ot.etapaAcual}</td>
+                <td className={style.list_content}>{ot.etapaActual}</td>
                 <td><Link onClick={() => handleComponentRender(ot)}>ver</Link></td>
               </tr>
             ))}
