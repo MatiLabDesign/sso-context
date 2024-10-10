@@ -3,7 +3,7 @@ import "./Etapas.css";
 import { Link, Outlet } from "react-router-dom";
 import { ENSAYOPCP, INGRESOPCP, INSPECCIONPCP, RECEPCIONPCP, SALIDAPCP } from "../../../config/routes/paths";
 
-import { selectedContext } from "../../lists/OtList";
+// import { selectedContext } from "../../lists/OtList";
 
 
 const Etapas = () => {

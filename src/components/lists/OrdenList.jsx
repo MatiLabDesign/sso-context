@@ -7,7 +7,7 @@ import { ENSAYOBM, INGRESOBM, INSPECCIONBM, RECEPCIONBM, SALIDABM } from "../../
 import { ENSAYOUCL, INGRESOUCL, INSPECCIONUCL, RECEPCIONUCL, SALIDAUCL } from "../../config/routes/paths";
 import Etapas from "../forms/etapas/Etapas";
 
-const OtList = () => {
+const OrdenList = () => {
   const [ots, setOts] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate(); // Hook para navegar
@@ -51,7 +51,7 @@ const OtList = () => {
       switch (etapaAcual) {
         case '1':
           console.log("Navegando a INGRESOPCP");
-          navigate('/etapa/ingreso-pcp'); // Redirigir a componente PCP Etapa 1
+          navigate('/dashboard/etapa/ingresoPCP'); // Redirigir a componente PCP Etapa 1
           break;
         case '2':
           navigate(RECEPCIONPCP); // Redirigir a componente PCP Etapa 2
@@ -62,7 +62,7 @@ const OtList = () => {
         case '4':
           console.log("Navegando a ENSAYOCP");
           console.log(etapaAcual);
-          navigate('/dashboard/etapa/ensayoPCP'); // Redirigir a componente PCP Etapa 4
+          navigate("/dashboard/etapa/ensayoPCP"); // Redirigir a componente PCP Etapa 4
           break;
         case '5':
           navigate(SALIDAPCP); // Redirigir a componente PCP Etapa 5
@@ -146,14 +146,15 @@ const OtList = () => {
             {results.map((ot) => (
               <tr className={style.table_row} key={ot.id}>
                 <td className={style.list_content}>
-                  <Link onClick = {() => handleComponentRender(ot)}>
+                  
                     {ot.numeroOT}
-                  </Link>
+                  
                 </td>
                 <td className={style.list_content}>
                   {ot.equipo.tipoEquipo.tipo}
                 </td>
                 <td className={style.list_content}>{ot.etapaAcual}</td>
+                <td><Link onClick={() => handleComponentRender(ot)}>ver</Link></td>
               </tr>
             ))}
           </tbody>
@@ -163,4 +164,4 @@ const OtList = () => {
   );
 };
 
-export default OtList;
+export default OrdenList;
