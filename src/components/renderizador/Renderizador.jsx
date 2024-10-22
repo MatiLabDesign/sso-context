@@ -85,7 +85,7 @@ const Renderizador = ({ selectedComponent }) => {
     case "Component15":
       return <BombaSalida />;
     default:
-      return <div><h3>Selecciona una OT</h3></div>;
+      return <></>;
   }
 };
 

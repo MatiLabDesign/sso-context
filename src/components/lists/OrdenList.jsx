@@ -113,6 +113,9 @@ const OrdenList = () => {
     } else {
       console.log('no anduvo');
     }
+    useEffect(() => {
+      navigate  
+    }, []);
   };
 
   return (

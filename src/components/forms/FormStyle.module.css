@@ -66,30 +66,33 @@
 
 /* clienteFormStyle */
 
-.input_cliente {
-    margin-top: 15px;
+.form_cliente {
+    margin-top: 50px;
+    margin-left: 200px;
+    border: solid 3px #888;
 }
 
-.form_cliente {
-    margin-top: 70px;
-    margin-left: 200px;
+.input_cliente {
+    margin-top: 10px;
+    border: solid 3px #ff0000;
 }
 
 .form_control_s {
     margin-top: 15px;
     /* trae un css de otro lado */
 }
-
 
 /* EquipoFormStyle */
 
 .input_equipo {
     margin-top: 15px;
+    border: solid  2px #b7ff00;
 }
 
 .form_equipo {
     margin-top: 170px;
     margin-left: 200px;
+    border: solid 2px #a6ff00;
 }
 
 .form_control_s {
@@ -97,16 +100,17 @@
     /* trae un css de otro lado */
 }
 
-
 /* TipoEquipoFormStyle */
 
 .input_tipo {
     margin-top: 15px;
+    border: solid 2px #00c8ff;
 }
 
 .form_tipo {
-    margin-top: 170px;
+    margin-top: 150px;
     margin-left: 200px;
+    border: solid 2px #ea00ff;
 }
 
 .form_control_s {
@@ -127,7 +131,7 @@
 }
 
 .form_ot {
-    margin-top: 170px;
+    margin-top: 120px;
     margin-left: 200px;
 }
 
@@ -141,5 +145,4 @@
     border-radius: 5px;
     /* trae un css de otro lado */
 }
-
 

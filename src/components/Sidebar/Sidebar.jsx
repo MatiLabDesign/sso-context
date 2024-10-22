@@ -1,4 +1,11 @@
 import style from "./SidebarStyle.module.css";
+import { RiFilePaper2Line } from "react-icons/ri";
+import { FaRegUser } from "react-icons/fa";
+import { LuServer } from "react-icons/lu";
+import { RiUser4Line } from "react-icons/ri";
+import { CgPlayPauseR } from "react-icons/cg";
+import { HiOutlineUsers } from "react-icons/hi2";
+import { LuUsers2 } from "react-icons/lu";
 import {
   CLIENT,
   EQUIPO,
@@ -13,7 +20,7 @@ const Sidebar = () => {
   return (
     <div className={style.menu_container}>
       <div className={style.img_row}>
-        <img className={style.img} src="/trinoilisologo2.png" alt="logo" />
+        <img className={style.img} src="/trinoilisologo.png" alt="logo" />
       </div>
       <div className={style.menu_row}>
         <Link className={style.bbtn} to={OT}>
@@ -22,22 +29,23 @@ const Sidebar = () => {
         <ul className={style.list}>
           <div className={style.list_item_container}>
             <li className={style.list_item}>
-              <Link to={OTLIST}>Consultar OT</Link>
+              
+              <Link to={OTLIST}><div className={style.icon}><CgPlayPauseR /> </div>Consultar OT</Link>
             </li>
           </div>
           <div className={style.list_item_container}>
             <li className={style.list_item}>
-              <Link to={CLIENT}>Clientes</Link>
+              <Link to={CLIENT}><div className={style.icon}><LuUsers2 /></div>Clientes</Link>
             </li>
           </div>
           <div className={style.list_item_container}>
             <li className={style.list_item}>
-              <Link to={EQUIPO}>Equipos</Link>
+              <Link to={EQUIPO}><div className={style.icon}><LuServer  /></div>Equipos</Link>
             </li>
           </div>
           <div className={style.list_item_container}>
             <li className={style.list_item}>
-              <Link to={TIPOEQUIPO}>Tipos de Equipos</Link>
+              <Link className={style.icon} to={TIPOEQUIPO}><div className={style.icon}><RiUser4Line/></div>Tipos de Equipos</Link>
             </li>
           </div>
         </ul>

@@ -53,7 +53,7 @@ const EquiposList = () => {
           <button className={style.form_control_s}>Crear Equipo</button>
         </Link>
         <table className={style.tabla}>
-          <thead>
+          <thead className={style.table_head}>
             <tr className={style.table_row}>
               <th className={style.lists_tittles} scope="col">
               N° de Serie
@@ -61,18 +61,18 @@ const EquiposList = () => {
               <th className={style.lists_tittles} scope="col">
                 Tipo de equipo
               </th>
-              <th className={style.lists_tittles} scope="col">
+              {/* <th className={style.lists_tittles} scope="col">
                 Remito transporte
-              </th>
+              </th> */}
             </tr>
           </thead>
-          <tbody className="linea-lista">
+          <tbody className={style.table_body}>
             {results.map((equipo) => (
-              <tr key={equipo.id}>
+              <tr className={style.table_row} key={equipo.id}>
                 <td className={style.list_content}>{equipo.numSerieEquipo}</td>
                 <td className={style.list_content}>{equipo.tipoEquipo.tipo}</td>
-                <td className={style.list_content}>{equipo.tipoEquipo.marca}</td>
-                <td className={style.list_content}>{equipo.tipoEquipo.modelo}</td>
+                {/* <td className={style.list_content}>{equipo.tipoEquipo.marca}</td>
+                <td className={style.list_content}>{equipo.tipoEquipo.modelo}</td> */}
               </tr>
             ))}
           </tbody>

@@ -50,13 +50,13 @@ const ClienteList = () => {
           <button className={style.form_control_s}>Crear Cliente</button>
         </Link>
         <table className={style.tabla}>
-          <thead>
+          <thead className={style.table_head}>
             <tr className={style.table_row}>
               <th className={style.lists_tittles} scope="col">
                 Razón Social
               </th>
               <th className={style.lists_tittles} scope="col">
-                Nombre Fantasia
+                Fantasia
               </th>
               <th className={style.lists_tittles} scope="col">
                 Cuit
@@ -75,9 +75,9 @@ const ClienteList = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="linea-lista">
+          <tbody className={style.table_body}>
             {results.map((cliente) => (
-              <tr key={cliente.id}>
+              <tr className={style.table_row} key={cliente.id}>
                 <td className={style.list_content}>{cliente.razonSocial}</td>
                 <td className={style.list_content}>{cliente.nombreFantasia}</td>
                 <td className={style.list_content}>{cliente.cuit}</td>

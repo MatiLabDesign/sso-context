@@ -8,8 +8,23 @@
     border-radius: 8px;
     margin-top: 50px;
 }
+.btn-salida{
+    background-color: #ff5100;
+    color: #fff;
+    font-weight: bold;
+    width: 120px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 50px;
+}
 
 .comentario{
     width: 600px;
     height: 150px;
+}
+
+.parrafo{
+    color:#036d4f;
+    font-weight: 450;
 }

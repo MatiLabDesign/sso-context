@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './PcpFormStyle.css';
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import InspeccionService from "../../../../services/InspeccionService";
 
 const PcpInspeccion = () => {
+  const numeroOrden = window.localStorage.getItem('numeroOT');
+  const tipoEquipo = window.localStorage.getItem('tipoEquipo');
+
+  const [inspeccion, setInspeccion] = useState([]);
+
+  useEffect(() => {
+    InspeccionService.getAllInspecciones()
+      .then((response) => {
+        setInspeccion(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log("el error esta en el useEffect");
+      });
+  }, []);
 
   const {
     register,
@@ -24,7 +39,12 @@ const PcpInspeccion = () => {
 
   return (
     <div>
-      <h1>PCP INSPECCIÓN</h1>
+      <h1>INSPECCIÓN</h1>
+      <h3>{numeroOrden} | {tipoEquipo}</h3>
+      {inspeccion.map((comentario) => (
+               
+      <p className="parrafo" key={comentario.id}>- {comentario.comentario}</p>
+            ))}
       <form onSubmit={handleSubmit(onSubmit)} className='form'>
         <div className='{style.input_cliente}'>
           <label>Comentario</label>

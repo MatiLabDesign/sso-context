@@ -28,7 +28,7 @@ const OtForm = () => {
         },
         remitoTransporte: data.remitoTransporte,
         comentario: data.comentario,
-        etapaAcual: 1
+        etapaActual: 1
       };
     OtService.createOt(orden);
     navigate("/dashboard/listar-ot");

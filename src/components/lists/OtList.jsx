@@ -1,11 +1,12 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./ListStyle.module.css";
 import OtService from "../../services/OtService";
-import { Link } from "react-router-dom";
+import {Navigate, Link} from "react-router-dom";
 import Renderizador from "../renderizador/Renderizador"; // Importamos el renderizador
 import { ETAPA } from "../../config/routes/paths";
+// import Etapas from "../forms/etapas/Etapas";
 
-export const selectedContext = createContext();
+
 
 const OtList = () => {
   const [ots, setOts] = useState([]);
@@ -36,10 +37,18 @@ const OtList = () => {
   // Función para seleccionar el componente basado en la etapa actual
   const [selectedComponent, setSelectedComponent] = useState(null); // Estado para el componente seleccionado
 
+  // window.localStorage.setItem("selectedComponent", selectedComponent);
+
+
+
   const handleComponentRender = (ots) => {
     const tipoEquipo = ots.equipo.tipoEquipo.tipo;
     const etapaActual = ots.etapaActual;
     const numeroOT = ots.numeroOT;
+    window.localStorage.setItem("tipoEquipo", tipoEquipo);
+    window.localStorage.setItem("etapaActual", etapaActual);
+    window.localStorage.setItem("numeroOT", numeroOT);
+    window.localStorage.setItem("selectedComponent", selectedComponent);
     console.log(tipoEquipo);
     console.log(etapaActual);
     console.log(numeroOT);
@@ -48,6 +57,7 @@ const OtList = () => {
       switch (etapaActual) {
         case "1":
           setSelectedComponent("Component1");
+          
           break;
         case "2":
           setSelectedComponent("Component2");
@@ -68,6 +78,7 @@ const OtList = () => {
       switch (etapaActual) {
         case "1":
           setSelectedComponent("Component6");
+          // navigate('/dashboard/etapa');
           break;
         case "2":
           setSelectedComponent("Component7");
@@ -107,41 +118,44 @@ const OtList = () => {
     } else {
       console.log("no anduvo");
     }
+    
+    
   };
 
   return (
-    <div className={style.list_container}>
-      <div className={style.search_container}>
-        <input
-          value={search}
-          onChange={searcher}
-          type="text"
-          placeholder="Filtrar OT por N°"
-          className={style.form_control}
-        />
-      </div>
+    
+      <div className={style.list_container}>
+        <div className={style.search_container}>
+          <input
+            value={search}
+            onChange={searcher}
+            type="text"
+            placeholder="Filtrar OT por N°"
+            className={style.form_control}
+          />
+        </div>
+        {/* <p>{selectedComponent}</p> */}
 
-      <div className={style.table_container}>
-        <table className={style.tabla}>
-          <thead>
-            <tr className={style.table_row}>
-              <th className={style.lists_tittles} scope="col">
-                N° OT
-              </th>
-              <th className={style.lists_tittles} scope="col">
-                Tipo de Equipo
-              </th>
-              <th className={style.lists_tittles} scope="col">
-                Etapa
-              </th>
-            </tr>
-          </thead>
-          <selectedContext.Provider value={selectedComponent}>
-            <tbody className="linea-lista">
+        <div className={style.table_container}>
+          <table className={style.tabla}>
+            <thead className={style.table_head}>
+              <tr className={style.table_row}>
+                <th className={style.lists_tittles} scope="col">
+                  N° OT
+                </th>
+                <th className={style.lists_tittles} scope="col">
+                  Tipo de Equipo
+                </th>
+                <th className={style.lists_tittles} scope="col">
+                  Etapa
+                </th>
+              </tr>
+            </thead>
+            <tbody className={style.table_body}>
               {results.map((ots) => (
-                <tr key={ots.id}>
+                <tr className={style.table_row} key={ots.id}>
                   <td className={style.list_content}>
-                    <Link onClick={() => handleComponentRender(ots)}>
+                    <Link className={style.link_list}  onClick={() => handleComponentRender(ots)} >
                       {ots.numeroOT}
                     </Link>
                   </td>
@@ -152,13 +166,14 @@ const OtList = () => {
                 </tr>
               ))}
             </tbody>
-          </selectedContext.Provider>
-        </table>
-      </div>
+          </table>
+        </div>
+        
 
-      {/* Renderiza el componente adecuado según el estado */}
-      <Renderizador selectedComponent={selectedComponent} />
-    </div>
+        {/* Renderiza el componente adecuado según el estado */}
+        <Renderizador selectedComponent={selectedComponent} />
+      </div>
+    
   );
 };
 
