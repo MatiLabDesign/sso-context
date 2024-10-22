@@ -55,6 +55,9 @@
     margin: 0 auto;
     border: none;
     border-radius: 5px;
+    &:hover{
+        background-color: #c66000;
+    }
 
 }
 

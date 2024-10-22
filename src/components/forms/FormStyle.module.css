@@ -69,12 +69,12 @@
 .form_cliente {
     margin-top: 50px;
     margin-left: 200px;
-    border: solid 3px #888;
+    /* border: solid 3px #888; */
 }
 
 .input_cliente {
     margin-top: 10px;
-    border: solid 3px #ff0000;
+    /* border: solid 3px #ff0000; */
 }
 
 .form_control_s {
@@ -86,13 +86,13 @@
 
 .input_equipo {
     margin-top: 15px;
-    border: solid  2px #b7ff00;
+    /* border: solid  2px #b7ff00; */
 }
 
 .form_equipo {
     margin-top: 170px;
     margin-left: 200px;
-    border: solid 2px #a6ff00;
+    /* border: solid 2px #a6ff00; */
 }
 
 .form_control_s {
@@ -104,13 +104,13 @@
 
 .input_tipo {
     margin-top: 15px;
-    border: solid 2px #00c8ff;
+    /* border: solid 2px #00c8ff; */
 }
 
 .form_tipo {
     margin-top: 150px;
     margin-left: 200px;
-    border: solid 2px #ea00ff;
+    /* border: solid 2px #ea00ff; */
 }
 
 .form_control_s {
@@ -144,5 +144,8 @@
     border: none;
     border-radius: 5px;
     /* trae un css de otro lado */
+    &:hover{
+        background-color: #02786a;
+    }
 }
 

@@ -1,10 +1,24 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import './BombaFormStyle.css';
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import EnsayoService from "../../../../services/EnsayoService";
 
 const BombaEnsayo = () => {
+  const numeroOrden = window.localStorage.getItem('numeroOT');
+  const tipoEquipo = window.localStorage.getItem('tipoEquipo');
+  const [ensayo, setEnsayo] = useState([]);
+
+  useEffect(() => {
+    EnsayoService.getAllEnsayos()
+        .then((response) => {
+        setEnsayo(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log("el error esta en el useEffect");
+      });
+  }, []);
 
   const {
     register,
@@ -23,7 +37,12 @@ const BombaEnsayo = () => {
 
   return (
     <div>
-      <h1>BOMBA ENSAYO</h1>
+      <h1>ENSAYO</h1>
+      <h3>{numeroOrden} | {tipoEquipo}</h3>
+      {ensayo.map((comentario) => (
+               
+               <p className="parrafo" key={comentario.id}>- {comentario.comentario}</p>
+                     ))}
       <form onSubmit={handleSubmit(onSubmit)} className='form'>
         <div className='{style.input_cliente}'>
           <label>Comentario</label>

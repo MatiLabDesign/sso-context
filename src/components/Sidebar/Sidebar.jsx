@@ -1,10 +1,7 @@
 import style from "./SidebarStyle.module.css";
-import { RiFilePaper2Line } from "react-icons/ri";
-import { FaRegUser } from "react-icons/fa";
 import { LuServer } from "react-icons/lu";
 import { RiUser4Line } from "react-icons/ri";
 import { CgPlayPauseR } from "react-icons/cg";
-import { HiOutlineUsers } from "react-icons/hi2";
 import { LuUsers2 } from "react-icons/lu";
 import {
   CLIENT,

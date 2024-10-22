@@ -7,6 +7,9 @@
     border: none;
     border-radius: 8px;
     margin-top: 50px;
+    &:hover{
+        background-color: #02786a;
+    }
 }
 
 .comentario{
