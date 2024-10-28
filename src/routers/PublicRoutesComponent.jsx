@@ -7,12 +7,12 @@ import Login from "../views/Login";
 
 const PublicRoutesComponent = () => {
   return (
-    <Routes>
+    <>
       <Route path="/" element={<PublicRoutes />}>
         <Route index element={<Home />} />
         <Route path={LOGIN} element={<Login />} />
       </Route>
-    </Routes>
+    </>
   );
 };
 

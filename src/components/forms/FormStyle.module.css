@@ -67,9 +67,14 @@
 /* clienteFormStyle */
 
 .form_cliente {
-    margin-top: 50px;
+    margin-top: 150px;
     margin-left: 200px;
+    display: flex;
+    justify-content:space-between;
     /* border: solid 3px #888; */
+}
+.form_box{
+    margin: 25px;
 }
 
 .input_cliente {

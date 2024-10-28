@@ -4,18 +4,18 @@ import PcpIngreso from "../components/forms/etapas/PCPForm/PcpIngreso";
 import PcpInspeccion from "../components/forms/etapas/PCPForm/PcpInspeccion";
 import PcpRecepcion from "../components/forms/etapas/PCPForm/PcpRecepcion";
 import PcpSalida from "../components/forms/etapas/PCPForm/PcpSalida";
-import { ENSAYO, ETAPA, INGRESO, INSPECCION, RECEPCION, SALIDA } from "../config/routes/paths";
+import { ENSAYOPCP, ETAPA, INGRESOPCP, INSPECCIONPCP, RECEPCIONPCP, SALIDAPCP } from "../config/routes/paths";
 import { Route } from "react-router-dom";
 
 const EtapasRoutes = () => {
   return (
     <>
       <Route path={ETAPA} element={<Etapas />}>
-        <Route path={INGRESO} element={<PcpIngreso />} />
-        <Route path={RECEPCION} element={<PcpRecepcion />} />
-        <Route path={INSPECCION} element={<PcpInspeccion />} />
-        <Route path={ENSAYO} element={<PcpEnsayo />} />
-        <Route path={SALIDA} element={<PcpSalida />} />
+        <Route path={INGRESOPCP} element={<PcpIngreso />} />
+        <Route path={RECEPCIONPCP} element={<PcpRecepcion />} />
+        <Route path={INSPECCIONPCP} element={<PcpInspeccion />} />
+        <Route path={ENSAYOPCP} element={<PcpEnsayo />} />
+        <Route path={SALIDAPCP} element={<PcpSalida />} />
       </Route>
     </>
   );

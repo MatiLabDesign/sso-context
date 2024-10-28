@@ -37,21 +37,21 @@ const TipoEquipoForm = () => {
           <label>Marca</label>
           <select {...register("marca")}>
             <option value="--">--</option>
-            <option value="Yokohama">Yokohama</option>
-            <option value="Hiflow">Hiflow</option>
-            <option value="MiBombita">MiBombita</option>
+            <option value="Marca1">Marca1</option>
+            <option value="Marca2">Marca2</option>
+            <option value="Marca3">Marca3</option>
           </select>
         </div>
         <div className={style.input_tipo}>
           <label>Modelo</label>
           <select {...register("modelo")}>
             <option value="--">--</option>
-            <option value="H60">H60</option>
-            <option value="Hf120">Hf120</option>
-            <option value="Orbital">Orbital</option>
-            <option value="JK60">JK60</option>
-            <option value="JKf120">JKf120</option>
-            <option value="Torrinte">Torrinte</option>
+            <option value="Modelo1">Modelo1</option>
+            <option value="Modelo2">Modelo2</option>
+            <option value="Modelo3">Modelo3</option>
+            <option value="Modelo4">Modelo4</option>
+            <option value="Modelo5">Modelo5</option>
+            <option value="Modelo6">Modelo6</option>
           </select>
         </div>
 

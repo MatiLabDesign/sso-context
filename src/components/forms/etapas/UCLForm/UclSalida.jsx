@@ -38,8 +38,8 @@ const UclSalida = () => {
             <p>El campo es requerido</p>
           )}
         </div>
-        <button className='btn' type="submit">
-          Check
+        <button className='btn-salida' type="submit">
+        Terminar
         </button>
       </form>
     </div>

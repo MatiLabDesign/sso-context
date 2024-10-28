@@ -8,14 +8,17 @@ const ClienteList = () => {
   const [clientes, setClientes] = useState([]);
 
   useEffect(() => {
-    ClienteService.getAllClientes()
-      .then((response) => {
+    const fetchClientes = async () => {
+      try {
+        const response = await ClienteService.getAllClientes();
         setClientes(response.data);
         console.log(response.data);
-      })
-      .catch((error) => {
-        console.log("el error esta en el useEffect");
-      });
+      } catch (error) {
+        console.log("el error está en el useEffect, en este nuevo");
+      }
+    };
+
+    fetchClientes();
   }, []);
 
   //Search con ternario
@@ -52,39 +55,51 @@ const ClienteList = () => {
         <table className={style.tabla}>
           <thead className={style.table_head}>
             <tr className={style.table_row}>
-              <th className={style.lists_tittles} scope="col">
-                Razón Social
-              </th>
-              <th className={style.lists_tittles} scope="col">
-                Fantasia
-              </th>
-              <th className={style.lists_tittles} scope="col">
-                Cuit
-              </th>
-              <th className={style.lists_tittles} scope="col">
-                Area
-              </th>
-              <th className={style.lists_tittles} scope="col">
-                Nombre
-              </th>
-              <th className={style.lists_tittles} scope="col">
-                Telefono
-              </th>
-              <th className={style.lists_tittles} scope="col">
-                Email
-              </th>
+              <div className={style.row_box}>
+                <th className={style.lists_tittles} scope="col">
+                  Razón Social
+                </th>
+                <th className={style.lists_tittles} scope="col">
+                  Fantasia
+                </th>
+                <th className={style.lists_tittles} scope="col">
+                  Cuit
+                </th>
+              </div>
+              <div className={style.row_box}>
+                <th className={style.lists_tittles} scope="col">
+                  Area
+                </th>
+                <th className={style.lists_tittles} scope="col">
+                  Nombre
+                </th>
+                <th className={style.lists_tittles} scope="col">
+                  Telefono
+                </th>
+                <th className={style.lists_tittles} scope="col">
+                  Email
+                </th>
+              </div>
             </tr>
           </thead>
           <tbody className={style.table_body}>
             {results.map((cliente) => (
               <tr className={style.table_row} key={cliente.id}>
-                <td className={style.list_content}>{cliente.razonSocial}</td>
-                <td className={style.list_content}>{cliente.nombreFantasia}</td>
-                <td className={style.list_content}>{cliente.cuit}</td>
-                <td className={style.list_content}>{cliente.area}</td>
-                <td className={style.list_content}>{cliente.nombreContacto}</td>
-                <td className={style.list_content}>{cliente.telefono}</td>
-                <td className={style.list_content}>{cliente.mail}</td>
+                <div className={style.row_box}>
+                  <td className={style.list_content}>{cliente.razonSocial}</td>
+                  <td className={style.list_content}>
+                    {cliente.nombreFantasia}
+                  </td>
+                  <td className={style.list_content}>{cliente.cuit}</td>
+                </div>
+                <div className={style.row_box}>
+                  <td className={style.list_content}>{cliente.area}</td>
+                  <td className={style.list_content}>
+                    {cliente.nombreContacto}
+                  </td>
+                  <td className={style.list_content}>{cliente.telefono}</td>
+                  <td className={style.list_content}>{cliente.mail}</td>
+                </div>
               </tr>
             ))}
           </tbody>

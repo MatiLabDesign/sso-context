@@ -38,6 +38,11 @@ const BombaSalida = () => {
   return (
     <div>
       <h1>SALIDA</h1>
+      <h3>{numeroOrden} | {tipoEquipo}</h3>
+      {salida.map((comentario) => (
+               
+               <p className="parrafo" key={comentario.id}>- {comentario.comentario}</p>
+                     ))}
       <form onSubmit={handleSubmit(onSubmit)} className='form'>
         <div className='{style.input_cliente}'>
           <label>Comentario</label>
@@ -51,8 +56,8 @@ const BombaSalida = () => {
             <p>El campo es requerido</p>
           )}
         </div>
-        <button className='btn' type="submit">
-          Check
+        <button className='btn-salida' type="submit">
+          Terminar
         </button>
       </form>
     </div>

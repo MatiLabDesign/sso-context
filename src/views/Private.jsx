@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/sidebar/Sidebar";
-// import './Private.css';
+import './viewStyle.css';
+
 
 const Private = () => {
   return (

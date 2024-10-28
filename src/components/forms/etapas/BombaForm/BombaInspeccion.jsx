@@ -41,10 +41,9 @@ const BombaInspeccion = () => {
     <div>
       <h1>INSPECCIÓN</h1>
       <h3>{numeroOrden} | {tipoEquipo}</h3>
-      {recepcion.map((comentario) => (
-               
-               <p className="parrafo" key={comentario.id}>- {comentario.comentario}</p>
-                     ))}
+      {inspeccion.map((comentario) => (
+      <p className="parrafo" key={comentario.id}>- {comentario.comentario}</p>
+      ))}
       <form onSubmit={handleSubmit(onSubmit)} className='form'>
         <div className='{style.input_cliente}'>
           <label>Comentario</label>

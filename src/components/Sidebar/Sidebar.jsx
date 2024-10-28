@@ -3,6 +3,8 @@ import { LuServer } from "react-icons/lu";
 import { RiUser4Line } from "react-icons/ri";
 import { CgPlayPauseR } from "react-icons/cg";
 import { LuUsers2 } from "react-icons/lu";
+import { IoMdExit } from "react-icons/io";
+import { RxExit } from "react-icons/rx";
 import {
   CLIENT,
   EQUIPO,
@@ -48,7 +50,7 @@ const Sidebar = () => {
         </ul>
       </div>
       <div className={style.logout_row}>
-        <Link to={LOGOUT}>Cerrar Sesión</Link>
+        <Link to={LOGOUT}>Cerrar Sesión<div className={style.icon_exit}><RxExit /></div></Link>
       </div>
     </div>
   );
