@@ -6,8 +6,20 @@ class EquipoService {
     return axios.get(EQUIPO_URL);
   }
 
+  getEquipoById(id) {
+    return axios.get(`${EQUIPO_URL}/${id}`);
+  }
+
   createEquipo(equipo) {
     return axios.post(EQUIPO_URL, equipo);
+  }
+
+  updateEquipo (id, equipo) {
+    return axios.put(`${EQUIPO_URL}/${id}`, equipo);
+  }
+
+  softDeleteEquipo(id) {
+    return axios.patch(`${EQUIPO_URL}/${id}`, { eliminado: true });
   }
 }
 

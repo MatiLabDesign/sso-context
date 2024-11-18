@@ -4,21 +4,22 @@ import ClienteService from "../../services/ClienteService";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-const ClienteList = () => {
+const ClienteList2 = () => {
   const [clientes, setClientes] = useState([]);
 
+  const fetchClientes = async () => {
+    try {
+      const response = await ClienteService.getAllClientes();
+      setClientes(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log("el error está en el useEffect, en este nuevo");
+    }
+  };
+  
   useEffect(() => {
-    const fetchClientes = async () => {
-      try {
-        const response = await ClienteService.getAllClientes();
-        setClientes(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.log("el error está en el useEffect, en este nuevo");
-      }
-    };
     fetchClientes();
-  }, []);
+  }, []); // Si coloco la dependencia con clientes hace infinitas llamadas
 
   //Search con ternario
   const [search, setSearch] = useState("");
@@ -108,4 +109,4 @@ const ClienteList = () => {
   );
 };
 
-export default ClienteList;
+export default ClienteList2;

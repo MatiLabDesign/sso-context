@@ -9,6 +9,20 @@ class SalidaService {
   createSalida(salida) {
     return axios.post(SALIDA_URL, salida);
   }
+
+  getSalidaById(id) {
+    return axios.get(`${SALIDA_URL}/${id}`);
+  }
+
+  updateSalida(id, salida) {
+    return axios.put(`${SALIDA_URL}/${id}`, salida);
+  }
+
+  softDeleteSalida(id) {
+    return axios.patch(`${SALIDA_URL}/${id}`, { eliminado: true });
+  }
+
+  
 }
 
 export default new SalidaService();

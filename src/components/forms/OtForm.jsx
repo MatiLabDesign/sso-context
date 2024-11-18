@@ -90,8 +90,7 @@ const OtForm = () => {
           <select {...register("equipo_id")}>
             {equipos.map((equipo) => (
               <option key={equipo.id} value={equipo.id}>
-                {equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.marca} - {equipo.tipoEquipo.modelo}
-              </option>
+                {equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.modelo} - {equipo.tipoEquipo.marca}</option>
             ))}
           </select>
         </div>

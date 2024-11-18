@@ -5,14 +5,21 @@ class OtService {
   getAllOt() {
     return axios.get(OT_URL);
   }
-
-  //REVISAR PARA TRAER ORDEN EN NAVEGACIÓN DE ETAPAS
+  
   getOtById(id) {
-    return axios.get(OT_URL + id);
+    return axios.get(`${OT_URL}/${id}`);
   }
 
   createOt(orden) {
     return axios.post(OT_URL, orden);
+  }
+
+  updateOt (id, orden) {
+    return axios.put(`${OT_URL}/${id}`, orden);
+  }
+
+  softDeleteOt(id) {
+    return axios.patch(`${OT_URL}/${id}`, { eliminado: true });
   }
 }
 

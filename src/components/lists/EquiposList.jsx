@@ -8,17 +8,20 @@ import { useState, useEffect } from "react";
 
 const EquiposList = () => {
   const [equipos, setEquipos] = useState([]);
-
+  
   useEffect(() => {
-    EquipoService.getAllEquipos()
-      .then((response) => {
+    const fetchEquipos = async ()=>{
+      try{
+        const response = await EquipoService.getAllEquipos();
         setEquipos(response.data);
         console.log(response.data);
-      })
-      .catch((error) => {
+      }catch (error){
         console.log("el error esta en el useEffect");
-      });
-  }, []);
+      }
+
+    };
+    fetchEquipos();
+}, []);
 
   // Search con ternario
   const [search, setSearch] = useState("");
@@ -55,11 +58,11 @@ const EquiposList = () => {
         <table className={style.tabla}>
           <thead className={style.table_head}>
             <tr className={style.table_row}>
-              <th className={style.lists_tittles} scope="col">
-              N° de Serie
+              <th className={style.lists_tittles_tittle} scope="col">
+                Tipo de equipo
               </th>
               <th className={style.lists_tittles} scope="col">
-                Tipo de equipo
+              N° de Serie
               </th>
               {/* <th className={style.lists_tittles} scope="col">
                 Remito transporte
@@ -69,8 +72,8 @@ const EquiposList = () => {
           <tbody className={style.table_body}>
             {results.map((equipo) => (
               <tr className={style.table_row} key={equipo.id}>
+                <td className={style.list_content_content}>{equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.modelo} - {equipo.tipoEquipo.marca}</td>
                 <td className={style.list_content}>{equipo.numSerieEquipo}</td>
-                <td className={style.list_content}>{equipo.tipoEquipo.tipo}</td>
                 {/* <td className={style.list_content}>{equipo.tipoEquipo.marca}</td>
                 <td className={style.list_content}>{equipo.tipoEquipo.modelo}</td> */}
               </tr>

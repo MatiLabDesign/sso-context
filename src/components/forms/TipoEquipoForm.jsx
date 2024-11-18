@@ -34,6 +34,28 @@ const TipoEquipoForm = () => {
           </select>
         </div>
         <div className={style.input_tipo}>
+          <label>Modelo</label>
+          <select {...register("modelo")}>
+            <option value="--">--</option>
+            <option value="H60">H60</option>
+            <option value="Div1">Div1</option>
+            <option value="MiniG">MiniG</option>
+            <option value="Cougar">Cougar</option>
+            <option value="Modelo5">900/1100</option>
+            <option value="Modelo6">ModBombaMec</option>
+          </select>
+        </div>
+
+        <div className={style.input_tipo}>
+          <label>Marca</label>
+          <input
+            type="text"
+            {...register("marca")}
+          />
+          
+        </div>
+
+        {/* <div className={style.input_tipo}>
           <label>Marca</label>
           <select {...register("marca")}>
             <option value="--">--</option>
@@ -41,20 +63,7 @@ const TipoEquipoForm = () => {
             <option value="Marca2">Marca2</option>
             <option value="Marca3">Marca3</option>
           </select>
-        </div>
-        <div className={style.input_tipo}>
-          <label>Modelo</label>
-          <select {...register("modelo")}>
-            <option value="--">--</option>
-            <option value="Modelo1">Modelo1</option>
-            <option value="Modelo2">Modelo2</option>
-            <option value="Modelo3">Modelo3</option>
-            <option value="Modelo4">Modelo4</option>
-            <option value="Modelo5">Modelo5</option>
-            <option value="Modelo6">Modelo6</option>
-          </select>
-        </div>
-
+        </div> */}
         <button className={style.form_control_s} type="submit">
           Guardar
         </button>

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import style from "./ListStyle.module.css";
 import OtService from "../../services/OtService";
-import {Navigate, Link} from "react-router-dom";
-import Renderizador from "../renderizador/Renderizador"; // Importamos el renderizador
-import { ETAPA } from "../../config/routes/paths";
+import {Link} from "react-router-dom";
+import Renderizador from "../renderizador/Renderizador";
+// import { ETAPA } from "../../config/routes/paths";
 // import Etapas from "../forms/etapas/Etapas";
-
-
 
 const OtList = () => {
   const [ots, setOts] = useState([]);
@@ -34,30 +32,32 @@ const OtList = () => {
         dato.numeroOT.toLowerCase().includes(search.toLowerCase())
       );
 
-  // Función para seleccionar el componente basado en la etapa actual
-  const [selectedComponent, setSelectedComponent] = useState(null); // Estado para el componente seleccionado
-
-  // window.localStorage.setItem("selectedComponent", selectedComponent);
-
-
+  const [selectedComponent, setSelectedComponent] = useState(null);
+  window.localStorage.setItem("selectedComponent", selectedComponent);
 
   const handleComponentRender = (ots) => {
     const tipoEquipo = ots.equipo.tipoEquipo.tipo;
+    const modeloEquipo = ots.equipo.tipoEquipo.modelo;
+    const marcaEquipo = ots.equipo.tipoEquipo.marca;
     const etapaActual = ots.etapaActual;
     const numeroOT = ots.numeroOT;
     window.localStorage.setItem("tipoEquipo", tipoEquipo);
+    window.localStorage.setItem("modeloEquipo", modeloEquipo);
+    window.localStorage.setItem("marcaEquipo", marcaEquipo);
     window.localStorage.setItem("etapaActual", etapaActual);
     window.localStorage.setItem("numeroOT", numeroOT);
-    window.localStorage.setItem("selectedComponent", selectedComponent);
+    
     console.log(tipoEquipo);
+    console.log(modeloEquipo);
+    console.log(marcaEquipo);
     console.log(etapaActual);
     console.log(numeroOT);
+    console.log(selectedComponent);
 
     if (tipoEquipo === "PCP") {
       switch (etapaActual) {
         case "1":
           setSelectedComponent("Component1");
-          
           break;
         case "2":
           setSelectedComponent("Component2");
@@ -118,9 +118,7 @@ const OtList = () => {
     } else {
       console.log("no anduvo");
     }
-    
-    
-  };
+};
 
   return (
     
@@ -134,8 +132,6 @@ const OtList = () => {
             className={style.form_control}
           />
         </div>
-        {/* <p>{selectedComponent}</p> */}
-
         <div className={style.table_container}>
           <table className={style.tabla}>
             <thead className={style.table_head}>
@@ -143,7 +139,7 @@ const OtList = () => {
                 <th className={style.lists_tittles} scope="col">
                   N° OT
                 </th>
-                <th className={style.lists_tittles} scope="col">
+                <th className={style.lists_tittles_tittle} scope="col">
                   Tipo de Equipo
                 </th>
                 <th className={style.lists_tittles} scope="col">
@@ -159,8 +155,8 @@ const OtList = () => {
                       {ots.numeroOT}
                     </Link>
                   </td>
-                  <td className={style.list_content}>
-                    {ots.equipo.tipoEquipo.tipo}
+                  <td className={style.list_content_content}>
+                    {ots.equipo.tipoEquipo.tipo} - {ots.equipo.tipoEquipo.modelo} - {ots.equipo.tipoEquipo.marca}
                   </td>
                   <td className={style.list_content}>{ots.etapaActual}</td>
                 </tr>
@@ -168,12 +164,9 @@ const OtList = () => {
             </tbody>
           </table>
         </div>
-        
-
         {/* Renderiza el componente adecuado según el estado */}
         <Renderizador selectedComponent={selectedComponent} />
       </div>
-    
   );
 };
 

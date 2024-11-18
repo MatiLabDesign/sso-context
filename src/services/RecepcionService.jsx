@@ -6,8 +6,20 @@ class RecepcionService {
     return axios.get(RECEPCION_URL);
   }
 
+  getRecepcionById(id) {
+    return axios.get(`${RECEPCION_URL}/${id}`);
+  }
+
   createRecepcion(recepcion) {
     return axios.post(RECEPCION_URL, recepcion);
+  }
+
+  updateRecepcion(id, recepcion) {
+    return axios.put(`${RECEPCION_URL}/${id}`, recepcion);
+  }
+
+  softDeleteRecepcion(id) {
+    return axios.patch(`${RECEPCION_URL}/${id}`, { eliminado: true });
   }
 }
 

@@ -5,18 +5,22 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const TipoEquipoList = () => {
+
   const [tipoEquipos, setTipoEquipos] = useState([]);
 
   useEffect(() => {
-    TipoEquipoService.getAllTipos()
-      .then((response) => {
+    const fetchTipoEquipos = async ()=>{
+      try{
+        const response = await TipoEquipoService.getAllTipos()
         setTipoEquipos(response.data);
         console.log(response.data);
-      })
-      .catch((error) => {
-        console.log("el error esta en el useEffect");
-      });
-  }, []);
+      } catch(error){
+        console.log('error useEffect');
+      }
+    
+    };
+    fetchTipoEquipos();
+  },[]);
 
   // Search con ternario
   const [search, setSearch] = useState("");
@@ -56,10 +60,10 @@ const TipoEquipoList = () => {
                 Tipo
               </th>
               <th className={style.lists_tittles} scope="col">
-                Marca
+                Modelo
               </th>
               <th className={style.lists_tittles} scope="col">
-                Modelo
+                Marca
               </th>
             </tr>
           </thead>
@@ -67,8 +71,8 @@ const TipoEquipoList = () => {
             {results.map((tipoEquipo) => (
               <tr className={style.table_row} key={tipoEquipo.id}>
                 <td className={style.list_content}>{tipoEquipo.tipo}</td>
-                <td className={style.list_content}>{tipoEquipo.marca}</td>
                 <td className={style.list_content}>{tipoEquipo.modelo}</td>
+                <td className={style.list_content}>{tipoEquipo.marca}</td>
               </tr>
             ))}
           </tbody>
