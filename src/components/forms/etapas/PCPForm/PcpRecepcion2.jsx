@@ -1,8 +1,9 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-// import axios from "axios";
+// import axios from "axios";7
 import "./PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
 import RecepcionService from "../../../../services/RecepcionService";
+import { useNavigate } from "react-router-dom";
 
 const RecepcionForm = () => {
   const { handleSubmit, control } = useForm({
@@ -28,11 +29,13 @@ const RecepcionForm = () => {
   const etapaActual = window.localStorage.getItem("etapaActual");
   const numeroOT = window.localStorage.getItem("numeroOT");
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data) => {
     try {
       const recepcion = data;
       RecepcionService.createRecepcion(recepcion);
-      //   navigate("/dashboard/etapa/inspeccionPcp");
+        navigate("/dashboard/etapa/inspeccionPcp");
       console.log("Datos enviados exitosamente:", recepcion);
     } catch (error) {
       console.error("Error al enviar los datos:", error);

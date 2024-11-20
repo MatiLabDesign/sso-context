@@ -24,7 +24,15 @@
 }
 
 .comentario-input{
-    width: 90%;
+    width: 100%;
+    border: 1px solid #bcbcbc;
+    border-radius: 5px;
+}
+
+.comentario-input:focus {
+    border-color: #004506;
+    background-color: #017d6c15;
+    outline: none;
 }
 
 .item-section {
@@ -74,7 +82,8 @@
 }
 
 .form-input:focus {
-    border-color: #c14f04;
+    border-color: #004506;
+    background-color: #017d6c15;
     outline: none;
 }
 
@@ -84,28 +93,49 @@
     margin-right: 10px;
 } */
 
-/* Botón de envío */
+/* Botón de envío 7*/
 .form-button {
     display: block;
     width: 150px;
     padding: 10px;
-    background-color: #017d6c;
+    background-color: #078a70;
     color: #fff;
     font-size: 1em;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin: 15px auto 0 auto;
+    margin-left: auto;
+    
+    /* margin: 15px auto 0 auto; */
 }
 
 .form-button:hover {
-    background-color: #11be9c;
-    text-shadow: 1px 2px 5px #023f33;
+    background-color: #00B495;
+    /* text-shadow: 1px 2px 5px #023f33; */
 }
 
 .radio-input{
     width: 20px;
+}
+input[type=radio]{
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border:  1px solid #004506;
+    border-radius: 50%;
+}
+input[type=radio]:checked::before{
+    margin: auto;
+    margin-top: 2px;
+    content: "";
+    width: 70%;
+    height: 70%;
+    /* background-color: #eb721c; */
+    background-color: #078a70;
+    /* background: linear-gradient(45deg,#078a70,#024e3f); */
+    display: block;
+    border-radius: 50%;
 }
 
 h4{

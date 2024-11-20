@@ -1,5 +1,5 @@
 .btn{
-    background-color: #036d4f;
+    background-color: #00B495;  /* color verdadero */
     color: #fff;
     font-weight: bold;
     width: 120px;
@@ -13,7 +13,7 @@
     }
 }
 .btn-salida{
-    background-color: #ff5100;
+    background-color: #F16B35;  /* color verdadero */
     color: #fff;
     font-weight: bold;
     width: 120px;
