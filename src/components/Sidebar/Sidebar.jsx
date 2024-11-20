@@ -22,7 +22,10 @@ const Sidebar = () => {
         <img className={style.img} src="/trinoilisologo.png" alt="logo" />
       </div>
       <div className={style.menu_row}>
-        <Link className={style.bbtn} to={OT}>
+        <Link className={''} to={''}>
+          <button className={style.bbtn2}>Servicio Campo</button>
+        </Link>
+        <Link className={''} to={OT}>
           <button className={style.bbtn}>Nueva OT</button>
         </Link>
         <ul className={style.list}>

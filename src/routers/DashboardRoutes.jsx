@@ -45,7 +45,7 @@ import OtForm from "../components/forms/OtForm";
 import Ot from "../views/Ot";
 import Etapas from "../components/forms/etapas/Etapas";
 import PcpIngreso from "../components/forms/etapas/PCPForm/PcpIngreso";
-import PcpRecepcion from "../components/forms/etapas/PCPForm/PcpRecepcion";
+import PcpRecepcion from "../components/forms/etapas/PCPForm/PcpRecepcion2";
 import PcpInspeccion from "../components/forms/etapas/PCPForm/PcpInspeccion";
 import PcpEnsayo from "../components/forms/etapas/PCPForm/PcpEnsayo";
 import PcpSalida from "../components/forms/etapas/PCPForm/PcpSalida";
