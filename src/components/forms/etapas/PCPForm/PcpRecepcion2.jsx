@@ -5,22 +5,22 @@ import "./PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
 import RecepcionService from "../../../../services/RecepcionService";
 import { useNavigate } from "react-router-dom";
 
-const RecepcionForm = () => {
+const PcpRecepcion2 = () => {
   const { handleSubmit, control } = useForm({
     defaultValues: {
       comentario: "",
       eliminado: false,
       itemRecepcion: {
-        cubreGrampa: { estado: "", requerimiento: "", observacion: "" },
-        cubrePolea: { estado: "", requerimiento: "", observacion: "" },
-        cubreVastago: { estado: "", requerimiento: "", observacion: "" },
-        grampaAntiEyeccion: { estado: "", requerimiento: "", observacion: "" },
-        estructuraChasis: { estado: "", requerimiento: "", observacion: "" },
-        linternaSeparador: { estado: "", requerimiento: "", observacion: "" },
-        mesaDeMotor: { estado: "", requerimiento: "", observacion: "" },
-        rielesDeMotor: { estado: "", requerimiento: "", observacion: "" },
-        soporteDeTransporte: { estado: "", requerimiento: "", observacion: "" },
-        poleaConducida: { estado: "", requerimiento: "", observacion: "" },
+        cubreGrampa: { estado: null, requerimiento: "", observacion: "" },
+        cubrePolea: { estado: null, requerimiento: "", observacion: "" },
+        cubreVastago: { estado: null, requerimiento: "", observacion: "" },
+        grampaAntiEyeccion: { estado: null, requerimiento: "", observacion: "" },
+        estructuraChasis: { estado: null, requerimiento: "", observacion: "" },
+        linternaSeparador: { estado: null, requerimiento: "", observacion: "" },
+        mesaDeMotor: { estado: null, requerimiento: "", observacion: "" },
+        rielesDeMotor: { estado: null, requerimiento: "", observacion: "" },
+        soporteDeTransporte: { estado: null, requerimiento: "", observacion: "" },
+        poleaConducida: { estado: null, requerimiento: "", observacion: "" },
       },
     },
   });
@@ -34,7 +34,7 @@ const RecepcionForm = () => {
   const onSubmit = async (data) => {
     try {
       const recepcion = data;
-      RecepcionService.createRecepcion(recepcion);
+      await RecepcionService.createRecepcion(recepcion);
         navigate("/dashboard/etapa/inspeccionPcp");
       console.log("Datos enviados exitosamente:", recepcion);
     } catch (error) {
@@ -90,10 +90,10 @@ const RecepcionForm = () => {
                     <input
                       className="radio-input"
                       type="radio"
-                      value="ok"
+                      value= "true"
                       {...field}
-                      // checked={field.value === "ok"}
-                      // onChange={(e) => field.onChange(e.target.value)}
+                      checked={field.value === true}
+                      onChange={() => field.onChange(true)}
                     />
                   </>
                 )}
@@ -109,9 +109,10 @@ const RecepcionForm = () => {
                     <input
                       className="radio-input"
                       type="radio"
-                      value="falta"
+                      value="false"
                       {...field}
-                      // checked={field.value === "falta"}
+                      checked={field.value === false}
+                      onChange={(e) => field.onChange(false)}
                     />
                   </>
                 )}
@@ -156,4 +157,4 @@ const RecepcionForm = () => {
   );
 };
 
-export default RecepcionForm;
+export default PcpRecepcion2;
