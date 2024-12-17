@@ -14,6 +14,8 @@ import {
   INGRESOUCL,
   INSPECCIONBM,
   INSPECCIONPCP,
+  INSPECCIONPCPB,
+  INSPECCIONPCPC,
   INSPECCIONUCL,
   LOGIN,
   LOGOUT,
@@ -46,7 +48,9 @@ import Ot from "../views/Ot";
 import Etapas from "../components/forms/etapas/Etapas";
 import PcpIngreso from "../components/forms/etapas/PCPForm/PcpIngreso";
 import PcpRecepcion from "../components/forms/etapas/PCPForm/PcpRecepcion2";
-import PcpInspeccion from "../components/forms/etapas/PCPForm/PcpInspeccion";
+import PcpInspeccion from "../components/forms/etapas/PCPForm/PcpInspeccionVH60A2";
+import PcpInspeccionB from "../components/forms/etapas/PCPForm/PcpInspeccionVH60B";
+import PcpInspeccionC from "../components/forms/etapas/PCPForm/PcpInspeccionVH60C";
 import PcpEnsayo from "../components/forms/etapas/PCPForm/PcpEnsayo";
 import PcpSalida from "../components/forms/etapas/PCPForm/PcpSalida";
 import UclEnsayo from "../components/forms/etapas/UCLForm/UclEnsayo";
@@ -81,6 +85,8 @@ const DashboardRoutes = () => {
                 <Route path={INGRESOPCP} element={<PcpIngreso />} />
                 <Route path={RECEPCIONPCP} element={<PcpRecepcion />} />
                 <Route path={INSPECCIONPCP} element={<PcpInspeccion />} />
+                <Route path={INSPECCIONPCPB} element={<PcpInspeccionB/>} />
+                <Route path={INSPECCIONPCPC} element={<PcpInspeccionC/>} />
                 <Route path={ENSAYOPCP} element={<PcpEnsayo />} />
                 <Route path={SALIDAPCP} element={<PcpSalida />} />
                 <Route path={INGRESOUCL} element={<UclIngreso />} />

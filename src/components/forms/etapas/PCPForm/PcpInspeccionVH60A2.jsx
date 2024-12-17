@@ -2,26 +2,25 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 // import axios from "axios";7
 import "./PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
-import RecepcionService from "../../../../services/RecepcionService";
+import RecepcionService from "../../../../services/InspeccionService";
 import { useNavigate } from "react-router-dom";
 import PcpInspeccion from './PcpInspeccion';
 import PcpInspeccionVH60A from './PcpInspeccionVH60A';
 import InspeccionService from "../../../../services/InspeccionService";
 
-const PcpInspeccionVH60B = () => {
+const PcpInspeccionVH60A2 = () => {
   const { handleSubmit, control } = useForm({
     defaultValues: {
       comentario: "",
       eliminado: false,
       itemInspeccionVH60A: {
-        axial294158: { estado: undefined, requerimiento: "", observacion: "" },
-        guiaSup6022: { estado: undefined, requerimiento: "", observacion: "" },
-        guiaInf6017: { estado: undefined, requerimiento: "", observacion: "" },
-        freno60051RsOz: { estado: undefined, requerimiento: "", observacion: "" },
-        antiretornoCsk25PpC3: { estado: undefined, requerimiento: "", observacion: "" },
-        corona: { estado: undefined, requerimiento: "", observacion: "" },
-        pinon: { estado: undefined, requerimiento: "", observacion: "" },
-        pastillasFreno: { estado: undefined, requerimiento: "", observacion: "" },
+        lubricanteBlock: { estado: undefined, requerimiento: "", observacion: "" },
+        lubricanteSistemaDeFreno: { estado: undefined, requerimiento: "", observacion: "" },
+        ejeMotriz: { estado: undefined, requerimiento: "", observacion: "" },
+        blockDeCabezal: { estado: undefined, requerimiento: "", observacion: "" },
+        placaInferior: { estado: undefined, requerimiento: "", observacion: "" },
+        placaSuperior: { estado: undefined, requerimiento: "", observacion: "" },
+        
       },
     },
   });
@@ -36,8 +35,9 @@ const PcpInspeccionVH60B = () => {
     try {
       const inspeccion = data;
       await InspeccionService.createInspeccion(inspeccion);
+        
       console.log("Datos enviados exitosamente:", inspeccion);
-      navigate("/dashboard/etapa/inspeccionPCPC");
+      navigate("/dashboard/etapa/inspeccionPCPB");
     } catch (error) {
       console.error("Error al enviar los datos:", error);
     }
@@ -45,7 +45,7 @@ const PcpInspeccionVH60B = () => {
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">Inspección B | {tipoEquipo} - OT N°{numeroOT}</h3>
+      <h3 className="form-title">Inspección A | {tipoEquipo} - OT N°{numeroOT}</h3>
 
       {/* Campo para comentario */}
       <div className="form-group">
@@ -65,13 +65,10 @@ const PcpInspeccionVH60B = () => {
         
 
       {/* Iterar sobre cada propiedad en itemRecepcion */}
-      <h3>Rodamientos</h3>
+      <h3>Lubricantes</h3>
       {[
-        "Axial 294158",
-        "Guia Sup 6022",
-        "Guia Inf 6017",
-        "Freno 6005 1RS o Z",
-        "Antiret CSK25-PP-C3",
+        "lubricante Block",
+        "lubricante Sist Freno",
         
       ].map((itemKey) => (
         <div className="item-section" key={itemKey}>
@@ -82,7 +79,7 @@ const PcpInspeccionVH60B = () => {
             <div className="item-tittle">
               <label className="form-label-1">Ok</label>
               <Controller
-                name={`itemInspeccion.${itemKey}.estado`}
+                name={`itemRecepcion.${itemKey}.estado`}
                 control={control}
                 render={({ field }) => (
                   <>
@@ -99,7 +96,7 @@ const PcpInspeccionVH60B = () => {
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label">Picado</label>
+              <label className="form-label-1">PM</label>
               <Controller
                 name={`itemRecepcion.${itemKey}.estado`}
                 control={control}
@@ -108,17 +105,17 @@ const PcpInspeccionVH60B = () => {
                     <input
                       className="radio-input"
                       type="radio"
-                      value= "picado"
+                      value= "pm"
                       {...field}
-                      checked={field.value === "picado"}
-                      onChange={() => field.onChange("picado")}
+                      checked={field.value === "pm"}
+                      onChange={() => field.onChange("pm")}
                     />
                   </>
                 )}
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label">Laminado</label>
+              <label className="form-label-1">Agua</label>
               <Controller
                 name={`itemRecepcion.${itemKey}.estado`}
                 control={control}
@@ -127,17 +124,17 @@ const PcpInspeccionVH60B = () => {
                     <input
                       className="radio-input"
                       type="radio"
-                      value= "laminado"
+                      value= "agua"
                       {...field}
-                      checked={field.value === "laminado"}
-                      onChange={() => field.onChange("laminado")}
+                      checked={field.value === "agua"}
+                      onChange={() => field.onChange("agua")}
                     />
                   </>
                 )}
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label">F.Jaula</label>
+              <label className="form-label-1">Sucio</label>
               <Controller
                 name={`itemRecepcion.${itemKey}.estado`}
                 control={control}
@@ -146,10 +143,10 @@ const PcpInspeccionVH60B = () => {
                     <input
                       className="radio-input"
                       type="radio"
-                      value= "jaula"
+                      value= "sucio"
                       {...field}
-                      checked={field.value === "jaula"}
-                      onChange={() => field.onChange("jaula")}
+                      checked={field.value === "sucio"}
+                      onChange={() => field.onChange("sucio")}
                     />
                   </>
                 )}
@@ -184,7 +181,7 @@ const PcpInspeccionVH60B = () => {
                   <input
                     className="form-input"
                     {...field}
-                    placeholder="Desgaste Especificar"
+                    placeholder="Especificar"
                   />
                 )}
               />
@@ -194,12 +191,13 @@ const PcpInspeccionVH60B = () => {
         </div>
       ))}
 
-      <h3>Transmisión freno</h3>
+      <h3>Item</h3>
       {[
+        "Eje Motriz",
+        "Block de Cabezal",
+        "Placa Inferior",
+        "Placa Superior",
         
-        "Corona",
-        "Piñon",
-        "Pastillas Freno",
       ].map((itemKey) => (
         <div className="item-section" key={itemKey}>
           <div className="item-field">
@@ -209,7 +207,7 @@ const PcpInspeccionVH60B = () => {
             <div className="item-tittle">
               <label className="form-label-1">Ok</label>
               <Controller
-                name={`itemInspeccion.${itemKey}.estado`}
+                name={`itemRecepcion.${itemKey}.estado`}
                 control={control}
                 render={({ field }) => (
                   <>
@@ -226,7 +224,7 @@ const PcpInspeccionVH60B = () => {
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label">Picado</label>
+              <label className="form-label">Aloj.Rodam.</label>
               <Controller
                 name={`itemRecepcion.${itemKey}.estado`}
                 control={control}
@@ -235,17 +233,17 @@ const PcpInspeccionVH60B = () => {
                     <input
                       className="radio-input"
                       type="radio"
-                      value= "picado"
+                      value= "arod"
                       {...field}
-                      checked={field.value === "picado"}
-                      onChange={() => field.onChange("picado")}
+                      checked={field.value === "arod"}
+                      onChange={() => field.onChange("arod")}
                     />
                   </>
                 )}
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label">Desgaste</label>
+              <label className="form-label">Aloj.Retén</label>
               <Controller
                 name={`itemRecepcion.${itemKey}.estado`}
                 control={control}
@@ -254,17 +252,17 @@ const PcpInspeccionVH60B = () => {
                     <input
                       className="radio-input"
                       type="radio"
-                      value= "desgastado"
+                      value= "aret"
                       {...field}
-                      checked={field.value === "desgastado"}
-                      onChange={() => field.onChange("desgastado")}
+                      checked={field.value === "aret"}
+                      onChange={() => field.onChange("aret")}
                     />
                   </>
                 )}
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label-1">Roto</label>
+              <label className="form-label">Diámetro</label>
               <Controller
                 name={`itemRecepcion.${itemKey}.estado`}
                 control={control}
@@ -273,10 +271,29 @@ const PcpInspeccionVH60B = () => {
                     <input
                       className="radio-input"
                       type="radio"
-                      value= "roto"
+                      value= "diametro"
                       {...field}
-                      checked={field.value === "roto"}
-                      onChange={() => field.onChange("roto")}
+                      checked={field.value === "diametro"}
+                      onChange={() => field.onChange("diametro")}
+                    />
+                  </>
+                )}
+              />
+            </div>
+            <div className="item-tittle">
+              <label className="form-label">Deformado</label>
+              <Controller
+                name={`itemRecepcion.${itemKey}.estado`}
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <input
+                      className="radio-input"
+                      type="radio"
+                      value= "deformado"
+                      {...field}
+                      checked={field.value === "deformado"}
+                      onChange={() => field.onChange("deformado")}
                     />
                   </>
                 )}
@@ -302,8 +319,8 @@ const PcpInspeccionVH60B = () => {
               />
             </div> */}
             
-            <div className="item-tittle">
-              {/* <label className="form-label">Requerimiento</label> */}
+            {/* <div className="item-tittle">
+              
               <Controller
                 name={`itemRecepcion.${itemKey}.especificar`}
                 control={control}
@@ -311,11 +328,11 @@ const PcpInspeccionVH60B = () => {
                   <input
                     className="form-input"
                     {...field}
-                    placeholder="Observación"
+                    placeholder="Especificar"
                   />
                 )}
               />
-            </div>
+            </div> */}
             
           </div>
         </div>
@@ -328,5 +345,4 @@ const PcpInspeccionVH60B = () => {
   );
 };
 
-export default PcpInspeccionVH60B;
-
+export default PcpInspeccionVH60A2;

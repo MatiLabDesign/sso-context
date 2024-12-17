@@ -66,8 +66,11 @@
     align-items: center;
     font-weight: bold;
     margin-right: 10px;
-    width: 30px;
+    width: 70px;
     color: #444;
+}
+.form-label-1 {
+    width: 40px;
 }
 
 /* Inputs de texto */

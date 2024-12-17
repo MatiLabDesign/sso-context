@@ -1,4 +1,4 @@
-import React from "react";
+import  {useEffect} from "react";
 import { useForm, Controller } from "react-hook-form";
 // import axios from "axios";7
 import "./PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
@@ -6,21 +6,21 @@ import RecepcionService from "../../../../services/RecepcionService";
 import { useNavigate } from "react-router-dom";
 
 const PcpRecepcion2 = () => {
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, control, reset } = useForm({
     defaultValues: {
       comentario: "",
       eliminado: false,
       itemRecepcion: {
-        cubreGrampa: { estado: null, requerimiento: "", observacion: "" },
-        cubrePolea: { estado: null, requerimiento: "", observacion: "" },
-        cubreVastago: { estado: null, requerimiento: "", observacion: "" },
-        grampaAntiEyeccion: { estado: null, requerimiento: "", observacion: "" },
-        estructuraChasis: { estado: null, requerimiento: "", observacion: "" },
-        linternaSeparador: { estado: null, requerimiento: "", observacion: "" },
-        mesaDeMotor: { estado: null, requerimiento: "", observacion: "" },
-        rielesDeMotor: { estado: null, requerimiento: "", observacion: "" },
-        soporteDeTransporte: { estado: null, requerimiento: "", observacion: "" },
-        poleaConducida: { estado: null, requerimiento: "", observacion: "" },
+        cubreGrampa: { estado: undefined, requerimiento: "", observacion: "" },
+        cubrePolea: { estado: undefined, requerimiento: "", observacion: "" },
+        cubreVastago: { estado: undefined, requerimiento: "", observacion: "" },
+        grampaAntiEyeccion: { estado: undefined, requerimiento: "", observacion: "" },
+        estructuraChasis: { estado: undefined, requerimiento: "", observacion: "" },
+        linternaSeparador: { estado: undefined, requerimiento: "", observacion: "" },
+        mesaDeMotor: { estado: undefined, requerimiento: "", observacion: "" },
+        rielesDeMotor: { estado: undefined, requerimiento: "", observacion: "" },
+        soporteDeTransporte: { estado: undefined, requerimiento: "", observacion: "" },
+        poleaConducida: { estado: undefined, requerimiento: "", observacion: "" },
       },
     },
   });
@@ -28,15 +28,35 @@ const PcpRecepcion2 = () => {
   const tipoEquipo = window.localStorage.getItem("tipoEquipo");
   const etapaActual = window.localStorage.getItem("etapaActual");
   const numeroOT = window.localStorage.getItem("numeroOT");
+  const ordenId = window.localStorage.getItem("ordenId");
 
   const navigate = useNavigate();
+
+   // Efecto para cargar los datos persistidos//////////
+   useEffect(() => {
+    const fetchRecepcionData = async () => {
+      try {
+        const response = await RecepcionService.getRecepcionById(ordenId);
+        if (response.data) {
+          reset(response.data); // Carga los datos en el formulario
+        }
+      } catch (error) {
+        console.error("Error al obtener los datos de recepción:", error);
+      }
+    };
+
+    fetchRecepcionData();
+  }, [numeroOT, reset]);
+/////////////////////////////////////////
+  
 
   const onSubmit = async (data) => {
     try {
       const recepcion = data;
       await RecepcionService.createRecepcion(recepcion);
-        navigate("/dashboard/etapa/inspeccionPcp");
+        
       console.log("Datos enviados exitosamente:", recepcion);
+      navigate("/dashboard/etapa/inspeccionPCP");
     } catch (error) {
       console.error("Error al enviar los datos:", error);
     }

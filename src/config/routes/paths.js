@@ -21,6 +21,8 @@ export const SALIDABM = '/dashboard/etapa/salidaBM';
 export const INGRESOPCP = '/dashboard/etapa/ingresoPCP';
 export const RECEPCIONPCP = '/dashboard/etapa/recepcionPCP';
 export const INSPECCIONPCP = '/dashboard/etapa/inspeccionPCP';
+export const INSPECCIONPCPB = '/dashboard/etapa/inspeccionPCPB';
+export const INSPECCIONPCPC = '/dashboard/etapa/inspeccionPCPC';
 export const ENSAYOPCP = '/dashboard/etapa/ensayoPCP';
 export const SALIDAPCP = '/dashboard/etapa/salidaPCP';
 

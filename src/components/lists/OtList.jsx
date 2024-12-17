@@ -36,11 +36,13 @@ const OtList = () => {
   window.localStorage.setItem("selectedComponent", selectedComponent);
 
   const handleComponentRender = (ots) => {
+    const ordenId = ots.id;
     const tipoEquipo = ots.equipo.tipoEquipo.tipo;
     const modeloEquipo = ots.equipo.tipoEquipo.modelo;
     const marcaEquipo = ots.equipo.tipoEquipo.marca;
     const etapaActual = ots.etapaActual;
     const numeroOT = ots.numeroOT;
+    window.localStorage.setItem("ordenId", ordenId);
     window.localStorage.setItem("tipoEquipo", tipoEquipo);
     window.localStorage.setItem("modeloEquipo", modeloEquipo);
     window.localStorage.setItem("marcaEquipo", marcaEquipo);
@@ -52,6 +54,7 @@ const OtList = () => {
     console.log(marcaEquipo);
     console.log(etapaActual);
     console.log(numeroOT);
+    console.log(ordenId);
     console.log(selectedComponent);
 
     if (tipoEquipo === "PCP") {
