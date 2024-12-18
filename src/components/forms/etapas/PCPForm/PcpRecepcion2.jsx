@@ -38,7 +38,7 @@ const PcpRecepcion2 = () => {
       try {
         const response = await RecepcionService.getRecepcionById(ordenId);
         if (response.data) {
-          reset(response.data); // Carga los datos en el formulario
+          reset(response.data); 
         }
       } catch (error) {
         console.error("Error al obtener los datos de recepción:", error);

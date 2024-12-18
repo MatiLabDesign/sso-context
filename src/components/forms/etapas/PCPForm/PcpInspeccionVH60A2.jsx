@@ -13,14 +13,14 @@ const PcpInspeccionVH60A2 = () => {
     defaultValues: {
       comentario: "",
       eliminado: false,
-      itemInspeccionVH60A: {
-        lubricanteBlock: { estado: undefined, requerimiento: "", observacion: "" },
-        lubricanteSistemaDeFreno: { estado: undefined, requerimiento: "", observacion: "" },
-        ejeMotriz: { estado: undefined, requerimiento: "", observacion: "" },
-        blockDeCabezal: { estado: undefined, requerimiento: "", observacion: "" },
-        placaInferior: { estado: undefined, requerimiento: "", observacion: "" },
-        placaSuperior: { estado: undefined, requerimiento: "", observacion: "" },
-        
+      lubricantePcpVh60: {
+        lubricanteBlockPortaRodamientos: { estado: undefined, especificar: ""},
+        lubricanteSistemaFreno: { estado: undefined, especificar: ""}},
+      itemPcpVh60:{
+        ejeMotriz: { estado: undefined },
+        blockCabezal: { estado: undefined },
+        placaInferior: { estado: undefined },
+        placaSuperior: { estado: undefined},
       },
     },
   });
@@ -181,7 +181,7 @@ const PcpInspeccionVH60A2 = () => {
                   <input
                     className="form-input"
                     {...field}
-                    placeholder="Especificar"
+                    placeholder="Sucio Especificar"
                   />
                 )}
               />
@@ -262,6 +262,20 @@ const PcpInspeccionVH60A2 = () => {
               />
             </div>
             <div className="item-tittle">
+              
+              <Controller
+                name={`itemRecepcion.${itemKey}.especificar`}
+                control={control}
+                render={({ field }) => (
+                  <input
+                    className="form-input size"
+                    {...field}
+                    placeholder="Diámetro"
+                  />
+                )}
+              />
+            </div>
+            {/* <div className="item-tittle">
               <label className="form-label">Diámetro</label>
               <Controller
                 name={`itemRecepcion.${itemKey}.estado`}
@@ -279,7 +293,7 @@ const PcpInspeccionVH60A2 = () => {
                   </>
                 )}
               />
-            </div>
+            </div> */}
             <div className="item-tittle">
               <label className="form-label">Deformado</label>
               <Controller
