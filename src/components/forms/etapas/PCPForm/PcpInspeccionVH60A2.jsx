@@ -17,10 +17,10 @@ const PcpInspeccionVH60A2 = () => {
         lubricanteBlockPortaRodamientos: { estado: undefined, especificar: ""},
         lubricanteSistemaFreno: { estado: undefined, especificar: ""}},
       itemPcpVh60:{
-        ejeMotriz: { estado: undefined },
-        blockCabezal: { estado: undefined },
-        placaInferior: { estado: undefined },
-        placaSuperior: { estado: undefined},
+        ejeMotriz: { estado: undefined, diametro: "" },
+        blockCabezal: { estado: undefined, diametro: "" },
+        placaInferior: { estado: undefined, diametro: "" },
+        placaSuperior: { estado: undefined, diametro: ""},
       },
     },
   });

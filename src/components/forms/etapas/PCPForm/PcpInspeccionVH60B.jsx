@@ -13,14 +13,15 @@ const PcpInspeccionVH60B = () => {
     defaultValues: {
       comentario: "",
       eliminado: false,
-      itemInspeccionVH60A: {
+      rodamientoPcpVh60: {
         axial294158: { estado: undefined, requerimiento: "", observacion: "" },
         guiaSup6022: { estado: undefined, requerimiento: "", observacion: "" },
         guiaInf6017: { estado: undefined, requerimiento: "", observacion: "" },
-        freno60051RsOz: { estado: undefined, requerimiento: "", observacion: "" },
-        antiretornoCsk25PpC3: { estado: undefined, requerimiento: "", observacion: "" },
+        freno60051rsZ: { estado: undefined, requerimiento: "", observacion: "" },
+        antirretornoCsk25PpC3: { estado: undefined, requerimiento: "", observacion: "" }},
+      transmisionFrenoPcpVh60:{
         corona: { estado: undefined, requerimiento: "", observacion: "" },
-        pinon: { estado: undefined, requerimiento: "", observacion: "" },
+        pinion: { estado: undefined, requerimiento: "", observacion: "" },
         pastillasFreno: { estado: undefined, requerimiento: "", observacion: "" },
       },
     },

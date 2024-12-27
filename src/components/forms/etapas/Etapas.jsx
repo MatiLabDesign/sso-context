@@ -135,7 +135,7 @@ const Etapas = () => {
     
       
       </nav>
-
+<h1>xxkjnxkxkxkxnx</h1>
       <div className="etapas-forms">
         
       {/* <Renderizador selectedComponent={selectedComponent}/> */}
