@@ -9,6 +9,7 @@ import {
   CLIENT,
   EQUIPO,
   LOGOUT,
+  OS,
   OT,
   OTLIST,
   TIPOEQUIPO,
@@ -22,7 +23,7 @@ const Sidebar = () => {
         <img className={style.img} src="/trinoilisologo.png" alt="logo" />
       </div>
       <div className={style.menu_row}>
-        <Link className={''} to={''}>
+        <Link className={''} to={OS}>
           <button className={style.bbtn2}>Servicio Campo</button>
         </Link>
         <Link className={''} to={OT}>

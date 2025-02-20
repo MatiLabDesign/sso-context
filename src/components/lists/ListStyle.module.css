@@ -63,6 +63,7 @@
     display: flex;
     flex-wrap: nowrap;
     padding-top: 10px;
+    align-items: center;
     /* border-top: 1px solid #535353; */
 }
 
@@ -71,6 +72,7 @@
     display: flex;
     width: 110px;
     text-align: left;
+    margin-left: 5px;
     
     /* border: 2px solid #ff0000; */
 }
@@ -136,6 +138,19 @@
     border-radius: 8px;
     border: none;
     margin: 25px 0;
+    cursor: pointer;
+    &:hover{
+        background-color: #02786a;
+    }
+}
+.button2 {
+    height: 30px;
+    background-color: #059080;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    border: none;
+    /* margin: 25px 0; */
     cursor: pointer;
     &:hover{
         background-color: #02786a;

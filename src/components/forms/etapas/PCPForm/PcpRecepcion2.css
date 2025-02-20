@@ -46,10 +46,12 @@
     color: #555;
     /* margin-bottom: 10px; */
     text-transform: capitalize;
+    
 }
 
 .item-tittle{
     display: flex;
+    align-items: center;
 }
 
 /* Campos de cada item */
@@ -66,7 +68,7 @@
     align-items: center;
     font-weight: bold;
     margin-right: 10px;
-    width: 70px;
+    /* width: 70px; */
     color: #444;
 }
 .form-label-1 {
@@ -140,10 +142,11 @@ input[type=radio]:checked::before{
     width: 70%;
     height: 70%;
     /* background-color: #eb721c; */
-    background-color: #078a70;
+    background: linear-gradient(to top, #0e6655, #09876e, #32b79d);
     /* background: linear-gradient(45deg,#078a70,#024e3f); */
     display: block;
     border-radius: 50%;
+    
 }
 
 h4{

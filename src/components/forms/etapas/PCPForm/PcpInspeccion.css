@@ -1,0 +1,22 @@
+input[type="checkbox"]{
+    width: 15px;
+    height: 15px;
+    /* appearance: none; */
+    /* background-color: blueviolet; */
+
+}
+.check:checked::after{
+    width: 15px;
+    height: 15px;
+    appearance: none;
+    background-color: rgb(43, 86, 226);
+
+}
+
+.container-into{
+    display: flex;
+}
+
+.item-section{
+    display: flex;
+}

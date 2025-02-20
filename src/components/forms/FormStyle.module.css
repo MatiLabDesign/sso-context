@@ -136,7 +136,7 @@
 }
 
 .form_ot {
-    margin-top: 120px;
+    margin-top: 200px;
     margin-left: 200px;
 }
 
@@ -154,3 +154,16 @@
     }
 }
 
+.form_container_i{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.form_input_i{
+    width: 150px;
+}
+
+.column_two{
+    margin-right: 25px;
+}

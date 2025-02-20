@@ -5,28 +5,38 @@ import {
   CREATEEQUIPO,
   CREATETIPOEQUIPO,
   ENSAYOBM,
-  ENSAYOPCP,
   ENSAYOUCL,
   EQUIPO,
   ETAPA,
   INGRESOBM,
-  INGRESOPCP,
   INGRESOUCL,
   INSPECCIONBM,
-  INSPECCIONPCP,
-  INSPECCIONPCPB,
-  INSPECCIONPCPC,
   INSPECCIONUCL,
   LOGIN,
   LOGOUT,
+  OS,
   OT,
   OTLIST,
+  PCP_ENSAYO,
+  PCP_INGRESO,
+  PCP_INSPECCION_COUGAR_A,
+  PCP_INSPECCION_COUGAR_B,
+  PCP_INSPECCION_COUGAR_C,
+  PCP_INSPECCION_DV1_A,
+  PCP_INSPECCION_DV1_B,
+  PCP_INSPECCION_DV1_C,
+  PCP_INSPECCION_MINIG_A,
+  PCP_INSPECCION_MINIG_B,
+  PCP_INSPECCION_MINIG_C,
+  PCP_INSPECCION_VH60_A,
+  PCP_INSPECCION_VH60_B,
+  PCP_INSPECCION_VH60_C,
+  PCP_RECEPCION,
+  PCP_SALIDA,
   PRIVATE,
   RECEPCIONBM,
-  RECEPCIONPCP,
   RECEPCIONUCL,
   SALIDABM,
-  SALIDAPCP,
   SALIDAUCL,
   TIPOEQUIPO,
 } from "../config/routes/paths";
@@ -47,10 +57,8 @@ import OtForm from "../components/forms/OtForm";
 import Ot from "../views/Ot";
 import Etapas from "../components/forms/etapas/Etapas";
 import PcpIngreso from "../components/forms/etapas/PCPForm/PcpIngreso";
-import PcpRecepcion from "../components/forms/etapas/PCPForm/PcpRecepcion2";
-import PcpInspeccion from "../components/forms/etapas/PCPForm/PcpInspeccionVH60A2";
-import PcpInspeccionB from "../components/forms/etapas/PCPForm/PcpInspeccionVH60B";
-import PcpInspeccionC from "../components/forms/etapas/PCPForm/PcpInspeccionVH60C";
+import PcpRecepcion from "../components/forms/etapas/PCPForm/PcpRecepcion";
+
 import PcpEnsayo from "../components/forms/etapas/PCPForm/PcpEnsayo";
 import PcpSalida from "../components/forms/etapas/PCPForm/PcpSalida";
 import UclEnsayo from "../components/forms/etapas/UCLForm/UclEnsayo";
@@ -63,47 +71,115 @@ import BombaRecepcion from "../components/forms/etapas/BombaForm/BombaRecepcion"
 import BombaInspeccion from "../components/forms/etapas/BombaForm/BombaInspeccion";
 import BombaEnsayo from "../components/forms/etapas/BombaForm/BombaEnsayo";
 import BombaSalida from "../components/forms/etapas/BombaForm/BombaSalida";
+import PcpInspeccionVH60B from "../components/forms/etapas/PCPForm/PcpInspeccionVH60B";
+import PcpInspeccionVH60C from "../components/forms/etapas/PCPForm/PcpInspeccionVH60C";
+import PcpInspeccionMiniGA from "./../components/forms/etapas/PCPForm/PcpInspeccionMiniGA";
+import PcpInspeccionMiniGB from "./../components/forms/etapas/PCPForm/PcpInspeccionMiniGB";
+import PcpInspeccionMiniGC from "./../components/forms/etapas/PCPForm/PcpInspeccionMiniGC";
+import PcpInspeccionDv1A from "./../components/forms/etapas/PCPForm/PcpInspeccionDv1A";
+import PcpInspeccionDv1B from "./../components/forms/etapas/PCPForm/PcpInspeccionDv1B";
+import PcpInspeccionDv1C from "./../components/forms/etapas/PCPForm/PcpInspeccionDv1C";
+import PcpInspeccionCougarA from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarA";
+import PcpInspeccionCougarB from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarB";
+import PcpInspeccionCougarC from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarC";
+import PcpInspeccionVH60A from "../components/forms/etapas/PCPForm/PcpInspeccionVH60A";
+import EtapasRoutes from "./EtapasRoutes";
+import OsForm from "../components/forms/OsForm";
 
 const DashboardRoutes = () => {
   return (
     <Routes>
-          <Route path="/" element={<PublicRoutes />}>
-            <Route index element={<Home />} />
-            <Route path={LOGIN} element={<Login />} />
+      <Route path="/" element={<PublicRoutes />}>
+        <Route index element={<Home />} />
+        <Route path={LOGIN} element={<Login />} />
+      </Route>
+      <Route path={PRIVATE} element={<PrivateRoutes />}>
+        <Route path={PRIVATE} element={<Private />}>
+          <Route path={CLIENT} element={<Client />} />
+          <Route path={TIPOEQUIPO} element={<TipoEquipo />} />
+          <Route path={EQUIPO} element={<Equipo />} />
+          <Route path={CREATECLIENTE} element={<CreateCliente />} />
+          <Route path={CREATEEQUIPO} element={<CreateEquipo />} />
+          <Route path={CREATETIPOEQUIPO} element={<CreateTipoEquipo />} />
+          <Route path={OT} element={<OtForm />} />
+          <Route path={OS} element={<OsForm />} />
+          <Route path={OTLIST} element={<Ot />} />
+            {/* <Route>
+              <EtapasRoutes/>
+            </Route> */}
+          <Route path={ETAPA} element={<Etapas />}>
+            <Route path={PCP_INGRESO} element={<PcpIngreso />} />
+
+            <Route
+              path={PCP_INSPECCION_VH60_A}
+              element={<PcpInspeccionVH60A />}
+            />
+            <Route
+              path={PCP_INSPECCION_VH60_B}
+              element={<PcpInspeccionVH60B />}
+            />
+            <Route
+              path={PCP_INSPECCION_VH60_C}
+              element={<PcpInspeccionVH60C />}
+            />
+            <Route
+              path={PCP_INSPECCION_MINIG_A}
+              element={<PcpInspeccionMiniGA />}
+            />
+            <Route
+              path={PCP_INSPECCION_MINIG_B}
+              element={<PcpInspeccionMiniGB />}
+            />
+            <Route
+              path={PCP_INSPECCION_MINIG_C}
+              element={<PcpInspeccionMiniGC />}
+            />
+            <Route
+              path={PCP_INSPECCION_DV1_A}
+              element={<PcpInspeccionDv1A />}
+            />
+            <Route
+              path={PCP_INSPECCION_DV1_B}
+              element={<PcpInspeccionDv1B />}
+            />
+            <Route
+              path={PCP_INSPECCION_DV1_C}
+              element={<PcpInspeccionDv1C />}
+            />
+            <Route
+              path={PCP_INSPECCION_COUGAR_A}
+              element={<PcpInspeccionCougarA />}
+            />
+            <Route
+              path={PCP_INSPECCION_COUGAR_B}
+              element={<PcpInspeccionCougarB />}
+            />
+            <Route
+              path={PCP_INSPECCION_COUGAR_C}
+              element={<PcpInspeccionCougarC />}
+            />
+
+            <Route path={PCP_RECEPCION} element={<PcpRecepcion />} />
+
+            <Route path={PCP_ENSAYO} element={<PcpEnsayo />} />
+
+            <Route path={PCP_SALIDA} element={<PcpSalida />} />
+
+            <Route path={INGRESOUCL} element={<UclIngreso />} />
+            <Route path={RECEPCIONUCL} element={<UclRecepcion />} />
+            <Route path={INSPECCIONUCL} element={<UclInspeccion />} />
+            <Route path={ENSAYOUCL} element={<UclEnsayo />} />
+            <Route path={SALIDAUCL} element={<UclSalida />} />
+            <Route path={INGRESOBM} element={<BombaIngreso />} />
+            <Route path={RECEPCIONBM} element={<BombaRecepcion />} />
+            <Route path={INSPECCIONBM} element={<BombaInspeccion />} />
+            <Route path={ENSAYOBM} element={<BombaEnsayo />} />
+            <Route path={SALIDABM} element={<BombaSalida />} />
           </Route>
-          <Route path={PRIVATE} element={<PrivateRoutes />}>
-            <Route path={PRIVATE} element={<Private />}>
-              <Route path={CLIENT} element={<Client />} />
-              <Route path={TIPOEQUIPO} element={<TipoEquipo />} />
-              <Route path={EQUIPO} element={<Equipo />} />
-              <Route path={CREATECLIENTE} element={<CreateCliente />} />
-              <Route path={CREATEEQUIPO} element={<CreateEquipo />} />
-              <Route path={CREATETIPOEQUIPO} element={<CreateTipoEquipo />} />
-              <Route path={OT} element={<OtForm />} />
-              <Route path={OTLIST} element={<Ot />} />
-              <Route path={ETAPA} element={<Etapas />}>
-                <Route path={INGRESOPCP} element={<PcpIngreso />} />
-                <Route path={RECEPCIONPCP} element={<PcpRecepcion />} />
-                <Route path={INSPECCIONPCP} element={<PcpInspeccion />} />
-                <Route path={INSPECCIONPCPB} element={<PcpInspeccionB/>} />
-                <Route path={INSPECCIONPCPC} element={<PcpInspeccionC/>} />
-                <Route path={ENSAYOPCP} element={<PcpEnsayo />} />
-                <Route path={SALIDAPCP} element={<PcpSalida />} />
-                <Route path={INGRESOUCL} element={<UclIngreso />} />
-                <Route path={RECEPCIONUCL} element={<UclRecepcion />} />
-                <Route path={INSPECCIONUCL} element={<UclInspeccion />} />
-                <Route path={ENSAYOUCL} element={<UclEnsayo />} />
-                <Route path={SALIDAUCL} element={<UclSalida />} />
-                <Route path={INGRESOBM} element={<BombaIngreso />} />
-                <Route path={RECEPCIONBM} element={<BombaRecepcion />} />
-                <Route path={INSPECCIONBM} element={<BombaInspeccion />} />
-                <Route path={ENSAYOBM} element={<BombaEnsayo />} />
-                <Route path={SALIDABM} element={<BombaSalida />} />
-              </Route>
-            </Route>
-            <Route path={LOGOUT} element={<Logout />} />
-          </Route>
-        </Routes>
+        </Route>
+        <Route path={LOGOUT} element={<Logout />} />
+      </Route>
+    </Routes>
   );
 };
 

@@ -40,7 +40,7 @@ const PcpEnsayo = () => {
   return (
     <div>
       <h1>ENSAYO</h1>
-      <h3>{numeroOrden} | {tipoEquipo}</h3>
+      {/* <h3>{numeroOrden} | {tipoEquipo}</h3> */}
       {ensayo.map((comentario) => (
                
                <p className="parrafo" key={comentario.id}>- {comentario.comentario}</p>

@@ -1,74 +1,110 @@
-import React, {useState, useEffect} from "react";
-import './PcpFormStyle.css';
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import "./PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
 import RecepcionService from "../../../../services/RecepcionService";
-import Renderizador from "../../../renderizador/Renderizador";
-
+import { useNavigate } from "react-router-dom";
+import recepcionPCP from "../../../../data/recepcionPCP";
 
 const PcpRecepcion = () => {
-  const numeroOrden = window.localStorage.getItem('numeroOT');
-  const tipoEquipo = window.localStorage.getItem('tipoEquipo');
+  const { register, handleSubmit } = useForm({defaultValues:recepcionPCP});
 
-  const [recepcion, setRecepcion] = useState([]);
-
-  useEffect(() => {
-    RecepcionService.getAllRecepcion()
-        .then((response) => {
-        setRecepcion(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log("el error esta en el useEffect");
-      });
-  }, []);
-
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
+  const tipoEquipo = window.localStorage.getItem("tipoEquipo");
+  const etapaActual = window.localStorage.getItem("etapaActual");
+  const numeroOT = window.localStorage.getItem("numeroOT");
+  const ordenId = window.localStorage.getItem("ordenId");
 
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    const recepcion = data;
-    RecepcionService.createRecepcion(recepcion);
-    navigate("/dashboard/etapa/inspeccionPcp");
-    console.log(recepcion);
+  // Efecto para cargar los datos persistidos//////////
+  //  useEffect(() => {
+  //   const fetchRecepcionData = async () => {
+  //     try {
+  //       const response = await RecepcionService.getRecepcionById(ordenId);
+  //       if (response.data) {
+  //         reset(response.data);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error al obtener los datos de recepción:", error);
+  //     }
+  //   };
+
+  //   fetchRecepcionData();
+  // }, [numeroOT, reset]);
+  /////////////////////////////////////////
+
+  const onSubmit = async (data) => {
+    try {
+      const recepcion = data;
+      await RecepcionService.createRecepcion(recepcion);
+
+      console.log("Datos enviados exitosamente:", recepcion);
+      navigate("/dashboard/etapa/inspeccionVh60A");
+    } catch (error) {
+      console.error("Error al enviar los datos:", error);
+    }
   };
 
-  const selectedComponent = window.localStorage.getItem('selectedComponent')
-  console.log(selectedComponent);
   return (
-    <div>
-      <h1>RECEPCIÓN</h1>
-      <h3>{numeroOrden} | {tipoEquipo}</h3>
-      {recepcion.map((comentario) => (
-               
-               <p className="parrafo" key={comentario.id}>- {comentario.comentario}</p>
-                     ))}
-      {/* <button className='btn' >s</button> */}
-      <Renderizador selectedComponent={selectedComponent}/>
-      <form onSubmit={handleSubmit(onSubmit)} className='form'>
-        <div className='{style.input_cliente}'>
-          <label>Comentario</label>
-          <input
-            type="text"
-            {...register("comentario", {
-              required: true,
-            })}
-          />
-          {errors.comentario?.type === "required" && (
-            <p>El campo es requerido</p>
-          )}
-        </div>
+    <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
+      <h3 className="form-title">
+        {/* Recepción | {tipoEquipo} - OT N°{numeroOT} */}
+        Recepción
+      </h3>
 
-        <button className='btn' type="submit">
-          Check
-        </button>
-      </form>
-    </div>
+      {/* Campo para comentario */}
+      <div className="form-group">
+        <label className="form-label">Comentario</label>
+        <input {...register("comentario")} placeholder="Comentario" />
+      </div>
+
+      {/* Iterar sobre cada propiedad en itemRecepcion */}
+      {[
+        "cubreGrampa",
+        "cubrePolea",
+        "cubreVastago",
+        "grampaAntiEyeccion",
+        "estructuraChasis",
+        "linternaSeparador",
+        "mesaDeMotor",
+        "rielesDeMotor",
+        "soporteDeTransporte",
+        "poleaConducida",
+      ].map((itemKey) => (
+        <div className="item-section" key={itemKey}>
+          <div className="item-field">
+            <div className="item-tittle">
+              <h4 className="item-title">{itemKey}</h4>
+            </div>
+            <div className="item-tittle">
+              <label className="form-label-1">Ok</label>
+              <input
+                className="radio-input"
+                type="checkbox"
+                {...register(`itemRecepcion.${itemKey}.estado`)}
+              />
+            </div>
+
+            <div className="item-tittle">
+              <input
+                className="form-input"
+                {...register(`itemRecepcion.${itemKey}.requerimiento`)}
+                placeholder="Requerimiento"
+              />
+            </div>
+            <div className="item-tittle">
+              <input
+                className="form-input"
+                {...register(`itemRecepcion.${itemKey}.observacion`)}
+                placeholder="Observación"
+              />
+            </div>
+          </div>
+        </div>
+      ))}
+
+      <button type="submit" className="form-button">
+        Guardar
+      </button>
+    </form>
   );
 };
 

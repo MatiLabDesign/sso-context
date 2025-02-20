@@ -1,44 +1,61 @@
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
-// import axios from "axios";7
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import "./PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
-import RecepcionService from "../../../../services/RecepcionService";
 import { useNavigate } from "react-router-dom";
-import PcpInspeccion from './PcpInspeccion';
-import PcpInspeccionVH60A from './PcpInspeccionVH60A';
 import InspeccionService from "../../../../services/InspeccionService";
 
 const PcpInspeccionVH60B = () => {
-  const { handleSubmit, control } = useForm({
-    defaultValues: {
-      comentario: "",
-      eliminado: false,
-      rodamientoPcpVh60: {
-        axial294158: { estado: undefined, requerimiento: "", observacion: "" },
-        guiaSup6022: { estado: undefined, requerimiento: "", observacion: "" },
-        guiaInf6017: { estado: undefined, requerimiento: "", observacion: "" },
-        freno60051rsZ: { estado: undefined, requerimiento: "", observacion: "" },
-        antirretornoCsk25PpC3: { estado: undefined, requerimiento: "", observacion: "" }},
-      transmisionFrenoPcpVh60:{
-        corona: { estado: undefined, requerimiento: "", observacion: "" },
-        pinion: { estado: undefined, requerimiento: "", observacion: "" },
-        pastillasFreno: { estado: undefined, requerimiento: "", observacion: "" },
-      },
-    },
-  });
+  const { handleSubmit, register } = useForm();
 
   const tipoEquipo = window.localStorage.getItem("tipoEquipo");
   const etapaActual = window.localStorage.getItem("etapaActual");
   const numeroOT = window.localStorage.getItem("numeroOT");
+  const inspeccionId = window.localStorage.getItem("ordenId");
 
   const navigate = useNavigate();
+  // const [inspeccionId, setInspeccionId] = useState();
 
+  // Cargar todas las inspecciones//////////
+  // useEffect(() => {
+  //   const fetchRecepcionData = async () => {
+  //     try {
+  //       const response = await InspeccionService.getAllInspecciones(); 
+  //       setInspeccionId(response.data.length);
+  //       console.log("Datos recibidos:", response.data);
+        
+  //     } catch (error) {
+  //       console.error("Error al obtener los datos de recepción:", error);
+  //     }
+  //   };
+
+  //   fetchRecepcionData();
+  // }, []); 
+
+  // useEffect(() => {
+  //   console.log("La cantidad de registros son:", inspeccionId);
+  // }, [inspeccionId]);
+
+  // useEffect(() => {
+  //   const fetchInspeccionById = async () => {
+  //     try {
+  //       const response = await InspeccionService.getInspeccionById(inspeccionId); 
+  //       setInspeccionId(response.data.length);
+  //       console.log("Datos por id", response.data);
+        
+  //     } catch (error) {
+  //       console.error("Error al obtener los datos de recepción:", error);
+  //     }
+  //   };
+
+  //   fetchInspeccionById();
+  // }, []);
+ 
   const onSubmit = async (data) => {
     try {
       const inspeccion = data;
-      await InspeccionService.createInspeccion(inspeccion);
+      await InspeccionService.updateInspeccion(inspeccionId, inspeccion);
       console.log("Datos enviados exitosamente:", inspeccion);
-      navigate("/dashboard/etapa/inspeccionPCPC");
+      navigate("/dashboard/etapa/inspeccionVh60C");
     } catch (error) {
       console.error("Error al enviar los datos:", error);
     }
@@ -46,34 +63,26 @@ const PcpInspeccionVH60B = () => {
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">Inspección B | {tipoEquipo} - OT N°{numeroOT}</h3>
+      <h3 className="form-title">
+        {/* Numero de registros: {inspeccionId} */}
+      </h3>
+      <h3 className="form-title">
+        Inspección B
+      </h3>
 
       {/* Campo para comentario */}
       <div className="form-group">
         <label className="form-label">Comentario</label>
-        <Controller
-          name="comentario"
-          control={control}
-          render={({ field }) => (
-            <input
-              className="comentario-input"
-              {...field}
-              placeholder="Comentario"
-            />
-          )}
-        />
+        <input {...register("comentario")} placeholder="Comentario" />
       </div>
-        
 
-      {/* Iterar sobre cada propiedad en itemRecepcion */}
       <h3>Rodamientos</h3>
       {[
-        "Axial 294158",
-        "Guia Sup 6022",
-        "Guia Inf 6017",
-        "Freno 6005 1RS o Z",
-        "Antiret CSK25-PP-C3",
-        
+        "axial294158",
+        "guiaSup6022",
+        "guiaInf6017",
+        "freno60051rsZ",
+        "antirretornoCsk25PpC3",
       ].map((itemKey) => (
         <div className="item-section" key={itemKey}>
           <div className="item-field">
@@ -82,126 +91,57 @@ const PcpInspeccionVH60B = () => {
             </div>
             <div className="item-tittle">
               <label className="form-label-1">Ok</label>
-              <Controller
-                name={`itemInspeccion.${itemKey}.estado`}
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <input
-                      className="radio-input"
-                      type="radio"
-                      value= "ok"
-                      {...field}
-                      checked={field.value === "ok"}
-                      onChange={() => field.onChange("ok")}
-                    />
-                  </>
-                )}
+              <input
+                className="radio-input"
+                type="checkbox"
+                {...register(`rodamientoPcpVh60.${itemKey}.ok`)}
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label">Picado</label>
-              <Controller
-                name={`itemRecepcion.${itemKey}.estado`}
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <input
-                      className="radio-input"
-                      type="radio"
-                      value= "picado"
-                      {...field}
-                      checked={field.value === "picado"}
-                      onChange={() => field.onChange("picado")}
-                    />
-                  </>
-                )}
+              <label className="form-label-1">Picado</label>
+              <input
+                className="radio-input"
+                type="checkbox"
+                {...register(`rodamientoPcpVh60.${itemKey}.picado`)}
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label">Laminado</label>
-              <Controller
-                name={`itemRecepcion.${itemKey}.estado`}
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <input
-                      className="radio-input"
-                      type="radio"
-                      value= "laminado"
-                      {...field}
-                      checked={field.value === "laminado"}
-                      onChange={() => field.onChange("laminado")}
-                    />
-                  </>
-                )}
+              <label className="form-label-1">Laminado</label>
+              <input
+                className="radio-input"
+                type="checkbox"
+                {...register(`rodamientoPcpVh60.${itemKey}.laminado`)}
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label">F.Jaula</label>
-              <Controller
-                name={`itemRecepcion.${itemKey}.estado`}
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <input
-                      className="radio-input"
-                      type="radio"
-                      value= "jaula"
-                      {...field}
-                      checked={field.value === "jaula"}
-                      onChange={() => field.onChange("jaula")}
-                    />
-                  </>
-                )}
+              <label className="form-label-1">F.jaula</label>
+              <input
+                className="radio-input"
+                type="checkbox"
+                {...register(`rodamientoPcpVh60.${itemKey}.fallaEnJaula`)}
               />
             </div>
-            {/* <div className="item-tittle">
-              <label className="form-label">Falta</label>
-              <Controller
-                name={`itemRecepcion.${itemKey}.estado`}
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <input
-                      className="radio-input"
-                      type="radio"
-                      value="false"
-                      {...field}
-                      checked={field.value === false}
-                      onChange={(e) => field.onChange(false)}
-                    />
-                  </>
-                )}
-              />
-            </div> */}
-            
             <div className="item-tittle">
-              {/* <label className="form-label">Requerimiento</label> */}
-              <Controller
-                name={`itemRecepcion.${itemKey}.especificar`}
-                control={control}
-                render={({ field }) => (
-                  <input
-                    className="form-input"
-                    {...field}
-                    placeholder="Desgaste Especificar"
-                  />
-                )}
+              <label className="form-label-1">Desgaste</label>
+              <input
+                className="radio-input"
+                type="checkbox"
+                {...register(`rodamientoPcpVh60.${itemKey}.desgaste`)}
               />
             </div>
-            
+            <div className="item-tittle">
+              <input
+                className="form-input"
+                {...register(`rodamientoPcpVh60.${itemKey}.especificar`)}
+                placeholder="Especificar"
+              />
+            </div>
           </div>
         </div>
       ))}
 
       <h3>Transmisión freno</h3>
-      {[
-        
-        "Corona",
-        "Piñon",
-        "Pastillas Freno",
-      ].map((itemKey) => (
+      {["corona", "pinion", "pastillasFreno"].map((itemKey) => (
         <div className="item-section" key={itemKey}>
           <div className="item-field">
             <div className="item-tittle">
@@ -209,115 +149,43 @@ const PcpInspeccionVH60B = () => {
             </div>
             <div className="item-tittle">
               <label className="form-label-1">Ok</label>
-              <Controller
-                name={`itemInspeccion.${itemKey}.estado`}
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <input
-                      className="radio-input"
-                      type="radio"
-                      value= "ok"
-                      {...field}
-                      checked={field.value === "ok"}
-                      onChange={() => field.onChange("ok")}
-                    />
-                  </>
-                )}
+              <input
+                className="radio-input"
+                type="checkbox"
+                {...register(`transmisionFrenoPcpVh60.${itemKey}.ok`)}
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label">Picado</label>
-              <Controller
-                name={`itemRecepcion.${itemKey}.estado`}
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <input
-                      className="radio-input"
-                      type="radio"
-                      value= "picado"
-                      {...field}
-                      checked={field.value === "picado"}
-                      onChange={() => field.onChange("picado")}
-                    />
-                  </>
-                )}
+              <label className="form-label-1">Picado</label>
+              <input
+                className="radio-input"
+                type="checkbox"
+                {...register(`transmisionFrenoPcpVh60.${itemKey}.picado`)}
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label">Desgaste</label>
-              <Controller
-                name={`itemRecepcion.${itemKey}.estado`}
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <input
-                      className="radio-input"
-                      type="radio"
-                      value= "desgastado"
-                      {...field}
-                      checked={field.value === "desgastado"}
-                      onChange={() => field.onChange("desgastado")}
-                    />
-                  </>
-                )}
+              <label className="form-label-1">Desgaste</label>
+              <input
+                className="radio-input"
+                type="checkbox"
+                {...register(`transmisionFrenoPcpVh60.${itemKey}.desgaste`)}
               />
             </div>
             <div className="item-tittle">
               <label className="form-label-1">Roto</label>
-              <Controller
-                name={`itemRecepcion.${itemKey}.estado`}
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <input
-                      className="radio-input"
-                      type="radio"
-                      value= "roto"
-                      {...field}
-                      checked={field.value === "roto"}
-                      onChange={() => field.onChange("roto")}
-                    />
-                  </>
-                )}
+              <input
+                className="radio-input"
+                type="checkbox"
+                {...register(`transmisionFrenoPcpVh60.${itemKey}.roto`)}
               />
             </div>
-            {/* <div className="item-tittle">
-              <label className="form-label">Falta</label>
-              <Controller
-                name={`itemRecepcion.${itemKey}.estado`}
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <input
-                      className="radio-input"
-                      type="radio"
-                      value="false"
-                      {...field}
-                      checked={field.value === false}
-                      onChange={(e) => field.onChange(false)}
-                    />
-                  </>
-                )}
-              />
-            </div> */}
-            
             <div className="item-tittle">
-              {/* <label className="form-label">Requerimiento</label> */}
-              <Controller
-                name={`itemRecepcion.${itemKey}.especificar`}
-                control={control}
-                render={({ field }) => (
-                  <input
-                    className="form-input"
-                    {...field}
-                    placeholder="Observación"
-                  />
-                )}
+              <input
+                className="form-input"
+                {...register(`transmisionFrenoPcpVh60.${itemKey}.especificar`)}
+                placeholder="Especificar"
               />
             </div>
-            
           </div>
         </div>
       ))}
@@ -330,4 +198,3 @@ const PcpInspeccionVH60B = () => {
 };
 
 export default PcpInspeccionVH60B;
-

@@ -18,18 +18,18 @@ const OtForm = () => {
 
   const onSubmit = (data) => {
     const orden = {
-        numeroOT: data.numeroOT,
-        cliente: {
-          id: data.cliente_id,
-        },
-        //no trae los id, viene undefined
-        equipo: {
-          id: data.equipo_id,
-        },
-        remitoTransporte: data.remitoTransporte,
-        comentario: data.comentario,
-        etapaActual: 1
-      };
+      numeroOT: data.numeroOT,
+      cliente: {
+        id: data.cliente_id,
+      },
+      //no trae los id, viene undefined
+      equipo: {
+        id: data.equipo_id,
+      },
+      remitoTransporte: data.remitoTransporte,
+      comentario: data.comentario,
+      etapaActual: 1,
+    };
     OtService.createOt(orden);
     navigate("/dashboard/listar-ot");
     console.log(orden);
@@ -70,36 +70,43 @@ const OtForm = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={style.form_ot}>
-        <div className={style.input_ot}>
-          <label>N° OT</label>
-          <input type="text" {...register("numeroOT")} />
-        </div>
+        <div className= {style.form_container_i}>
+          <div className={style.column_two}>
+            <div className={style.input_ot}>
+              <label>Cliente</label>
+              <select {...register("cliente_id")}>
+                {clientes.map((cliente) => (
+                  <option key={cliente.id} value={cliente.id}>
+                    {cliente.razonSocial}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className={style.input_ot}>
+              <label>Equipos</label>
+              <select {...register("equipo_id")}>
+                {equipos.map((equipo) => (
+                  <option key={equipo.id} value={equipo.id}>
+                    {equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.modelo} -{" "}
+                    {equipo.tipoEquipo.marca}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className={style.column_two}>
+            <div className={style.input_ot}>
+              <label>N° OT</label>
+              <input className={style.form_input_i}  type="text" {...register("numeroOT")} />
+            </div>
 
-        <div className={style.input_ot}>
-          <label>Cliente</label>
-          <select {...register("cliente_id")}>
-            {clientes.map((cliente) => (
-              <option key={cliente.id} value={cliente.id}>
-                {cliente.razonSocial}
-              </option>
-            ))}
-          </select>
+            <div className={style.input_ot}>
+              <label>N° Rto transporte</label>
+              <input className={style.form_input_i}  type="text" {...register("remitoTransporte")} />
+            </div>
+          </div>
         </div>
-        <div className={style.input_ot}>
-          <label>Equipos</label>
-          <select {...register("equipo_id")}>
-            {equipos.map((equipo) => (
-              <option key={equipo.id} value={equipo.id}>
-                {equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.modelo} - {equipo.tipoEquipo.marca}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className={style.input_ot}>
-          <label>N° Rto transporte</label>
-          <input type="text" {...register("remitoTransporte")} />
-        </div>
-        <div>
+        {/* <div>
           <label>otro</label>
           <input
             className={style.input_check}
@@ -109,9 +116,9 @@ const OtForm = () => {
         </div>
         {includeOtro && (
           <div className={style.input_ot}>
-            <input type="text" {...register("comentario")} />
+            <input  type="text" {...register("comentario")} />
           </div>
-        )}
+        )} */}
 
         <button className={style.form_control_s} type="submit">
           Guardar
