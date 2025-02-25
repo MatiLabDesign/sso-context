@@ -59,7 +59,7 @@ import Etapas from "../components/forms/etapas/Etapas";
 import PcpIngreso from "../components/forms/etapas/PCPForm/PcpIngreso";
 import PcpRecepcion from "../components/forms/etapas/PCPForm/PcpRecepcion";
 
-import PcpEnsayo from "../components/forms/etapas/PCPForm/PcpEnsayo";
+import PcpEnsayo from "../components/forms/etapas/PCPForm/PcpEnsayoMiniGA";
 import PcpSalida from "../components/forms/etapas/PCPForm/PcpSalida";
 import UclEnsayo from "../components/forms/etapas/UCLForm/UclEnsayo";
 import UclInspeccion from "../components/forms/etapas/UCLForm/UclInspeccion";

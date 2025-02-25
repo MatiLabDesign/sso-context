@@ -40,7 +40,7 @@ export const PCP_INSPECCION_COUGAR_A = '/dashboard/etapa/inspeccionCougarA';
 export const PCP_INSPECCION_COUGAR_B = '/dashboard/etapa/inspeccionCougarB';
 export const PCP_INSPECCION_COUGAR_C = '/dashboard/etapa/inspeccionCougarC';
 
-export const PCP_ENSAYO = '/dashboard/etapa/ensayoPCP';
+export const PCP_ENSAYO = '/dashboard/etapa/ensayoMiniGA';
 export const PCP_SALIDA = '/dashboard/etapa/salidaPCP';
 
 export const INGRESOUCL = '/dashboard/etapa/ingresoUCL';

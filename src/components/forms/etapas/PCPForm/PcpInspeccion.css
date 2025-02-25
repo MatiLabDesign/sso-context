@@ -1,6 +1,15 @@
 input[type="checkbox"]{
     width: 15px;
     height: 15px;
+    /* color: red; */
+    /* appearance: none; */
+    /* background-color: blueviolet; */
+
+}
+input[type="checkbox"]:checked{
+    width: 15px;
+    height: 15px;
+    background-color: rgb(8, 154, 122);
     /* appearance: none; */
     /* background-color: blueviolet; */
 

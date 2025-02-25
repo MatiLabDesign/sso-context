@@ -10,15 +10,16 @@ const PcpInspeccionVH60C = () => {
   const tipoEquipo = window.localStorage.getItem("tipoEquipo");
   const etapaActual = window.localStorage.getItem("etapaActual");
   const numeroOT = window.localStorage.getItem("numeroOT");
+  const inspeccionId = window.localStorage.getItem("ordenId");
 
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
       const inspeccion = data;
-      await InspeccionService.updateInspeccion(22, inspeccion);
+      await InspeccionService.updateInspeccion(inspeccionId, inspeccion);
       console.log("Datos enviados exitosamente:", inspeccion);
-      navigate("/dashboard/etapa/ensayoPCP");
+      navigate("/dashboard/etapa/ensayoMiniGA");
     } catch (error) {
       console.error("Error al enviar los datos:", error);
     }

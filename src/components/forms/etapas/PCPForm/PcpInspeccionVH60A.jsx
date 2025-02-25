@@ -41,7 +41,9 @@ const PcpInspeccionVH60A = () => {
 
       {/* Iterar sobre cada propiedad en itemRecepcion */}
       <h3>Lubricantes</h3>
-      {["lubricanteBlockPortaRodamientos", "lubricanteSistemaFreno"].map(
+
+      {/* //modificar nombre de acuerdo al Json */}
+      {["lubBlockPortaRod", "lubricanteSistemaFreno"].map(
         (itemKey) => (
           <div className="item-section" key={itemKey}>
             <div className="item-field">

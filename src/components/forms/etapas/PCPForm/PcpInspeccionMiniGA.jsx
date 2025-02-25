@@ -2,149 +2,172 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import "./PcpInspeccion.css";
 import "./PcpRecepcion2.css";
+import inspeccionPCPminiG from './../../../../data/inspeccionPCPminiG';
+import { useNavigate } from 'react-router-dom';
 
 const PcpInspeccionMiniGA = () => {
   const { register, handleSubmit, control, formState: { errors } } = useForm({
-    defaultValues: {
-      comentario: "Inspección inicial de prueba",
-      eliminado: false,
-      lubricantePcpMiniG: {
-        lubricanteBlockPortaRodamientos: {
-          ok: false,
-          particulasMetalicas: false,
-          agua: false,
-          sucio: true,
-        },
-      },
-      itemPcpMiniG: {
-        ejeMotriz: {
-          ok: true,
-          alojamientoRodamiento: false,
-          alojamientoReten: false,
-          diametro: 20.5,
-          deformado: false,
-        },
-        blockCabezal: {
-          ok: true,
-          alojamientoRodamiento: true,
-          alojamientoReten: false,
-          diametro: 15.3,
-          deformado: false,
-        },
-        placaInferior: {
-          ok: false,
-          alojamientoRodamiento: true,
-          alojamientoReten: true,
-          diametro: 18.0,
-          deformado: true,
-        },
-      },
-      rodamientoPcpMiniG: {
-        ok: false,
-        picado: true,
-        laminado: false,
-        fallaEnJaula: true,
-        desgaste: "Moderado",
-      },
-    },
+    defaultValues: inspeccionPCPminiG
   });
 
-  const onSubmit = (data) => console.log(data);
+  const tipoEquipo = window.localStorage.getItem("tipoEquipo");
+  const etapaActual = window.localStorage.getItem("etapaActual");
+  const numeroOT = window.localStorage.getItem("numeroOT");
+
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    try {
+      const inspeccion = data;
+      // await InspeccionService.createInspeccion(inspeccion);
+
+      console.log("Datos enviados exitosamente:", inspeccion);
+      navigate("/dashboard/etapa/inspeccionMiniGB");
+    } catch (error) {
+      console.error("Error al enviar los datos:", error);
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {/* Comentario */}
-      <div>
-        <label htmlFor="comentario">Comentario:</label>
-        <textarea id="comentario" {...register("comentario")} />
+    <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
+      <h3 className="form-title">
+        {/* Inspección A | {tipoEquipo} - OT N°{numeroOT} */}
+        Inspección MiniG A
+      </h3>
+
+      {/* Campo para comentario */}
+      <div className="form-group">
+        <label className="form-label">Comentario</label>
+        <input {...register("comentario")} placeholder="Comentario" />
       </div>
 
-      {/* Eliminado */}
-      <div>
-        <label htmlFor="eliminado">Eliminado:</label>
-        <input className='check' type="checkbox" id="eliminado" {...register("eliminado")} />
-      </div>
+      {/* Iterar sobre cada propiedad en itemRecepcion */}
+      <h3>Lubricantes</h3>
 
-      {/* Lubricantes */}
-      <div>
-        <h3>Lubricantes</h3>
+      {/* //modificar nombre de acuerdo al Json */}
+      {["lubBlockPortaRod"].map(
+        (itemKey) => (
+          <div className="item-section" key={itemKey}>
+            <div className="item-field">
+              <div className="item-tittle">
+                <h4 className="item-title">{itemKey}</h4>
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">Ok</label>
+                <input
+                  className="radio-input"
+                  type="checkbox"
+                  {...register(`lubricantePcpVh60.${itemKey}.ok`)}
+                />
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">PM</label>
+                <input
+                  className="radio-input"
+                  type="checkbox"
+                  {...register(
+                    `lubricantePcpVh60.${itemKey}.particulasMetalicas`
+                  )}
+                />
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">Agua</label>
+                <input
+                  className="radio-input"
+                  type="checkbox"
+                  {...register(`lubricantePcpVh60.${itemKey}.agua`)}
+                />
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">Sucio</label>
+                <input
+                  className="radio-input"
+                  type="checkbox"
+                  {...register(`lubricantePcpVh60.${itemKey}.sucio`)}
+                />
+              </div>
 
-        {/* Lubricante Block Porta Rodamientos */}
-        <div className='container-into'>
-          <h4>Lubricante Block Porta Rodamientos</h4>
-          <label htmlFor="estadoLubricanteBlock">Estado:</label>
-          <input className='check' type="checkbox" id="estadoLubricanteBlock" {...register("lubricantePcpVh60.lubricanteBlockPortaRodamientos.estado")} value={true} /> Bueno
-          <input className='check' type="checkbox" id="estadoLubricanteBlock" {...register("lubricantePcpVh60.lubricanteBlockPortaRodamientos.estado")} value={false} /> Malo
+              <div className="item-tittle">
+                <input
+                  className="form-input"
+                  {...register(`lubricantePcpVh60.${itemKey}.especificar`)}
+                  placeholder="Especificar"
+                />
+              </div>
+            </div>
+          </div>
+        )
+      )}
 
-          <label htmlFor="especificarLubricanteBlock">Especificar:</label>
-          <input type="text" id="especificarLubricanteBlock" {...register("lubricantePcpVh60.lubricanteBlockPortaRodamientos.especificar")} />
-        </div>
+      <h3>Item</h3>
+      {["ejeMotriz", "blockCabezal", "placaInferior"].map(
+        (itemKey) => (
+          <div className="item-section" key={itemKey}>
+            <div className="item-tittle">
+              <h4 className="item-title">{itemKey}</h4>
+            </div>
+            <div className="item-tittle">
+              <label className="form-label">Ok</label>
+              <input
+                type="checkbox"
+                name="check aceite"
+                className="radio-input"
+                {...register(`itemPcpVh60.${itemKey}.ok`)}
+              />
+            </div>
+            <div className="item-tittle">
+              <label className="form-label">Retén</label>
+              <input
+                type="checkbox"
+                name="check aceite"
+                className="radio-input"
+                {...register(`itemPcpVh60.${itemKey}.alojamientoReten`)}
+              />
+            </div>
+            <div className="item-tittle">
+              <label className="form-label">Rodamiento</label>
+              <input
+                type="checkbox"
+                name="check aceite"
+                className="radio-input"
+                {...register(`itemPcpVh60.${itemKey}.alojamientoRodamiento`)}
+              />
+            </div>
+            <div className="item-tittle">
+              <label className="form-label">Diametro</label>
+              <input
+                type="checkbox"
+                name="check aceite"
+                className="radio-input"
+                {...register(`itemPcpVh60.${itemKey}.diametro`)}
+              />
+            </div>
+            <div className="item-tittle">
+              <label className="form-label">Deformado</label>
+              <input
+                type="checkbox"
+                name="check aceite"
+                className="radio-input"
+                {...register(`itemPcpVh60.${itemKey}.deformado`)}
+              />
+            </div>
 
-        {/* Lubricante Sistema Freno */}
-        <div>
-          <h4>Lubricante Sistema Freno</h4>
-          <label htmlFor="estadoLubricanteFreno">Estado:</label>
-          <input className='check' type="checkbox" id="estadoLubricanteFreno" {...register("lubricantePcpVh60.lubricanteSistemaFreno.estado")} value={true} /> Bueno
-          <input className='check' type="checkbox" id="estadoLubricanteFreno" {...register("lubricantePcpVh60.lubricanteSistemaFreno.estado")} value={false} /> Malo
+            <div className="item-tittle">
+              <input
+                className="form-input"
+                {...register(`itemPcpVh60.${itemKey}.especificar`)}
+                placeholder="Especificar"
+              />
+            </div>
+          </div>
+        )
+      )}
 
-          <label htmlFor="especificarLubricanteFreno">Especificar:</label>
-          <input type="text" id="especificarLubricanteFreno" {...register("lubricantePcpVh60.lubricanteSistemaFreno.especificar")} />
-        </div>
-      </div>
-
-      {/* Items */}
-      <div>
-        <h3>Items</h3>
-
-        {/* Eje Motriz */}
-        <div>
-          <h4>Eje Motriz</h4>
-          <label htmlFor="estadoEjeMotriz">Estado:</label>
-          <input className='check' type="checkbox" id="estadoEjeMotriz" {...register("itemPcpVh60.ejeMotriz.estado")} value={true} /> Bueno
-          <input className='check' type="checkbox" id="estadoEjeMotriz" {...register("itemPcpVh60.ejeMotriz.estado")} value={false} /> Malo
-
-          <label htmlFor="diametroEjeMotriz">Diámetro:</label>
-          <input type="text" id="diametroEjeMotriz" {...register("itemPcpVh60.ejeMotriz.diametro")} />
-        </div>
-
-        {/* Block Cabezal */}
-        <div>
-          <h4>Block Cabezal</h4>
-          <label htmlFor="estadoBlockCabezal">Estado:</label>
-          <input className='check' type="checkbox" id="estadoBlockCabezal" {...register("itemPcpVh60.blockCabezal.estado")} value={true} /> Bueno
-          <input className='check' type="checkbox" id="estadoBlockCabezal" {...register("itemPcpVh60.blockCabezal.estado")} value={false} /> Malo
-
-          <label htmlFor="diametroBlockCabezal">Diámetro:</label>
-          <input className='check' type="text" id="diametroBlockCabezal" {...register("itemPcpVh60.blockCabezal.diametro")} />
-        </div>
-
-        {/* Placa Inferior */}
-        <div>
-          <h4>Placa Inferior</h4>
-          <label htmlFor="estadoPlacaInferior">Estado:</label>
-          <input className='check' type="checkbox" id="estadoPlacaInferior" {...register("itemPcpVh60.placaInferior.estado")} value={true} /> Bueno
-          <input className='check' type="checkbox" id="estadoPlacaInferior" {...register("itemPcpVh60.placaInferior.estado")} value={false} /> Malo
-
-          <label htmlFor="diametroPlacaInferior">Diámetro:</label>
-          <input type="text" id="diametroPlacaInferior" {...register("itemPcpVh60.placaInferior.diametro")} />
-        </div>
-
-        {/* Placa Superior */}
-        <div>
-          <h4>Placa Superior</h4>
-          <label htmlFor="estadoPlacaSuperior">Estado:</label>
-          <input className='check' type="checkbox" id="estadoPlacaSuperior" {...register("itemPcpVh60.placaSuperior.estado")} value={true} /> Bueno
-          <input className='check' type="checkbox" id="estadoPlacaSuperior" {...register("itemPcpVh60.placaSuperior.estado")} value={false} /> Malo
-
-          <label htmlFor="diametroPlacaSuperior">Diámetro:</label>
-          <input type="text" id="diametroPlacaSuperior" {...register("itemPcpVh60.placaSuperior.diametro")} />
-        </div>
-      </div>
-
-      <button type="submit">Enviar</button>
+      <button type="submit" className="form-button">
+        Guardar
+      </button>
     </form>
   );
 };
-
 
 export default PcpInspeccionMiniGA;
