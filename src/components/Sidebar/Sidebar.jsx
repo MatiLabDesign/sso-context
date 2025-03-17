@@ -24,7 +24,7 @@ const Sidebar = () => {
       </div>
       <div className={style.menu_row}>
         <Link className={''} to={OS}>
-          <button className={style.bbtn2}>Servicio Campo</button>
+          <button className={style.bbtn2}>Cliente View</button>
         </Link>
         <Link className={''} to={OT}>
           <button className={style.bbtn}>Nueva OT</button>

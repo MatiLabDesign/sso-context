@@ -22,26 +22,30 @@ const PcpRecepcion = () => {
   const navigate = useNavigate();
 
   const { allOts, otActual, loading, error } = useOrdenData(ordenId);
-  
-  useEffect(() => {
-    if (!loading && otActual) {
-      console.log("✅ Están en una OT específica:", JSON.stringify(otActual));
-      console.log("✅ Estas son todas las OTs:", JSON.stringify(allOts));
-    }
-  }, [otActual, allOts, loading]);
-  
+  console.log("Estan son todas la oTsssss" , JSON.stringify(otActual));
+  console.log("Este está después de useOrdenData", JSON.stringify(otActual, null, 2));
+//   const [otActual, setOtActual] = useState(null)
+//   console.log(otActual);
 
+//  useEffect(() => {
+//     console.log("ordenId recibido en el hook:", ordenId);
+//     const fetchOrdenData = async () => {
+//       if (!ordenId) return;
+//       try {
+//         const response = await OtService.getOtById(ordenId);
+//         console.log("OT específica recibida:", response.data);
+//         if (response.data) setOtActual(response.data);
+//       } catch (error) {
+//         console.error("Error al obtener la OT específica:", error);
+//       }
+//     };
 
-  const [recepcionId, setRecepcionId] = useState(null);
+//     fetchOrdenData();
+//   }, [ordenId]);
 
-useEffect(() => {
-  if (otActual?.id) {
-    setRecepcionId(otActual.recepcion.id); // Asigna el valor solo cuando esté disponible
-  }
-}, [otActual]);
-console.log("este es RECEPCION ID "+recepcionId); 
+//   console.log(otActual);
 
-
+  const recepcionId = otActual?.id;
   const {
     recepcionActual,
     loading: recepcionLoading,
@@ -49,15 +53,6 @@ console.log("este es RECEPCION ID "+recepcionId);
     createRecepcion,
     updateRecepcion,
   } = useRecepcionData(recepcionId, reset);
-  
-  useEffect(() => {
-    if (recepcionActual?.id) {
-      console.log("este este ess la recepcion actual iddddd" + recepcionActual.id); // Asigna el valor solo cuando esté disponible
-    }
-  }, [otActual]);
-  console.log("este este essssssss" + recepcionId);
-
-
 
   const onSubmit = async (data) => {
     try {
@@ -68,7 +63,12 @@ console.log("este es RECEPCION ID "+recepcionId);
       } else {
         const nuevaRecepcion = await createRecepcion(data);
         console.log("Nueva recepción creada:", nuevaRecepcion);
-        console.log(data);
+
+        // if (nuevaRecepcion?.data) {
+        //   updateRecepcion(recepcionId, nuevaRecepcion.data);
+          
+        // }
+
         if (modeloEquipo) {
           navigate(`/dashboard/etapa/inspeccion${modeloEquipo}A`);
         } else {

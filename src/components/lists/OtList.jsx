@@ -39,32 +39,23 @@ const OtList = () => {
 
   const navigate = useNavigate();
 
-  const verDetalle = (id, numeroOT ) => {
+  const verDetalle = (id, equipo) => {
     
     const ordenId = id;
-    // const tipoEquipo = equipo.tipoEquipo.tipo;
-    // const modeloEquipo = equipo.tipoEquipo.modelo;
-    // const marcaEquipo = equipo.tipoEquipo.marca;
-    // const etapaActual = etapaActual;
-    const OT = numeroOT;
+    const tipoEquipo = equipo.tipoEquipo.tipo;
+    
     window.localStorage.setItem("ordenId", ordenId);
-    // window.localStorage.setItem("tipoEquipo", tipoEquipo);
-    // window.localStorage.setItem("modeloEquipo", modeloEquipo);
-    // window.localStorage.setItem("marcaEquipo", marcaEquipo);
-    // window.localStorage.setItem("etapaActual", etapaActual);
-    window.localStorage.setItem("numeroOT", OT);
 
-    // console.log(tipoEquipo);
-    // console.log(modeloEquipo);
-    // console.log(marcaEquipo);
-    // console.log(etapaActual);
-    console.log(numeroOT);
     console.log(ordenId);
-    navigate(`/dashboard/etapa/ingresoPCP`);
+    console.log(tipoEquipo);
+
+    // navigate(`/dashboard/etapa/ingreso${tipoEquipo}`);
+    navigate(`/dashboard/etapa/consultarOt`);
   };
 
   return (
     <div className={style.list_container}>
+      
       <div className={style.search_container}>
         <input
           value={search}
@@ -74,6 +65,10 @@ const OtList = () => {
           className={style.form_control}
         />
       </div>
+
+      <button className={style.button3}>Activas</button>
+      <button className={style.button3}>Terminadas</button>
+      
       <div className={style.table_container}>
         <table className={style.tabla}>
           <thead className={style.table_head}>
@@ -99,17 +94,16 @@ const OtList = () => {
                   
                   {numeroOT}
                 </td>
-                {/* <td className={style.list_content_content}>
-                  {ots.cliente.cuit}
-                </td> */}
                 <td className={style.list_content_content}>
                   {equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.modelo}{" "}
                   - {equipo.tipoEquipo.marca}
                 </td>
                 <td className={style.list_content}>{etapaActual}</td>
                 <td className={style.list_content}>{cliente.razonSocial}</td>
-                <button className={style.button2} onClick={() => verDetalle(id, numeroOT)}><IoIosCopy />
-                </button>
+                <td>
+                  <button className={style.button2} onClick={() => verDetalle(id, equipo)}><IoIosCopy />
+                  </button>
+                </td>
                 {/* <FaFileAlt /> */}
                  {/* <BsCardChecklist /> */}
               </tr>
@@ -118,7 +112,6 @@ const OtList = () => {
           </tbody>
         </table>
       </div>
-      {/* <Outlet/> */}
     </div>
   );
 };

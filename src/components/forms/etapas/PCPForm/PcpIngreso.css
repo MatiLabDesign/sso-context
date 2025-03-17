@@ -1,0 +1,21 @@
+.cliente_container{
+    display: flex;
+}
+.equipo_container{
+    display: flex;
+}
+
+
+.cliente_element{
+    display: flex;
+}
+
+p{
+    margin-right: 30px;
+}
+
+.cliente_title{
+    font-weight: 700;
+    color: rgb(95, 95, 95);
+}
+

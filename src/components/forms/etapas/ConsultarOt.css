@@ -1,0 +1,29 @@
+.consultar_container{
+    margin: 50px 100px;
+}
+
+.cliente_container{
+    display: flex;
+}
+.equipo_container{
+    display: flex;
+}
+
+
+.cliente_element{
+    display: flex;
+}
+
+p{
+    margin-right: 30px;
+}
+
+.cliente_title{
+    font-weight: 700;
+    color: rgb(95, 95, 95);
+}
+
+.activa{
+    color: rgb(0, 130, 69);
+    font-weight: 700;
+}

@@ -30,7 +30,7 @@ const PcpInspeccionVH60A = () => {
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
       <h3 className="form-title">
         {/* Inspección A | {tipoEquipo} - OT N°{numeroOT} */}
-        Inspección A
+        Inspección VH60 A
       </h3>
 
       {/* Campo para comentario */}

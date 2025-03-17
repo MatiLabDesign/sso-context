@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import {
   CLIENT,
+  CONSULTA,
   CREATECLIENTE,
   CREATEEQUIPO,
   CREATETIPOEQUIPO,
@@ -85,6 +86,7 @@ import PcpInspeccionCougarC from "./../components/forms/etapas/PCPForm/PcpInspec
 import PcpInspeccionVH60A from "../components/forms/etapas/PCPForm/PcpInspeccionVH60A";
 import EtapasRoutes from "./EtapasRoutes";
 import OsForm from "../components/forms/OsForm";
+import ConsultarOt from "../components/forms/etapas/ConsultarOt";
 
 const DashboardRoutes = () => {
   return (
@@ -104,9 +106,10 @@ const DashboardRoutes = () => {
           <Route path={OT} element={<OtForm />} />
           <Route path={OS} element={<OsForm />} />
           <Route path={OTLIST} element={<Ot />} />
-            {/* <Route>
+          {/* <Route>
               <EtapasRoutes/>
             </Route> */}
+          <Route path={CONSULTA} element={<ConsultarOt />} />
           <Route path={ETAPA} element={<Etapas />}>
             <Route path={PCP_INGRESO} element={<PcpIngreso />} />
 

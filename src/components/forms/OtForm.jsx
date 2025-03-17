@@ -15,10 +15,16 @@ const OtForm = () => {
   } = useForm();
 
   const navigate = useNavigate();
+  //---------------------------------------------
+  //crear el numero de OT de acuerdo al equipo
+  const createNumeroEquipo = () =>{
+    console.log("se está generando un numero de OT");
+    //acá voy a colocar la logica para crear el número de OT
+  }
 
   const onSubmit = (data) => {
     const orden = {
-      numeroOT: data.numeroOT,
+      numeroOT: createNumeroEquipo(),
       cliente: {
         id: data.cliente_id,
       },
@@ -97,7 +103,8 @@ const OtForm = () => {
           <div className={style.column_two}>
             <div className={style.input_ot}>
               <label>N° OT</label>
-              <input className={style.form_input_i}  type="text" {...register("numeroOT")} />
+              <p {...register("numeroOT")}>OT1522362</p>
+              {/* <input className={style.form_input_i}  type="text" {...register("numeroOT")} /> */}
             </div>
 
             <div className={style.input_ot}>
@@ -121,7 +128,7 @@ const OtForm = () => {
         )} */}
 
         <button className={style.form_control_s} type="submit">
-          Guardar
+          Generar OT
         </button>
       </form>
     </>
