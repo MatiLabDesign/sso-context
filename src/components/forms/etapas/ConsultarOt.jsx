@@ -18,14 +18,14 @@ const ConsultarOt = () => {
 
   const [ordenData, setOrdenData] = useState(null); // Estado para almacenar los datos de la orden
 
-  const ordenID = window.localStorage.getItem("ordenId");
+  const ordenId = window.localStorage.getItem("ordenId");
 
   useEffect(() => {
     const fetchIngresoOrdenData = async () => {
-      if (!ordenID) return; // Si no hay ordenId, no hace nada
+      if (!ordenId) return; // Si no hay ordenId, no hace nada
 
       try {
-        const response = await OtService.getOtById(ordenID);
+        const response = await OtService.getOtById(ordenId);
         if (response.data) {
           setOrdenData(response.data); // Guardamos los datos en el estado
         }
@@ -35,7 +35,7 @@ const ConsultarOt = () => {
     };
 
     fetchIngresoOrdenData();
-  }, [ordenID]);
+  }, [ordenId]);
 
   const etapasMap = {
     1: `ingreso${ordenData?.equipo.tipoEquipo.tipo || ""}`,

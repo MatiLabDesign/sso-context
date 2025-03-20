@@ -64,6 +64,9 @@ const EquiposList = () => {
               <th className={style.lists_tittles} scope="col">
               N° de Serie
               </th>
+              <th className={style.lists_tittles} scope="col">
+              Marca
+              </th>
               {/* <th className={style.lists_tittles} scope="col">
                 Remito transporte
               </th> */}
@@ -74,8 +77,8 @@ const EquiposList = () => {
               <tr className={style.table_row} key={equipo.id}>
                 <td className={style.list_content_content}>{equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.modelo} - {equipo.tipoEquipo.marca}</td>
                 <td className={style.list_content}>{equipo.numSerieEquipo}</td>
-                {/* <td className={style.list_content}>{equipo.tipoEquipo.marca}</td>
-                <td className={style.list_content}>{equipo.tipoEquipo.modelo}</td> */}
+                <td className={style.list_content}>{equipo.tipoEquipo.marca}</td>
+                {/* <td className={style.list_content}>{equipo.tipoEquipo.modelo}</td> */}
               </tr>
             ))}
           </tbody>

@@ -13,35 +13,38 @@ const PcpRecepcion = () => {
     defaultValues: recepcionPCP,
   });
 
-  const tipoEquipo = localStorage.getItem("tipoEquipo");
-  const modeloEquipo = localStorage.getItem("modeloEquipo");
   const ordenId = localStorage.getItem("ordenId");
-
+ 
   console.log(ordenId);
 
   const navigate = useNavigate();
 
-  const { allOts, otActual, loading, error } = useOrdenData(ordenId);
+  
+
+  const { allOts, otActual, updateOt, loading, error } = useOrdenData(ordenId);
   
   useEffect(() => {
-    if (!loading && otActual) {
-      console.log("✅ Están en una OT específica:", JSON.stringify(otActual));
-      console.log("✅ Estas son todas las OTs:", JSON.stringify(allOts));
-    }
-  }, [otActual, allOts, loading]);
+    if (otActual) {
+      console.log("✅ Datos recibidos:", otActual);
   
-
-
+      if (otActual.recepcion && otActual.recepcion.id) {
+        setRecepcionId(otActual.recepcion.id);
+        
+      } else {
+        console.warn("⚠️ Advertencia: `otActual.recepcion` no tiene un ID válido.");
+        setRecepcionId(null); // Limpia el estado para evitar errores posteriores
+      }
+    }
+  }, [otActual]);
+  
   const [recepcionId, setRecepcionId] = useState(null);
-
-useEffect(() => {
-  if (otActual?.id) {
-    setRecepcionId(otActual.recepcion.id); // Asigna el valor solo cuando esté disponible
-  }
-}, [otActual]);
-console.log("este es RECEPCION ID "+recepcionId); 
-
-
+  
+  useEffect(() => {
+    if (recepcionId) {
+        console.log("✅ Este es el id de recepción:", recepcionId);
+     }
+}, [recepcionId]);
+ 
   const {
     recepcionActual,
     loading: recepcionLoading,
@@ -49,43 +52,76 @@ console.log("este es RECEPCION ID "+recepcionId);
     createRecepcion,
     updateRecepcion,
   } = useRecepcionData(recepcionId, reset);
-  
+
   useEffect(() => {
-    if (recepcionActual?.id) {
-      console.log("este este ess la recepcion actual iddddd" + recepcionActual.id); // Asigna el valor solo cuando esté disponible
+    if (recepcionActual) {
+        console.log("✅ Datos Recepción actual:", recepcionActual);
     }
-  }, [otActual]);
-  console.log("este este essssssss" + recepcionId);
+}, [recepcionActual]);
 
+const onSubmit = async (data) => {
+  try {
+    const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
+    const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
 
+    if (recepcionId) {
+      console.log("Recepción existente:", recepcionId);
 
-  const onSubmit = async (data) => {
-    try {
-      if (recepcionActual && Object.keys(recepcionActual).length > 0) {
-        console.log("Recepción existente:", recepcionActual);
-        updateRecepcion(recepcionActual);
-        console.log(recepcionActual)
+      await updateRecepcion(recepcionId, data);
+      console.log("✅ Recepción actualizada correctamente:", data);
+
+      if (modeloEquipoActual && tipoEquipoActual) {
+        navigate(`/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}A`);
       } else {
-        const nuevaRecepcion = await createRecepcion(data);
-        console.log("Nueva recepción creada:", nuevaRecepcion);
-        console.log(data);
-        if (modeloEquipo) {
-          navigate(`/dashboard/etapa/inspeccion${modeloEquipo}A`);
-        } else {
-          console.error("Error: Modelo de equipo no definido");
-        }
+        console.error("❌ Error: Modelo de equipo no definido.");
       }
-    } catch (error) {
-      console.error("Error al procesar la recepción:", error);
+
+    } else {
+      console.log("🚀 Creando nueva recepción...");
+
+      const nuevaRecepcion = await createRecepcion(data);
+      console.log("✅ Nueva recepción creada:", nuevaRecepcion);
+
+      const nuevaRecepcionId = nuevaRecepcion?.id;
+      if (nuevaRecepcionId) {
+        console.log("🔄 Actualizando OT con ID de nueva recepción...");
+
+        const updatedOt = {
+          ...otActual,
+          recepcion: { id: nuevaRecepcionId }
+        };
+
+        console.log("🔍 JSON enviado a la API:", updatedOt);
+
+        await updateOt(ordenId, updatedOt);
+
+        console.log("✅ OT actualizada con éxito.");
+
+        if (modeloEquipoActual && tipoEquipoActual) {
+          navigate(`/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}A`);
+        } else {
+          console.error("❌ Error: Modelo de equipo no definido.");
+        }
+
+      } else {
+        console.error("❌ Error: No se pudo obtener el ID de la nueva recepción.");
+        return;
+      }
     }
-  };
+  } catch (error) {
+    console.error("❌ Error al procesar la recepción:", error);
+  }
+};
+
+
+
 
   // if (loading || recepcionLoading) return <p>Cargando datos...</p>;
   // if (error) return <p>{error}</p>;
   // if (recepcionError) return <p>{recepcionError}</p>;
 
   // console.log(allOts);
-  console.log(otActual);
+  // console.log(ordenData);
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>

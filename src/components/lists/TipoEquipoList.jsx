@@ -50,9 +50,9 @@ const TipoEquipoList = () => {
       </div>
 
       <div className={style.table_container}>
-        <Link to="/dashboard/tipoequipo/nuevo-tipo-equipo">
+         <Link to="/dashboard/tipoequipo/nuevo-tipo-equipo">
           <button className={style.form_control_s}>Crear Tipo</button>
-        </Link>
+         </Link> 
         <table className={style.tabla}>
           <thead className={style.table_head}>
             <tr className={style.table_row}>
@@ -64,7 +64,7 @@ const TipoEquipoList = () => {
               </th>
               <th className={style.lists_tittles} scope="col">
                 Marca
-              </th>
+              </th> 
             </tr>
           </thead>
           <tbody className={style.table_body}>

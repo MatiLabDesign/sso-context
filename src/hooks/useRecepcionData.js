@@ -13,8 +13,8 @@ const useRecepcionData = (recepcionId, reset) => {
 
       setLoading(true);
       try {
-        // const response = await RecepcionService.getRecepcionById(recepcionId);
-        const response = 2;
+        const response = await RecepcionService.getRecepcionById(recepcionId);
+        // const response = 2;
         if (response.data) {
           setRecepcionActual(response.data);
           reset(response.data); // Rellena el formulario
@@ -46,7 +46,7 @@ const useRecepcionData = (recepcionId, reset) => {
 
   const updateRecepcion = async (id, data) => {
     try {
-      const response = await RecepcionService.updateOt(id, data);
+      const response = await RecepcionService.updateRecepcion(id, data);
       setRecepcionActual(response.data);
       return response;
     } catch (err) {

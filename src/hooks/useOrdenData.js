@@ -38,18 +38,19 @@ const useOrdenData = (ordenId) => {
     fetchAllOts();
   }, []); // Se ejecuta solo una vez
 
-  const updateOrden = (ordenId, data) => {
+  const updateOt = (ordenId, data) => {
       try {
         const response = OtService.updateOt(ordenId, data);
-        setRecepcionActual(response.data);
+        setOtActual(response.data);
         return response;
       } catch (err) {
         setError("Error al actualizar la recepción");
         throw err;
       }
     };
+    
 
-  return { otActual, allOts, loading, error };
+  return { otActual, allOts, updateOt, loading, error };
 };
 
 export default useOrdenData;

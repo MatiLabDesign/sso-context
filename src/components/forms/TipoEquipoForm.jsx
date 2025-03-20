@@ -46,14 +46,14 @@ const TipoEquipoForm = () => {
           </select>
         </div>
 
-        <div className={style.input_tipo}>
+        {/* <div className={style.input_tipo}>
           <label>Marca</label>
           <input
             type="text"
             {...register("marca")}
           />
           
-        </div>
+        </div> */}
 
         {/* <div className={style.input_tipo}>
           <label>Marca</label>
