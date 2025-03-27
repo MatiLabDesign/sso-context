@@ -59,6 +59,9 @@ const PcpRecepcion = () => {
     }
 }, [recepcionActual]);
 
+const etapaSiguiente = 3;
+
+
 const onSubmit = async (data) => {
   try {
     const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
@@ -88,7 +91,9 @@ const onSubmit = async (data) => {
 
         const updatedOt = {
           ...otActual,
-          recepcion: { id: nuevaRecepcionId }
+          recepcion: { id: nuevaRecepcionId },
+          etapaActual: etapaSiguiente
+
         };
 
         console.log("🔍 JSON enviado a la API:", updatedOt);

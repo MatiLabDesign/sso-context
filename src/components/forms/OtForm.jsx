@@ -24,7 +24,7 @@ const OtForm = () => {
 
   const onSubmit = (data) => {
     const orden = {
-      numeroOT: createNumeroEquipo(),
+      // numeroOT: createNumeroEquipo(),
       cliente: {
         id: data.cliente_id,
       },

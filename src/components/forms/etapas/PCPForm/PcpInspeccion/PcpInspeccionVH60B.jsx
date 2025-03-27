@@ -1,76 +1,96 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import "./PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
-import { useNavigate } from "react-router-dom";
-import InspeccionService from "../../../../services/InspeccionService";
+import "../PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
+import { useNavigate, Link } from "react-router-dom";
+import InspeccionService from "../../../../../services/InspeccionService";
+import useOrdenData from "../../../../../hooks/useOrdenData";
+import useInspeccionData from "../../../../../hooks/useInspeccionData";
 
 const PcpInspeccionVH60B = () => {
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, reset, watch } = useForm();
 
-  const tipoEquipo = window.localStorage.getItem("tipoEquipo");
-  const etapaActual = window.localStorage.getItem("etapaActual");
-  const numeroOT = window.localStorage.getItem("numeroOT");
-  const inspeccionId = window.localStorage.getItem("ordenId");
+  const ordenId = window.localStorage.getItem("ordenId");
 
   const navigate = useNavigate();
-  // const [inspeccionId, setInspeccionId] = useState();
+  console.log(ordenId)
 
-  // Cargar todas las inspecciones//////////
-  // useEffect(() => {
-  //   const fetchRecepcionData = async () => {
-  //     try {
-  //       const response = await InspeccionService.getAllInspecciones(); 
-  //       setInspeccionId(response.data.length);
-  //       console.log("Datos recibidos:", response.data);
+  const { allOts, otActual, updateOt, loading, error } = useOrdenData(ordenId);
+
+
+  useEffect(() => {
+    if (otActual) {
+      console.log("✅ Datos recibidos:", otActual);
+  
+      if (otActual.inspeccionPcpVh60 && otActual.inspeccionPcpVh60.id) {
+        setInspecionId(otActual.inspeccionPcpVh60.id);
         
-  //     } catch (error) {
-  //       console.error("Error al obtener los datos de recepción:", error);
-  //     }
-  //   };
+      } else {
+        console.warn("⚠️ Advertencia: `otActual.inspeccionPcpVh60` no tiene un ID válido.");
+        setInspecionId(null); // Limpia el estado para evitar errores posteriores
+      }
+    }
+  }, [otActual]);
+  
+  const [inspeccionId, setInspecionId] = useState(null);
 
-  //   fetchRecepcionData();
-  // }, []); 
-
-  // useEffect(() => {
-  //   console.log("La cantidad de registros son:", inspeccionId);
-  // }, [inspeccionId]);
-
-  // useEffect(() => {
-  //   const fetchInspeccionById = async () => {
-  //     try {
-  //       const response = await InspeccionService.getInspeccionById(inspeccionId); 
-  //       setInspeccionId(response.data.length);
-  //       console.log("Datos por id", response.data);
-        
-  //     } catch (error) {
-  //       console.error("Error al obtener los datos de recepción:", error);
-  //     }
-  //   };
-
-  //   fetchInspeccionById();
-  // }, []);
+  useEffect(() => {
+    if (inspeccionId) {
+        console.log("✅ Este es el id de Inspección:", inspeccionId);
+     }
+}, [inspeccionId]);
  
+  const { inspeccionActual, createInspeccion, updateInspeccion } = useInspeccionData(inspeccionId, reset);
+
+  useEffect(() => {
+    if (inspeccionActual) {
+        console.log("✅ Datos Inspección actual:", inspeccionActual);
+    }
+}, [inspeccionActual]);
+
   const onSubmit = async (data) => {
     try {
-      const inspeccion = data;
-      await InspeccionService.updateInspeccion(inspeccionId, inspeccion);
-      console.log("Datos enviados exitosamente:", inspeccion);
-      navigate("/dashboard/etapa/inspeccionVh60C");
+      const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
+      const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
+  
+      if (inspeccionId) {
+        console.log("Inspección existente:", inspeccionId);
+  
+        await updateInspeccion(inspeccionId, data);
+        console.log("✅ Inspección actualizada correctamente:", data);
+  
+        if (modeloEquipoActual && tipoEquipoActual) {
+          navigate(`/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}C`);
+        } else {
+          console.error("❌ Error: Modelo de equipo no definido.");
+        }
+        
+      } else {
+        console.log("🚀 La inspección no existe...");
+          
+      }
     } catch (error) {
-      console.error("Error al enviar los datos:", error);
+      console.error("❌ Error al procesar la inspección:", error);
     }
   };
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(
+      `/dashboard/etapa/inspeccionPCPVh60C`
+    );
+  };
+  const handleClickA = (e) => {
+    e.preventDefault();
+    navigate(
+      `/dashboard/etapa/inspeccionPCPVh60A`
+    );
+  };
+
+
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">
-        {/* Numero de registros: {inspeccionId} */}
-      </h3>
-      <h3 className="form-title">
-        Inspección B
-      </h3>
+      <h3 className="form-title">Inspección B</h3>
 
-      {/* Campo para comentario */}
       <div className="form-group">
         <label className="form-label">Comentario</label>
         <input {...register("comentario")} placeholder="Comentario" />
@@ -95,6 +115,7 @@ const PcpInspeccionVH60B = () => {
                 className="radio-input"
                 type="checkbox"
                 {...register(`rodamientoPcpVh60.${itemKey}.ok`)}
+                checked={watch(`rodamientoPcpVh60.${itemKey}.ok`)}
               />
             </div>
             <div className="item-tittle">
@@ -103,6 +124,7 @@ const PcpInspeccionVH60B = () => {
                 className="radio-input"
                 type="checkbox"
                 {...register(`rodamientoPcpVh60.${itemKey}.picado`)}
+                checked={watch(`rodamientoPcpVh60.${itemKey}.picado`)}
               />
             </div>
             <div className="item-tittle">
@@ -111,6 +133,7 @@ const PcpInspeccionVH60B = () => {
                 className="radio-input"
                 type="checkbox"
                 {...register(`rodamientoPcpVh60.${itemKey}.laminado`)}
+                checked={watch(`rodamientoPcpVh60.${itemKey}.laminado`)}
               />
             </div>
             <div className="item-tittle">
@@ -119,6 +142,7 @@ const PcpInspeccionVH60B = () => {
                 className="radio-input"
                 type="checkbox"
                 {...register(`rodamientoPcpVh60.${itemKey}.fallaEnJaula`)}
+                checked={watch(`rodamientoPcpVh60.${itemKey}.fallaEnJaula`)}
               />
             </div>
             <div className="item-tittle">
@@ -127,6 +151,7 @@ const PcpInspeccionVH60B = () => {
                 className="radio-input"
                 type="checkbox"
                 {...register(`rodamientoPcpVh60.${itemKey}.desgaste`)}
+                checked={watch(`rodamientoPcpVh60.${itemKey}.desgaste`)}
               />
             </div>
             <div className="item-tittle">
@@ -153,6 +178,7 @@ const PcpInspeccionVH60B = () => {
                 className="radio-input"
                 type="checkbox"
                 {...register(`transmisionFrenoPcpVh60.${itemKey}.ok`)}
+                checked={watch(`transmisionFrenoPcpVh60.${itemKey}.ok`)}
               />
             </div>
             <div className="item-tittle">
@@ -161,6 +187,7 @@ const PcpInspeccionVH60B = () => {
                 className="radio-input"
                 type="checkbox"
                 {...register(`transmisionFrenoPcpVh60.${itemKey}.picado`)}
+                checked={watch(`transmisionFrenoPcpVh60.${itemKey}.picado`)}
               />
             </div>
             <div className="item-tittle">
@@ -168,7 +195,8 @@ const PcpInspeccionVH60B = () => {
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`transmisionFrenoPcpVh60.${itemKey}.desgaste`)}
+                {...register(`transmisionFrenoPcpVh60.${itemKey}.desgastado`)}
+                checked={watch(`transmisionFrenoPcpVh60.${itemKey}.desgastado`)}
               />
             </div>
             <div className="item-tittle">
@@ -177,6 +205,7 @@ const PcpInspeccionVH60B = () => {
                 className="radio-input"
                 type="checkbox"
                 {...register(`transmisionFrenoPcpVh60.${itemKey}.roto`)}
+                checked={watch(`transmisionFrenoPcpVh60.${itemKey}.roto`)}
               />
             </div>
             <div className="item-tittle">
@@ -193,8 +222,11 @@ const PcpInspeccionVH60B = () => {
       <button type="submit" className="form-button">
         Guardar
       </button>
+      <Link onClick={handleClickA}>Anterior</Link>
+      <Link onClick={handleClick}>Siguiente</Link>
     </form>
   );
 };
 
 export default PcpInspeccionVH60B;
+

@@ -10,3 +10,10 @@ const genericoNumero = `TRL-OTH-${año}-${mes}`;
 console.log(pcpNumero, uclNumero, bmNumero, genericoNumero);
 
 export default pcpNumero;
+
+// pcpNumero = PCP-DH-2025-03-000001;
+// pcpNumero = PCP-DH-2025-04-000002;
+// uclNumero = RRL-UCL-2025-03-000001;
+// uclNumero = RRL-UCL-2025-04-000002;
+// bmNumero = RRL-SRP-2025-03-000001;
+// genericoNumero = TRL-OTH-2025-05-0000001;

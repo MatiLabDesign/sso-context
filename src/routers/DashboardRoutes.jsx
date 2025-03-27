@@ -72,8 +72,8 @@ import BombaRecepcion from "../components/forms/etapas/BombaForm/BombaRecepcion"
 import BombaInspeccion from "../components/forms/etapas/BombaForm/BombaInspeccion";
 import BombaEnsayo from "../components/forms/etapas/BombaForm/BombaEnsayo";
 import BombaSalida from "../components/forms/etapas/BombaForm/BombaSalida";
-import PcpInspeccionVH60B from "../components/forms/etapas/PCPForm/PcpInspeccionVH60B";
-import PcpInspeccionVH60C from "../components/forms/etapas/PCPForm/PcpInspeccionVH60C";
+import PcpInspeccionVH60B from "../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionVH60B";
+import PcpInspeccionVH60C from "../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionVH60C";
 import PcpInspeccionMiniGA from "./../components/forms/etapas/PCPForm/PcpInspeccionMiniGA";
 import PcpInspeccionMiniGB from "./../components/forms/etapas/PCPForm/PcpInspeccionMiniGB";
 import PcpInspeccionMiniGC from "./../components/forms/etapas/PCPForm/PcpInspeccionMiniGC";
@@ -83,7 +83,7 @@ import PcpInspeccionDv1C from "./../components/forms/etapas/PCPForm/PcpInspeccio
 import PcpInspeccionCougarA from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarA";
 import PcpInspeccionCougarB from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarB";
 import PcpInspeccionCougarC from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarC";
-import PcpInspeccionVH60A from "../components/forms/etapas/PCPForm/PcpInspeccionVH60A";
+import PcpInspeccionVH60A from "../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionVH60A";
 import EtapasRoutes from "./EtapasRoutes";
 import OsForm from "../components/forms/OsForm";
 import ConsultarOt from "../components/forms/etapas/ConsultarOt";

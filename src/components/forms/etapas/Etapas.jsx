@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Etapas.css";
 import { Link, Outlet } from "react-router-dom";
-import {
-  PCP_ENSAYO,
-  PCP_INGRESO,
-  PCP_INSPECCION_MINIG_A,
-  PCP_INSPECCION_VH60_A,
-  PCP_RECEPCION,
-  PCP_SALIDA,
-} from "../../../config/routes/paths";
-import OtService from "../../../services/OtService";
 import useOrdenData from "../../../hooks/useOrdenData";
 
 
@@ -19,9 +10,6 @@ const Etapas = () => {
 
   const { allOts, otActual, updateOt, loading, error } = useOrdenData(ordenId);
 
-
-  // window.localStorage.setItem("numeroOT", numeroOT);
-  // window.localStorage.setItem("equipo", equipo);
 
   const [tipoEquipo, setTipoEquipo] = useState();
   const [modeloEquipo, setModeloEquipo] = useState();
