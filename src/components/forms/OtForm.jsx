@@ -94,19 +94,13 @@ const OtForm = () => {
                 {equipos.map((equipo) => (
                   <option key={equipo.id} value={equipo.id}>
                     {equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.modelo} -{" "}
-                    {equipo.tipoEquipo.marca}
+                    {equipo.marca}
                   </option>
                 ))}
               </select>
             </div>
           </div>
           <div className={style.column_two}>
-            <div className={style.input_ot}>
-              <label>N° OT</label>
-              <p {...register("numeroOT")}>OT1522362</p>
-              {/* <input className={style.form_input_i}  type="text" {...register("numeroOT")} /> */}
-            </div>
-
             <div className={style.input_ot}>
               <label>N° Rto transporte</label>
               <input className={style.form_input_i}  type="text" {...register("remitoTransporte")} />

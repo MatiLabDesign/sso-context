@@ -97,12 +97,18 @@ const PcpInspeccionVH60C = () => {
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">Inspección C</h3>
+      <h3 className="form-title">Inspección VH60 C</h3>
 
       {/* Campo para comentario */}
       <div className="form-group">
-        <label className="form-label">Comentario</label>
-        <input {...register("comentario")} placeholder="Comentario" />
+        <div className="label-input">
+          <label className="form-label">Comentario</label>
+          <input {...register("comentario")} placeholder="Comentario" />
+        </div>
+        <div className="next-button">
+          <Link onClick={handleClick}>Siguiente</Link>
+          <Link onClick={handleClickA}>Anterior</Link>
+        </div>
       </div>
 
       {/* Iterar sobre cada propiedad en sistemaHidraulicoPcpVh60 */}
@@ -230,8 +236,6 @@ const PcpInspeccionVH60C = () => {
       <button type="submit" className="form-button">
         Guardar
       </button>
-      <Link onClick={handleClickA}>Anterior</Link>
-      <Link onClick={handleClick}>Siguiente</Link>
     </form>
   );
 };

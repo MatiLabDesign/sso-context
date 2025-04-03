@@ -6,5 +6,5 @@ export const OT_URL = "http://localhost:8080/api/orden";
 export const OS_URL = "http://localhost:8080/api/oservicio";
 export const RECEPCION_URL = "http://localhost:8080/api/recepcion";
 export const INSPECCION_URL = "http://localhost:8080/api/inspeccionesvh60";
-export const ENSAYO_URL = "http://localhost:8080/api/ensayo";
+export const ENSAYO_URL = "http://localhost:8080/api/ensayopvh60";
 export const SALIDA_URL = "http://localhost:8080/api/salida";

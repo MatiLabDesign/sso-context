@@ -19,6 +19,7 @@
 .form_control {
     width: 80%;
     height: 40px;
+    margin-left: -120px;
     border-radius: 10px;
     background-color: #99999937;
     padding-left: 25px;
@@ -32,6 +33,7 @@
     color: #666;
     width: 80%;
     padding-top: 50px;
+    margin-left: -20px;
 }
 
 .form_control_s {
@@ -76,6 +78,15 @@
     
     /* border: 2px solid #ff0000; */
 }
+.lists_tittles2 {
+    font-size: 14px;
+    display: flex;
+    width: 200px;
+    text-align: left;
+    margin-left: 5px;
+    
+    /* border: 2px solid #ff0000; */
+}
 .lists_tittles_tittle {
     
     width: 240px;
@@ -93,6 +104,15 @@
     text-align: left;
     min-width: 90px;
     width: 110px;
+    padding-left: 5px;
+    /* border: 2px solid #ff0000; */
+}
+.list_content2 {
+    font-size: 14px;
+    display: flex;
+    text-align: left;
+    min-width: 90px;
+    width: 200px;
     padding-left: 5px;
     /* border: 2px solid #ff0000; */
 }
@@ -163,9 +183,45 @@
     background-color: #059080;
     color: #fff;
     text-decoration: none;
-    border-radius: 8px;
+    border-radius: 4px;
     border: none;
     cursor: pointer;
     margin-right: 10px;
     margin-top: 15px;
+}
+.button4{
+    width: 120px;
+    height: 30px;
+    background-color: #eb7302;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 15px;
+}
+
+.imagen_container{
+    width: 30px;
+    height: 30px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mas_button{
+    width: 30px;
+    height: 30px;
+    color: #e4e4e4;
+    z-index: 3;
+    background-color: #02786a;
+    border-radius: 8px;
+    border: none;
+    margin-left: 15px;
+    margin-bottom: 30px;
+}
+.mas_button:hover{
+    background-color: #005249;
 }

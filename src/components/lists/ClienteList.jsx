@@ -48,10 +48,12 @@ const ClienteList = () => {
       </div>
 
       <div className={style.table_container}>
-        <Link to="nuevo">
-          <button className={style.form_control_s}>Crear Cliente</button>
-        </Link>
-        <table className={style.tabla}>
+        <div className={style.imagen_container}>
+          <Link to="nuevo">
+            <button className={style.mas_button}>+</button>
+          </Link>
+        </div>
+        <table className="table-auto">
           <thead className={style.table_head}>
             <tr className={style.table_row}>
               <div className={style.row_box}>

@@ -41,7 +41,7 @@ const PcpIngreso = () => {
   };
 
   return (
-    <div>
+    <div className="view_container">
         <h3>Cliente</h3>
       <div className="cliente_container">
         <div className="cliente_divisor">

@@ -67,13 +67,13 @@ const OtList = () => {
       </div>
 
       <button className={style.button3}>Activas</button>
-      <button className={style.button3}>Terminadas</button>
+      <button className={style.button4}>Terminadas</button>
       
       <div className={style.table_container}>
-        <table className={style.tabla}>
+        <table className="table-auto">
           <thead className={style.table_head}>
             <tr className={style.table_row}>
-              <th className={style.lists_tittles} scope="col">
+              <th className={style.lists_tittles2} scope="col">
                 N° OT
               </th>
               <th className={style.lists_tittles_tittle} scope="col">
@@ -90,13 +90,13 @@ const OtList = () => {
           <tbody className={style.table_body}>
             {results.map(({id, numeroOT, equipo, etapaActual, cliente}) => (
               <tr className={style.table_row} key={id}>
-                <td className={style.list_content}>
+                <td className={style.list_content2}>
                   
                   {numeroOT}
                 </td>
                 <td className={style.list_content_content}>
                   {equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.modelo}{" "}
-                  - {equipo.tipoEquipo.marca}
+                  - {equipo.marca}
                 </td>
                 <td className={style.list_content}>{etapaActual}</td>
                 <td className={style.list_content}>{cliente.razonSocial}</td>
@@ -112,6 +112,7 @@ const OtList = () => {
           </tbody>
         </table>
       </div>
+      
     </div>
   );
 };

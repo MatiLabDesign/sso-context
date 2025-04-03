@@ -17,8 +17,12 @@ const EquipoForm = () => {
   const onSubmit = (data) => {
     const equipo = {
       numSerieEquipo: data.numSerieEquipo,
+      marca: data.marca,
       tipoEquipo: {
         id: data.tipoequipo_id,
+        tipo: data.tipoequipo_id,
+        modelo: data.modelo
+        
       },
     };
     EquipoService.createEquipo(equipo);
@@ -62,7 +66,7 @@ const EquipoForm = () => {
           <select {...register("tipoequipo_id")}>
             {tipos.map((tipo) => (
               <option key={tipo.id} value={tipo.id}>
-                {tipo.tipo} - {tipo.modelo} - {tipo.marca}
+                {tipo.tipo} - {tipo.modelo}
               </option>
             ))}
           </select>

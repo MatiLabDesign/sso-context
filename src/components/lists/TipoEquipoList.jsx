@@ -1,10 +1,11 @@
 import React from "react";
 import style from "./ListStyle.module.css";
 import TipoEquipoService from "../../services/TipoEquipoService";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const TipoEquipoList = () => {
+  
 
   const [tipoEquipos, setTipoEquipos] = useState([]);
 
@@ -50,10 +51,12 @@ const TipoEquipoList = () => {
       </div>
 
       <div className={style.table_container}>
-         <Link to="/dashboard/tipoequipo/nuevo-tipo-equipo">
-          <button className={style.form_control_s}>Crear Tipo</button>
-         </Link> 
-        <table className={style.tabla}>
+        <div className={style.imagen_container}>
+                  <Link to="/dashboard/tipoequipo/nuevo-tipo-equipo">
+                    <button className={style.mas_button}>+</button>
+                  </Link>
+                </div>
+        <table className="table-auto">
           <thead className={style.table_head}>
             <tr className={style.table_row}>
               <th className={style.lists_tittles} scope="col">
@@ -62,9 +65,6 @@ const TipoEquipoList = () => {
               <th className={style.lists_tittles} scope="col">
                 Modelo
               </th>
-              <th className={style.lists_tittles} scope="col">
-                Marca
-              </th> 
             </tr>
           </thead>
           <tbody className={style.table_body}>
@@ -72,7 +72,6 @@ const TipoEquipoList = () => {
               <tr className={style.table_row} key={tipoEquipo.id}>
                 <td className={style.list_content}>{tipoEquipo.tipo}</td>
                 <td className={style.list_content}>{tipoEquipo.modelo}</td>
-                <td className={style.list_content}>{tipoEquipo.marca}</td>
               </tr>
             ))}
           </tbody>

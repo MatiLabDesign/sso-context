@@ -4,24 +4,22 @@ import EquipoService from "../../services/EquipoService";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-
-
 const EquiposList = () => {
   const [equipos, setEquipos] = useState([]);
-  
+
   useEffect(() => {
-    const fetchEquipos = async ()=>{
-      try{
+    const fetchEquipos = async () => {
+      try {
         const response = await EquipoService.getAllEquipos();
         setEquipos(response.data);
         console.log(response.data);
-      }catch (error){
+      } catch (error) {
         console.log("el error esta en el useEffect");
       }
 
     };
     fetchEquipos();
-}, []);
+  }, []);
 
   // Search con ternario
   const [search, setSearch] = useState("");
@@ -31,7 +29,6 @@ const EquiposList = () => {
     console.log(e.target.value);
   };
 
-  
   const results = !search
     ? equipos
     : equipos.filter((dato) =>
@@ -52,20 +49,22 @@ const EquiposList = () => {
       </div>
 
       <div className={style.table_container}>
-        <Link to="/dashboard/equipo/nuevo-equipo">
-          <button className={style.form_control_s}>Crear Equipo</button>
-        </Link>
-        <table className={style.tabla}>
+        <div className={style.imagen_container}>
+          <Link to="/dashboard/equipo/nuevo-equipo">
+            <button className={style.mas_button}>+</button>
+          </Link>
+        </div>
+        <table className="table-auto">
           <thead className={style.table_head}>
             <tr className={style.table_row}>
               <th className={style.lists_tittles_tittle} scope="col">
                 Tipo de equipo
               </th>
               <th className={style.lists_tittles} scope="col">
-              N° de Serie
+                N° de Serie
               </th>
               <th className={style.lists_tittles} scope="col">
-              Marca
+                Marca
               </th>
               {/* <th className={style.lists_tittles} scope="col">
                 Remito transporte
@@ -75,9 +74,11 @@ const EquiposList = () => {
           <tbody className={style.table_body}>
             {results.map((equipo) => (
               <tr className={style.table_row} key={equipo.id}>
-                <td className={style.list_content_content}>{equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.modelo} - {equipo.tipoEquipo.marca}</td>
+                <td className={style.list_content_content}>
+                  {equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.modelo}
+                </td>
                 <td className={style.list_content}>{equipo.numSerieEquipo}</td>
-                <td className={style.list_content}>{equipo.tipoEquipo.marca}</td>
+                <td className={style.list_content}>{equipo.marca}</td>
                 {/* <td className={style.list_content}>{equipo.tipoEquipo.modelo}</td> */}
               </tr>
             ))}

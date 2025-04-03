@@ -129,22 +129,23 @@ const PcpInspeccionVH60A = () => {
     }
   };
 
-  
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(
-      `/dashboard/etapa/inspeccionPCPVh60B`
-    );
+    navigate(`/dashboard/etapa/inspeccionPCPVh60B`);
   };
-  
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
       <h3 className="form-title">Inspección VH60 A</h3>
 
       <div className="form-group">
-        <label className="form-label">Comentario</label>
-        <input {...register("comentario")} placeholder="Comentario" />
+        <div className="label-input">
+          <label className="form-label">Comentario</label>
+          <input {...register("comentario")} placeholder="Comentario" />
+        </div>
+        <div className="next-button">
+          <Link onClick={handleClick}>Siguiente</Link>
+        </div>
       </div>
 
       <h3>Lubricantes</h3>
@@ -273,7 +274,6 @@ const PcpInspeccionVH60A = () => {
       <button type="submit" className="form-button">
         Guardar
       </button>
-      <Link onClick={handleClick}>Siguiente</Link>
     </form>
   );
 };

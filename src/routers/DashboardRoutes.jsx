@@ -19,6 +19,7 @@ import {
   OT,
   OTLIST,
   PCP_ENSAYO,
+  PCP_ENSAYO_VH60_B,
   PCP_INGRESO,
   PCP_INSPECCION_COUGAR_A,
   PCP_INSPECCION_COUGAR_B,
@@ -87,6 +88,8 @@ import PcpInspeccionVH60A from "../components/forms/etapas/PCPForm/PcpInspeccion
 import EtapasRoutes from "./EtapasRoutes";
 import OsForm from "../components/forms/OsForm";
 import ConsultarOt from "../components/forms/etapas/ConsultarOt";
+import PcpEnsayoVH60A from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVh60A";
+import PcpEnsayoVH60B from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVH60B";
 
 const DashboardRoutes = () => {
   return (
@@ -164,7 +167,8 @@ const DashboardRoutes = () => {
 
             <Route path={PCP_RECEPCION} element={<PcpRecepcion />} />
 
-            <Route path={PCP_ENSAYO} element={<PcpEnsayo />} />
+            <Route path={PCP_ENSAYO} element={<PcpEnsayoVH60A />} />
+            <Route path={PCP_ENSAYO_VH60_B} element={<PcpEnsayoVH60B />} />
 
             <Route path={PCP_SALIDA} element={<PcpSalida />} />
 

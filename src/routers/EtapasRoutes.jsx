@@ -57,6 +57,7 @@ import PcpInspeccionCougarA from "./../components/forms/etapas/PCPForm/PcpInspec
 import PcpInspeccionCougarB from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarB";
 import PcpInspeccionCougarC from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarC";
 import PcpInspeccionVH60A from "../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionVH60A";
+import PcpEnsayoVH60A from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVh60A";
 
 const EtapasRoutes = () => {
   return (
@@ -79,7 +80,7 @@ const EtapasRoutes = () => {
 
       <Route path={PCP_RECEPCION} element={<PcpRecepcion />} />
 
-      <Route path={PCP_ENSAYO} element={<PcpEnsayo />} />
+      <Route path={PCP_ENSAYO} element={<PcpEnsayoVH60A />} />
 
       <Route path={PCP_SALIDA} element={<PcpSalida />} />
 

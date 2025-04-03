@@ -12,61 +12,62 @@ const PcpInspeccionVH60B = () => {
   const ordenId = window.localStorage.getItem("ordenId");
 
   const navigate = useNavigate();
-  console.log(ordenId)
+  console.log(ordenId);
 
   const { allOts, otActual, updateOt, loading, error } = useOrdenData(ordenId);
-
 
   useEffect(() => {
     if (otActual) {
       console.log("✅ Datos recibidos:", otActual);
-  
+
       if (otActual.inspeccionPcpVh60 && otActual.inspeccionPcpVh60.id) {
         setInspecionId(otActual.inspeccionPcpVh60.id);
-        
       } else {
-        console.warn("⚠️ Advertencia: `otActual.inspeccionPcpVh60` no tiene un ID válido.");
+        console.warn(
+          "⚠️ Advertencia: `otActual.inspeccionPcpVh60` no tiene un ID válido."
+        );
         setInspecionId(null); // Limpia el estado para evitar errores posteriores
       }
     }
   }, [otActual]);
-  
+
   const [inspeccionId, setInspecionId] = useState(null);
 
   useEffect(() => {
     if (inspeccionId) {
-        console.log("✅ Este es el id de Inspección:", inspeccionId);
-     }
-}, [inspeccionId]);
- 
-  const { inspeccionActual, createInspeccion, updateInspeccion } = useInspeccionData(inspeccionId, reset);
+      console.log("✅ Este es el id de Inspección:", inspeccionId);
+    }
+  }, [inspeccionId]);
+
+  const { inspeccionActual, createInspeccion, updateInspeccion } =
+    useInspeccionData(inspeccionId, reset);
 
   useEffect(() => {
     if (inspeccionActual) {
-        console.log("✅ Datos Inspección actual:", inspeccionActual);
+      console.log("✅ Datos Inspección actual:", inspeccionActual);
     }
-}, [inspeccionActual]);
+  }, [inspeccionActual]);
 
   const onSubmit = async (data) => {
     try {
       const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
       const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
-  
+
       if (inspeccionId) {
         console.log("Inspección existente:", inspeccionId);
-  
+
         await updateInspeccion(inspeccionId, data);
         console.log("✅ Inspección actualizada correctamente:", data);
-  
+
         if (modeloEquipoActual && tipoEquipoActual) {
-          navigate(`/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}C`);
+          navigate(
+            `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}C`
+          );
         } else {
           console.error("❌ Error: Modelo de equipo no definido.");
         }
-        
       } else {
         console.log("🚀 La inspección no existe...");
-          
       }
     } catch (error) {
       console.error("❌ Error al procesar la inspección:", error);
@@ -75,25 +76,26 @@ const PcpInspeccionVH60B = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(
-      `/dashboard/etapa/inspeccionPCPVh60C`
-    );
+    navigate(`/dashboard/etapa/inspeccionPCPVh60C`);
   };
   const handleClickA = (e) => {
     e.preventDefault();
-    navigate(
-      `/dashboard/etapa/inspeccionPCPVh60A`
-    );
+    navigate(`/dashboard/etapa/inspeccionPCPVh60A`);
   };
-
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">Inspección B</h3>
+      <h3 className="form-title">Inspección VH60 B</h3>
 
       <div className="form-group">
-        <label className="form-label">Comentario</label>
-        <input {...register("comentario")} placeholder="Comentario" />
+        <div className="label-input">
+          <label className="form-label">Comentario</label>
+          <input {...register("comentario")} placeholder="Comentario" />
+        </div>
+        <div className="next-button">
+          <Link onClick={handleClick}>Siguiente</Link>
+          <Link onClick={handleClickA}>Anterior</Link>
+        </div>
       </div>
 
       <h3>Rodamientos</h3>
@@ -222,11 +224,8 @@ const PcpInspeccionVH60B = () => {
       <button type="submit" className="form-button">
         Guardar
       </button>
-      <Link onClick={handleClickA}>Anterior</Link>
-      <Link onClick={handleClick}>Siguiente</Link>
     </form>
   );
 };
 
 export default PcpInspeccionVH60B;
-

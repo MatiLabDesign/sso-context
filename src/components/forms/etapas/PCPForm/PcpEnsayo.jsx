@@ -8,6 +8,16 @@ const PcpEnsayo = () => {
   const numeroOrden = window.localStorage.getItem('numeroOT');
   const tipoEquipo = window.localStorage.getItem('tipoEquipo');
 
+  //revisar como hacer el calculo
+   const n1 = 5;
+  const n2 = 3;
+  const calc = (n1, n2) =>{
+    return n1 + n2;
+  }
+  console.log ("este es el calculo" + calc(n1, n2));
+  ////////////////////////////////////////////
+ 
+
   const [ensayo, setEnsayo] = useState([]);
 
   useEffect(() => {

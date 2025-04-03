@@ -18,7 +18,10 @@ const TipoEquipoForm = () => {
     TipoEquipoService.createTipoEquipo(tipoEquipo);
     navigate("/dashboard/tipoequipo");
     console.log(tipoEquipo);
+    
   };
+
+  
 
   return (
     <>

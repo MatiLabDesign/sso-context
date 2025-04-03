@@ -21,6 +21,12 @@
 .form-group {
     margin-bottom: 20px;
     height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.next-button{
+    margin-left: 200px;
 }
 
 .comentario-input{
@@ -54,6 +60,9 @@
     display: flex;
     align-items: center;
 }
+.item-tittle2{
+    width: 110px;
+}
 
 /* Campos de cada item */
 .item-field {
@@ -86,6 +95,14 @@
     border-radius: 5px;
     margin-left: 15px;
     /* transition: border-color 0.3s; */
+}
+.form-input2 {
+    width: 50px;
+    width: 50px;
+    height: 25px;
+    border: 1px solid #bcbcbc;
+    border-radius: 5px;
+    margin-left: 15px;
 }
 .form-input.size {
     width: 90px;
@@ -157,3 +174,12 @@ h4{
 .torque{
     margin-left: 10px;
 }
+
+/* Elimina las flechas en Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
