@@ -146,6 +146,9 @@ const PcpInspeccionVH60A = () => {
         <div className="next-button">
           <Link onClick={handleClick}>Siguiente</Link>
         </div>
+        <button type="submit" className="form-button">
+        Guardar
+      </button>
       </div>
 
       <h3>Lubricantes</h3>
@@ -270,10 +273,12 @@ const PcpInspeccionVH60A = () => {
           </div>
         )
       )}
-
-      <button type="submit" className="form-button">
-        Guardar
-      </button>
+      <div className="imegenes">
+        <div className="imagen-prueba">+</div>
+        <div className="imagen-prueba">+</div>
+        <div className="imagen-prueba">+</div>
+      </div>
+      
     </form>
   );
 };

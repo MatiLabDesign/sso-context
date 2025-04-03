@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import './PcpFormStyle.css';
+import "./PcpFormStyle.css";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import SalidaService from "../../../../services/SalidaService";
 
 const PcpSalida = () => {
-  const numeroOrden = window.localStorage.getItem('numeroOT');
-  const tipoEquipo = window.localStorage.getItem('tipoEquipo');
+  const numeroOrden = window.localStorage.getItem("numeroOT");
+  const tipoEquipo = window.localStorage.getItem("tipoEquipo");
 
   const [salida, setSalida] = useState([]);
 
@@ -41,11 +41,12 @@ const PcpSalida = () => {
       <h1>SALIDA</h1>
       {/* <h3>{numeroOrden} | {tipoEquipo}</h3> */}
       {salida.map((comentario) => (
-               
-               <p className="parrafo" key={comentario.id}>- {comentario.comentario}</p>
-                     ))}
-      <form onSubmit={handleSubmit(onSubmit)} className='form'>
-        <div className='{style.input_cliente}'>
+        <p className="parrafo" key={comentario.id}>
+          - {comentario.comentario}
+        </p>
+      ))}
+      <form onSubmit={handleSubmit(onSubmit)} className="form">
+        <div className="{style.input_cliente}">
           <label>Comentario</label>
           <input
             type="text"
@@ -57,7 +58,12 @@ const PcpSalida = () => {
             <p>El campo es requerido</p>
           )}
         </div>
-        <button className='btn-salida' type="submit">
+        <div className="imegenes">
+          <div className="imagen-prueba">+</div>
+          <div className="imagen-prueba">+</div>
+          <div className="imagen-prueba">+</div>
+        </div>
+        <button className="btn-salida" type="submit">
           Terminar
         </button>
       </form>

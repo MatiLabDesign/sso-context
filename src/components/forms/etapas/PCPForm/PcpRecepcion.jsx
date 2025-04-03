@@ -137,8 +137,16 @@ const onSubmit = async (data) => {
 
       {/* Campo para comentario */}
       <div className="form-group">
+        <div className="label-container">
         <label className="form-label">Comentario</label>
         <input {...register("comentario")} placeholder="Comentario" />
+
+        </div>
+        <div className="button-container">
+        <button type="submit" className="form-button">
+        Guardar
+      </button>
+        </div>
       </div>
 
       {/* Iterar sobre cada propiedad en itemRecepcion */}
@@ -187,9 +195,15 @@ const onSubmit = async (data) => {
         </div>
       ))}
 
-      <button type="submit" className="form-button">
-        Guardar
-      </button>
+<div className="imegenes">
+          <div className="imagen-prueba">+</div>
+          <div className="imagen-prueba">+</div>
+          <div className="imagen-prueba">+</div>
+
+
+        </div>
+      
+
     </form>
   );
 };

@@ -115,7 +115,7 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-left: auto;
+    margin-left: 25px;
     
     /* margin: 15px auto 0 auto; */
 }
@@ -152,4 +152,12 @@ input[type=radio]:checked::before{
 
 h4{
     width: 200px;
+}
+
+.next-button{
+    margin-right: 25px;
+}
+
+.button-container{
+    margin-left: 150px;
 }

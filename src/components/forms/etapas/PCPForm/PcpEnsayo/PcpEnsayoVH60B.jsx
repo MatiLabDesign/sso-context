@@ -40,6 +40,7 @@ const PcpEnsayoVH60B = () => {
 
       if (ensayoId) {
         await updateEnsayo(ensayoId, { ...data, fuerzasCalculadas: fuerzas });
+        console.log("ensayo datatatatatta" + data);
       } else {
         const newEnsayo = await createEnsayo({
           ...data,

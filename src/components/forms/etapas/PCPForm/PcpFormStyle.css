@@ -32,3 +32,21 @@
     color:#036d4f;
     font-weight: 450;
 }
+
+.imagen-prueba{
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    font-size: 30px;
+    background-color: #999999;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imegenes{
+    display: flex;
+}
