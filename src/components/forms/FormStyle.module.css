@@ -67,8 +67,8 @@
 /* clienteFormStyle */
 
 .form_cliente {
-    margin-top: 150px;
-    margin-left: 200px;
+    margin-top: 200px;
+    margin-left: 30px;
     display: flex;
     justify-content:space-between;
     /* border: solid 3px #888; */
@@ -95,8 +95,8 @@
 }
 
 .form_equipo {
-    margin-top: 170px;
-    margin-left: 200px;
+    margin-top: 250px;
+    margin-left: 50px;
     /* border: solid 2px #a6ff00; */
 }
 
@@ -113,8 +113,8 @@
 }
 
 .form_tipo {
-    margin-top: 150px;
-    margin-left: 200px;
+    margin-top: 250px;
+    margin-left: 50px;
     /* border: solid 2px #ea00ff; */
 }
 
@@ -123,10 +123,10 @@
     /* trae un css de otro lado */
 }
 
-.input_check{
+/* .input_check{
     box-shadow: none;
     text-align: left;
-}
+} */
 
 
 /* OtFormStyle */
@@ -136,8 +136,8 @@
 }
 
 .form_ot {
-    margin-top: 200px;
-    margin-left: 200px;
+    margin-top: 230px;
+    margin-left: 50px;
 }
 
 .form_control_s {
@@ -164,6 +164,6 @@
     width: 150px;
 }
 
-.column_two{
+/* .column_two{
     margin-right: 25px;
-}
+} */

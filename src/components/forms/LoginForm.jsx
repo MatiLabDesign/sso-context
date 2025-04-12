@@ -3,6 +3,7 @@ import { useAuthContext } from "../../contexts/authContext";
 import LoginService from "../../services/LoginService";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 const LoginForm = () => {
   const { login } = useAuthContext();
@@ -28,6 +29,12 @@ const LoginForm = () => {
     } catch (error) {
       if (error.response) {
         console.error("Usuario NO autorizado:", error.response.status);
+        Swal.fire({
+          title: "Usuario o contraseña incorrecta!",
+          icon: "error",
+          draggable: true,
+          confirmButtonColor: '#059080'
+        });
       }
       return null;
     }

@@ -27,3 +27,81 @@ p{
     color: rgb(0, 130, 69);
     font-weight: 700;
 }
+
+.title-container{
+    display: flex;
+    align-items: center;
+}
+
+.estapa-title{
+    width: 200px;
+}
+.titlle-tittle{
+    
+    margin-right: 100px;
+}
+.cuadrado{
+    position: relative;
+    width: 200px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 2em;
+    overflow: hidden;
+
+}
+.cuadrado::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #049d7e;
+    transform: translateX(-100%);
+    animation: fill-bar2 0.8s 0.3s ease-in-out forwards ;
+
+}
+
+@keyframes fill-bar2{
+    to{
+        transform: translateX(0%);
+    }
+}
+.cuadrado-rojo{
+    position: relative;
+    width: 200px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 2em;
+    overflow: hidden;
+}
+.cuadrado-rojo::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #eb7202;
+    transform: translateX(-100%);
+    animation: fill-bar 0.8s 0.3s ease-in-out forwards ;
+
+}
+
+@keyframes fill-bar{
+    to{
+        transform: translateX(0%);
+    }
+}
+
+.etapa-container{
+    display: flex;
+    align-items: center;
+}
+
+.comentario-title{
+    width: 250px;
+    text-wrap: nowrap;
+    font-size: 14px;
+}
+
+.btn{
+    margin-left: 130px;
+    margin-top: -10px;
+}

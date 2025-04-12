@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import EquipoService from "../../services/EquipoService";
 import TipoEquipoService from "../../services/TipoEquipoService";
+import Swal from "sweetalert2";
 
 const EquipoForm = () => {
   const {
@@ -21,13 +22,18 @@ const EquipoForm = () => {
       tipoEquipo: {
         id: data.tipoequipo_id,
         tipo: data.tipoequipo_id,
-        modelo: data.modelo
-        
+        modelo: data.modelo,
       },
     };
     EquipoService.createEquipo(equipo);
     navigate("/dashboard/equipo");
     console.log(equipo);
+    Swal.fire({
+      title: "Excelente!",
+      text: "Equipo creado con éxito",
+      icon: "success",
+      confirmButtonColor: "#059080",
+    });
   };
 
   const [tipos, setTipos] = useState([]);
@@ -61,7 +67,7 @@ const EquipoForm = () => {
           )}
         </div>
 
-         <div className={style.input_ot}>
+        <div className={style.input_ot}>
           <label>Tipo de Equipo</label>
           <select {...register("tipoequipo_id")}>
             {tipos.map((tipo) => (
@@ -70,7 +76,7 @@ const EquipoForm = () => {
               </option>
             ))}
           </select>
-        </div> 
+        </div>
 
         {/*<div className={style.input_tipo}>
                   <label>Tipo de equipo</label>
@@ -98,13 +104,9 @@ const EquipoForm = () => {
         */}
 
         <div className={style.input_tipo}>
-                  <label>Marca</label>
-                  <input
-                    type="text"
-                    {...register("marca")}
-                  />
-                  
-                </div>
+          <label>Marca</label>
+          <input type="text" {...register("marca")} />
+        </div>
 
         <button className={style.form_control_s} type="submit">
           Guardar

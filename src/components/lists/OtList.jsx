@@ -9,6 +9,7 @@ import { FaFileAlt } from "react-icons/fa";
 import { IoIosCopy } from "react-icons/io";
 
 
+
 const OtList = () => {
   const [ots, setOts] = useState([]);
   const [search, setSearch] = useState("");
@@ -72,11 +73,11 @@ const OtList = () => {
       <div className={style.table_container}>
         <table className="table-auto">
           <thead className={style.table_head}>
-            <tr className={style.table_row}>
+            <tr className={style.table_row2}>
               <th className={style.lists_tittles2} scope="col">
                 N° OT
               </th>
-              <th className={style.lists_tittles_tittle} scope="col">
+              <th className={style.lists_tittles_tittle2} scope="col">
                 Tipo de Equipo
               </th>
               <th className={style.lists_tittles} scope="col">
@@ -94,7 +95,7 @@ const OtList = () => {
                   
                   {numeroOT}
                 </td>
-                <td className={style.list_content_content}>
+                <td className={style.list_content_content2}>
                   {equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.modelo}{" "}
                   - {equipo.marca}
                 </td>

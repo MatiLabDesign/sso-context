@@ -1,8 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import "./PcpInspeccion.css";
-import "./PcpRecepcion2.css";
-import inspeccionPCPminiG from './../../../../data/inspeccionPCPminiG';
+import "../PcpInspeccion.css";
+import "../PcpRecepcion2.css";
+import inspeccionPCPminiG from '../../../../../data/inspeccionPCPminiG';
 import { useNavigate } from 'react-router-dom';
 
 const PcpInspeccionMiniGA = () => {

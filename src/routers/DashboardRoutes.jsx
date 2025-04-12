@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import {
   CLIENT,
+  CLIENTE_VIEW,
   CONSULTA,
   CREATECLIENTE,
   CREATEEQUIPO,
@@ -61,7 +62,7 @@ import Etapas from "../components/forms/etapas/Etapas";
 import PcpIngreso from "../components/forms/etapas/PCPForm/PcpIngreso";
 import PcpRecepcion from "../components/forms/etapas/PCPForm/PcpRecepcion";
 
-import PcpEnsayo from "../components/forms/etapas/PCPForm/PcpEnsayoMiniGA";
+import PcpEnsayo from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoMiniGA";
 import PcpSalida from "../components/forms/etapas/PCPForm/PcpSalida";
 import UclEnsayo from "../components/forms/etapas/UCLForm/UclEnsayo";
 import UclInspeccion from "../components/forms/etapas/UCLForm/UclInspeccion";
@@ -75,12 +76,12 @@ import BombaEnsayo from "../components/forms/etapas/BombaForm/BombaEnsayo";
 import BombaSalida from "../components/forms/etapas/BombaForm/BombaSalida";
 import PcpInspeccionVH60B from "../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionVH60B";
 import PcpInspeccionVH60C from "../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionVH60C";
-import PcpInspeccionMiniGA from "./../components/forms/etapas/PCPForm/PcpInspeccionMiniGA";
-import PcpInspeccionMiniGB from "./../components/forms/etapas/PCPForm/PcpInspeccionMiniGB";
-import PcpInspeccionMiniGC from "./../components/forms/etapas/PCPForm/PcpInspeccionMiniGC";
-import PcpInspeccionDv1A from "./../components/forms/etapas/PCPForm/PcpInspeccionDv1A";
-import PcpInspeccionDv1B from "./../components/forms/etapas/PCPForm/PcpInspeccionDv1B";
-import PcpInspeccionDv1C from "./../components/forms/etapas/PCPForm/PcpInspeccionDv1C";
+import PcpInspeccionMiniGA from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionMiniGA";
+import PcpInspeccionMiniGB from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionMiniGB";
+import PcpInspeccionMiniGC from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionMiniGC";
+import PcpInspeccionDv1A from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionDv1A";
+import PcpInspeccionDv1B from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionDv1B";
+import PcpInspeccionDv1C from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionDv1C";
 import PcpInspeccionCougarA from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarA";
 import PcpInspeccionCougarB from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarB";
 import PcpInspeccionCougarC from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarC";
@@ -90,6 +91,7 @@ import OsForm from "../components/forms/OsForm";
 import ConsultarOt from "../components/forms/etapas/ConsultarOt";
 import PcpEnsayoVH60A from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVh60A";
 import PcpEnsayoVH60B from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVH60B";
+import ClienteDashboard from "../viewsCliente/ClienteDashboard";
 
 const DashboardRoutes = () => {
   return (
@@ -109,6 +111,8 @@ const DashboardRoutes = () => {
           <Route path={OT} element={<OtForm />} />
           <Route path={OS} element={<OsForm />} />
           <Route path={OTLIST} element={<Ot />} />
+          <Route path={CLIENTE_VIEW} element={<ClienteDashboard />} />
+          
           {/* <Route>
               <EtapasRoutes/>
             </Route> */}

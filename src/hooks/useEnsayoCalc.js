@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const useEnsayoCalc = (formValues) => {
   const [fuerzas, setFuerzas] = useState({});
@@ -7,44 +7,39 @@ const useEnsayoCalc = (formValues) => {
     if (isNaN(voltaje)) voltaje = 0;
     if (isNaN(corriente)) corriente = 0;
     if (RPM === 0) return 0;
-    
+
     const fuerza = (7 * voltaje * corriente) / RPM;
-    return parseFloat(fuerza.toFixed(4)); // Redondeo a 4 decimales
+    return parseFloat(fuerza.toFixed(4));
   };
 
-  useEffect(() => {
-    if (!formValues?.itemEnsayo) {
-      setFuerzas({}); // Limpiar fuerzas si no hay datos
-      return;
-    }
-    
-    console.log('Valores recibidos para cálculo:', formValues.itemEnsayo);
-    
+  // 💡 Memorizar las fuerzas calculadas a partir de formValues
+  const nuevasFuerzas = useMemo(() => {
+    if (!formValues?.itemEnsayo) return {};
+
     const rpmMap = { rpm200: 200, rpm300: 300, rpm400: 400, rpm500: 500 };
-    const nuevasFuerzas = {};
-    
+    const calculadas = {};
+
     Object.keys(rpmMap).forEach(key => {
       const item = formValues.itemEnsayo[key];
       if (item) {
         const voltaje = parseFloat(item.voltajeSalida);
         const corriente = parseFloat(item.corrienteSalida);
         const rpm = rpmMap[key];
-        
-        nuevasFuerzas[key] = calcularFuerza(voltaje, corriente, rpm);
-        console.log(`Cálculo para ${key}:`, {
-          voltaje,
-          corriente, 
-          rpm,
-          fuerza: nuevasFuerzas[key]
-        });
+        calculadas[key] = calcularFuerza(voltaje, corriente, rpm);
       } else {
-        nuevasFuerzas[key] = 0; // Valor por defecto si no existe el item
+        calculadas[key] = 0;
       }
     });
-    
-    console.log('Fuerzas calculadas:', nuevasFuerzas);
-    setFuerzas(nuevasFuerzas);
-  }, [formValues?.itemEnsayo]); // Solo recalcula cuando cambian estos valores
+
+    return calculadas;
+  }, [formValues]);
+
+  // 🔁 Solo actualizamos el estado si cambian las fuerzas realmente
+  useEffect(() => {
+    if (JSON.stringify(nuevasFuerzas) !== JSON.stringify(fuerzas)) {
+      setFuerzas(nuevasFuerzas);
+    }
+  }, [nuevasFuerzas, fuerzas]);
 
   return { fuerzas };
 };

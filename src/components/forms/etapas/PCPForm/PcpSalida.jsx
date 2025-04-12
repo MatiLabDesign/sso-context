@@ -58,7 +58,7 @@ const PcpSalida = () => {
             <p>El campo es requerido</p>
           )}
         </div>
-        <div className="imegenes">
+        <div className="imagenes">
           <div className="imagen-prueba">+</div>
           <div className="imagen-prueba">+</div>
           <div className="imagen-prueba">+</div>

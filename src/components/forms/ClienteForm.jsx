@@ -3,6 +3,7 @@ import style from "./FormStyle.module.css";
 import ClienteService from "../../services/ClienteService";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const ClienteForm = () => {
   const {
@@ -18,6 +19,12 @@ const ClienteForm = () => {
     ClienteService.createCliente(cliente);
     navigate("/dashboard/client");
     console.log(cliente);
+    Swal.fire({
+          title: "Perfecto!",
+          text: "Cliente creado con éxito",
+          icon: "success",
+          confirmButtonColor: "#059080",
+        });
   };
 
   return (

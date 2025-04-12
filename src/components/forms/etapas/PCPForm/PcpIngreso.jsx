@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
 import "./PcpIngreso.css";
 import { PCP_RECEPCION } from "../../../../config/routes/paths";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TipoEquipo from "./../../../../views/TipoEquipo";
 import OtService from "../../../../services/OtService";
+import useOrdenData from "../../../../hooks/useOrdenData";
 
 const PcpIngreso = () => {
   //GET getOtByNumeroOT
   const numeroOrden = window.localStorage.getItem("numeroOT");
   // const ordenID = window.localStorage.getItem('ordenId');
   const tipoEquipo = window.localStorage.getItem("tipoEquipo");
+  const ordenId = window.localStorage.getItem("ordenId");
+  const navigate = useNavigate();
 
   const [ordenData, setOrdenData] = useState(null); // Estado para almacenar los datos de la orden
-
-  const ordenID = window.localStorage.getItem("ordenId");
+  const { allOts, otActual, updateOt } = useOrdenData(ordenId);
 
   useEffect(() => {
     const fetchIngresoOrdenData = async () => {
-      if (!ordenID) return; // Si no hay ordenId, no hace nada
+      if (!ordenId) return; // Si no hay ordenId, no hace nada
 
       try {
-        const response = await OtService.getOtById(ordenID);
+        const response = await OtService.getOtById(ordenId);
         if (response.data) {
           setOrdenData(response.data); // Guardamos los datos en el estado
         }
@@ -30,7 +32,7 @@ const PcpIngreso = () => {
     };
 
     fetchIngresoOrdenData();
-  }, [ordenID]);
+  }, [ordenId]);
 
   const etapasMap = {
     1: "Ingreso",
@@ -39,6 +41,20 @@ const PcpIngreso = () => {
     4: "Ensayo",
     5: "Salida",
   };
+
+  const handleClick = (e) => {
+    const updatedOt = {
+      ...otActual,
+      etapaActual: etapaSiguiente,
+    };
+
+    updateOt(ordenId, updatedOt);
+    e.preventDefault();
+    navigate(`/dashboard/etapa/recepcionPCP`);
+  };
+
+  const etapaSiguiente = 2;
+  
 
   return (
     <div className="view_container">
@@ -123,7 +139,7 @@ const PcpIngreso = () => {
       <label htmlFor="input-comentario">Tipo Equipo</label>
       <label htmlFor="input-comentario">Marca</label>
       <label htmlFor="input-comentario">Modelo</label> */}
-      <Link to={PCP_RECEPCION}>
+      <Link onClick={handleClick}>
         <button className="btn">Ingresar</button>
       </Link>
     </div>

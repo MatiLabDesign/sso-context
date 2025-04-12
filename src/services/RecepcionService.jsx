@@ -18,9 +18,30 @@ class RecepcionService {
     return axios.put(`${RECEPCION_URL}/${id}`, recepcion);
   }
 
+  // updateRecepcionImagen(id, imagenesFormData) {
+  //   return axios.put(`${RECEPCION_URL}/${id}/subir-imagen`, imagenesFormData);
+  // }
+
+  updateRecepcionImagen(id, datosJson, imagenes) {
+    const formData = new FormData();
+    formData.append("jsonData", JSON.stringify(datosJson));
+    imagenes.forEach((img, index) => {
+      if (img) {
+        formData.append(`imagen${index}`, img);
+      }
+    });
+
+    return axios.post(`${RECEPCION_URL}/${id}/subir-imagen`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  }
+
   softDeleteRecepcion(id) {
     return axios.patch(`${RECEPCION_URL}/${id}`, { eliminado: true });
   }
 }
 
 export default new RecepcionService();
+

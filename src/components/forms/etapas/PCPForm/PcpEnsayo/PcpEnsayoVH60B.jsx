@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "../PcpEnsayo.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import EnsayoService from "../../../../../services/EnsayoService";
 import ensayoPCPVH60 from "../../../../../data/ensayoPCPVH60";
 import useEnsayoCalc from "../../../../../hooks/useEnsayoCalc";
 import useOrdenData from "../../../../../hooks/useOrdenData";
 import useEnsayoData from "../../../../../hooks/useEnsayoData";
+import { IoIosArrowRoundForward } from "react-icons/io";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 
 const PcpEnsayoVH60B = () => {
   const { register, handleSubmit, watch, reset } = useForm({
@@ -62,6 +66,15 @@ const PcpEnsayoVH60B = () => {
     }
   };
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(`/dashboard/etapa/salidaPCP`);
+  };
+  const handleClickA = (e) => {
+    e.preventDefault();
+    navigate(`/dashboard/etapa/ensayoPCP`);
+  };
+
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
       <h3 className="form-title">
@@ -71,11 +84,30 @@ const PcpEnsayoVH60B = () => {
 
       {/* Campo para comentario */}
       <div className="form-group">
-        <label className="form-label">Comentario</label>
-        <input {...register("comentario")} placeholder="Comentario" />
-      </div>
+              <div className="label-input">
+                <label className="form-label">Comentario</label>
+                <input {...register("comentario")} placeholder="Comentario" />
+              </div>
+              <button className="form-button-2">
+                <Link onClick={handleClickA}>
+                  <FaArrowLeft />
+                </Link>
+              </button>
+              <button className="form-button-2">
+                <Link onClick={handleClick}>
+                  <FaArrowRight />
+                </Link>
+              </button>
+              <button type="submit" className="form-button">
+                Guardar
+              </button>
+            </div>
 
       {/* Iterar sobre cada propiedad en itemRecepcion */}
+
+      <div className="lista-container2">
+
+      
       {[
         "cargaAxial",
         "temperatura",
@@ -110,10 +142,9 @@ const PcpEnsayoVH60B = () => {
           </div>
         </div>
       ))}
+      </div>
 
-      <button type="submit" className="form-button">
-        Guardar
-      </button>
+      
     </form>
   );
 };

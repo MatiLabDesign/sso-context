@@ -80,16 +80,15 @@
     margin-right: 10px;
     /* width: 70px; */
     color: #444;
+    
 }
-.form-label-1 {
-    width: 100%;
-}
+
 
 
 /* Inputs de texto */
 .form-input {
     /* padding: 8px; */
-    width: 100px;
+    width: 200px;
     height: 25px;
     border: 1px solid #bcbcbc;
     border-radius: 5px;
@@ -133,7 +132,7 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-left: auto;
+    margin-left: 50px;
     
     /* margin: 15px auto 0 auto; */
 }
@@ -143,10 +142,10 @@
     /* text-shadow: 1px 2px 5px #023f33; */
 }
 
-.radio-input{
-    width: 20px;
-}
-input[type=radio]{
+/* .radio-input{
+    width: 25px;
+} */
+/* input[type=radio]{
     appearance: none;
     width: 18px;
     height: 18px;
@@ -159,13 +158,11 @@ input[type=radio]:checked::before{
     content: "";
     width: 70%;
     height: 70%;
-    /* background-color: #eb721c; */
     background: linear-gradient(to top, #0e6655, #09876e, #32b79d);
-    /* background: linear-gradient(45deg,#078a70,#024e3f); */
     display: block;
     border-radius: 50%;
     
-}
+} */
 
 h4{
     width: 200px;
@@ -173,6 +170,10 @@ h4{
 
 .torque{
     margin-left: 10px;
+}
+.torque-value2{
+    color: #0e6655;
+    font-weight: 600;
 }
 
 /* Elimina las flechas en Chrome, Safari, Edge, Opera */

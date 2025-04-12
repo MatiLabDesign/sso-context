@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import "./PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
+import "../PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
 import { useNavigate } from "react-router-dom";
-import InspeccionService from "../../../../services/InspeccionService";
+import InspeccionService from "../../../../../services/InspeccionService";
 
 const PcpInspeccionMiniGB = () => {
   const { handleSubmit, register } = useForm();
@@ -76,68 +76,68 @@ const PcpInspeccionMiniGB = () => {
         <input {...register("comentario")} placeholder="Comentario" />
       </div>
 
-      <h3>Rodamientos</h3>
       {[
-        "axial29416",
-        "guiaSupNJ217",
-        "guiaInfNJ214",
-        "zapata61822",
-      ].map((itemKey) => (
-        <div className="item-section" key={itemKey}>
-          <div className="item-field">
-            <div className="item-tittle">
-              <h4 className="item-title">{itemKey}</h4>
-            </div>
-            <div className="item-tittle">
-              <label className="form-label-1">Ok</label>
-              <input
-                className="radio-input"
-                type="checkbox"
-                {...register(`rodamientoPcpVh60.${itemKey}.ok`)}
-              />
-            </div>
-            <div className="item-tittle">
-              <label className="form-label-1">Picado</label>
-              <input
-                className="radio-input"
-                type="checkbox"
-                {...register(`rodamientoPcpVh60.${itemKey}.picado`)}
-              />
-            </div>
-            <div className="item-tittle">
-              <label className="form-label-1">Laminado</label>
-              <input
-                className="radio-input"
-                type="checkbox"
-                {...register(`rodamientoPcpVh60.${itemKey}.laminado`)}
-              />
-            </div>
-            <div className="item-tittle">
-              <label className="form-label-1">F.jaula</label>
-              <input
-                className="radio-input"
-                type="checkbox"
-                {...register(`rodamientoPcpVh60.${itemKey}.fallaEnJaula`)}
-              />
-            </div>
-            <div className="item-tittle">
-              <label className="form-label-1">Desgaste</label>
-              <input
-                className="radio-input"
-                type="checkbox"
-                {...register(`rodamientoPcpVh60.${itemKey}.desgaste`)}
-              />
-            </div>
-            <div className="item-tittle">
-              <input
-                className="form-input"
-                {...register(`rodamientoPcpVh60.${itemKey}.especificar`)}
-                placeholder="Especificar"
-              />
-            </div>
-          </div>
-        </div>
-      ))}
+  { key: "Axial:", value: "axial29416" },
+  { key: "Guía Sup.", value: "guiaSupNJ217" },
+  { key: "Guía Inf.", value: "guiaInfNJ214" },
+  { key: "Zapata", value: "zapata61822" },
+].map(({ key, value }) => (
+  <div className="item-section" key={key}>
+    <div className="item-field">
+      <div className="item-tittle">
+        <h4 className="item-title">{value}</h4>
+      </div>
+      <div className="item-tittle">
+        <label className="form-label-1">Ok</label>
+        <input
+          className="radio-input"
+          type="checkbox"
+          {...register(`rodamientoPcpVh60.${value}.ok`)}
+        />
+      </div>
+      <div className="item-tittle">
+        <label className="form-label-1">Picado</label>
+        <input
+          className="radio-input"
+          type="checkbox"
+          {...register(`rodamientoPcpVh60.${value}.picado`)}
+        />
+      </div>
+      <div className="item-tittle">
+        <label className="form-label-1">Laminado</label>
+        <input
+          className="radio-input"
+          type="checkbox"
+          {...register(`rodamientoPcpVh60.${value}.laminado`)}
+        />
+      </div>
+      <div className="item-tittle">
+        <label className="form-label-1">F.jaula</label>
+        <input
+          className="radio-input"
+          type="checkbox"
+          {...register(`rodamientoPcpVh60.${value}.fallaEnJaula`)}
+        />
+      </div>
+      <div className="item-tittle">
+        <label className="form-label-1">Desgaste</label>
+        <input
+          className="radio-input"
+          type="checkbox"
+          {...register(`rodamientoPcpVh60.${value}.desgaste`)}
+        />
+      </div>
+      <div className="item-tittle">
+        <input
+          className="form-input"
+          {...register(`rodamientoPcpVh60.${value}.especificar`)}
+          placeholder="Especificar"
+        />
+      </div>
+    </div>
+  </div>
+))}
+
 
       <h3>Item</h3>
       {["cuboPortaRodamiento"].map((itemKey) => (

@@ -1,50 +1,40 @@
 import { useForm } from "react-hook-form";
-import "./PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
+import "./PcpRecepcion2.css";
 import RecepcionService from "../../../../services/RecepcionService";
 import OtService from "../../../../services/OtService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import recepcionPCP from "../../../../data/recepcionPCP";
 import { useEffect, useState } from "react";
 import useOrdenData from "../../../../hooks/useOrdenData";
 import useRecepcionData from "../../../../hooks/useRecepcionData";
+import Swal from "sweetalert2";
+import { FaArrowRight } from "react-icons/fa";
 
 const PcpRecepcion = () => {
-  const { register, handleSubmit, reset, watch } = useForm({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { isDirty },
+  } = useForm({
     defaultValues: recepcionPCP,
   });
 
+  const [imagenes, setImagenes] = useState([null, null, null, null, null, null]);
+  const [urlsTemporales, setUrlsTemporales] = useState(Array(6).fill(null));
+
   const ordenId = localStorage.getItem("ordenId");
- 
-  console.log(ordenId);
-
   const navigate = useNavigate();
+  const { allOts, otActual, updateOt } = useOrdenData(ordenId);
+  const [recepcionId, setRecepcionId] = useState(null);
 
-  
-
-  const { allOts, otActual, updateOt, loading, error } = useOrdenData(ordenId);
-  
   useEffect(() => {
-    if (otActual) {
-      console.log("✅ Datos recibidos:", otActual);
-  
-      if (otActual.recepcion && otActual.recepcion.id) {
-        setRecepcionId(otActual.recepcion.id);
-        
-      } else {
-        console.warn("⚠️ Advertencia: `otActual.recepcion` no tiene un ID válido.");
-        setRecepcionId(null); // Limpia el estado para evitar errores posteriores
-      }
+    if (otActual?.recepcion?.id) {
+      setRecepcionId(otActual.recepcion.id);
     }
   }, [otActual]);
-  
-  const [recepcionId, setRecepcionId] = useState(null);
-  
-  useEffect(() => {
-    if (recepcionId) {
-        console.log("✅ Este es el id de recepción:", recepcionId);
-     }
-}, [recepcionId]);
- 
+
   const {
     recepcionActual,
     loading: recepcionLoading,
@@ -53,159 +43,217 @@ const PcpRecepcion = () => {
     updateRecepcion,
   } = useRecepcionData(recepcionId, reset);
 
-  useEffect(() => {
-    if (recepcionActual) {
-        console.log("✅ Datos Recepción actual:", recepcionActual);
+  const etapaSiguiente = 3;
+
+  const handleImagenChange = (index, file) => {
+    const nuevasImagenes = [...imagenes];
+    nuevasImagenes[index] = file;
+    setImagenes(nuevasImagenes);
+
+    const nuevasUrls = [...urlsTemporales];
+    nuevasUrls[index] = URL.createObjectURL(file);
+    setUrlsTemporales(nuevasUrls);
+  };
+
+  const handleImagenClick = (index, e) => {
+    if (urlsTemporales[index]) {
+      
+      Swal.fire({
+        title: `Imagen ${index + 1}`,
+        imageUrl: urlsTemporales[index],
+        // imageWidth: 400,
+        imageHeight: 350,
+        imageAlt: `Imagen ${index + 1}`,
+        confirmButtonColor: "#059080",
+      });
+     
     }
-}, [recepcionActual]);
+    e.preventDefault();
+  };
 
-const etapaSiguiente = 3;
-
-
-const onSubmit = async (data) => {
-  try {
-    const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
-    const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
-
-    if (recepcionId) {
-      console.log("Recepción existente:", recepcionId);
-
-      await updateRecepcion(recepcionId, data);
-      console.log("✅ Recepción actualizada correctamente:", data);
-
-      if (modeloEquipoActual && tipoEquipoActual) {
-        navigate(`/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}A`);
-      } else {
-        console.error("❌ Error: Modelo de equipo no definido.");
-      }
-
-    } else {
-      console.log("🚀 Creando nueva recepción...");
-
-      const nuevaRecepcion = await createRecepcion(data);
-      console.log("✅ Nueva recepción creada:", nuevaRecepcion);
-
-      const nuevaRecepcionId = nuevaRecepcion?.id;
-      if (nuevaRecepcionId) {
-        console.log("🔄 Actualizando OT con ID de nueva recepción...");
-
-        const updatedOt = {
-          ...otActual,
-          recepcion: { id: nuevaRecepcionId },
-          etapaActual: etapaSiguiente
-
-        };
-
-        console.log("🔍 JSON enviado a la API:", updatedOt);
-
-        await updateOt(ordenId, updatedOt);
-
-        console.log("✅ OT actualizada con éxito.");
-
-        if (modeloEquipoActual && tipoEquipoActual) {
-          navigate(`/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}A`);
-        } else {
-          console.error("❌ Error: Modelo de equipo no definido.");
-        }
-
-      } else {
-        console.error("❌ Error: No se pudo obtener el ID de la nueva recepción.");
+  const onSubmit = async (data) => {
+    try {
+      if (!isDirty) {
+        Swal.fire({
+          title: "Sin cambios",
+          text: "No se detectaron modificaciones para guardar.",
+          icon: "info",
+          confirmButtonColor: "#059080",
+        });
         return;
       }
+
+      const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
+      const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
+
+      if (recepcionId) {
+        const result = await Swal.fire({
+          title: "¿Quiere guardar los datos?",
+          text: "Los cambios son irreversibles",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#059080",
+          cancelButtonColor: "#f09898",
+          confirmButtonText: "Sí, guardar!",
+          cancelButtonText: "Cancelar",
+        });
+
+        if (result.isConfirmed) {
+          await updateRecepcion(recepcionId, data);
+
+          // Subir imágenes
+          // const formData = new FormData();
+          // imagenes.forEach((img, index) => {
+          //   if (img) {
+          //     formData.append(`img${index + 1}`, img);
+          //   }
+          // });
+
+          // await RecepcionService.updateRecepcionImagen(recepcionId, formData);
+
+          // await Swal.fire({
+          //   title: "Perfecto!",
+          //   text: "Datos actualizados con éxito",
+          //   icon: "success",
+          //   confirmButtonColor: "#059080",
+          // });
+
+          if (modeloEquipoActual && tipoEquipoActual) {
+            navigate(
+              `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}A`
+            );
+          }
+        }
+      } else {
+        const nuevaRecepcion = await createRecepcion(data);
+        const nuevaRecepcionId = nuevaRecepcion?.id;
+
+        if (nuevaRecepcionId) {
+          const updatedOt = {
+            ...otActual,
+            recepcion: { id: nuevaRecepcionId },
+            etapaActual: etapaSiguiente,
+          };
+
+          await updateOt(ordenId, updatedOt);
+
+          await Swal.fire({
+            title: "Perfecto!",
+            text: "Recepción creada con éxito",
+            icon: "success",
+            confirmButtonColor: "#059080",
+          });
+
+          if (modeloEquipoActual && tipoEquipoActual) {
+            navigate(
+              `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}A`
+            );
+          }
+        }
+      }
+    } catch (error) {
+      console.error("❌ Error al procesar la recepción:", error);
     }
-  } catch (error) {
-    console.error("❌ Error al procesar la recepción:", error);
-  }
-};
+  };
 
-
-
-
-  // if (loading || recepcionLoading) return <p>Cargando datos...</p>;
-  // if (error) return <p>{error}</p>;
-  // if (recepcionError) return <p>{recepcionError}</p>;
-
-  // console.log(allOts);
-  // console.log(ordenData);
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(`/dashboard/etapa/inspeccionPCPVh60A`);
+  };
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">
-        {/* Recepción | {tipoEquipo} - OT N°{numeroOT} */}
-        Recepción PCP
-      </h3>
+      <h3 className="form-title">Recepción PCP</h3>
 
-      {/* Campo para comentario */}
       <div className="form-group">
         <div className="label-container">
-        <label className="form-label">Comentario</label>
-        <input {...register("comentario")} placeholder="Comentario" />
-
+          <label className="form-label">Comentario</label>
+          <input {...register("comentario")} placeholder="Comentario" />
         </div>
+        <button type="button" className="form-button-2">
+          <Link onClick={handleClick}>
+            <FaArrowRight />
+          </Link>
+        </button>
+
         <div className="button-container">
-        <button type="submit" className="form-button">
-        Guardar
-      </button>
+          <button type="submit" className="form-button">
+            Guardar
+          </button>
         </div>
       </div>
 
-      {/* Iterar sobre cada propiedad en itemRecepcion */}
-      {[
-        "cubreGrampa",
-        "cubrePolea",
-        "cubreVastago",
-        "grampaAntiEyeccion",
-        "estructuraChasis",
-        "linternaSeparador",
-        "mesaDeMotor",
-        "rielesDeMotor",
-        "soporteDeTransporte",
-        "poleaConducida",
-      ].map((itemKey) => (
-        <div className="item-section" key={itemKey}>
-          <div className="item-field">
-            <div className="item-tittle">
-              <h4 className="item-title">{itemKey}</h4>
-            </div>
-            <div className="item-tittle">
-              <label className="form-label-1">Ok</label>
-              <input
-                className="radio-input"
-                type="checkbox"
-                {...register(`itemRecepcion.${itemKey}.estado`)}
-                checked={watch(`itemRecepcion.${itemKey}.estado`)}
-              />
-            </div>
-
-            <div className="item-tittle">
-              <input
-                className="form-input"
-                {...register(`itemRecepcion.${itemKey}.requerimiento`)}
-                placeholder="Requerimiento"
-              />
-            </div>
-            <div className="item-tittle">
-              <input
-                className="form-input"
-                {...register(`itemRecepcion.${itemKey}.observacion`)}
-                placeholder="Observación"
-              />
+      <div className="lista-container">
+        {[
+          "cubreGrampa",
+          "cubrePolea",
+          "cubreVastago",
+          "grampaAntiEyeccion",
+          "estructuraChasis",
+          "linternaSeparador",
+          "mesaDeMotor",
+          "rielesDeMotor",
+          "soporteDeTransporte",
+          "poleaConducida",
+        ].map((itemKey) => (
+          <div className="item-section" key={itemKey}>
+            <div className="item-field">
+              <div className="item-tittle">
+                <h4 className="item-title">{itemKey}</h4>
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">Ok</label>
+                <input
+                  className="radio-input"
+                  type="checkbox"
+                  {...register(`itemRecepcion.${itemKey}.estado`)}
+                  checked={watch(`itemRecepcion.${itemKey}.estado`)}
+                />
+              </div>
+              <div className="item-tittle">
+                <input
+                  className="form-input"
+                  {...register(`itemRecepcion.${itemKey}.requerimiento`)}
+                  placeholder="Requerimiento"
+                />
+              </div>
+              <div className="item-tittle">
+                <input
+                  className="form-input"
+                  {...register(`itemRecepcion.${itemKey}.observacion`)}
+                  placeholder="Observación"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
-<div className="imegenes">
-          <div className="imagen-prueba">+</div>
-          <div className="imagen-prueba">+</div>
-          <div className="imagen-prueba">+</div>
-
-
-        </div>
-      
-
+      <div className="imagenes">
+        {[0, 1, 2, 3, 4, 5].map((index) => (
+          <label key={index} className="imagen-prueba">
+            {imagenes[index] ? (
+              <img
+                src={urlsTemporales[index]}
+                alt={`Imagen ${index + 1}`}
+                className="imagen-preview"
+                onClick={() => handleImagenClick(index)}
+              />
+            ) : (
+              "+"
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={(e) => handleImagenChange(index, e.target.files[0])}
+            />
+          </label>
+        ))}
+      </div>
     </form>
   );
 };
 
 export default PcpRecepcion;
+

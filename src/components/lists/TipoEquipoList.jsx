@@ -58,7 +58,7 @@ const TipoEquipoList = () => {
                 </div>
         <table className="table-auto">
           <thead className={style.table_head}>
-            <tr className={style.table_row}>
+            <tr className={style.table_row2}>
               <th className={style.lists_tittles} scope="col">
                 Tipo
               </th>

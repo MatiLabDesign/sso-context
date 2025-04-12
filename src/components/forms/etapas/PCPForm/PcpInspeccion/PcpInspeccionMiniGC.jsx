@@ -1,8 +1,8 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import "./PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
+import "../PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
 import { useNavigate } from "react-router-dom";
-import InspeccionService from "../../../../services/InspeccionService";
+import InspeccionService from "../../../../../services/InspeccionService";
 
 const PcpInspeccionMiniGC = () => {
   const { handleSubmit, control, register } = useForm();

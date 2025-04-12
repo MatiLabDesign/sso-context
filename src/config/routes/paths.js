@@ -15,6 +15,8 @@ export const OTLIST = '/dashboard/listar-ot';
 export const OS = '/dashboard/os';
 export const OSLIST = '/dashboard/listar-os';
 
+export const CLIENTE_VIEW = '/dashboard/cliente'
+
 export const ETAPA = '/dashboard/etapa';
 export const CONSULTA = '/dashboard/etapa/consultarOt';
 

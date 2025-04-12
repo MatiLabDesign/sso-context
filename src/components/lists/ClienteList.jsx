@@ -55,7 +55,7 @@ const ClienteList = () => {
         </div>
         <table className="table-auto">
           <thead className={style.table_head}>
-            <tr className={style.table_row}>
+            <tr className={style.table_row2}>
               <div className={style.row_box}>
                 <th className={style.lists_tittles} scope="col">
                   Razón Social

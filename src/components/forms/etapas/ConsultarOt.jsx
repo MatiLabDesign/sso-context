@@ -7,14 +7,6 @@ import OtService from "../../../services/OtService";
 
 const ConsultarOt = () => {
   const navigate = useNavigate();
-  
-
-
-
-  //GET getOtByNumeroOT
-//   const numeroOrden = window.localStorage.getItem("numeroOT");
-  // const ordenID = window.localStorage.getItem('ordenId');
-//   const tipoEquipo = window.localStorage.getItem("tipoEquipo");
 
   const [ordenData, setOrdenData] = useState(null); // Estado para almacenar los datos de la orden
 
@@ -27,6 +19,7 @@ const ConsultarOt = () => {
       try {
         const response = await OtService.getOtById(ordenId);
         if (response.data) {
+          console.log(response.data);
           setOrdenData(response.data); // Guardamos los datos en el estado
         }
       } catch (error) {
@@ -40,9 +33,11 @@ const ConsultarOt = () => {
   const etapasMap = {
     1: `ingreso${ordenData?.equipo.tipoEquipo.tipo || ""}`,
     2: `recepcion${ordenData?.equipo.tipoEquipo.tipo || ""}`,
-    3: `inspeccion${ordenData?.equipo.tipoEquipo.tipo || ""}${ordenData?.equipo.tipoEquipo.modelo || ""}A`,
+    3: `inspeccion${ordenData?.equipo.tipoEquipo.tipo || ""}${
+      ordenData?.equipo.tipoEquipo.modelo || ""
+    }A`,
     4: `ensayo${ordenData?.equipo.tipoEquipo.tipo || ""}`,
-    5: `salida${ordenData?.equipo.tipoEquipo.tipo || ""}`
+    5: `salida${ordenData?.equipo.tipoEquipo.tipo || ""}`,
   };
 
   const handleClick = () => {
@@ -52,33 +47,59 @@ const ConsultarOt = () => {
     // navigate(
     //   `/dashboard/etapa/${etapasMap[ordenData.etapaActual]}${ordenData?.equipo.tipoEquipo.modelo}A`
     // );
-    navigate(
-      `/dashboard/etapa/${etapasMap[ordenData.etapaActual]}`
-    );
+    navigate(`/dashboard/etapa/${etapasMap[ordenData.etapaActual]}`);
   };
 
   return (
     <div className="consultar_container">
+      <div className="title-container">
+        <h3 className="titlle-tittle">Equipo</h3>
+        <div className="cliente_element">
+          <p className="cliente_title">
+            {ordenData ? ordenData.equipo.tipoEquipo.tipo : "Cargando datos..."}
+          </p>
+        </div>
+        <div className="cliente_element">
+          <p className="cliente_title">
+            {ordenData
+              ? ordenData.equipo.tipoEquipo.modelo
+              : "Cargando datos..."}
+          </p>
+        </div>
+        <div className="cliente_element">
+          <p className="cliente_title">
+            {ordenData
+              ? ordenData.equipo.marca
+              : "Cargando datos..."}
+          </p>
+        </div>
+        <div className="cliente_element">
+        <button className="btn" onClick={handleClick}>
+        Consultar
+      </button>
+        </div>
+      </div>
+
       <h3>Cliente</h3>
+
       <div className="cliente_container">
         <div className="cliente_divisor">
           <div className="cliente_element">
-            <p className="cliente_title">Razón Social</p>
-            <p>
+            <p className="cliente_title">
               {ordenData ? ordenData.cliente.razonSocial : "Cargando datos..."}
             </p>
           </div>
-          <div className="cliente_element">
+          {/* <div className="cliente_element">
             <p className="cliente_title">Contacto</p>
             <p>
               {ordenData
                 ? ordenData.cliente.nombreContacto
                 : "Cargando datos..."}
             </p>
-          </div>
+          </div> */}
         </div>
         <div className="cliente_divisor">
-          <div className="cliente_element">
+          {/* <div className="cliente_element">
             <p className="cliente_title">E-mail</p>
             <p>{ordenData ? ordenData.cliente.mail : "Cargando datos..."}</p>
           </div>
@@ -87,10 +108,33 @@ const ConsultarOt = () => {
             <p>
               {ordenData ? ordenData.cliente.telefono : "Cargando datos..."}
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
-      <h3>Equipo</h3>
+      <div className="fila-container">
+        <div className="etapa-container">
+          <h3 className="estapa-title">Ingreso</h3>
+          {/* <p className="comentario-title">{ordenData ? ordenData.recepcion.comentario : "Cargando datos..."}</p> */}
+          <div className="cuadrado-rojo"></div>
+        </div>
+        <div className="etapa-container">
+          <h3 className="estapa-title">Recepción</h3>
+          {/* <p className="comentario-title">{ordenData ? ordenData.inspeccionPcpVh60.comentario : "Cargando datos..."}</p> */}
+
+          <div className="cuadrado"></div>
+        </div>
+        <div className="etapa-container">
+          <h3 className="estapa-title">Inspección</h3>
+        </div>
+        <div className="etapa-container">
+          <h3 className="estapa-title">Ensayo</h3>
+        </div>
+        <div className="etapa-container">
+          <h3 className="estapa-title">Salida</h3>
+        </div>
+        
+      </div>
+      {/* <h3>Equipo</h3>
       <div className="equipo_container">
         <div className="equipo_divisor">
           <div className="cliente_element">
@@ -137,21 +181,19 @@ const ConsultarOt = () => {
           </div>
           <div className="cliente_element">
             <p className="cliente_title">Estado</p>
-            <p className="activa">
-              Activa
-            </p>
+            <p className="activa">Activa</p>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* <h3>{numeroOrden} | {tipoEquipo}</h3> */}
       {/* <label htmlFor="input-comentario">Fecha de ingreso:{numeroOT}</label>
       <label htmlFor="input-comentario">Tipo Equipo</label>
       <label htmlFor="input-comentario">Marca</label>
       <label htmlFor="input-comentario">Modelo</label> */}
       {/* <Link onClick={() => console.log("Botón clickeado")}> */}
-      <button className="btn" onClick={handleClick}>
+      {/* <button className="btn" onClick={handleClick}>
         Revisar
-      </button>
+      </button> */}
       {/* </Link> */}
     </div>
   );

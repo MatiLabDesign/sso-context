@@ -7,6 +7,7 @@ import { IoMdExit } from "react-icons/io";
 import { RxExit } from "react-icons/rx";
 import {
   CLIENT,
+  CLIENTE_VIEW,
   EQUIPO,
   LOGOUT,
   OS,
@@ -23,7 +24,7 @@ const Sidebar = () => {
         <img className={style.img} src="/trinoilisologo.png" alt="logo" />
       </div>
       <div className={style.menu_row}>
-        <Link className={''} to={OS}>
+        <Link className={''} to={CLIENTE_VIEW}>
           <button className={style.bbtn2}>Cliente View</button>
         </Link>
         <Link className={''} to={OT}>

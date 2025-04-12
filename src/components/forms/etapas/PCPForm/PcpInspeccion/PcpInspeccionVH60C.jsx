@@ -5,11 +5,18 @@ import { useNavigate, Link } from "react-router-dom";
 import InspeccionService from "../../../../../services/InspeccionService";
 import useOrdenData from "../../../../../hooks/useOrdenData";
 import useInspeccionData from "../../../../../hooks/useInspeccionData";
+import { IoIosArrowRoundForward } from "react-icons/io";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const PcpInspeccionVH60C = () => {
-  const { handleSubmit, control, register, reset, watch } = useForm();
+  const { handleSubmit, control, register, reset, watch, formState: { isDirty }, } = useForm();
 
   const ordenId = window.localStorage.getItem("ordenId");
+
+  const [imagenes, setImagenes] = useState([null, null, null]);
 
   const navigate = useNavigate();
 
@@ -51,21 +58,44 @@ const PcpInspeccionVH60C = () => {
 
   const onSubmit = async (data) => {
     try {
+      if (!isDirty) {
+        await Swal.fire({
+          title: "Sin cambios",
+          text: "No se detectaron modificaciones para guardar.",
+          icon: "info",
+          confirmButtonColor: "#059080",
+        });
+        return;
+      }
+  
       const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
       const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
-
+  
       if (inspeccionId) {
         console.log("Inspección existente:", inspeccionId);
-
-        await updateInspeccion(inspeccionId, data);
-        console.log("✅ Inspección actualizada correctamente:", data);
-
-        if (modeloEquipoActual && tipoEquipoActual) {
-          // console.log("acá navega a ensayo");
-          // navigate(`/dashboard/etapa/ensayo${tipoEquipoActual}${modeloEquipoActual}`);
-          navigate(`/dashboard/etapa/ensayo${tipoEquipoActual}`);
+  
+        const result = await Swal.fire({
+          title: "¿Quiere guardar los datos?",
+          text: "Los cambios son irreversibles",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#059080",
+          cancelButtonColor: "#f09898",
+          confirmButtonText: "Sí, guardar!",
+          cancelButtonText: "Cancelar",
+        });
+  
+        if (result.isConfirmed) {
+          await updateInspeccion(inspeccionId, data);
+          console.log("✅ Inspección actualizada correctamente:", data);
+  
+          if (modeloEquipoActual && tipoEquipoActual) {
+            navigate(`/dashboard/etapa/ensayo${tipoEquipoActual}`);
+          } else {
+            console.error("❌ Error: Modelo de equipo no definido.");
+          }
         } else {
-          console.error("❌ Error: Modelo de equipo no definido.");
+          console.log("❌ Acción cancelada por el usuario.");
         }
       } else {
         console.log("🚀 La inspección no existe...");
@@ -74,6 +104,14 @@ const PcpInspeccionVH60C = () => {
       console.error("❌ Error al procesar la inspección:", error);
     }
   };
+
+  const handleImagenChange = (index, file) => {
+    const nuevasImagenes = [...imagenes];
+    nuevasImagenes[index] = file;
+    setImagenes(nuevasImagenes);
+  };
+  
+  
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -105,13 +143,19 @@ const PcpInspeccionVH60C = () => {
           <label className="form-label">Comentario</label>
           <input {...register("comentario")} placeholder="Comentario" />
         </div>
-        <div className="next-button">
-          <Link onClick={handleClick}>Siguiente</Link>
-          <Link onClick={handleClickA}>Anterior</Link>
-        </div>
+        <button type="button" className="form-button-2">
+          <Link onClick={handleClickA}>
+            <FaArrowLeft />
+          </Link>
+        </button>
+        <button type="button" className="form-button-2">
+          <Link onClick={handleClick}>
+            <FaArrowRight />
+          </Link>
+        </button>
         <button type="submit" className="form-button">
-        Guardar
-      </button>
+          Guardar
+        </button>
       </div>
 
       {/* Iterar sobre cada propiedad en sistemaHidraulicoPcpVh60 */}
@@ -235,13 +279,27 @@ const PcpInspeccionVH60C = () => {
           </div>
         </div>
       ))}
-      <div className="imegenes">
-          <div className="imagen-prueba">+</div>
-          <div className="imagen-prueba">+</div>
-          <div className="imagen-prueba">+</div>
-        </div>
-
-      
+      <div className="imagenes">
+        {[0, 1, 2].map((index) => (
+          <label key={index} className="imagen-prueba">
+            {imagenes[index] ? (
+              <img
+                src={URL.createObjectURL(imagenes[index])}
+                alt={`Imagen ${index + 1}`}
+                className="imagen-preview"
+              />
+            ) : (
+              "+"
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={(e) => handleImagenChange(index, e.target.files[0])}
+            />
+          </label>
+        ))}
+      </div>
     </form>
   );
 };

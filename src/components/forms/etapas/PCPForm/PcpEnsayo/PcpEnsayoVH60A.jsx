@@ -9,6 +9,8 @@ import useOrdenData from "../../../../../hooks/useOrdenData";
 import useEnsayoData from "../../../../../hooks/useEnsayoData";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 
 const PcpEnsayoVH60A = () => {
   const { register, handleSubmit, watch, reset } = useForm({
@@ -77,24 +79,24 @@ const PcpEnsayoVH60A = () => {
       <h3 className="form-title">Ensayo PCP VH60 A</h3>
 
       <div className="form-group">
-        <div className="label-input">
-          <label className="form-label">Comentario</label>
-          <input {...register("comentario")} placeholder="Comentario" />
-        </div>
-        <button className="form-button-2">
-          <Link onClick={handleClickA}>
-            <IoIosArrowRoundBack className="icono" />
-          </Link>
-        </button>
-        <button className="form-button-2">
-          <Link onClick={handleClick}>
-            <IoIosArrowRoundForward className="icono" />
-          </Link>
-        </button>
-        <button type="submit" className="form-button">
-          Guardar
-        </button>
-      </div>
+              <div className="label-input">
+                <label className="form-label">Comentario</label>
+                <input {...register("comentario")} placeholder="Comentario" />
+              </div>
+              <button className="form-button-2">
+                <Link onClick={handleClickA}>
+                  <FaArrowLeft />
+                </Link>
+              </button>
+              <button className="form-button-2">
+                <Link onClick={handleClick}>
+                  <FaArrowRight />
+                </Link>
+              </button>
+              <button type="submit" className="form-button">
+                Guardar
+              </button>
+            </div>
       <div className="lista-container2">
         {["rpm200", "rpm300", "rpm400", "rpm500"].map((itemKey) => (
           <div className="item-section" key={itemKey}>
