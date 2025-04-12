@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "../PcpEnsayo.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import EnsayoService from "../../../../../services/EnsayoService";
 import ensayoPCPVH60 from "../../../../../data/ensayoPCPVH60";
 import useEnsayoCalc from "../../../../../hooks/useEnsayoCalc";
 import useOrdenData from "../../../../../hooks/useOrdenData";
 import useEnsayoData from "../../../../../hooks/useEnsayoData";
+import { IoIosArrowRoundForward } from "react-icons/io";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 const PcpEnsayoVH60A = () => {
   const { register, handleSubmit, watch, reset } = useForm({
@@ -20,7 +22,10 @@ const PcpEnsayoVH60A = () => {
   const { fuerzas } = useEnsayoCalc(formValues);
   const { otActual, updateOt } = useOrdenData(ordenId);
   const [ensayoId, setEnsayoId] = useState(null);
-  const { ensayoActual, createEnsayo, updateEnsayo } = useEnsayoData(ensayoId, reset);
+  const { ensayoActual, createEnsayo, updateEnsayo } = useEnsayoData(
+    ensayoId,
+    reset
+  );
 
   // Carga inicial de datos
   useEffect(() => {
@@ -38,11 +43,14 @@ const PcpEnsayoVH60A = () => {
       if (ensayoId) {
         await updateEnsayo(ensayoId, { ...data, fuerzasCalculadas: fuerzas });
       } else {
-        const nuevoEnsayo = await createEnsayo({ ...data, fuerzasCalculadas: fuerzas });
+        const nuevoEnsayo = await createEnsayo({
+          ...data,
+          fuerzasCalculadas: fuerzas,
+        });
         if (nuevoEnsayo?.id) {
           await updateOt(ordenId, {
             ...otActual,
-            ensayoPcpVh60: { id: nuevoEnsayo.id }
+            ensayoVh60: { id: nuevoEnsayo.id },
           });
         }
       }
@@ -55,88 +63,104 @@ const PcpEnsayoVH60A = () => {
     }
   };
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(`/dashboard/etapa/ensayoPCPVh60B`);
+  };
+  const handleClickA = (e) => {
+    e.preventDefault();
+    navigate(`/dashboard/etapa/inspeccionPCPVh60C`);
+  };
+
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
       <h3 className="form-title">Ensayo PCP VH60 A</h3>
 
       <div className="form-group">
-        <label className="form-label">Comentario</label>
-        <input 
-          {...register("comentario")} 
-          placeholder="Comentario" 
-        />
+        <div className="label-input">
+          <label className="form-label">Comentario</label>
+          <input {...register("comentario")} placeholder="Comentario" />
+        </div>
+        <button className="form-button-2">
+          <Link onClick={handleClickA}>
+            <IoIosArrowRoundBack className="icono" />
+          </Link>
+        </button>
+        <button className="form-button-2">
+          <Link onClick={handleClick}>
+            <IoIosArrowRoundForward className="icono" />
+          </Link>
+        </button>
+        <button type="submit" className="form-button">
+          Guardar
+        </button>
       </div>
-
-      {["rpm200", "rpm300", "rpm400", "rpm500"].map((itemKey) => (
-        <div className="item-section" key={itemKey}>
-          <div className="item-field">
-            <div className="item-tittle2">
-              <h4 className="item-title">{itemKey}</h4>
-            </div>
-            
-            <div className="item-tittle">
-              <label>C F</label>
-              <input
-                className="form-input2"
-                {...register(`itemEnsayo.${itemKey}.currentF`)}
-                placeholder="Current F"
-                type="number"
-                step="0.01"
-              />
-            </div>
-
-            <div className="item-tittle">
-              <label>U Out</label>
-              <input
-                className="form-input2"
-                {...register(`itemEnsayo.${itemKey}.voltajeSalida`)}
-                placeholder="Voltaje (V)"
-                type="number"
-                step="0.01"
-              />
-            </div>
-
-            <div className="item-tittle">
-              <label>I Out</label>
-              <input
-                className="form-input2"
-                {...register(`itemEnsayo.${itemKey}.corrienteSalida`)}
-                placeholder="Corriente (A)"
-                type="number"
-                step="0.01"
-              />
-            </div>
-
-            <div className="item-tittle">
-              <label>Tq   .</label>
-              <div className="torque-value">
-                {fuerzas[itemKey]?.toFixed(2) || "0.00"} lbf
+      <div className="lista-container2">
+        {["rpm200", "rpm300", "rpm400", "rpm500"].map((itemKey) => (
+          <div className="item-section" key={itemKey}>
+            <div className="item-field">
+              <div className="item-tittle2">
+                <h4 className="item-title">{itemKey}</h4>
               </div>
-            </div>
-            <div className="item-tittle">
-              <label>Ref .</label>
-              <div className="torque-value">
-                0.35 lbf
-              </div>
-            </div>
 
-            <div className="item-tittle">
-              <label>T°</label>
-              <input
-                className="form-input2"
-                {...register(`itemEnsayo.${itemKey}.temperaturaCarcazaC`)}
-                placeholder="Temperatura (°C)"
-                type="number"
-                step="0.1"
-              />
+              <div className="item-tittle">
+                <label>C F</label>
+                <input
+                  className="form-input2"
+                  {...register(`itemEnsayo.${itemKey}.currentF`)}
+                  placeholder="Current F"
+                  type="number"
+                  step="0.01"
+                />
+              </div>
+
+              <div className="item-tittle">
+                <label>U Out</label>
+                <input
+                  className="form-input2"
+                  {...register(`itemEnsayo.${itemKey}.voltajeSalida`)}
+                  placeholder="Voltaje (V)"
+                  type="number"
+                  step="0.01"
+                />
+              </div>
+
+              <div className="item-tittle">
+                <label>I Out</label>
+                <input
+                  className="form-input2"
+                  {...register(`itemEnsayo.${itemKey}.corrienteSalida`)}
+                  placeholder="Corriente (A)"
+                  type="number"
+                  step="0.01"
+                />
+              </div>
+
+              <div className="item-tittle">
+                <label>Tq .</label>
+                <div className="torque-value2">
+                  {fuerzas[itemKey]?.toFixed(2) || "0.00"} lbf
+                </div>
+              </div>
+              <div className="item-tittle">
+                <label>Ref .</label>
+                <div className="torque-value">0.35 lbf</div>
+              </div>
+
+              <div className="item-tittle">
+                <label>T°</label>
+                <input
+                  className="form-input2"
+                  {...register(`itemEnsayo.${itemKey}.temperaturaCarcazaC`)}
+                  placeholder="Temperatura (°C)"
+                  type="number"
+                  step="0.1"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-
-      <button type="submit" className="form-button">
-        Guardar
-      </button>
+        ))}
+      </div>
     </form>
   );
 };
