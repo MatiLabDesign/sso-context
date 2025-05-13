@@ -1,92 +1,53 @@
-const ensayoPCPVH60 = {
-    comentario: "",
-    eliminado: false,
-    itemEnsayo: {
-      cargaAxial:{
-        ok: false,
-        observacion: ""
-        },
-        temperatura: {
-            ok: false,
-            observacion: ""
-        },
-        nivelDeRuido: {
-            ok: false,
-            observacion: ""
-        },
-        nivelDeVibracion: {
-            ok: false,
-            observacion: ""
-        },
-        fugaDeAceite: {
-            ok: false,
-            observacion: ""
-        },
-        nivelDeAceite: {
-            ok: false,
-            observacion: ""
-        },
-        pintura: {
-            ok: false,
-            observacion: ""
-        },
-        rpm200: {
-        currentF: 0,
-        voltajeSalida: 0,
-        corrienteSalida: 0,
-        posicionSalida1: 0,
-        posicionSalida2: 0,
-        torqueFrenado: 0,
-        torqueFrenado1: 0,
-        torqueFrenado2: 0,
-        torqueFabricaReferencia: 0,
-        torqueReferencia1: 0,
-        torqueReferencia2: 0,
-        temperaturaCarcazaC: 0
-      },
-      rpm300: {
-        currentF: 0,
-        voltajeSalida: 0,
-        corrienteSalida: 0,
-        posicionSalida1: 0,
-        posicionSalida2: 0,
-        torqueFrenado: 0,
-        torqueFrenado1: 0,
-        torqueFrenado2: 0,
-        torqueFabricaReferencia: 0,
-        torqueReferencia1: 0,
-        torqueReferencia2: 0,
-        temperaturaCarcazaC: 0
-      },
-      rpm400: {
-        currentF: 0,
-        voltajeSalida: 0,
-        corrienteSalida: 0,
-        posicionSalida1: 0,
-        posicionSalida2: 0,
-        torqueFrenado: 0,
-        torqueFrenado1: 0,
-        torqueFrenado2: 0,
-        torqueFabricaReferencia: 0,
-        torqueReferencia1: 0,
-        torqueReferencia2: 0,
-        temperaturaCarcazaC: 0
-      },
-      rpm500: {
-        currentF: 0,
-        voltajeSalida: 0,
-        corrienteSalida: 0,
-        posicionSalida1: 0,
-        posicionSalida2: 0,
-        torqueFrenado: 0,
-        torqueFrenado1: 0,
-        torqueFrenado2: 0,
-        torqueFabricaReferencia: 0,
-        torqueReferencia1: 0,
-        torqueReferencia2: 0,
-        temperaturaCarcazaC: 0
-      }
-    },
-}
-
-export default ensayoPCPVH60;
+const ensayoVH60 = {
+  rpm100CurrentF: 0.0,
+  rpm100VoltajeSalida: 0.0,
+  rpm100CorrienteSalida: 0.0,
+  rpm100PosicionSalida1: 0.0,
+  rpm100PosicionSalida2: 0.0,
+  rpm100TorqueFrenado: 0.0,
+  rpm100TorqueFrenado1: 0.0,
+  rpm100TorqueFrenado2: 0.0,
+  rpm100TorqueFabricaReferencia: 0.0,
+  rpm100TorqueReferencia1: 0.0,
+  rpm100TorqueReferencia2: 0.0,
+  rpm100TemperaturaCarcazaC: 0.0,
+  rpm200CurrentF: 0.0,
+  rpm200VoltajeSalida: 0.0,
+  rpm200CorrienteSalida: 0.0,
+  rpm200PosicionSalida1: 0.0,
+  rpm200PosicionSalida2: 0.0,
+  rpm200TorqueFrenado: 0.0,
+  rpm200TorqueFrenado1: 0.0,
+  rpm200TorqueFrenado2: 0.0,
+  rpm200TorqueFabricaReferencia: 0.0,
+  rpm200TorqueReferencia1: 0.0,
+  rpm200TorqueReferencia2: 0.0,
+  rpm200TemperaturaCarcazaC: 0.0,
+  rpm300CurrentF: 0.0,
+  rpm300VoltajeSalida: 0.0,
+  rpm300CorrienteSalida: 0.0,
+  rpm300PosicionSalida1: 0.0,
+  rpm300PosicionSalida2: 0.0,
+  rpm300TorqueFrenado: 0.0,
+  rpm300TorqueFrenado1: 0.0,
+  rpm300TorqueFrenado2: 0.0,
+  rpm300TorqueFabricaReferencia: 0.0,
+  rpm300TorqueReferencia1: 0.0,
+  rpm300TorqueReferencia2: 0.0,
+  rpm300TemperaturaCarcazaC: 0.0,
+  cargaAxialOK: false,
+  cargaAxialObservacion: "",
+  temperaturaOK: false,
+  temperaturaObservacion: "",
+  nivelDeRuidoOK: false,
+  nivelDeRuidoObservacion: "",
+  nivelDeVibracionOK: false,
+  nivelDeVibracionObservacion: "",
+  fugaDeAceiteOK: false,
+  fugaDeAceiteObservacion: "",
+  nivelDeAceiteOK: false,
+  nivelDeAceiteObservacion: "",
+  pinturaOK: false,
+  pinturaObservacion: ""
+ };
+ export default ensayoVH60;

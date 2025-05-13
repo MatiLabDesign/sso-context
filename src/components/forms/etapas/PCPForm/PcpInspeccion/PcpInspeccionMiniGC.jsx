@@ -1,8 +1,10 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import "../PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InspeccionService from "../../../../../services/InspeccionService";
+import { FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 
 const PcpInspeccionMiniGC = () => {
   const { handleSubmit, control, register } = useForm();
@@ -25,21 +27,50 @@ const PcpInspeccionMiniGC = () => {
     }
   };
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(`/dashboard/etapa/ensayoPCP`);
+  };
+
+  const handleClickA = (e) => {
+    e.preventDefault();
+    navigate(`/dashboard/etapa/inspeccionPCPMiniGB`);
+  };
+
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">
-        Inspección C
-      </h3>
+      <h3 className="form-title">Inspección MiniG C</h3>
 
       {/* Campo para comentario */}
       <div className="form-group">
-        <label className="form-label">Comentario</label>
-        <input {...register("comentario")} placeholder="Comentario" />
+        <div className="label-input">
+          <label className="form-label">Comentario</label>
+          <input {...register("comentario")} placeholder="Comentario" />
+        </div>
+        <button type="button" className="form-button-2">
+          <Link onClick={handleClickA}>
+            <FaArrowLeft />
+          </Link>
+        </button>
+        <button type="button" className="form-button-2">
+          <Link onClick={handleClick}>
+            <FaArrowRight />
+          </Link>
+        </button>
+        <button type="submit" className="form-button">
+          Guardar
+        </button>
       </div>
 
       {/* Iterar sobre cada propiedad en itemRecepcion */}
       <h3>Sistema Hidraulico</h3>
-      {["zapataDeFreno", "ferodo", "levaS", "vastagoDeResortes", "resortes"].map((itemKey) => (
+      {[
+        "zapataDeFreno",
+        "ferodo",
+        "levaS",
+        "vastagoDeResortes",
+        "resortes",
+      ].map((itemKey) => (
         <div className="item-section" key={itemKey}>
           <div className="item-field">
             <div className="item-tittle">
@@ -77,7 +108,7 @@ const PcpInspeccionMiniGC = () => {
                 {...register(`items.${itemKey}.eficiencia`)}
               />
             </div>
-            
+
             <div className="item-tittle">
               <input
                 className="form-input"
@@ -148,11 +179,9 @@ const PcpInspeccionMiniGC = () => {
         </div>
       ))}
 
-      <button type="submit" className="form-button">
-        Guardar
-      </button>
+      
     </form>
   );
 };
 
-export default PcpInspeccionMiniGC
+export default PcpInspeccionMiniGC;

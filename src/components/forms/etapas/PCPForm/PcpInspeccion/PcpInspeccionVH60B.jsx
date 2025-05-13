@@ -12,11 +12,18 @@ import { FaArrowLeft } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const PcpInspeccionVH60B = () => {
-  const { handleSubmit, register, reset, watch, formState: { isDirty }, } = useForm();
+  const {
+    handleSubmit,
+    register,
+    reset,
+    watch,
+    formState: { isDirty },
+  } = useForm();
 
   const ordenId = window.localStorage.getItem("ordenId");
 
   const [imagenes, setImagenes] = useState([null, null, null]);
+  const [urlsTemporales, setUrlsTemporales] = useState(Array(6).fill(null));
 
   const navigate = useNavigate();
   console.log(ordenId);
@@ -66,13 +73,13 @@ const PcpInspeccionVH60B = () => {
         });
         return;
       }
-  
+
       const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
       const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
-  
+
       if (inspeccionId) {
         console.log("Inspección existente:", inspeccionId);
-  
+
         const result = await Swal.fire({
           title: "¿Quiere guardar los datos?",
           text: "Los cambios son irreversibles",
@@ -83,11 +90,11 @@ const PcpInspeccionVH60B = () => {
           confirmButtonText: "Sí, guardar!",
           cancelButtonText: "Cancelar",
         });
-  
+
         if (result.isConfirmed) {
           await updateInspeccion(inspeccionId, data);
           console.log("✅ Inspección actualizada correctamente:", data);
-  
+
           if (modeloEquipoActual && tipoEquipoActual) {
             navigate(
               `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}C`
@@ -110,9 +117,24 @@ const PcpInspeccionVH60B = () => {
     const nuevasImagenes = [...imagenes];
     nuevasImagenes[index] = file;
     setImagenes(nuevasImagenes);
+
+    const nuevasUrls = [...urlsTemporales];
+    nuevasUrls[index] = URL.createObjectURL(file);
+    setUrlsTemporales(nuevasUrls);
   };
-  
-  
+
+  const handleImagenClick = (index, e) => {
+    if (urlsTemporales[index]) {
+      Swal.fire({
+        title: `Imagen ${index + 1}`,
+        imageUrl: urlsTemporales[index],
+        imageHeight: 350,
+        imageAlt: `Imagen ${index + 1}`,
+        confirmButtonColor: "#059080",
+      });
+    }
+    e.preventDefault();
+  };
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -122,6 +144,81 @@ const PcpInspeccionVH60B = () => {
     e.preventDefault();
     navigate(`/dashboard/etapa/inspeccionPCPVh60A`);
   };
+
+  const rodamientos = [
+    {
+      ok: "axOk",
+      picado: "axPic",
+      laminado: "axLam",
+      fallaEnJaula: "axFj",
+      desgaste: "axDesg",
+      esp: "axEsp",
+      label: "Axial 294158",
+    },
+    {
+      ok: "gsOk",
+      picado: "gsPic",
+      laminado: "guiaSup6022.laminado",
+      fallaEnJaula: "gsFj",
+      desgaste: "gsDesg",
+      esp: "gsEsp",
+      label: "Guía Superior 6022",
+    },
+    {
+      ok: "giOk",
+      picado: "giPic",
+      laminado: "giLam",
+      fallaEnJaula: "giFj",
+      desgaste: "giDesg",
+      esp: "giEsp",
+      label: "Guía Inferior 6017",
+    },
+    {
+      ok: "frOk",
+      picado: "frPic",
+      laminado: "frLam",
+      fallaEnJaula: "frFj",
+      desgaste: "frDesg",
+      esp: "frEsp",
+      label: "Freno 6005-1RS-Z",
+    },
+    {
+      ok: "arOk",
+      picado: "arPic",
+      laminado: "arLamo",
+      fallaEnJaula: "arFj",
+      desgaste: "arDesg",
+      esp: "arEsp",
+      label: "Antirretorno CSK25-PP-C3",
+    },
+  ];
+
+  const transmision = [
+    {
+      ok: "corOk",
+      picado: "corPic",
+      desgastado: "corDesg",
+      roto: "corRot",
+      esp: "corEsp",
+      label: "Corona",
+    },
+    {
+      ok: "pinOk",
+      picado: "pinPic",
+      desgastado: "piDesg",
+      roto: "pinRot",
+      esp: "pinEsp",
+      label: "Piñón",
+    },
+    {
+      ok: "pfOk",
+      picado: "pfPic",
+      desgastado: "pfDesg",
+      roto: "pfRot",
+      esp: "pfEsp",
+      label: "Pastillas de Freno",
+    },
+  ];
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
@@ -148,25 +245,19 @@ const PcpInspeccionVH60B = () => {
       </div>
       <div className="lista-container">
         <h3>Rodamientos</h3>
-        {[
-          "axial294158",
-          "guiaSup6022",
-          "guiaInf6017",
-          "freno60051rsZ",
-          "antirretornoCsk25PpC3",
-        ].map((itemKey) => (
-          <div className="item-section" key={itemKey}>
+        {rodamientos.map((item, index) => (
+          <div className="item-section" key={index}>
             <div className="item-field">
               <div className="item-tittle">
-                <h4 className="item-title">{itemKey}</h4>
+                <h4 className="item-title">{item.label}</h4>
               </div>
               <div className="item-tittle">
                 <label className="form-label-1">Ok</label>
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpVh60.${itemKey}.ok`)}
-                  checked={watch(`rodamientoPcpVh60.${itemKey}.ok`)}
+                  {...register(`rodamientoPcpVh60.${item.ok}`)}
+                  checked={watch(`rodamientoPcpVh60.${item.ok}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -174,8 +265,8 @@ const PcpInspeccionVH60B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpVh60.${itemKey}.picado`)}
-                  checked={watch(`rodamientoPcpVh60.${itemKey}.picado`)}
+                  {...register(`rodamientoPcpVh60.${item.picado}`)}
+                  checked={watch(`rodamientoPcpVh60.${item.picado}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -183,8 +274,8 @@ const PcpInspeccionVH60B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpVh60.${itemKey}.laminado`)}
-                  checked={watch(`rodamientoPcpVh60.${itemKey}.laminado`)}
+                  {...register(`rodamientoPcpVh60.${item.laminado}`)}
+                  checked={watch(`rodamientoPcpVh60.${item.laminado}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -192,8 +283,8 @@ const PcpInspeccionVH60B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpVh60.${itemKey}.fallaEnJaula`)}
-                  checked={watch(`rodamientoPcpVh60.${itemKey}.fallaEnJaula`)}
+                  {...register(`rodamientoPcpVh60.${item.fallaEnJaula}`)}
+                  checked={watch(`rodamientoPcpVh60.${item.fallaEnJaula}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -201,14 +292,14 @@ const PcpInspeccionVH60B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpVh60.${itemKey}.desgaste`)}
-                  checked={watch(`rodamientoPcpVh60.${itemKey}.desgaste`)}
+                  {...register(`rodamientoPcpVh60.${item.desgaste}`)}
+                  checked={watch(`rodamientoPcpVh60.${item.desgaste}`)}
                 />
               </div>
               <div className="item-tittle">
                 <input
                   className="form-input"
-                  {...register(`rodamientoPcpVh60.${itemKey}.especificar`)}
+                  {...register(`rodamientoPcpVh60.${item.esp}`)}
                   placeholder="Especificar"
                 />
               </div>
@@ -217,19 +308,19 @@ const PcpInspeccionVH60B = () => {
         ))}
 
         <h3>Transmisión freno</h3>
-        {["corona", "pinion", "pastillasFreno"].map((itemKey) => (
-          <div className="item-section" key={itemKey}>
+        {transmision.map((item, index) => (
+          <div className="item-section" key={index}>
             <div className="item-field">
               <div className="item-tittle">
-                <h4 className="item-title">{itemKey}</h4>
+                <h4 className="item-title">{item.label}</h4>
               </div>
               <div className="item-tittle">
                 <label className="form-label-1">Ok</label>
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`transmisionFrenoPcpVh60.${itemKey}.ok`)}
-                  checked={watch(`transmisionFrenoPcpVh60.${itemKey}.ok`)}
+                  {...register(`transmisionFrenoPcpVh60.${item.ok}`)}
+                  checked={watch(`transmisionFrenoPcpVh60.${item.ok}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -237,8 +328,8 @@ const PcpInspeccionVH60B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`transmisionFrenoPcpVh60.${itemKey}.picado`)}
-                  checked={watch(`transmisionFrenoPcpVh60.${itemKey}.picado`)}
+                  {...register(`transmisionFrenoPcpVh60.${item.picado}`)}
+                  checked={watch(`transmisionFrenoPcpVh60.${item.picado}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -246,10 +337,8 @@ const PcpInspeccionVH60B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`transmisionFrenoPcpVh60.${itemKey}.desgastado`)}
-                  checked={watch(
-                    `transmisionFrenoPcpVh60.${itemKey}.desgastado`
-                  )}
+                  {...register(`transmisionFrenoPcpVh60.${item.desgastado}`)}
+                  checked={watch(`transmisionFrenoPcpVh60.${item.desgastado}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -257,16 +346,14 @@ const PcpInspeccionVH60B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`transmisionFrenoPcpVh60.${itemKey}.roto`)}
-                  checked={watch(`transmisionFrenoPcpVh60.${itemKey}.roto`)}
+                  {...register(`transmisionFrenoPcpVh60.${item.roto}`)}
+                  checked={watch(`transmisionFrenoPcpVh60.${item.roto}`)}
                 />
               </div>
               <div className="item-tittle">
                 <input
                   className="form-input"
-                  {...register(
-                    `transmisionFrenoPcpVh60.${itemKey}.especificar`
-                  )}
+                  {...register(`transmisionFrenoPcpVh60.${item.esp}`)}
                   placeholder="Especificar"
                 />
               </div>
@@ -279,9 +366,10 @@ const PcpInspeccionVH60B = () => {
           <label key={index} className="imagen-prueba">
             {imagenes[index] ? (
               <img
-                src={URL.createObjectURL(imagenes[index])}
+                src={urlsTemporales[index]}
                 alt={`Imagen ${index + 1}`}
                 className="imagen-preview"
+                onClick={(e) => handleImagenClick(index, e)}
               />
             ) : (
               "+"

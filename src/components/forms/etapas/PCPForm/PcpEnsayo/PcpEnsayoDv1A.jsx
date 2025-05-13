@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import ensayoPCPMiniG from "../../../../../data/ensayoPCPMiniG";
 import EnsayoService from "../../../../../services/EnsayoService";
 
-const PcpEnsayoMiniGA = () => {
+const PcpEnsayoDv1A = () => {
   const { register, handleSubmit } = useForm({defaultValues:ensayoPCPMiniG});
 
   const tipoEquipo = window.localStorage.getItem("tipoEquipo");
@@ -47,14 +47,14 @@ const PcpEnsayoMiniGA = () => {
       console.error("Error al enviar los datos:", error);
     }
   };
-
-  const itemEnsayoMiniG = [
-    ["200", "35.7", "0"],
-    ["300", "53.6", "130"],
-    ["400", "71.4", "250"],
-    ["500", "89.3", "380"],
+  
+  const itemEnsayoDv1 =[
+    ["100", "10", "18", "135"],
+    ["100", "20", "18", "150"],
+    ["100", "70", "18", "320"],
+    ["100", "100", "18", "450"],
   ];
-  // [rpm, currentF, torqueRef]
+  // [rpm, presion, currentF, torqueRef]
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
@@ -136,4 +136,4 @@ const PcpEnsayoMiniGA = () => {
   );
 };
 
-export default PcpEnsayoMiniGA;
+export default PcpEnsayoDv1A;

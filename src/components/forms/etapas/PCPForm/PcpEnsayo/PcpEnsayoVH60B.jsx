@@ -106,6 +106,14 @@ const PcpEnsayoVH60B = () => {
       {/* Iterar sobre cada propiedad en itemRecepcion */}
 
       <div className="lista-container2">
+        {/* [["cargaAxialOK", "cargaAxialObservacion", "Carga Axial"],
+          ["temperaturaOK", "temperaturaObservacion", "Temperatura"],
+          ["nivelDeRuidoOK", "nivelDeRuidoObservacion", "Nivel de Ruido"],
+          ["nivelDeVibracionOK", "nivelDeVibracionObservacion", "Nivel de Vibración"],
+          ["fugaDeAceiteOK", "fugaDeAceiteObservacion", "Fuga de Aceite"],
+          ["nivelDeAceiteOK", "nivelDeAceiteObservacion", "Nivel de Aceite"],
+          ["pinturaOK", "pinturaObservacion", "Pintura"],
+          ] */}
 
       
       {[

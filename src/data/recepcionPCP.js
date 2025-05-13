@@ -2,57 +2,36 @@ const recepcionPCP = {
     comentario: "",
     eliminado: false,
     itemRecepcion: {
-        cubreGrampa: {
-            estado: false,
-            requerimiento: "",
-            observacion: ""
-        },
-        cubrePolea: {
-            estado: false,
-            requerimiento: "",
-            observacion: ""
-        },
-        cubreVastago: {
-            estado: false,
-            requerimiento: "",
-            observacion: ""
-        },
-        grampaAntiEyeccion: {
-            estado: false,
-            requerimiento: "",
-            observacion: ""
-        },
-        estructuraChasis: {
-            estado: false,
-            requerimiento: "",
-            observacion: ""
-        },
-        linternaSeparador: {
-            estado: false,
-            requerimiento: "",
-            observacion: ""
-        },
-        mesaDeMotor: {
-            estado: false,
-            requerimiento: "",
-            observacion: ""
-        },
-        rielesDeMotor: {
-            estado: false,
-            requerimiento: "",
-            observacion: ""
-        },
-        soporteDeTransporte: {
-            estado: false,
-            requerimiento: "",
-            observacion: ""
-        },
-        poleaConducida: {
-            estado: false,
-            requerimiento: "",
-            observacion: ""
-        }
+    cgestado: false,
+    cgrequerimiento: "",
+    cgobservacion: "",
+    estado: false,
+    requerimiento: "",
+    observacion: "",
+    cvestado: false,
+    cvrequerimiento: "",
+    cvobservacion: "",
+    gaestado: false,
+    garequerimiento: "",
+    gaobservacion: "",
+    ecestado: false,
+    ecrequerimiento: "",
+    ecobservacion: "",
+    lsestado: false,
+    lsrequerimiento: "",
+    lsobservacion: "",
+    mmestado: false,
+    mmrequerimiento: "",
+    mmobservacion: "",
+    rmestado: false,
+    rmrequerimiento: "",
+    rmobservacion: "",
+    stestado: false,
+    strequerimiento: "",
+    stobservacion: "",
+    pcestado: false,
+    pcrequerimiento: "",
+    pcobservacion: ""
     },
-}
-
-export default recepcionPCP;
+   };
+   export default recepcionPCP;

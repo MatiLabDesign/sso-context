@@ -52,7 +52,8 @@ p{
 .cuadrado::before{
     content: '';
     position: absolute;
-    width: 100%;
+    /* en el width se cambia el porcentaje de la barra */
+    width: 33%;
     height: 100%;
     background-color: #049d7e;
     transform: translateX(-100%);

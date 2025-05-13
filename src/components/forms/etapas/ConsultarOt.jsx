@@ -121,13 +121,15 @@ const ConsultarOt = () => {
           <h3 className="estapa-title">Recepción</h3>
           {/* <p className="comentario-title">{ordenData ? ordenData.inspeccionPcpVh60.comentario : "Cargando datos..."}</p> */}
 
-          <div className="cuadrado"></div>
+          <div className="cuadrado-rojo"></div>
         </div>
         <div className="etapa-container">
           <h3 className="estapa-title">Inspección</h3>
+          <div className="cuadrado-rojo"></div>
         </div>
         <div className="etapa-container">
           <h3 className="estapa-title">Ensayo</h3>
+          <div className="cuadrado"></div>
         </div>
         <div className="etapa-container">
           <h3 className="estapa-title">Salida</h3>

@@ -16,7 +16,6 @@ import {
   INSPECCIONUCL,
   LOGIN,
   LOGOUT,
-  OS,
   OT,
   OTLIST,
   PCP_ENSAYO,
@@ -87,7 +86,6 @@ import PcpInspeccionCougarB from "./../components/forms/etapas/PCPForm/PcpInspec
 import PcpInspeccionCougarC from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarC";
 import PcpInspeccionVH60A from "../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionVH60A";
 import EtapasRoutes from "./EtapasRoutes";
-import OsForm from "../components/forms/OsForm";
 import ConsultarOt from "../components/forms/etapas/ConsultarOt";
 import PcpEnsayoVH60A from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVh60A";
 import PcpEnsayoVH60B from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVH60B";
@@ -99,6 +97,7 @@ const DashboardRoutes = () => {
       <Route path="/" element={<PublicRoutes />}>
         <Route index element={<Home />} />
         <Route path={LOGIN} element={<Login />} />
+        <Route path={CLIENTE_VIEW} element={<ClienteDashboard/>}/>
       </Route>
       <Route path={PRIVATE} element={<PrivateRoutes />}>
         <Route path={PRIVATE} element={<Private />}>
@@ -109,10 +108,8 @@ const DashboardRoutes = () => {
           <Route path={CREATEEQUIPO} element={<CreateEquipo />} />
           <Route path={CREATETIPOEQUIPO} element={<CreateTipoEquipo />} />
           <Route path={OT} element={<OtForm />} />
-          <Route path={OS} element={<OsForm />} />
           <Route path={OTLIST} element={<Ot />} />
-          <Route path={CLIENTE_VIEW} element={<ClienteDashboard />} />
-          
+
           {/* <Route>
               <EtapasRoutes/>
             </Route> */}

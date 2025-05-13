@@ -1,161 +1,122 @@
-const inspeccionPCPVH60 = {
-    comentario: "",
-    eliminado: false,
-    lubricantePcpVh60: {
-      lubricanteBlockPortaRodamientos: {
-        ok: false,
-        particulasMetalicas: false,
-        agua: false,
-        sucio: false,
-        especificar: ""
-      },
-      lubricanteSistemaFreno: {
-        ok: false,
-        particulasMetalicas: false,
-        agua: false,
-        sucio: false,
-        especificar: ""
-      }
-    },
-    itemPcpVh60: {
-      ejeMotriz: {
-        ok: false,
-        alojamientoRodamiento: false,
-        alojamientoReten: false,
-        diametro: false,
-        deformado: false,
-        especificar: ""
-      },
-      blockCabezal: {
-        ok: false,
-        alojamientoRodamiento: false,
-        alojamientoReten: false,
-        diametro: false,
-        deformado: false,
-        especificar: ""
-      },
-      placaInferior: {
-        ok: false,
-        alojamientoRodamiento: false,
-        alojamientoReten: false,
-        diametro: false,
-        deformado: false,
-        especificar: ""
-      },
-      placaSuperior: {
-        ok: false,
-        alojamientoRodamiento: false,
-        alojamientoReten: false,
-        diametro: false,
-        deformado: false,
-        especificar: ""
-      }
-    },
-    rodamientoPcpVh60: {
-      axial294158: {
-        ok: false,
-        picado: false,
-        laminado: false,
-        fallaEnJaula: false,
-        desgaste: false,
-        especificar: ""
-      },
-      guiaSup6022: {
-        ok: false,
-        picado: false,
-        laminado: false,
-        fallaEnJaula: false,
-        desgaste: false,
-        especificar: ""
-      },
-      guiaInf6017: {
-        ok: false,
-        picado: false,
-        laminado: false,
-        fallaEnJaula: false,
-        desgaste: false,
-        especificar: ""
-      },
-      freno60051rsZ: {
-        ok: false,
-        picado: false,
-        laminado: false,
-        fallaEnJaula: false,
-        desgaste: false,
-        especificar: ""
-      },
-      antirretornoCsk25PpC3: {
-        ok: false,
-        picado: false,
-        laminado: false,
-        fallaEnJaula: false,
-        desgaste: false,
-        especificar: ""
-      }
-    },
-    transmisionFrenoPcpVh60: {
-      corona: {
-        ok: false,
-        picado: false,
-        desgastado: false,
-        roto: false,
-        especificar: ""
-      },
-      pinion: {
-        ok: false,
-        picado: false,
-        desgastado: false,
-        roto: false,
-        especificar: ""
-      },
-      pastillasFreno: {
-        ok: false,
-        picado: false,
-        desgastado: false,
-        roto: false,
-        especificar: ""
-      }
-    },
-    sistemaHidraulicoPcpVh60: {
-      bomba: {
-        ok: false,
-        fugas: false,
-        roto: false,
-        eficiencia: false,
-        especificar: ""
-      },
-      manifold: {
-        ok: false,
-        fugas: false,
-        roto: false,
-        eficiencia: false,
-        especificar: ""
-      },
-      caliper: {
-        ok: false,
-        fugas: false,
-        roto: false,
-        eficiencia: false,
-        especificar: ""
-      },
-      conjuntoMangueras: {
-        ok: false,
-        fugas: false,
-        roto: false,
-        eficiencia: false,
-        especificar: ""
-      }
-    },
-    poleaPcpVh60: {
-      polea: {
-        ok: false,
-        fisura: false,
-        poros: false,
-        disenoInadecuado: false,
-        numeroTrazabilidad: false,
-        especificar: ""
-      }
-    }
-  };
-
-export default inspeccionPCPVH60;
+const inspeccionPcpVH60 = {
+  comentario: "",
+  eliminado: false,
+  lubricantePcpVh60: {
+  lbprOk: false,
+  lbprPM: false,
+  lbprAgua: false,
+  lbprSucio: false,
+  lbprEsp: "",
+  lsfOk: false,
+  lsfPM: false,
+  lsfAgua: false,
+  lsfSucio: false,
+  lsfEsp: ""
+  },
+  itemPcpVh60: {
+  emOk: false,
+  emAlRod: false,
+  emAlRet: false,
+  emDiam: false,
+  emDef: false,
+  emEsp: "",
+  bcOk: false,
+  bcAlRod: false,
+  bcAlRet: false,
+  bcDiam: false,
+  bcDef: false,
+  bcEsp: "",
+  piOk: false,
+  piAlRod: false,
+  piAlRet: false,
+  piDiam: false,
+  piDef: false,
+  piEsp: "",
+  psOk: false,
+  psAlRod: false,
+  psAlRet: false,
+  psDiam: false,
+  psDef: false,
+  psEsp: ""
+  },
+  rodamientoPcpVh60: {
+  axOk: false,
+  axPic: false,
+  axLam: false,
+  axFj: false,
+  axDesg: false,
+  axEsp: "",
+  gsOk: false,
+  gsPic: false,
+  gsLam: false,
+  gsFj: false,
+  gsDesg: false,
+  gsEsp: "",
+  giOk: false,
+  giPic: false,
+  giLam: false,
+  giFj: false,
+  giDesg: false,
+  giEsp: "",
+  frOk: false,
+  frPic: false,
+  frLam: false,
+  frFj: false,
+  frDesg: false,
+  frEsp: "",
+  arOk: false,
+  arPic: false,
+  arLam: false,
+  arFj: false,
+  arDesg: false,
+  arEsp: ""
+  },
+  transmisionFrenoPcpVh60: {
+  corOk: false,
+  corPic: false,
+  corDesg: false,
+  corRot: false,
+  corEsp: "",
+  pinOk: false,
+  pinPic: false,
+  pinDesg: false,
+  pinRot: false,
+  pinEsp: "",
+  pfOk: false,
+  pfPic: false,
+  pfDesg: false,
+  pfRot: false,
+  pfEsp: ""
+  },
+  sistemaHidraulicoPcpVh60: {
+  bomOk: false,
+  bomFug: false,
+  bomRot: false,
+  bomEf: false,
+  bomEsp: "",
+  manOk: false,
+  manFug: false,
+  manRot: false,
+  manEf: false,
+  manEsp: "",
+  calOk: false,
+  calFug: false,
+  calRot: false,
+  calEf: false,
+  calEsp: "",
+  cmOk: false,
+  cmFug: false,
+  cmRot: false,
+  cmEf: false,
+  cmEsp: ""
+  },
+  poleaPcpVh60: {
+  ok: false,
+  alojRod: false,
+  alojRet: false,
+  diam: false,
+  def: false,
+  esp: ""
+  }
+ };
+ export default inspeccionPcpVH60;

@@ -15,20 +15,12 @@ const OtForm = () => {
   } = useForm();
 
   const navigate = useNavigate();
-  //---------------------------------------------
-  //crear el numero de OT de acuerdo al equipo
-  const createNumeroEquipo = () =>{
-    console.log("se está generando un numero de OT");
-    //acá voy a colocar la logica para crear el número de OT
-  }
-
+  
   const onSubmit = (data) => {
     const orden = {
-      // numeroOT: createNumeroEquipo(),
       cliente: {
         id: data.cliente_id,
       },
-      //no trae los id, viene undefined
       equipo: {
         id: data.equipo_id,
       },
@@ -77,7 +69,7 @@ const OtForm = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={style.form_ot}>
         <div className= {style.form_container_i}>
-          <div className={style.column_two}>
+          <div className={style.column_one}>
             <div className={style.input_ot}>
               <label>Cliente</label>
               <select {...register("cliente_id")}>
@@ -89,7 +81,7 @@ const OtForm = () => {
               </select>
             </div>
             <div className={style.input_ot}>
-              <label>Equipos</label>
+              <label>Equipo</label>
               <select {...register("equipo_id")}>
                 {equipos.map((equipo) => (
                   <option key={equipo.id} value={equipo.id}>

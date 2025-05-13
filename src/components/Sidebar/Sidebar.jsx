@@ -10,7 +10,6 @@ import {
   CLIENTE_VIEW,
   EQUIPO,
   LOGOUT,
-  OS,
   OT,
   OTLIST,
   TIPOEQUIPO,
@@ -24,9 +23,9 @@ const Sidebar = () => {
         <img className={style.img} src="/trinoilisologo.png" alt="logo" />
       </div>
       <div className={style.menu_row}>
-        <Link className={''} to={CLIENTE_VIEW}>
+        {/* <Link className={''} to={CLIENTE_VIEW}>
           <button className={style.bbtn2}>Cliente View</button>
-        </Link>
+        </Link> */}
         <Link className={''} to={OT}>
           <button className={style.bbtn}>Nueva OT</button>
         </Link>
@@ -47,11 +46,11 @@ const Sidebar = () => {
               <Link to={EQUIPO}><div className={style.icon}><LuServer  /></div>Equipos</Link>
             </li>
           </div>
-          <div className={style.list_item_container}>
+          {/* <div className={style.list_item_container}>
             <li className={style.list_item}>
               <Link className={style.icon} to={TIPOEQUIPO}><div className={style.icon}><RiUser4Line/></div>Tipos de Equipos</Link>
             </li>
-          </div>
+          </div> */}
         </ul>
       </div>
       <div className={style.logout_row}>

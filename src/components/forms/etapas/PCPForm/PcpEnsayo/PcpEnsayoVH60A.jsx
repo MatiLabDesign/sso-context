@@ -74,95 +74,119 @@ const PcpEnsayoVH60A = () => {
     navigate(`/dashboard/etapa/inspeccionPCPVh60C`);
   };
 
+  const itemEnsayoVh60 = [
+    ["100", "17.9", "8", "10"],
+    ["200", "35.7", "16", "20"],
+    ["300", "53.6", "24", "30"],
+  ];
+  // [rpm, rpm100CurrentF, rpm100TorqueReferencia1, rpm100TorqueReferencia2]
+
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
       <h3 className="form-title">Ensayo PCP VH60 A</h3>
 
       <div className="form-group">
-              <div className="label-input">
-                <label className="form-label">Comentario</label>
-                <input {...register("comentario")} placeholder="Comentario" />
-              </div>
-              <button className="form-button-2">
-                <Link onClick={handleClickA}>
-                  <FaArrowLeft />
-                </Link>
-              </button>
-              <button className="form-button-2">
-                <Link onClick={handleClick}>
-                  <FaArrowRight />
-                </Link>
-              </button>
-              <button type="submit" className="form-button">
-                Guardar
-              </button>
-            </div>
-      <div className="lista-container2">
-        {["rpm200", "rpm300", "rpm400", "rpm500"].map((itemKey) => (
-          <div className="item-section" key={itemKey}>
-            <div className="item-field">
-              <div className="item-tittle2">
-                <h4 className="item-title">{itemKey}</h4>
-              </div>
-
-              <div className="item-tittle">
-                <label>C F</label>
-                <input
-                  className="form-input2"
-                  {...register(`itemEnsayo.${itemKey}.currentF`)}
-                  placeholder="Current F"
-                  type="number"
-                  step="0.01"
-                />
-              </div>
-
-              <div className="item-tittle">
-                <label>U Out</label>
-                <input
-                  className="form-input2"
-                  {...register(`itemEnsayo.${itemKey}.voltajeSalida`)}
-                  placeholder="Voltaje (V)"
-                  type="number"
-                  step="0.01"
-                />
-              </div>
-
-              <div className="item-tittle">
-                <label>I Out</label>
-                <input
-                  className="form-input2"
-                  {...register(`itemEnsayo.${itemKey}.corrienteSalida`)}
-                  placeholder="Corriente (A)"
-                  type="number"
-                  step="0.01"
-                />
-              </div>
-
-              <div className="item-tittle">
-                <label>Tq .</label>
-                <div className="torque-value2">
-                  {fuerzas[itemKey]?.toFixed(2) || "0.00"} lbf
-                </div>
-              </div>
-              <div className="item-tittle">
-                <label>Ref .</label>
-                <div className="torque-value">0.35 lbf</div>
-              </div>
-
-              <div className="item-tittle">
-                <label>T°</label>
-                <input
-                  className="form-input2"
-                  {...register(`itemEnsayo.${itemKey}.temperaturaCarcazaC`)}
-                  placeholder="Temperatura (°C)"
-                  type="number"
-                  step="0.1"
-                />
-              </div>
-            </div>
-          </div>
-        ))}
+        <div className="label-input">
+          <label className="form-label">Comentario</label>
+          <input {...register("comentario")} placeholder="Comentario" />
+        </div>
+        <button className="form-button-2">
+          <Link onClick={handleClickA}>
+            <FaArrowLeft />
+          </Link>
+        </button>
+        <button className="form-button-2">
+          <Link onClick={handleClick}>
+            <FaArrowRight />
+          </Link>
+        </button>
+        <button type="submit" className="form-button">
+          Guardar
+        </button>
       </div>
+      <table className="ensayoTable">
+        <thead>
+          <tr>
+            <th>RPM</th>
+            <th>Corriente</th>
+            <th>Voltaje</th>
+            <th>Pos 1</th>
+            <th>Pos 2</th>
+            <th>Torque 1</th>
+            <th>Torque 2</th>
+            <th>Ref 1</th>
+            <th>Ref 2</th>
+            <th>Temperatura</th>
+          </tr>
+        </thead>
+        <tbody>
+          {itemEnsayoVh60.map(
+            ([
+              rpm,
+              rpm100CurrentF,
+              rpm100TorqueReferencia1,
+              rpm100TorqueReferencia2,
+            ]) => (
+              <tr key={rpm}>
+                <td>
+                  <strong>{rpm}</strong>
+                </td>
+                <td>
+                  <p className="datoEnsayo" {...register(`rpm${rpm}CurrentF`)}>{rpm100CurrentF}</p>
+                </td>
+                <td>
+                  <input
+                    className="inputEnsayo"
+                    {...register(`rpm${rpm}VoltajeSalida`)}
+                    type="number"
+                  />
+                </td>
+                <td>
+                  <input
+                    className="inputEnsayo"
+                    {...register(`rpm${rpm}PosicionSalida1`)}
+                    type="number"
+                  />
+                </td>
+                <td>
+                  <input
+                    className="inputEnsayo"
+                    {...register(`rpm${rpm}PosicionSalida2`)}
+                    type="number"
+                  />
+                </td>
+                <td>
+                  <input
+                    className="inputEnsayo"
+                    {...register(`rpm${rpm}TorqueFrenado1`)}
+                    type="number"
+                  />
+                </td>
+                <td>
+                  <input
+                    className="inputEnsayo"
+                    {...register(`rpm${rpm}TorqueFrenado2`)}
+                    type="number"
+                  />
+                </td>
+                <td>
+                  <p className="datoEnsayo">{rpm100TorqueReferencia1}</p>
+                </td>
+                <td>
+                  <p className="datoEnsayo">{rpm100TorqueReferencia2}</p>
+                </td>
+                <td>
+                  <input
+                    className="inputEnsayo"
+                    {...register(`rpm${rpm}TemperaturaCarcazaC`)}
+                    type="number"
+                  />
+                </td>
+              </tr>
+            )
+          )}
+        </tbody>
+      </table>
     </form>
   );
 };

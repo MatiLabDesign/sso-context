@@ -1,7 +1,5 @@
 import { useForm } from "react-hook-form";
 import "./PcpRecepcion2.css";
-import RecepcionService from "../../../../services/RecepcionService";
-import OtService from "../../../../services/OtService";
 import { Link, useNavigate } from "react-router-dom";
 import recepcionPCP from "../../../../data/recepcionPCP";
 import { useEffect, useState } from "react";
@@ -9,6 +7,7 @@ import useOrdenData from "../../../../hooks/useOrdenData";
 import useRecepcionData from "../../../../hooks/useRecepcionData";
 import Swal from "sweetalert2";
 import { FaArrowRight } from "react-icons/fa";
+
 
 const PcpRecepcion = () => {
   const {
@@ -57,16 +56,13 @@ const PcpRecepcion = () => {
 
   const handleImagenClick = (index, e) => {
     if (urlsTemporales[index]) {
-      
       Swal.fire({
         title: `Imagen ${index + 1}`,
         imageUrl: urlsTemporales[index],
-        // imageWidth: 400,
         imageHeight: 350,
         imageAlt: `Imagen ${index + 1}`,
         confirmButtonColor: "#059080",
       });
-     
     }
     e.preventDefault();
   };
@@ -100,23 +96,6 @@ const PcpRecepcion = () => {
 
         if (result.isConfirmed) {
           await updateRecepcion(recepcionId, data);
-
-          // Subir imágenes
-          // const formData = new FormData();
-          // imagenes.forEach((img, index) => {
-          //   if (img) {
-          //     formData.append(`img${index + 1}`, img);
-          //   }
-          // });
-
-          // await RecepcionService.updateRecepcionImagen(recepcionId, formData);
-
-          // await Swal.fire({
-          //   title: "Perfecto!",
-          //   text: "Datos actualizados con éxito",
-          //   icon: "success",
-          //   confirmButtonColor: "#059080",
-          // });
 
           if (modeloEquipoActual && tipoEquipoActual) {
             navigate(
@@ -185,42 +164,41 @@ const PcpRecepcion = () => {
 
       <div className="lista-container">
         {[
-          "cubreGrampa",
-          "cubrePolea",
-          "cubreVastago",
-          "grampaAntiEyeccion",
-          "estructuraChasis",
-          "linternaSeparador",
-          "mesaDeMotor",
-          "rielesDeMotor",
-          "soporteDeTransporte",
-          "poleaConducida",
-        ].map((itemKey) => (
-          <div className="item-section" key={itemKey}>
+          ["cgestado", "cgrequerimiento", "cgobservacion", "Cubre Grampa"],
+          ["cvestado", "cvrequerimiento", "cvobservacion", "Cubre Polea"],
+          ["gaestado", "garequerimiento", "gaobservacion", "Grampa Anti Eyección"],
+          ["ecestado", "ecrequerimiento", "ecobservacion", "Estructura Chasis"],
+          ["lsestado", "lsrequerimiento", "lsobservacion", "Linterna Separador"],
+          ["mmestado", "mmrequerimiento", "mmobservacion", "Mesa de Motor"],
+          ["rmestado", "rmrequerimiento", "rmobservacion", "Rieles de Motor"],
+          ["stestado", "strequerimiento", "stobservacion", "Soporte de Transporte"],
+          ["pcestado", "pcrequerimiento", "pcobservacion", "Polea Conducida"],
+        ].map(([estadoKey, reqKey, obsKey, label]) => (
+          <div className="item-section" key={estadoKey}>
             <div className="item-field">
               <div className="item-tittle">
-                <h4 className="item-title">{itemKey}</h4>
+                <h4 className="item-title">{label}</h4>
               </div>
               <div className="item-tittle">
                 <label className="form-label-1">Ok</label>
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`itemRecepcion.${itemKey}.estado`)}
-                  checked={watch(`itemRecepcion.${itemKey}.estado`)}
+                  {...register(`itemRecepcion.${estadoKey}`)}
+                  checked={watch(`itemRecepcion.${estadoKey}`)}
                 />
               </div>
               <div className="item-tittle">
                 <input
                   className="form-input"
-                  {...register(`itemRecepcion.${itemKey}.requerimiento`)}
+                  {...register(`itemRecepcion.${reqKey}`)}
                   placeholder="Requerimiento"
                 />
               </div>
               <div className="item-tittle">
                 <input
                   className="form-input"
-                  {...register(`itemRecepcion.${itemKey}.observacion`)}
+                  {...register(`itemRecepcion.${obsKey}`)}
                   placeholder="Observación"
                 />
               </div>
@@ -237,7 +215,7 @@ const PcpRecepcion = () => {
                 src={urlsTemporales[index]}
                 alt={`Imagen ${index + 1}`}
                 className="imagen-preview"
-                onClick={() => handleImagenClick(index)}
+                onClick={(e) => handleImagenClick(index, e)}
               />
             ) : (
               "+"
@@ -256,4 +234,5 @@ const PcpRecepcion = () => {
 };
 
 export default PcpRecepcion;
+
 

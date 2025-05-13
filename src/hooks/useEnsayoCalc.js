@@ -16,7 +16,7 @@ const useEnsayoCalc = (formValues) => {
   const nuevasFuerzas = useMemo(() => {
     if (!formValues?.itemEnsayo) return {};
 
-    const rpmMap = { rpm200: 200, rpm300: 300, rpm400: 400, rpm500: 500 };
+    const rpmMap = { "100": 100, "200": 200, "300": 300};
     const calculadas = {};
 
     Object.keys(rpmMap).forEach(key => {

@@ -52,9 +52,9 @@ const TipoEquipoList = () => {
 
       <div className={style.table_container}>
         <div className={style.imagen_container}>
-                  <Link to="/dashboard/tipoequipo/nuevo-tipo-equipo">
+                  {/* <Link to="/dashboard/tipoequipo/nuevo-tipo-equipo">
                     <button className={style.mas_button}>+</button>
-                  </Link>
+                  </Link> */}
                 </div>
         <table className="table-auto">
           <thead className={style.table_head}>
