@@ -10,6 +10,7 @@ import {
   ENSAYOUCL,
   EQUIPO,
   ETAPA,
+  IMAGEN,
   INGRESOBM,
   INGRESOUCL,
   INSPECCIONBM,
@@ -90,6 +91,7 @@ import ConsultarOt from "../components/forms/etapas/ConsultarOt";
 import PcpEnsayoVH60A from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVh60A";
 import PcpEnsayoVH60B from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVH60B";
 import ClienteDashboard from "../viewsCliente/ClienteDashboard";
+import ImagenForm from "../components/forms/ImagenForm";
 
 const DashboardRoutes = () => {
   return (
@@ -109,6 +111,7 @@ const DashboardRoutes = () => {
           <Route path={CREATETIPOEQUIPO} element={<CreateTipoEquipo />} />
           <Route path={OT} element={<OtForm />} />
           <Route path={OTLIST} element={<Ot />} />
+          <Route path={IMAGEN} element={<ImagenForm/>} />
 
           {/* <Route>
               <EtapasRoutes/>

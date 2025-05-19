@@ -6,6 +6,7 @@ export const LOGOUT = '/dashboard/logout';
 export const CLIENT = 'client';
 export const TIPOEQUIPO = 'tipoequipo';
 export const EQUIPO = 'equipo';
+export const IMAGEN = '/dashboard/imagen-form';
 export const CREATECLIENTE = '/dashboard/client/nuevo';
 export const CREATEEQUIPO = '/dashboard/equipo/nuevo-equipo';
 export const CREATETIPOEQUIPO = '/dashboard/tipoequipo/nuevo-tipo-equipo';

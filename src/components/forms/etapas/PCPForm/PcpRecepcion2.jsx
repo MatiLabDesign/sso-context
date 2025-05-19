@@ -7,7 +7,6 @@ import useOrdenData from "../../../../hooks/useOrdenData";
 import useRecepcionData from "../../../../hooks/useRecepcionData";
 import Swal from "sweetalert2";
 import { FaArrowRight } from "react-icons/fa";
-import { IMAGEN } from "../../../../config/routes/paths";
 
 
 const PcpRecepcion = () => {
@@ -208,40 +207,28 @@ const PcpRecepcion = () => {
         ))}
       </div>
 
-  
-
-<div className="imagenes">
-  {[0, 1, 2, 3, 4, 5].map((index) => {
-    const hayImagen = imagenes[index];
-
-    return hayImagen ? (
-      <label key={index} className="imagen-prueba">
-        <img
-          src={urlsTemporales[index]}
-          alt={`Imagen ${index + 1}`}
-          className="imagen-preview"
-          onClick={(e) => handleImagenClick(index, e)}
-        />
-        <input
-          type="file"
-          accept="image/*"
-          style={{ display: "none" }}
-          onChange={(e) => handleImagenChange(index, e.target.files[0])}
-        />
-      </label>
-    ) : (
-      <div key={index} className="imagen-prueba">
-        <Link
-          to={IMAGEN}
-          className="boton-agregar-imagen"
-        >
-          +
-        </Link>
+      <div className="imagenes">
+        {[0, 1, 2, 3, 4, 5].map((index) => (
+          <label key={index} className="imagen-prueba">
+            {imagenes[index] ? (
+              <img
+                src={urlsTemporales[index]}
+                alt={`Imagen ${index + 1}`}
+                className="imagen-preview"
+                onClick={(e) => handleImagenClick(index, e)}
+              />
+            ) : (
+              "+"
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={(e) => handleImagenChange(index, e.target.files[0])}
+            />
+          </label>
+        ))}
       </div>
-    );
-  })}
-</div>
-
     </form>
   );
 };

@@ -20,6 +20,7 @@
     border-radius: 12px;
 }
 
+
 .row {
     display: flex;
     justify-content: space-between;
@@ -95,8 +96,8 @@
 }
 
 .form_equipo {
-    margin-top: 250px;
-    margin-left: 50px;
+    margin-top: 50px;
+    margin-left: 150px;
     /* border: solid 2px #a6ff00; */
 }
 
@@ -141,6 +142,20 @@
 }
 
 .form_control_s {
+    margin-top: 15px;
+    background-color: #059080;
+    color: #fff;
+    width: 150px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    /* trae un css de otro lado */
+    &:hover{
+        background-color: #02786a;
+    }
+}
+.form_control_s2 {
+    margin-left: 80px;
     margin-top: 15px;
     background-color: #059080;
     color: #fff;

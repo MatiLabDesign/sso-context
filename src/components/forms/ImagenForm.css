@@ -1,0 +1,20 @@
+.Imagen_container{
+    margin: auto;
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    /* background-color: rgb(172, 172, 172); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: dashed 2.5px rgb(2, 132, 112) ;
+    cursor: pointer;
+    
+}
+
+.imagen_upload{
+    width: 102%;
+    height: 102%;
+    border-radius: 10px;
+
+}
