@@ -8,7 +8,7 @@ import useRecepcionData from "../../../../hooks/useRecepcionData";
 import Swal from "sweetalert2";
 import { FaArrowRight } from "react-icons/fa";
 import { IMAGEN } from "../../../../config/routes/paths";
-
+import ImagenService from "../../../../services/ImagenService";
 
 const PcpRecepcion = () => {
   const {
@@ -21,8 +21,39 @@ const PcpRecepcion = () => {
     defaultValues: recepcionPCP,
   });
 
-  const [imagenes, setImagenes] = useState([null, null, null, null, null, null]);
+  const [imagenes, setImagenes] = useState(Array(6).fill(null));
   const [urlsTemporales, setUrlsTemporales] = useState(Array(6).fill(null));
+
+  const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
+  const recepcionIdGuardada = localStorage.getItem("recepcionId");
+  console.log(recepcionIdGuardada);
+
+  useEffect(() => {
+    const fetchImagenes = async () => {
+      // Solo ejecutar si existe un ID de recepción
+      if (!recepcionIdGuardada) return;
+
+      try {
+        const response = await ImagenService.getImagenByRecepcionId(
+          recepcionIdGuardada
+        );
+        if (response.data) {
+          setImagenesGuardadas(response.data);
+          console.log(imagenesGuardadas);
+        }
+      } catch (error) {
+        setError("Error al obtener las imágenes de la recepción");
+        console.error("Error al obtener las imágenes:", error);
+      }
+    };
+
+    fetchImagenes();
+  }, [recepcionIdGuardada]);
+
+  // Si quieres ver el valor actualizado de imagenesGuardadas, muévelo a otro useEffect
+  useEffect(() => {
+    console.log(imagenesGuardadas);
+  }, [imagenesGuardadas]);
 
   const ordenId = localStorage.getItem("ordenId");
   const navigate = useNavigate();
@@ -56,17 +87,33 @@ const PcpRecepcion = () => {
   };
 
   const handleImagenClick = (index, e) => {
-    if (urlsTemporales[index]) {
-      Swal.fire({
-        title: `Imagen ${index + 1}`,
-        imageUrl: urlsTemporales[index],
-        imageHeight: 350,
-        imageAlt: `Imagen ${index + 1}`,
-        confirmButtonColor: "#059080",
-      });
-    }
-    e.preventDefault();
-  };
+  e.preventDefault();
+  
+  localStorage.setItem("recepcionId", recepcionId);
+  localStorage.setItem("imagenIndex", index);
+  
+  const imagenSrc = obtenerSrcImagen(index);
+  if (imagenSrc) {
+    Swal.fire({
+      title: `Imagen ${index + 1}`,
+      imageUrl: imagenSrc,
+      imageHeight: 350,
+      imageAlt: `Imagen ${index + 1}`,
+      confirmButtonColor: "#eb7302",
+      cancelButtonColor: "#059080",
+      showCancelButton: true,
+      confirmButtonText: 'Editar',
+      cancelButtonText: 'Cerrar',
+      // footer: '¿Quieres editar esta imagen?'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/dashboard/imagen-form");
+      }
+    });
+  } else {
+    navigate("/dashboard/imagen-form");
+  }
+};
 
   const onSubmit = async (data) => {
     try {
@@ -141,6 +188,30 @@ const PcpRecepcion = () => {
     navigate(`/dashboard/etapa/inspeccionPCPVh60A`);
   };
 
+  const dataImagen = () => {
+    localStorage.setItem("recepcionId", recepcionId);
+    navigate(IMAGEN);
+  };
+
+  const obtenerSrcImagen = (index) => {
+    if (urlsTemporales[index]) {
+      return urlsTemporales[index];
+    }
+
+    const imagenGuardada = imagenesGuardadas[index];
+
+    if (imagenGuardada?.url) {
+      const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+      // Si ya incluye 'http' en la URL del backend, asegurate de que la url guardada comience con /
+      const cleanUrl = imagenGuardada.url.startsWith("/")
+        ? imagenGuardada.url
+        : `/${imagenGuardada.url}`;
+      return `${base}${cleanUrl}`;
+    }
+
+    return null;
+  };
+
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
       <h3 className="form-title">Recepción PCP</h3>
@@ -167,12 +238,27 @@ const PcpRecepcion = () => {
         {[
           ["cgestado", "cgrequerimiento", "cgobservacion", "Cubre Grampa"],
           ["cvestado", "cvrequerimiento", "cvobservacion", "Cubre Polea"],
-          ["gaestado", "garequerimiento", "gaobservacion", "Grampa Anti Eyección"],
+          [
+            "gaestado",
+            "garequerimiento",
+            "gaobservacion",
+            "Grampa Anti Eyección",
+          ],
           ["ecestado", "ecrequerimiento", "ecobservacion", "Estructura Chasis"],
-          ["lsestado", "lsrequerimiento", "lsobservacion", "Linterna Separador"],
+          [
+            "lsestado",
+            "lsrequerimiento",
+            "lsobservacion",
+            "Linterna Separador",
+          ],
           ["mmestado", "mmrequerimiento", "mmobservacion", "Mesa de Motor"],
           ["rmestado", "rmrequerimiento", "rmobservacion", "Rieles de Motor"],
-          ["stestado", "strequerimiento", "stobservacion", "Soporte de Transporte"],
+          [
+            "stestado",
+            "strequerimiento",
+            "stobservacion",
+            "Soporte de Transporte",
+          ],
           ["pcestado", "pcrequerimiento", "pcobservacion", "Polea Conducida"],
         ].map(([estadoKey, reqKey, obsKey, label]) => (
           <div className="item-section" key={estadoKey}>
@@ -208,44 +294,39 @@ const PcpRecepcion = () => {
         ))}
       </div>
 
-  
+      <div className="imagenes">
+        {[0, 1, 2, 3, 4, 5].map((index) => {
+          const imagenSrc = obtenerSrcImagen(index);
 
-<div className="imagenes">
-  {[0, 1, 2, 3, 4, 5].map((index) => {
-    const hayImagen = imagenes[index];
-
-    return hayImagen ? (
-      <label key={index} className="imagen-prueba">
-        <img
-          src={urlsTemporales[index]}
-          alt={`Imagen ${index + 1}`}
-          className="imagen-preview"
-          onClick={(e) => handleImagenClick(index, e)}
-        />
-        <input
-          type="file"
-          accept="image/*"
-          style={{ display: "none" }}
-          onChange={(e) => handleImagenChange(index, e.target.files[0])}
-        />
-      </label>
-    ) : (
-      <div key={index} className="imagen-prueba">
-        <Link
-          to={IMAGEN}
-          className="boton-agregar-imagen"
-        >
-          +
-        </Link>
+          return imagenSrc ? (
+            <label key={index} className="imagen-prueba">
+              <img
+                src={imagenSrc}
+                alt={`Imagen ${index + 1}`}
+                className="imagen-preview"
+                onClick={(e) => handleImagenClick(index, e)}
+              />
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={(e) => handleImagenChange(index, e.target.files[0])}
+              />
+            </label>
+          ) : (
+            <div key={index} className="imagen-prueba">
+              <div
+                className="boton-agregar-imagen"
+                onClick={() => dataImagen()}
+              >
+                <span>+</span>
+              </div>
+            </div>
+          );
+        })}
       </div>
-    );
-  })}
-</div>
-
     </form>
   );
 };
 
 export default PcpRecepcion;
-
-

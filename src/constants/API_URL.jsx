@@ -7,4 +7,5 @@ export const RECEPCION_URL = "http://localhost:8080/api/recepcion";
 export const INSPECCION_URL = "http://localhost:8080/api/inspeccionesvh60";
 export const ENSAYO_URL = "http://localhost:8080/api/ensayopvh60";
 export const SALIDA_URL = "http://localhost:8080/api/salida";
-export const IMAGEN_URL = "http://localhost:8080/api/recepcion/12/subir-imagen"
+export const IMAGEN_URL = "http://localhost:8080/api/imagenes/subir"
+export const IMAGEN_URL_GET= "http://localhost:8080/api/imagenes/recepcion"

@@ -1,22 +1,35 @@
 import axios from "axios";
-import { IMAGEN_URL } from "../constants/API_URL";
+import { IMAGEN_URL, IMAGEN_URL_GET } from "../constants/API_URL";  
 
+/**
+ * Servicio para interactuar con la API de imagenes.
+ *
+ * @class
+ */
 class ImagenService {
 
   getAllImagenes() {
     return axios.get(IMAGEN_URL);
   }
 
-  getImagenById(id) {
-    return axios.get(`${IMAGEN_URL}/${id}`);
+  getImagenByRecepcionId(recepcionId) {
+    return axios.get(`${IMAGEN_URL_GET}/${recepcionId}`);
   }
 
-  createImagen(imagen) {
-    return axios.post(IMAGEN_URL, imagen);
+  createImagen(formData) {
+    return axios.post(IMAGEN_URL, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
   }
 
-  updateImagen (id, imagen) {
-    return axios.put(`${IMAGEN_URL}/${id}`, imagen);
+  updateImagen (id, formData) {
+    return axios.put(`${IMAGEN_URL}/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
   }
 
   softDeleteImagenEquipo(id) {

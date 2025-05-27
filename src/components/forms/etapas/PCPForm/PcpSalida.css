@@ -1,0 +1,13 @@
+.form-groupS{
+    display: flex;
+    flex-direction: column;
+}
+
+.form-buttonS{
+    background-color: red;
+    margin-top: 50px;
+}
+
+/* .imagenes{
+    margin-top: 50px;
+} */
