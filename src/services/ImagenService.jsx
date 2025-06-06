@@ -1,11 +1,6 @@
 import axios from "axios";
 import { IMAGEN_URL, IMAGEN_URL_GET } from "../constants/API_URL";  
 
-/**
- * Servicio para interactuar con la API de imagenes.
- *
- * @class
- */
 class ImagenService {
 
   getAllImagenes() {

@@ -91,11 +91,14 @@ const PcpRecepcion = () => {
   
   localStorage.setItem("recepcionId", recepcionId);
   localStorage.setItem("imagenIndex", index);
+
+    // Obtener descripción si existe en imagenesGuardadas
+  const descripcion = imagenesGuardadas[index]?.descripcion || "Imagen sin descripción";
   
   const imagenSrc = obtenerSrcImagen(index);
   if (imagenSrc) {
     Swal.fire({
-      title: `Imagen ${index + 1}`,
+      title: descripcion,
       imageUrl: imagenSrc,
       imageHeight: 350,
       imageAlt: `Imagen ${index + 1}`,

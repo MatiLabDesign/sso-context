@@ -28,6 +28,8 @@ const ImagenForm = () => {
     inputRef.current?.click();
   };
 
+  const imgRecepcionId = window.localStorage.getItem("recepcionId");
+
   const onSubmit = async (data) => {
     console.log("📤 Datos del formulario:", data);
     console.log("🖼 Imagen cargada:", imagen);
@@ -44,28 +46,15 @@ const ImagenForm = () => {
         return;
       }
 
-      // Crear un objeto con los datos del formulario para JSON
-      // const imagenData = {
-      //   descripcion: data.descripcion || "",
-      //   publicar: data.publicar || false
-      // };
-      // console.log("Datos a enviar:", imagenData);
-
       // Crear FormData para enviar la imagen y datos
       const formData = new FormData();
       
       // Adjuntar la imagen
       formData.append("file", imagen);
-      
-      // Adjuntar los datos como JSON en un campo llamado "datos"
-      // formData.append("datos", new Blob([JSON.stringify(imagenData)], {
-      //   type: "application/json"
-      // }));
-      
       // También enviar los datos como campos individuales en caso de que el backend los espere así
       formData.append("descripcion", data.descripcion || "");
       formData.append("publicar", data.publicar ? "true" : "false");
-      formData.append("recepcionId", data.recepcionId || 1);
+      formData.append("recepcionId", imgRecepcionId || null);
       
       // Enviar al backend
       const response = await axios.post(IMAGEN_URL, formData, {

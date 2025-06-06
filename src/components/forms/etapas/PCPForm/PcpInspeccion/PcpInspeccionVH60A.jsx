@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "../PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
 import { useNavigate, Link } from "react-router-dom";
-import InspeccionService from "../../../../../services/InspeccionService";
 import inspeccionPCPVH60 from "../../../../../data/inspeccionPCPVH60";
 import useOrdenData from "../../../../../hooks/useOrdenData";
 import useInspeccionData from "../../../../../hooks/useInspeccionData";
-import { IoIosArrowRoundForward } from "react-icons/io";
-import { IoIosArrowRoundBack } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 import Swal from "sweetalert2";
@@ -66,23 +63,6 @@ const PcpInspeccionVH60A = () => {
     }
   }, [inspeccionActual]);
 
-  //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  //XXXXXXXXXXXX   N° DE ETAPA OT  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-  const etapasXXX = {
-    1: "Ingreso",
-    2: "Recepcion",
-    3: "Inspeccion A",
-    4: "Inspeccion B",
-    5: "Inspeccion C",
-    6: "Ensayo A",
-    7: "Ensayo B",
-    8: "Salida",
-  };
-  //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxXXXXXXXXXXXXXXXXXXX
-  //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxXXXXXXXXXXXXXXXXXXX
-  //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxXXXXXXXXXXXXXXXXXXX
   const handleImagenChange = (index, file) => {
     const nuevasImagenes = [...imagenes];
     nuevasImagenes[index] = file;
