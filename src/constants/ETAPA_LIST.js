@@ -7,5 +7,6 @@ const ETAPA_LIST = {
     6: "Ensayo A",
     7: "Ensayo B",
     8: "Salida",
+    9: "Terminada"
   };
   export default ETAPA_LIST;

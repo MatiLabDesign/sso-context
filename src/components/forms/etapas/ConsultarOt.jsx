@@ -1,4 +1,4 @@
-import "./ConsultarOt.css";
+import "./ConsultarOtNew.css";
 import { useNavigate } from "react-router-dom";
 import useOrdenData from "../../../hooks/useOrdenData";
 
@@ -9,6 +9,9 @@ const ConsultarOt = () => {
 
   const { otActual } = useOrdenData(ordenId);
 
+  const etapaActual = otActual?.etapaActual;
+  console.log(etapaActual);
+
   //REVISAR LAS ETAPAS PARA UTILIZAR LA CONST ETAPA_LIST
   const etapasMap = {
     1: `ingreso${otActual?.equipo.tipoEquipo.tipo || ""}`,
@@ -16,10 +19,20 @@ const ConsultarOt = () => {
     3: `inspeccion${otActual?.equipo.tipoEquipo.tipo || ""}${
       otActual?.equipo.tipoEquipo.modelo || ""
     }A`,
-    4: `ensayo${otActual?.equipo.tipoEquipo.tipo || ""}`,
-    5: `salida${otActual?.equipo.tipoEquipo.tipo || ""}`,
+    4: `inspeccion${otActual?.equipo.tipoEquipo.tipo || ""}${
+      otActual?.equipo.tipoEquipo.modelo || ""
+    }B`,
+    5: `inspeccion${otActual?.equipo.tipoEquipo.tipo || ""}${
+      otActual?.equipo.tipoEquipo.modelo || ""
+    }C`,
+    6: `ensayo${otActual?.equipo.tipoEquipo.tipo || ""}`,
+    7: `ensayo${otActual?.equipo.tipoEquipo.tipo || ""}${
+      otActual?.equipo.tipoEquipo.modelo || ""
+    }B`,
+    8: `salida${otActual?.equipo.tipoEquipo.tipo || ""}`,
   };
 
+///////////////////ACA TENGO QUE REVISAR LAS URL/////////////////
   const handleClick = () => {
     console.log("Evento antes de navegar...");
     navigate(`/dashboard/etapa/${etapasMap[otActual.etapaActual]}`);
@@ -27,132 +40,110 @@ const ConsultarOt = () => {
 
   return (
     <div className="consultar_container">
-      <div className="title-container">
-        <h3 className="titlle-tittle">Equipo</h3>
-        <div className="cliente_element">
-          <p className="cliente_title">
-            {otActual ? otActual.equipo.tipoEquipo.tipo : "Cargando datos..."}
-          </p>
+      <div className="header">
+        <div className="left_column">
+          <h2>Consultar OT</h2>
         </div>
-        <div className="cliente_element">
-          <p className="cliente_title">
-            {otActual ? otActual.equipo.tipoEquipo.modelo : "Cargando datos..."}
-          </p>
+        <div className="right_column">
+          <div className="header_row">
+            {/* //colocar numero de serie */}
+            numSerie
+          </div>
+          <div className="header_row">
+            {/* //colocar numero de tipo equipo y modelo */}
+            tipoEquipo modelo
+          </div>
         </div>
-        <div className="cliente_element">
-          <p className="cliente_title">
-            {otActual ? otActual.equipo.marca : "Cargando datos..."}
-          </p>
+      </div>
+      <div className="file">
+        <div className="left_column_file">
+          <h4>Cliente</h4>
+          razonSocial
         </div>
+        <div className="right_column_file">
+          <h4>Fecha de Ingreso</h4>
+          fechaIngreso
+        </div>
+      </div>
+      <div className="main_content">
+        <table className="table_content">
+          {/* <thead>
+            <tr>
+              <th>Etapas</th>
+              <th>Comentarios</th>
+              <th>Estado</th>
+            </tr>
+          </thead> */}
+          <tbody>
+            <td className="etapas_column">
+              <tr className="table_rows">
+                <p>Ingreso</p>
+              </tr>
+              <tr className="table_rows">
+                <p>Recepción</p>
+              </tr>
+              <tr className="table_rows">
+                <p>Inspección</p>
+              </tr>
+              <tr className="table_rows">
+                <p>Ensayo</p>
+              </tr>
+              <tr className="table_rows">
+                <p>Salida</p>
+              </tr>
+            </td>
+            <td className="comentario_column">
+              <tr className="table_rows">
+                <p>Comentario1</p>
+              </tr>
+              <tr className="table_rows">
+                <p>comentario 2</p>
+              </tr>
+              <tr className="table_rows">
+                <p>comentario 2</p>
+              </tr>
+              <tr className="table_rows">
+                <p>comentario 2</p>
+              </tr>
+              <tr className="table_rows">
+                <p>comentario 2</p>
+              </tr>
+            </td>
+            <td className="estado_column">
+              <tr className="table_rows">
+                <div className={etapaActual <= 1 ? "cuadrado" : "cuadrado-rojo"}></div>
+              </tr>
+              <tr className="table_rows">
+                <div className={etapaActual <= 2 ? "cuadrado" : "cuadrado-rojo"}>
 
+                   </div>
+              </tr>
+              <tr className="table_rows">
+                <div className={etapaActual <= 3 ? "cuadrado" :
+                  etapaActual == 4 ? "cuadrado33" :
+                  etapaActual == 5 ? "cuadrado66" :
+                  "cuadrado-rojo"}></div>
+              </tr>
+              <tr className="table_rows">
+                <div className={etapaActual <= 6 ? "cuadrado" :
+                  etapaActual == 7 ? "cuadrado50" :
+                  "cuadrado-rojo" }></div>
+              </tr>
+              <tr className="table_rows">
+                <div className={etapaActual <= 8 ? "cuadrado" :
+                  "cuadrado-rojo"}></div>
+              </tr>
+            </td>
+          </tbody>
+        </table>
+      </div>
+      <div className="under_content">
         <div className="cliente_element">
           <button className="btn" onClick={handleClick}>
             Consultar
           </button>
         </div>
       </div>
-      <div className="cliente_element">
-        <p className="cliente_title">Número de Serie</p>
-        <p>{otActual ? otActual.equipo.numSerieEquipo : "Cargando datos..."}</p>
-      </div>
-
-      <h3>Cliente</h3>
-
-      <div className="cliente_container">
-        <div className="cliente_divisor">
-          <div className="cliente_element">
-            <p className="cliente_title">
-              {otActual ? otActual.cliente.razonSocial : "Cargando datos..."}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="fila-container">
-        <div className="etapa-container">
-          <h3 className="estapa-title">Ingreso</h3>
-          <div className="cuadrado-rojo"></div>
-        </div>
-        <div className="etapa-container">
-          <h3 className="estapa-title">Recepción</h3>
-          {/* <p className="comentario-title">{otActual ? otActual.recepcion.comentario : "Cargando datos..."}</p> */}
-          {/* <p className="comentario-title">{otActual ? otActual.inspeccionPcpVh60.comentario : "Cargando datos..."}</p> */}
-
-          <div className="cuadrado-rojo"></div>
-        </div>
-        <div className="etapa-container">
-          <h3 className="estapa-title">Inspección</h3>
-          <div className="cuadrado-rojo"></div>
-        </div>
-        <div className="etapa-container">
-          <h3 className="estapa-title">Ensayo</h3>
-          <div className="cuadrado"></div>
-        </div>
-        <div className="etapa-container">
-          <h3 className="estapa-title">Salida</h3>
-        </div>
-      </div>
-
-      {/* <h3>Equipo</h3>
-      <div className="equipo_container">
-        <div className="equipo_divisor">
-          <div className="cliente_element">
-            <p className="cliente_title">Tipo</p>
-            <p>
-              {otActual
-                ? otActual.equipo.tipoEquipo.tipo
-                : "Cargando datos..."}
-            </p>
-          </div>
-          <div className="cliente_element">
-            <p className="cliente_title">Modelo</p>
-            <p>
-              {otActual
-                ? otActual.equipo.tipoEquipo.modelo
-                : "Cargando datos..."}
-            </p>
-          </div>
-          <div className="cliente_element">
-            <p className="cliente_title">Marca</p>
-            <p>
-              {otActual
-                ? otActual.equipo.tipoEquipo.marca
-                : "Cargando datos..."}
-            </p>
-          </div>
-        </div>
-        <div className="equipo_divisor">
-          <div className="cliente_element">
-            <p className="cliente_title">Número de Serie</p>
-            <p>
-              {otActual
-                ? otActual.equipo.numSerieEquipo
-                : "Cargando datos..."}
-            </p>
-          </div>
-          <div className="cliente_element">
-            <p className="cliente_title">Etapa Actual</p>
-            <p>
-              {otActual
-                ? etapasMap[otActual.etapaActual] || "Etapa desconocida"
-                : "Cargando datos..."}
-            </p>
-          </div>
-          <div className="cliente_element">
-            <p className="cliente_title">Estado</p>
-            <p className="activa">Activa</p>
-          </div>
-        </div>
-      </div> */}
-      {/* <h3>{numeroOrden} | {tipoEquipo}</h3> */}
-      {/* <label htmlFor="input-comentario">Fecha de ingreso:{numeroOT}</label>
-      <label htmlFor="input-comentario">Tipo Equipo</label>
-      <label htmlFor="input-comentario">Marca</label>
-      <label htmlFor="input-comentario">Modelo</label> */}
-      {/* <Link onClick={() => console.log("Botón clickeado")}> */}
-      {/* <button className="btn" onClick={handleClick}>
-        Revisar
-      </button> */}
-      {/* </Link> */}
     </div>
   );
 };

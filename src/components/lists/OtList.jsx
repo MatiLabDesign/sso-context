@@ -3,6 +3,7 @@ import style from "./ListStyle.module.css";
 import { useNavigate } from "react-router-dom";
 import { IoIosCopy } from "react-icons/io";
 import useOrdenData from "../../hooks/useOrdenData";
+import ETAPA_LIST from "../../constants/ETAPA_LIST";
 
 const OtList = () => {
   const [search, setSearch] = useState("");
@@ -96,14 +97,22 @@ const OtList = () => {
         </button>
       </div>
 
-      <div className={style.table_container}>
+      <div className={style.table_container_2}>
         <table className="table-auto">
           <thead className={style.table_head}>
             <tr className={style.table_row2}>
-              <th className={style.lists_tittles2} scope="col">N° OT</th>
-              <th className={style.lists_tittles_tittle2} scope="col">Tipo de Equipo</th>
-              <th className={style.lists_tittles} scope="col">Etapa</th>
-              <th className={style.lists_tittles} scope="col">Cliente</th>
+              <th className={style.lists_tittles2} scope="col">
+                N° OT
+              </th>
+              <th className={style.lists_tittles_tittle2} scope="col">
+                Tipo de Equipo
+              </th>
+              <th className={style.lists_tittles} scope="col">
+                Etapa
+              </th>
+              <th className={style.lists_tittles} scope="col">
+                Cliente
+              </th>
               <th scope="col" />
             </tr>
           </thead>
@@ -111,6 +120,7 @@ const OtList = () => {
             {results.map(
               ({
                 id,
+                activa,
                 numeroOT,
                 equipo,
                 etapaActual,
@@ -124,9 +134,10 @@ const OtList = () => {
                 <tr className={style.table_row} key={id}>
                   <td className={style.list_content2}>{numeroOT}</td>
                   <td className={style.list_content_content2}>
-                    {equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.modelo} - {equipo.marca}
+                    {equipo.tipoEquipo.tipo} - {equipo.tipoEquipo.modelo} -{" "}
+                    {equipo.marca}
                   </td>
-                  <td className={style.list_content}>{etapaActual}</td>
+                  <td className={style.list_content}>{ETAPA_LIST[etapaActual]}</td>
                   <td className={style.list_content}>{cliente.razonSocial}</td>
                   <td>
                     <button
@@ -146,6 +157,7 @@ const OtList = () => {
                       <IoIosCopy />
                     </button>
                   </td>
+                  <td className={style.list_content_T}>{!activa && "T"}</td>
                 </tr>
               )
             )}
@@ -164,4 +176,3 @@ const OtList = () => {
 };
 
 export default OtList;
-

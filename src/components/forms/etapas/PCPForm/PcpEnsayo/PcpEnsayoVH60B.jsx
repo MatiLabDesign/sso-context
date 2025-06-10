@@ -29,6 +29,7 @@ const PcpEnsayoVH60B = () => {
     reset
   );
 
+  const etapaSiguiente = 8;
   // Carga inicial de datos
   useEffect(() => {
     if (otActual?.ensayo?.id) {
@@ -50,11 +51,14 @@ const PcpEnsayoVH60B = () => {
           ...data,
           fuerzasCalculadas: fuerzas,
         });
-        if (newEnsayo?.id) {
-          await updateOt(ordenId, {
+
+        const updatedOt = {
             ...otActual,
-            ensayoPcpVh60: { id: newEnsayo.id },
-          });
+            ensayoVh60: { id: newEnsayo.id },
+            etapaActual: etapaSiguiente,
+          };
+        if (newEnsayo?.id) {
+          await updateOt(ordenId, updatedOt);
         }
       }
 

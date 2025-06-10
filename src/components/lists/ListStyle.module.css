@@ -5,7 +5,7 @@
     width: 90%;
     margin-left: 60px;
     min-height: 80vh;
-    padding-top: 50px;
+    padding-top: 0px;
 }
 
 .search_container {
@@ -33,6 +33,12 @@
     color: #666;
     width: 80%;
     padding-top: 50px;
+    margin-left: -20px;
+}
+.table_container_2 {
+    color: #666;
+    width: 80%;
+    padding-top: 0px;
     margin-left: -20px;
 }
 
@@ -127,6 +133,12 @@
     width: 110px;
     padding-left: 5px;
     /* border: 2px solid #ff0000; */
+}
+
+.list_content_T{
+    color: #eb7302;
+    font-weight: 500;
+    margin-left: 15px;
 }
 .list_content2 {
     font-size: 14px;

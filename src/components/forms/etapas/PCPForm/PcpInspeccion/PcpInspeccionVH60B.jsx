@@ -45,6 +45,8 @@ const PcpInspeccionVH60B = () => {
     }
   }, [otActual]);
 
+  const etapaSiguiente = 5;
+
   const [inspeccionId, setInspecionId] = useState(null);
 
   useEffect(() => {
@@ -61,6 +63,8 @@ const PcpInspeccionVH60B = () => {
       console.log("✅ Datos Inspección actual:", inspeccionActual);
     }
   }, [inspeccionActual]);
+
+
 
   const onSubmit = async (data) => {
     try {
@@ -90,6 +94,15 @@ const PcpInspeccionVH60B = () => {
           confirmButtonText: "Sí, guardar!",
           cancelButtonText: "Cancelar",
         });
+
+        const updatedOt = {
+            ...otActual,
+            etapaActual: etapaSiguiente,
+          };
+
+          await updateOt(ordenId, updatedOt);
+
+          console.log("✅ OT actualizada con éxito.");
 
         if (result.isConfirmed) {
           await updateInspeccion(inspeccionId, data);

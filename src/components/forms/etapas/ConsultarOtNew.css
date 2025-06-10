@@ -1,0 +1,267 @@
+.consultar_container {
+    width: 100%;
+    /* margin: 50px 100px; */
+    margin: 20px;
+}
+
+.header {
+    width: 95%;
+    display: flex;
+    /* background-color: green; */
+    margin: auto;
+}
+
+.left_column {
+    /* display: grid;
+    justify-content: flex-end;
+    align-items: center; */
+    width: 50%;
+    /* background-color: red; */
+}
+
+.right_column {
+    display: grid;
+    justify-content: flex-end;
+    align-items: center;
+    width: 50%;
+    /* background-color: blue; */
+}
+
+.header_row {
+    /* background-color: pink; */
+    height: 40%;
+    text-align: end;
+    padding-right: 75px;
+    /* border: solid 2px palevioletred; */
+}
+
+.file {
+    display: flex;
+    width: 95%;
+    margin: auto;
+    /* background-color: #eb7202; */
+}
+
+.left_column_file {
+    /* background-color: aquamarine; */
+    width: 50%;
+    padding-left: 25px;
+}
+
+.right_column_file {
+    display: grid;
+    justify-content: flex-end;
+    align-items: center;
+    /* background-color: gainsboro; */
+    width: 50%;
+}
+
+.main_content {
+    display: flex;
+    width: 95%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.main_column {
+    width: 33%;
+    /* background-color: antiquewhite; */
+    /* border: saddlebrown solid 2px; */
+}
+
+.cuadrado-rojo {
+    margin-top: 15px;
+}
+
+.cuadrado {
+    margin-top: 15px;
+}
+
+.under_content {
+    /* background-color: rebeccapurple; */
+    width: 95%;
+    margin: auto;
+    height: 70px;
+
+}
+
+.table_content {
+    width: 100%;
+    /* background-color: tan; */
+}
+
+.table_rows{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    /* background-color: #049d7e; */
+}
+
+.etapas_column {
+    width: 20%;
+    /* background-color: #0030f17a; */
+    margin: auto;
+}
+
+.comentario_column {
+    width: 50%;
+    /* background-color: #ff2205; */
+    padding-left: 25px;
+}
+
+.estado_column {
+    width: 30%;
+    /* background-color: #f174007a; */
+    padding-left: 35px;
+}
+
+h2{
+    color: #049d7e;
+}
+
+h3{
+    color: #666;
+}
+
+p{
+    color: #666;
+}
+
+
+
+
+
+.cuadrado {
+    position: relative;
+    width: 200px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 2em;
+    overflow: hidden;
+
+}
+
+.cuadrado::before {
+    content: '';
+    position: absolute;
+    /* en el width se cambia el porcentaje de la barra */
+    width: 0%;
+    height: 100%;
+    background-color: #049d7e;
+    transform: translateX(-100%);
+    animation: fill-bar2 0.8s 0.3s ease-in-out forwards;
+
+}
+
+@keyframes fill-bar2 {
+    to {
+        transform: translateX(0%);
+    }
+}
+.cuadrado33 {
+    position: relative;
+    width: 200px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 2em;
+    overflow: hidden;
+
+}
+
+.cuadrado33::before {
+    content: '';
+    position: absolute;
+    /* en el width se cambia el porcentaje de la barra */
+    width: 33%;
+    height: 100%;
+    background-color: #049d7e;
+    transform: translateX(-100%);
+    animation: fill-bar2 0.8s 0.3s ease-in-out forwards;
+
+}
+
+@keyframes fill-bar2 {
+    to {
+        transform: translateX(0%);
+    }
+}
+.cuadrado50 {
+    position: relative;
+    width: 200px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 2em;
+    overflow: hidden;
+
+}
+
+.cuadrado50::before {
+    content: '';
+    position: absolute;
+    /* en el width se cambia el porcentaje de la barra */
+    width: 50%;
+    height: 100%;
+    background-color: #049d7e;
+    transform: translateX(-100%);
+    animation: fill-bar2 0.8s 0.3s ease-in-out forwards;
+
+}
+
+@keyframes fill-bar2 {
+    to {
+        transform: translateX(0%);
+    }
+}
+.cuadrado66 {
+    position: relative;
+    width: 200px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 2em;
+    overflow: hidden;
+
+}
+
+.cuadrado66::before {
+    content: '';
+    position: absolute;
+    /* en el width se cambia el porcentaje de la barra */
+    width: 66%;
+    height: 100%;
+    background-color: #049d7e;
+    transform: translateX(-100%);
+    animation: fill-bar2 0.8s 0.3s ease-in-out forwards;
+
+}
+
+@keyframes fill-bar2 {
+    to {
+        transform: translateX(0%);
+    }
+}
+
+.cuadrado-rojo {
+    position: relative;
+    width: 200px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 2em;
+    overflow: hidden;
+}
+
+.cuadrado-rojo::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #eb7202;
+    transform: translateX(-100%);
+    animation: fill-bar 0.8s 0.3s ease-in-out forwards;
+
+}
+
+@keyframes fill-bar {
+    to {
+        transform: translateX(0%);
+    }
+}

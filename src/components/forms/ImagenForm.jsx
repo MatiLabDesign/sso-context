@@ -96,7 +96,7 @@ const ImagenForm = () => {
   return (
     <div>
       <h2>Cargar imagen</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className={style.form_equipo}>
+      <form onSubmit={handleSubmit(onSubmit)} className={style.form_equipo_b}>
         <div className="Imagen_container" onClick={handleContenedorClick}>
           <input
             type="file"

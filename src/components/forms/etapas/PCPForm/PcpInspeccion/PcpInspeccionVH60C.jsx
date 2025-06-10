@@ -49,6 +49,8 @@ const PcpInspeccionVH60C = () => {
 
   const [inspeccionId, setInspecionId] = useState(null);
 
+  const etapaSiguiente = 6;
+
   useEffect(() => {
     if (inspeccionId) {
       console.log("✅ Este es el id de Inspección:", inspeccionId);
@@ -78,6 +80,13 @@ const PcpInspeccionVH60C = () => {
 
       const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
       const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
+
+      const updatedOt = {
+        ...otActual,
+        etapaActual: etapaSiguiente,
+      };
+
+      await updateOt(ordenId, updatedOt);
 
       if (inspeccionId) {
         console.log("Inspección existente:", inspeccionId);

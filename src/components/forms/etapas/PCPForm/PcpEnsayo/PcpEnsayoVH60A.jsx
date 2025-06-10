@@ -29,6 +29,8 @@ const PcpEnsayoVH60A = () => {
     reset
   );
 
+  const etapaSiguiente = 7;
+
   // Carga inicial de datos
   useEffect(() => {
     if (otActual?.ensayo?.id) {
@@ -49,13 +51,23 @@ const PcpEnsayoVH60A = () => {
           ...data,
           fuerzasCalculadas: fuerzas,
         });
-        if (nuevoEnsayo?.id) {
-          await updateOt(ordenId, {
+        
+        const updatedOt = {
             ...otActual,
             ensayoVh60: { id: nuevoEnsayo.id },
-          });
+            etapaActual: etapaSiguiente,
+          };
+        if (nuevoEnsayo?.id) {
+          await updateOt(ordenId, updatedOt);
         }
       }
+
+      const updatedOt = {
+            ...otActual,
+            etapaActual: etapaSiguiente,
+          };
+
+          await updateOt(ordenId, updatedOt);
 
       if (modeloEquipo && tipoEquipo) {
         navigate(`/dashboard/etapa/ensayo${tipoEquipo}${modeloEquipo}B`);

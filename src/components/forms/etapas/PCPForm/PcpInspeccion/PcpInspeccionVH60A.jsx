@@ -63,6 +63,8 @@ const PcpInspeccionVH60A = () => {
     }
   }, [inspeccionActual]);
 
+  const etapaSiguiente = 4;
+
   const handleImagenChange = (index, file) => {
     const nuevasImagenes = [...imagenes];
     nuevasImagenes[index] = file;
@@ -142,7 +144,9 @@ const PcpInspeccionVH60A = () => {
           const updatedOt = {
             ...otActual,
             inspeccionPcpVh60: { id: nuevaInspeccionId },
+            etapaActual: etapaSiguiente,
           };
+          
           await Swal.fire({
             title: "Perfecto!",
             text: "Inspección creada con éxito",

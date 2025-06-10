@@ -24,6 +24,8 @@ const PcpSalida = () => {
   const [imagenes, setImagenes] = useState(Array(3).fill(null));
   const [urlsTemporales, setUrlsTemporales] = useState(Array(3).fill(null));
 
+  const etapaSiguiente = 9;
+
   const handleImagenChange = (index, file) => {
     const nuevasImagenes = [...imagenes];
     nuevasImagenes[index] = file;
@@ -64,7 +66,8 @@ const PcpSalida = () => {
         // Actualizamos el estado de la OT a false (finalizada)
         const updatedOt = {
           ...otActual,
-          activa: false
+          activa: false,
+          etapaActual: etapaSiguiente
           // comentarioSalida: data.comentario,
           // numeroRemito: data.numeroRemito,
           // observacionesSalida: data.observaciones
