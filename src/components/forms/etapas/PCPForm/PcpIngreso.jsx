@@ -75,7 +75,8 @@ const PcpIngreso = () => {
       const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
 
       if (recepcionId) {
-        await updateRecepcion(recepcionId, data);
+        return;
+        // await updateRecepcion(recepcionId, data);
       } else {
         const nuevaRecepcion = await createRecepcion(data);
         const nuevaRecepcionId = nuevaRecepcion?.id;
@@ -113,11 +114,17 @@ const PcpIngreso = () => {
         <div className="cliente_divisor">
           <div className="cliente_element">
             <p className="cliente_title">Razón Social</p>
-            <p>{ordenData ? ordenData.cliente.razonSocial : "Cargando datos..."}</p>
+            <p>
+              {ordenData ? ordenData.cliente.razonSocial : "Cargando datos..."}
+            </p>
           </div>
           <div className="cliente_element">
             <p className="cliente_title">Contacto</p>
-            <p>{ordenData ? ordenData.cliente.nombreContacto : "Cargando datos..."}</p>
+            <p>
+              {ordenData
+                ? ordenData.cliente.nombreContacto
+                : "Cargando datos..."}
+            </p>
           </div>
         </div>
         <div className="cliente_divisor">
@@ -127,7 +134,9 @@ const PcpIngreso = () => {
           </div>
           <div className="cliente_element">
             <p className="cliente_title">WhatsApp</p>
-            <p>{ordenData ? ordenData.cliente.telefono : "Cargando datos..."}</p>
+            <p>
+              {ordenData ? ordenData.cliente.telefono : "Cargando datos..."}
+            </p>
           </div>
         </div>
       </div>
@@ -137,21 +146,37 @@ const PcpIngreso = () => {
         <div className="equipo_divisor">
           <div className="cliente_element">
             <p className="cliente_title">Tipo</p>
-            <p>{ordenData ? ordenData.equipo.tipoEquipo.tipo : "Cargando datos..."}</p>
+            <p>
+              {ordenData
+                ? ordenData.equipo.tipoEquipo.tipo
+                : "Cargando datos..."}
+            </p>
           </div>
           <div className="cliente_element">
             <p className="cliente_title">Modelo</p>
-            <p>{ordenData ? ordenData.equipo.tipoEquipo.modelo : "Cargando datos..."}</p>
+            <p>
+              {ordenData
+                ? ordenData.equipo.tipoEquipo.modelo
+                : "Cargando datos..."}
+            </p>
           </div>
           <div className="cliente_element">
             <p className="cliente_title">Marca</p>
-            <p>{ordenData ? ordenData.equipo.tipoEquipo.marca : "Cargando datos..."}</p>
+            <p>
+              {ordenData
+                ? ordenData.equipo.tipoEquipo.marca
+                : "Cargando datos..."}
+            </p>
           </div>
         </div>
         <div className="equipo_divisor">
           <div className="cliente_element">
             <p className="cliente_title">Número de Serie</p>
-            <p>{ordenData ? ordenData.equipo.numSerieEquipo : "Cargando datos..."}</p>
+            <p>
+              {ordenData
+                ? ordenData.equipo.numSerieEquipo
+                : "Cargando datos..."}
+            </p>
           </div>
           <div className="cliente_element">
             <p className="cliente_title">Etapa Actual</p>
@@ -175,6 +200,3 @@ const PcpIngreso = () => {
 };
 
 export default PcpIngreso;
-
-
-

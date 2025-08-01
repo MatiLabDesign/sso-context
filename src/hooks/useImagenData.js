@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ImagenService from "../services/ImagenService";
 
-const useImagenData = (imagenId, reset) => {
+const useImagenData = (imagenId, reset, modeloEquipo) => {
   const [imagen, setImagen] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -30,12 +30,12 @@ const useImagenData = (imagenId, reset) => {
     fetchImagenData();
   }, [imagenId, reset]);
 
-  // Crear una nueva imagen
-  const createImagen = async (data) => {
+  // Crear una nueva imagen ------ARREGLADO
+  const newImagenRecepcion = async (data) => {
     try {
-      const nuevaImagen = await ImagenService.createImagen(data);
+      const nuevaImagen = await ImagenService.createImagenRecepcion(data);
       if (nuevaImagen?.data) {
-        setRecepcionActual(nuevaImagen.data);
+        setImagen(nuevaImagen.data);
       }
       return nuevaImagen?.data;
     } catch (error) {
@@ -43,6 +43,27 @@ const useImagenData = (imagenId, reset) => {
       throw error;
     }
   };
+  // Crear una nueva imagen ------ARREGLADO
+  const newImagen = async (data) => {
+  // const newImagenInspeccionPcp = async (data) => {
+    try {
+      const nuevaImagen = await ImagenService.createImagenRecepcion(data);
+      //REVISAR BIEN LOS ENDPOINTS----------------------------------------------->>>>>
+
+      
+      if (nuevaImagen?.data) {
+        setImagen(nuevaImagen.data);
+      }
+      return nuevaImagen?.data;
+    } catch (error) {
+      console.error("Error al cargar la imagen :", error);
+      throw error;
+    }
+  };
+
+
+
+
 
   const updateImagen = async (imagenId, data) => {
     try {
@@ -54,7 +75,7 @@ const useImagenData = (imagenId, reset) => {
       throw err;
     }
   };
-  return { imagen, loading, error, createImagen, updateImagen };
+  return { imagen, loading, error, newImagen, updateImagen };
 };
 
 export default useImagenData;

@@ -1,11 +1,14 @@
 export const LOGIN_URL = "http://localhost:8080/api/login";
+
 export const CLIENTE_URL = "http://localhost:8080/api/cliente";
 export const TIPO_EQUIPO_URL = "http://localhost:8080/api/tipoequipo";
 export const EQUIPO_URL = "http://localhost:8080/api/equipo";
 export const OT_URL = "http://localhost:8080/api/orden";
+
 export const RECEPCION_URL = "http://localhost:8080/api/recepcion";
 export const INSPECCION_URL = "http://localhost:8080/api/inspeccionesvh60";
 export const ENSAYO_URL = "http://localhost:8080/api/ensayopvh60";
 export const SALIDA_URL = "http://localhost:8080/api/salida";
-export const IMAGEN_URL = "http://localhost:8080/api/imagenes/subir"
+
+export const IMAGEN_URL = "http://localhost:8080/api/imagenes"
 export const IMAGEN_URL_GET= "http://localhost:8080/api/imagenes/recepcion"

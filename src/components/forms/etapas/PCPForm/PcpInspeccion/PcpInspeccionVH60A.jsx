@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import "../PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
+import "../PcpRecepcion2.css";
 import { useNavigate, Link } from "react-router-dom";
 import inspeccionPCPVH60 from "../../../../../data/inspeccionPCPVH60";
 import useOrdenData from "../../../../../hooks/useOrdenData";
@@ -8,6 +8,8 @@ import useInspeccionData from "../../../../../hooks/useInspeccionData";
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 import Swal from "sweetalert2";
+import ImagenService from "../../../../../services/ImagenService";
+import { IMAGEN } from "../../../../../config/routes/paths";
 
 const PcpInspeccionVH60A = () => {
   const {
@@ -20,10 +22,50 @@ const PcpInspeccionVH60A = () => {
     defaultValues: inspeccionPCPVH60,
   });
 
+  const [imagenes, setImagenes] = useState(Array(6).fill(null));
   const [urlsTemporales, setUrlsTemporales] = useState(Array(6).fill(null));
 
+  const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
+  const recepcionIdGuardada = localStorage.getItem("recepcionId");
+  const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
+  const modeloGuardada = localStorage.getItem("modelo");
+  //Logica para ver el tipo y el modelo del equipo
+  const inspeccionIdGuardada = ()=>{
+    if (inspeccionId) {
+      
+    }
+  }
+
+  console.log(recepcionIdGuardada);
+
+  useEffect(() => {
+    const fetchImagenes = async () => {
+      // Solo ejecutar si existe un ID de recepción
+      if (!recepcionIdGuardada) return;
+
+      try {
+        const response = await ImagenService.getImagenByRecepcionId(
+          recepcionIdGuardada
+        );
+        if (response.data) {
+          setImagenesGuardadas(response.data);
+          console.log(imagenesGuardadas);
+        }
+      } catch (error) {
+        setError("Error al obtener las imágenes de la recepción");
+        console.error("Error al obtener las imágenes:", error);
+      }
+    };
+
+    fetchImagenes();
+  }, [recepcionIdGuardada]);
+
+  // Si quieres ver el valor actualizado de imagenesGuardadas, muévelo a otro useEffect
+  useEffect(() => {
+    console.log(imagenesGuardadas);
+  }, [imagenesGuardadas]);
+
   const ordenId = localStorage.getItem("ordenId");
-  const [imagenes, setImagenes] = useState([null, null, null]);
 
   const navigate = useNavigate();
 
@@ -76,16 +118,36 @@ const PcpInspeccionVH60A = () => {
   };
 
   const handleImagenClick = (index, e) => {
-    if (urlsTemporales[index]) {
+    e.preventDefault();
+
+    localStorage.setItem("inspeccionId", inspeccionId);
+    localStorage.setItem("imagenIndex", index);
+
+    // Obtener descripción si existe en imagenesGuardadas
+    const descripcion =
+      imagenesGuardadas[index]?.descripcion || "Imagen sin descripción";
+
+    const imagenSrc = obtenerSrcImagen(index);
+    if (imagenSrc) {
       Swal.fire({
-        title: `Imagen ${index + 1}`,
-        imageUrl: urlsTemporales[index],
+        title: descripcion,
+        imageUrl: imagenSrc,
         imageHeight: 350,
         imageAlt: `Imagen ${index + 1}`,
-        confirmButtonColor: "#059080",
+        confirmButtonColor: "#eb7302",
+        cancelButtonColor: "#059080",
+        showCancelButton: true,
+        confirmButtonText: "Editar",
+        cancelButtonText: "Cerrar",
+        // footer: '¿Quieres editar esta imagen?'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/dashboard/imagen-form");
+        }
       });
+    } else {
+      navigate("/dashboard/imagen-form");
     }
-    e.preventDefault();
   };
 
   const onSubmit = async (data) => {
@@ -120,6 +182,11 @@ const PcpInspeccionVH60A = () => {
         if (result.isConfirmed) {
           await updateInspeccion(inspeccionId, data);
           console.log("✅ Inspección actualizada correctamente:", data);
+          const updatedOt = {
+            ...otActual,
+            etapaActual: etapaSiguiente,
+          };
+          await updateOt(ordenId, updatedOt);
 
           if (modeloEquipoActual && tipoEquipoActual) {
             navigate(
@@ -134,45 +201,45 @@ const PcpInspeccionVH60A = () => {
       } else {
         console.log("🚀 Creando nueva inspección...");
 
-        const nuevaInspeccion = await createInspeccion(data);
-        console.log("✅ Nueva inspección creada:", nuevaInspeccion);
+        // const nuevaInspeccion = await createInspeccion(data);
+        // console.log("✅ Nueva inspección creada:", nuevaInspeccion);
 
-        const nuevaInspeccionId = nuevaInspeccion?.id;
-        if (nuevaInspeccionId) {
-          console.log("🔄 Actualizando OT con ID de nueva inspección...");
+        // const nuevaInspeccionId = nuevaInspeccion?.id;
+        // if (nuevaInspeccionId) {
+        //   console.log("🔄 Actualizando OT con ID de nueva inspección...");
 
-          const updatedOt = {
-            ...otActual,
-            inspeccionPcpVh60: { id: nuevaInspeccionId },
-            etapaActual: etapaSiguiente,
-          };
-          
-          await Swal.fire({
-            title: "Perfecto!",
-            text: "Inspección creada con éxito",
-            icon: "success",
-            confirmButtonColor: "#059080",
-          });
+        //   const updatedOt = {
+        //     ...otActual,
+        //     inspeccionPcpVh60: { id: nuevaInspeccionId },
+        //     etapaActual: etapaSiguiente,
+        //   };
 
-          console.log("🔍 JSON enviado a la API:", updatedOt);
+        //   await Swal.fire({
+        //     title: "Perfecto!",
+        //     text: "Inspección creada con éxito",
+        //     icon: "success",
+        //     confirmButtonColor: "#059080",
+        //   });
 
-          await updateOt(ordenId, updatedOt);
+        //   console.log("🔍 JSON enviado a la API:", updatedOt);
 
-          console.log("✅ OT actualizada con éxito.");
+        //   await updateOt(ordenId, updatedOt);
 
-          if (modeloEquipoActual && tipoEquipoActual) {
-            navigate(
-              `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}B`
-            );
-          } else {
-            console.error("❌ Error: Modelo de equipo no definido.");
-          }
-        } else {
-          console.error(
-            "❌ Error: No se pudo obtener el ID de la nueva inspección."
-          );
-          return;
-        }
+        //   console.log("✅ OT actualizada con éxito.");
+
+        //   if (modeloEquipoActual && tipoEquipoActual) {
+        //     navigate(
+        //       `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}B`
+        //     );
+        //   } else {
+        //     console.error("❌ Error: Modelo de equipo no definido.");
+        //   }
+        // } else {
+        //   console.error(
+        //     "❌ Error: No se pudo obtener el ID de la nueva inspección."
+        //   );
+        //   return;
+        // }
       }
     } catch (error) {
       console.error("❌ Error al procesar la inspección:", error);
@@ -246,6 +313,32 @@ const PcpInspeccionVH60A = () => {
       label: "Placa Superior",
     },
   ];
+
+  const dataImagen = () => {
+    localStorage.setItem("inspeccionVh60Id", inspeccionId);
+    navigate(IMAGEN);
+  };
+
+  const obtenerSrcImagen = (index) => {
+    if (urlsTemporales[index]) {
+      return urlsTemporales[index];
+    }
+
+    const imagenGuardada = imagenesGuardadas[index];
+
+    if (imagenGuardada?.url) {
+      const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+
+      // Asegurarse de que la URL comience con '/' si no es absoluta
+      const cleanUrl = imagenGuardada.url.startsWith("/")
+        ? imagenGuardada.url
+        : `/${imagenGuardada.url}`;
+
+      return `${base}${cleanUrl}`;
+    }
+
+    return null;
+  };
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
@@ -387,26 +480,35 @@ const PcpInspeccionVH60A = () => {
         ))}
       </div>
       <div className="imagenes">
-        {[0, 1, 2, 3, 4, 5].map((index) => (
-          <label key={index} className="imagen-prueba">
-            {imagenes[index] ? (
+        {[0, 1, 2, 3, 4, 5].map((index) => {
+          const imagenSrc = obtenerSrcImagen(index);
+
+          return imagenSrc ? (
+            <label key={index} className="imagen-prueba">
               <img
-                src={urlsTemporales[index]}
+                src={imagenSrc}
                 alt={`Imagen ${index + 1}`}
                 className="imagen-preview"
                 onClick={(e) => handleImagenClick(index, e)}
               />
-            ) : (
-              "+"
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={(e) => handleImagenChange(index, e.target.files[0])}
-            />
-          </label>
-        ))}
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={(e) => handleImagenChange(index, e.target.files[0])}
+              />
+            </label>
+          ) : (
+            <div key={index} className="imagen-prueba">
+              <div
+                className="boton-agregar-imagen"
+                onClick={() => dataImagen()}
+              >
+                <span>+</span>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </form>
   );

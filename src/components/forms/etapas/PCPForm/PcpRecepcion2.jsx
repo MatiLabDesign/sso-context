@@ -7,7 +7,12 @@ import useOrdenData from "../../../../hooks/useOrdenData";
 import useRecepcionData from "../../../../hooks/useRecepcionData";
 import Swal from "sweetalert2";
 import { FaArrowRight } from "react-icons/fa";
-
+import { IMAGEN } from "../../../../config/routes/paths";
+import ImagenService from "../../../../services/ImagenService";
+import useInspeccionData from "../../../../hooks/useInspeccionData";
+import inspeccionPcpDv1 from "../../../../data/inspeccionPCPDv1";
+import inspeccionPcpMiniG from "../../../../data/inspeccionPCPminiG";
+import inspeccionPcpCoguar from "../../../../data/inspeccionPCPCougar";
 
 const PcpRecepcion = () => {
   const {
@@ -20,17 +25,74 @@ const PcpRecepcion = () => {
     defaultValues: recepcionPCP,
   });
 
-  const [imagenes, setImagenes] = useState([null, null, null, null, null, null]);
+  const [imagenes, setImagenes] = useState(Array(6).fill(null));
   const [urlsTemporales, setUrlsTemporales] = useState(Array(6).fill(null));
+
+  const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
+  const recepcionIdGuardada = localStorage.getItem("recepcionId");
+  console.log(recepcionIdGuardada);
+
+  useEffect(() => {
+    const fetchImagenes = async () => {
+      // Solo ejecutar si existe un ID de recepción
+      if (!recepcionIdGuardada) return;
+
+      try {
+        const response = await ImagenService.getImagenByRecepcionId(
+          recepcionIdGuardada
+        );
+        if (response.data) {
+          setImagenesGuardadas(response.data);
+          console.log(imagenesGuardadas);
+        }
+      } catch (error) {
+        setError("Error al obtener las imágenes de la recepción");
+        console.error("Error al obtener las imágenes:", error);
+      }
+    };
+
+    fetchImagenes();
+  }, [recepcionIdGuardada]);
+
+  // Si quieres ver el valor actualizado de imagenesGuardadas, muévelo a otro useEffect
+  useEffect(() => {
+    console.log(imagenesGuardadas);
+  }, [imagenesGuardadas]);
 
   const ordenId = localStorage.getItem("ordenId");
   const navigate = useNavigate();
   const { allOts, otActual, updateOt } = useOrdenData(ordenId);
   const [recepcionId, setRecepcionId] = useState(null);
+  const [inspeccionId, setInspeccionId] = useState(null);
+  const [tipoInspeccion, setTipoInspeccion] = useState(null);
 
   useEffect(() => {
     if (otActual?.recepcion?.id) {
       setRecepcionId(otActual.recepcion.id);
+    }
+  }, [otActual]);
+
+  useEffect(() => {
+    if (
+      otActual?.inspeccionPcpVh60?.id ||
+      otActual?.inspeccionPcpDV1?.id ||
+      otActual?.inspeccionPcpMiniG?.id ||
+      otActual?.inspeccionPcpCoguar?.id
+    ) {
+      setInspeccionId(
+        otActual?.inspeccionPcpVh60?.id ||
+          otActual?.inspeccionPcpDV1?.id ||
+          otActual?.inspeccionPcpMiniG?.id ||
+          otActual?.inspeccionPcpCoguar?.id
+      );
+    }
+  }, [otActual]);
+
+  useEffect(() => {
+    if (otActual?.inspeccionPcpVh60?.id) {
+      setTipoInspeccion(
+        "inspeccionPcpVh60"
+      );
     }
   }, [otActual]);
 
@@ -42,7 +104,10 @@ const PcpRecepcion = () => {
     updateRecepcion,
   } = useRecepcionData(recepcionId, reset);
 
+  const { createInspeccion } = useInspeccionData(inspeccionId);
+
   const etapaSiguiente = 3;
+  const etapaInspeccion = 4;
 
   const handleImagenChange = (index, file) => {
     const nuevasImagenes = [...imagenes];
@@ -55,16 +120,36 @@ const PcpRecepcion = () => {
   };
 
   const handleImagenClick = (index, e) => {
-    if (urlsTemporales[index]) {
+    e.preventDefault();
+
+    localStorage.setItem("recepcionId", recepcionId);
+    localStorage.setItem("imagenIndex", index);
+
+    // Obtener descripción si existe en imagenesGuardadas
+    const descripcion =
+      imagenesGuardadas[index]?.descripcion || "Imagen sin descripción";
+
+    const imagenSrc = obtenerSrcImagen(index);
+    if (imagenSrc) {
       Swal.fire({
-        title: `Imagen ${index + 1}`,
-        imageUrl: urlsTemporales[index],
+        title: descripcion,
+        imageUrl: imagenSrc,
         imageHeight: 350,
         imageAlt: `Imagen ${index + 1}`,
-        confirmButtonColor: "#059080",
+        confirmButtonColor: "#eb7302",
+        cancelButtonColor: "#059080",
+        showCancelButton: true,
+        confirmButtonText: "Editar",
+        cancelButtonText: "Cerrar",
+        // footer: '¿Quieres editar esta imagen?'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/dashboard/imagen-form");
+        }
       });
+    } else {
+      navigate("/dashboard/imagen-form");
     }
-    e.preventDefault();
   };
 
   const onSubmit = async (data) => {
@@ -97,6 +182,31 @@ const PcpRecepcion = () => {
         if (result.isConfirmed) {
           await updateRecepcion(recepcionId, data);
 
+          if (!inspeccionId) {
+            // Solo crear si NO hay una inspección existente
+            const nuevaInspeccion = await createInspeccion(data);
+            const nuevaInspeccionId = nuevaInspeccion?.id;
+
+            if (nuevaInspeccionId) {
+              const updatedOt = {
+                ...otActual,
+                inspeccionPcpVh60: { id: nuevaInspeccionId },
+                etapaActual: etapaSiguiente,
+              };
+
+              await updateOt(ordenId, updatedOt);
+              localStorage.setItem("Tipo Inspección", tipoInspeccion);
+              console.log("localstore = tipoInspeccion guardado");
+
+              await Swal.fire({
+                title: "Perfecto!",
+                text: "Inspección creada con éxito",
+                icon: "success",
+                confirmButtonColor: "#059080",
+              });
+            }
+          }
+
           if (modeloEquipoActual && tipoEquipoActual) {
             navigate(
               `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}A`
@@ -104,6 +214,7 @@ const PcpRecepcion = () => {
           }
         }
       } else {
+        //Tengo que ver si saco el CREATERECEPCION
         const nuevaRecepcion = await createRecepcion(data);
         const nuevaRecepcionId = nuevaRecepcion?.id;
 
@@ -140,6 +251,32 @@ const PcpRecepcion = () => {
     navigate(`/dashboard/etapa/inspeccionPCPVh60A`);
   };
 
+  const dataImagen = () => {
+    localStorage.setItem("recepcionId", recepcionId);
+    navigate(IMAGEN);
+  };
+
+  const obtenerSrcImagen = (index) => {
+    if (urlsTemporales[index]) {
+      return urlsTemporales[index];
+    }
+
+    const imagenGuardada = imagenesGuardadas[index];
+
+    if (imagenGuardada?.url) {
+      const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+
+      // Asegurarse de que la URL comience con '/' si no es absoluta
+      const cleanUrl = imagenGuardada.url.startsWith("/")
+        ? imagenGuardada.url
+        : `/${imagenGuardada.url}`;
+
+      return `${base}${cleanUrl}`;
+    }
+
+    return null;
+  };
+
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
       <h3 className="form-title">Recepción PCP</h3>
@@ -166,12 +303,27 @@ const PcpRecepcion = () => {
         {[
           ["cgestado", "cgrequerimiento", "cgobservacion", "Cubre Grampa"],
           ["cvestado", "cvrequerimiento", "cvobservacion", "Cubre Polea"],
-          ["gaestado", "garequerimiento", "gaobservacion", "Grampa Anti Eyección"],
+          [
+            "gaestado",
+            "garequerimiento",
+            "gaobservacion",
+            "Grampa Anti Eyección",
+          ],
           ["ecestado", "ecrequerimiento", "ecobservacion", "Estructura Chasis"],
-          ["lsestado", "lsrequerimiento", "lsobservacion", "Linterna Separador"],
+          [
+            "lsestado",
+            "lsrequerimiento",
+            "lsobservacion",
+            "Linterna Separador",
+          ],
           ["mmestado", "mmrequerimiento", "mmobservacion", "Mesa de Motor"],
           ["rmestado", "rmrequerimiento", "rmobservacion", "Rieles de Motor"],
-          ["stestado", "strequerimiento", "stobservacion", "Soporte de Transporte"],
+          [
+            "stestado",
+            "strequerimiento",
+            "stobservacion",
+            "Soporte de Transporte",
+          ],
           ["pcestado", "pcrequerimiento", "pcobservacion", "Polea Conducida"],
         ].map(([estadoKey, reqKey, obsKey, label]) => (
           <div className="item-section" key={estadoKey}>
@@ -208,31 +360,38 @@ const PcpRecepcion = () => {
       </div>
 
       <div className="imagenes">
-        {[0, 1, 2, 3, 4, 5].map((index) => (
-          <label key={index} className="imagen-prueba">
-            {imagenes[index] ? (
+        {[0, 1, 2, 3, 4, 5].map((index) => {
+          const imagenSrc = obtenerSrcImagen(index);
+
+          return imagenSrc ? (
+            <label key={index} className="imagen-prueba">
               <img
-                src={urlsTemporales[index]}
+                src={imagenSrc}
                 alt={`Imagen ${index + 1}`}
                 className="imagen-preview"
                 onClick={(e) => handleImagenClick(index, e)}
               />
-            ) : (
-              "+"
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={(e) => handleImagenChange(index, e.target.files[0])}
-            />
-          </label>
-        ))}
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={(e) => handleImagenChange(index, e.target.files[0])}
+              />
+            </label>
+          ) : (
+            <div key={index} className="imagen-prueba">
+              <div
+                className="boton-agregar-imagen"
+                onClick={() => dataImagen()}
+              >
+                <span>+</span>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </form>
   );
 };
 
 export default PcpRecepcion;
-
-

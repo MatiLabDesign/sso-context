@@ -5,26 +5,45 @@ import recepcionPCP from "../../../../data/recepcionPCP";
 import { useEffect, useState } from "react";
 import useOrdenData from "../../../../hooks/useOrdenData";
 import useRecepcionData from "../../../../hooks/useRecepcionData";
+import useInspeccionData from "../../../../hooks/useInspeccionData";
 import Swal from "sweetalert2";
 import { FaArrowRight } from "react-icons/fa";
 import { IMAGEN } from "../../../../config/routes/paths";
 import ImagenService from "../../../../services/ImagenService";
+import inspeccionPcpDv1 from "./../../../../data/inspeccionPCPDv1";
+import inspeccionPcpMiniG from "./../../../../data/inspeccionPCPminiG";
+import inspeccionPcpCoguar from "./../../../../data/inspeccionPCPCougar";
+import useImagenData from "../../../../hooks/useImagenData";
 
 const PcpRecepcion = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { isDirty },
-  } = useForm({
-    defaultValues: recepcionPCP,
-  });
+  const { register, handleSubmit, reset, watch, formState: { isDirty },
+  } = useForm({ defaultValues: recepcionPCP });
+
+  const ordenId = localStorage.getItem("ordenId");
+  const [recepcionId, setRecepcionId] = useState(null);
+  const [inspeccionId, setInspeccionId] = useState(null);
+  const [tipoInspeccion, setTipoInspeccion] = useState(null);
+  
+  const navigate = useNavigate();
+
+  //  CUSTOM HOOKS
+  const { allOts, otActual, updateOt } = useOrdenData(ordenId);
+
+  const { recepcionActual, loading: recepcionLoading, error: recepcionError,
+  createRecepcion, updateRecepcion
+  } = useRecepcionData(recepcionId, reset);
+
+  const { createInspeccion } = useInspeccionData(inspeccionId);
+
+  const { newImagen } = useImagenData();
+
+  // IMAGENES----------------------<<<<<<<<<
 
   const [imagenes, setImagenes] = useState(Array(6).fill(null));
   const [urlsTemporales, setUrlsTemporales] = useState(Array(6).fill(null));
 
   const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
+
   const recepcionIdGuardada = localStorage.getItem("recepcionId");
   console.log(recepcionIdGuardada);
 
@@ -55,10 +74,7 @@ const PcpRecepcion = () => {
     console.log(imagenesGuardadas);
   }, [imagenesGuardadas]);
 
-  const ordenId = localStorage.getItem("ordenId");
-  const navigate = useNavigate();
-  const { allOts, otActual, updateOt } = useOrdenData(ordenId);
-  const [recepcionId, setRecepcionId] = useState(null);
+  
 
   useEffect(() => {
     if (otActual?.recepcion?.id) {
@@ -66,15 +82,34 @@ const PcpRecepcion = () => {
     }
   }, [otActual]);
 
-  const {
-    recepcionActual,
-    loading: recepcionLoading,
-    error: recepcionError,
-    createRecepcion,
-    updateRecepcion,
-  } = useRecepcionData(recepcionId, reset);
+  useEffect(() => {
+    if (
+      otActual?.inspeccionPcpVh60?.id ||
+      otActual?.inspeccionPcpDV1?.id ||
+      otActual?.inspeccionPcpMiniG?.id ||
+      otActual?.inspeccionPcpCoguar?.id
+    ) {
+      setInspeccionId(
+        otActual?.inspeccionPcpVh60?.id ||
+          otActual?.inspeccionPcpDV1?.id ||
+          otActual?.inspeccionPcpMiniG?.id ||
+          otActual?.inspeccionPcpCoguar?.id
+      );
+    }
+  }, [otActual]);
+
+  useEffect(() => {
+    if (otActual?.inspeccionPcpVh60?.id) {
+      setTipoInspeccion(
+        "inspeccionPcpVh60"
+      );
+    }
+  }, [otActual]);
+
+  
 
   const etapaSiguiente = 3;
+  const etapaInspeccion = 4;
 
   const handleImagenChange = (index, file) => {
     const nuevasImagenes = [...imagenes];
@@ -87,36 +122,37 @@ const PcpRecepcion = () => {
   };
 
   const handleImagenClick = (index, e) => {
-  e.preventDefault();
-  
-  localStorage.setItem("recepcionId", recepcionId);
-  localStorage.setItem("imagenIndex", index);
+    e.preventDefault();
+
+    localStorage.setItem("recepcionId", recepcionId);
+    localStorage.setItem("imagenIndex", index);
 
     // Obtener descripción si existe en imagenesGuardadas
-  const descripcion = imagenesGuardadas[index]?.descripcion || "Imagen sin descripción";
-  
-  const imagenSrc = obtenerSrcImagen(index);
-  if (imagenSrc) {
-    Swal.fire({
-      title: descripcion,
-      imageUrl: imagenSrc,
-      imageHeight: 350,
-      imageAlt: `Imagen ${index + 1}`,
-      confirmButtonColor: "#eb7302",
-      cancelButtonColor: "#059080",
-      showCancelButton: true,
-      confirmButtonText: 'Editar',
-      cancelButtonText: 'Cerrar',
-      // footer: '¿Quieres editar esta imagen?'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/dashboard/imagen-form");
-      }
-    });
-  } else {
-    navigate("/dashboard/imagen-form");
-  }
-};
+    const descripcion =
+      imagenesGuardadas[index]?.descripcion || "Imagen sin descripción";
+
+    const imagenSrc = obtenerSrcImagen(index);
+    if (imagenSrc) {
+      Swal.fire({
+        title: descripcion,
+        imageUrl: imagenSrc,
+        imageHeight: 350,
+        imageAlt: `Imagen ${index + 1}`,
+        confirmButtonColor: "#eb7302",
+        cancelButtonColor: "#059080",
+        showCancelButton: true,
+        confirmButtonText: "Editar",
+        cancelButtonText: "Cerrar",
+        // footer: '¿Quieres editar esta imagen?'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/dashboard/imagen-form");
+        }
+      });
+    } else {
+      navigate("/dashboard/imagen-form");
+    }
+  };
 
   const onSubmit = async (data) => {
     try {
@@ -148,6 +184,31 @@ const PcpRecepcion = () => {
         if (result.isConfirmed) {
           await updateRecepcion(recepcionId, data);
 
+          if (!inspeccionId) {
+            // Solo crear si NO hay una inspección existente
+            const nuevaInspeccion = await createInspeccion(data);
+            const nuevaInspeccionId = nuevaInspeccion?.id;
+
+            if (nuevaInspeccionId) {
+              const updatedOt = {
+                ...otActual,
+                inspeccionPcpVh60: { id: nuevaInspeccionId },
+                etapaActual: etapaSiguiente,
+              };
+
+              await updateOt(ordenId, updatedOt);
+              localStorage.setItem("Tipo Inspección", tipoInspeccion);
+              console.log("localstore = tipoInspeccion guardado");
+
+              await Swal.fire({
+                title: "Perfecto!",
+                text: "Inspección creada con éxito",
+                icon: "success",
+                confirmButtonColor: "#059080",
+              });
+            }
+          }
+
           if (modeloEquipoActual && tipoEquipoActual) {
             navigate(
               `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}A`
@@ -155,6 +216,7 @@ const PcpRecepcion = () => {
           }
         }
       } else {
+        //Tengo que ver si saco el CREATERECEPCION
         const nuevaRecepcion = await createRecepcion(data);
         const nuevaRecepcionId = nuevaRecepcion?.id;
 
@@ -205,10 +267,12 @@ const PcpRecepcion = () => {
 
     if (imagenGuardada?.url) {
       const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
-      // Si ya incluye 'http' en la URL del backend, asegurate de que la url guardada comience con /
+
+      // Asegurarse de que la URL comience con '/' si no es absoluta
       const cleanUrl = imagenGuardada.url.startsWith("/")
         ? imagenGuardada.url
         : `/${imagenGuardada.url}`;
+
       return `${base}${cleanUrl}`;
     }
 

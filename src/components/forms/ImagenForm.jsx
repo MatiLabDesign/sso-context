@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { IMAGEN_URL } from "../../constants/API_URL";
 import Swal from "sweetalert2";
+import useImagenData from "../../hooks/useImagenData";
 
 const ImagenForm = () => {
   const {
@@ -18,6 +19,8 @@ const ImagenForm = () => {
   const [imagen, setImagen] = useState(null);
   const [urlTemporal, setUrlTemporal] = useState(null);
   const inputRef = useRef();
+
+  const { newImagen } = useImagenData(imagen);
 
   const handleImagenChange = (file) => {
     setImagen(file);
@@ -55,13 +58,12 @@ const ImagenForm = () => {
       formData.append("descripcion", data.descripcion || "");
       formData.append("publicar", data.publicar ? "true" : "false");
       formData.append("recepcionId", imgRecepcionId || null);
+      //
+
       
-      // Enviar al backend
-      const response = await axios.post(IMAGEN_URL, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      });
+      
+      // Enviar al backend ----ARREGLADO
+      const response = await newImagen(formData);
       
       console.log("✅ Imagen guardada exitosamente:", response.data);
       

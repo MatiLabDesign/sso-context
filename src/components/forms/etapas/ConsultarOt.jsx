@@ -32,10 +32,10 @@ const ConsultarOt = () => {
     8: `salida${otActual?.equipo.tipoEquipo.tipo || ""}`,
   };
 
-///////////////////ACA TENGO QUE REVISAR LAS URL/////////////////
+  ///////////////////ACA TENGO QUE REVISAR LAS URL/////////////////
   const handleClick = () => {
     console.log("Evento antes de navegar...");
-    navigate(`/dashboard/etapa/${etapasMap[otActual.etapaActual]}`);
+    navigate(`/dashboard/etapa/${etapasMap[otActual?.etapaActual]}`);
   };
 
   return (
@@ -46,24 +46,29 @@ const ConsultarOt = () => {
         </div>
         <div className="right_column">
           <div className="header_row">
-            {/* //colocar numero de serie */}
-            numSerie
+            <p className="cliente_title">
+              {otActual ? otActual.equipo.numSerieEquipo : "Cargando datos..."}
+            </p>
           </div>
           <div className="header_row">
-            {/* //colocar numero de tipo equipo y modelo */}
-            tipoEquipo modelo
+            <p className="cliente_title">
+              {otActual ? otActual.equipo.tipoEquipo.tipo : "Cargando datos..."}
+              {otActual ? otActual.equipo.tipoEquipo.modelo : "Cargando datos..."}
+            </p>
           </div>
         </div>
       </div>
       <div className="file">
         <div className="left_column_file">
           <h4>Cliente</h4>
-          razonSocial
+          <p className="cliente_title">
+            {otActual ? otActual.cliente.razonSocial : "Cargando datos..."}
+          </p>
         </div>
-        <div className="right_column_file">
+        {/* <div className="right_column_file">
           <h4>Fecha de Ingreso</h4>
           fechaIngreso
-        </div>
+        </div> */}
       </div>
       <div className="main_content">
         <table className="table_content">
@@ -94,10 +99,10 @@ const ConsultarOt = () => {
             </td>
             <td className="comentario_column">
               <tr className="table_rows">
-                <p>Comentario1</p>
+                <p>Esta es al primera etapa</p>
               </tr>
               <tr className="table_rows">
-                <p>comentario 2</p>
+                <p className="comentario-title">{otActual?.recepcion?.comentario ?? ""}</p>
               </tr>
               <tr className="table_rows">
                 <p>comentario 2</p>
@@ -111,27 +116,43 @@ const ConsultarOt = () => {
             </td>
             <td className="estado_column">
               <tr className="table_rows">
-                <div className={etapaActual <= 1 ? "cuadrado" : "cuadrado-rojo"}></div>
+                <div
+                  className={etapaActual <= 1 ? "cuadrado" : "cuadrado-rojo"}
+                ></div>
               </tr>
               <tr className="table_rows">
-                <div className={etapaActual <= 2 ? "cuadrado" : "cuadrado-rojo"}>
-
-                   </div>
+                <div
+                  className={etapaActual <= 2 ? "cuadrado" : "cuadrado-rojo"}
+                ></div>
               </tr>
               <tr className="table_rows">
-                <div className={etapaActual <= 3 ? "cuadrado" :
-                  etapaActual == 4 ? "cuadrado33" :
-                  etapaActual == 5 ? "cuadrado66" :
-                  "cuadrado-rojo"}></div>
+                <div
+                  className={
+                    etapaActual <= 3
+                      ? "cuadrado"
+                      : etapaActual == 4
+                      ? "cuadrado33"
+                      : etapaActual == 5
+                      ? "cuadrado66"
+                      : "cuadrado-rojo"
+                  }
+                ></div>
               </tr>
               <tr className="table_rows">
-                <div className={etapaActual <= 6 ? "cuadrado" :
-                  etapaActual == 7 ? "cuadrado50" :
-                  "cuadrado-rojo" }></div>
+                <div
+                  className={
+                    etapaActual <= 6
+                      ? "cuadrado"
+                      : etapaActual == 7
+                      ? "cuadrado50"
+                      : "cuadrado-rojo"
+                  }
+                ></div>
               </tr>
               <tr className="table_rows">
-                <div className={etapaActual <= 8 ? "cuadrado" :
-                  "cuadrado-rojo"}></div>
+                <div
+                  className={etapaActual <= 8 ? "cuadrado" : "cuadrado-rojo"}
+                ></div>
               </tr>
             </td>
           </tbody>
