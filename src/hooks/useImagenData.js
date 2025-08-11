@@ -30,10 +30,36 @@ const useImagenData = (imagenId, reset, modeloEquipo) => {
     fetchImagenData();
   }, [imagenId, reset]);
 
+  
   // Crear una nueva imagen ------ARREGLADO
   const newImagenRecepcion = async (data) => {
     try {
       const nuevaImagen = await ImagenService.createImagenRecepcion(data);
+      if (nuevaImagen?.data) {
+        setImagen(nuevaImagen.data);
+      }
+      return nuevaImagen?.data;
+    } catch (error) {
+      console.error("Error al cargar la imagen :", error);
+      throw error;
+    }
+  };
+
+  const newImagenInspeccionVh60 = async (data) => {
+    try {
+      const nuevaImagen = await ImagenService.createImagenInspeccionPcpVh60(data);
+      if (nuevaImagen?.data) {
+        setImagen(nuevaImagen.data);
+      }
+      return nuevaImagen?.data;
+    } catch (error) {
+      console.error("Error al cargar la imagen :", error);
+      throw error;
+    }
+  };
+  const newImagenInspeccion2 = async (data) => {
+    try {
+      const nuevaImagen = await ImagenService.createImagenInspeccionPcpVh60(data);
       if (nuevaImagen?.data) {
         setImagen(nuevaImagen.data);
       }
@@ -65,7 +91,17 @@ const useImagenData = (imagenId, reset, modeloEquipo) => {
 
 
 
-  const updateImagen = async (imagenId, data) => {
+  const updateImagenRecepcion = async (imagenId, data) => {
+    try {
+      const response = await ImagenService.updateImagenRecepcion(imagenId, data);
+      setImagen(response.data);
+      return response;
+    } catch (err) {
+      setError("Error al actualizar la recepción");
+      throw err;
+    }
+  };
+  const updateImagenInspeccion = async (imagenId, data) => {
     try {
       const response = await ImagenService.updateImagen(imagenId, data);
       setImagen(response.data);
@@ -75,7 +111,7 @@ const useImagenData = (imagenId, reset, modeloEquipo) => {
       throw err;
     }
   };
-  return { imagen, loading, error, newImagen, updateImagen };
+  return { imagen, loading, error, newImagenRecepcion, newImagenInspeccionVh60, updateImagenRecepcion, updateImagenInspeccion };
 };
 
 export default useImagenData;

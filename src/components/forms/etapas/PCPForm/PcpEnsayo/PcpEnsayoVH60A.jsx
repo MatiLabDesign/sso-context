@@ -11,6 +11,7 @@ import { IoIosArrowRoundForward } from "react-icons/io";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
+import { ENSAYO_A_ITEMS } from "../../../../../constants/ENSAYO_ITEMS";
 
 const PcpEnsayoVH60A = () => {
   const { register, handleSubmit, watch, reset } = useForm({
@@ -51,23 +52,23 @@ const PcpEnsayoVH60A = () => {
           ...data,
           fuerzasCalculadas: fuerzas,
         });
-        
+
         const updatedOt = {
-            ...otActual,
-            ensayoVh60: { id: nuevoEnsayo.id },
-            etapaActual: etapaSiguiente,
-          };
+          ...otActual,
+          ensayoVh60: { id: nuevoEnsayo.id },
+          etapaActual: etapaSiguiente,
+        };
         if (nuevoEnsayo?.id) {
           await updateOt(ordenId, updatedOt);
         }
       }
 
       const updatedOt = {
-            ...otActual,
-            etapaActual: etapaSiguiente,
-          };
+        ...otActual,
+        etapaActual: etapaSiguiente,
+      };
 
-          await updateOt(ordenId, updatedOt);
+      await updateOt(ordenId, updatedOt);
 
       if (modeloEquipo && tipoEquipo) {
         navigate(`/dashboard/etapa/ensayo${tipoEquipo}${modeloEquipo}B`);
@@ -85,13 +86,6 @@ const PcpEnsayoVH60A = () => {
     e.preventDefault();
     navigate(`/dashboard/etapa/inspeccionPCPVh60C`);
   };
-
-  const itemEnsayoVh60 = [
-    ["100", "17.9", "8", "10"],
-    ["200", "35.7", "16", "20"],
-    ["300", "53.6", "24", "30"],
-  ];
-  // [rpm, rpm100CurrentF, rpm100TorqueReferencia1, rpm100TorqueReferencia2]
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
@@ -132,19 +126,21 @@ const PcpEnsayoVH60A = () => {
           </tr>
         </thead>
         <tbody>
-          {itemEnsayoVh60.map(
-            ([
+          {ENSAYO_A_ITEMS.map(
+            ({
               rpm,
-              rpm100CurrentF,
-              rpm100TorqueReferencia1,
-              rpm100TorqueReferencia2,
-            ]) => (
+              currentF: rpm100CurrentF,
+              torqueRef1: rpm100TorqueReferencia1,
+              torqueRef2: rpm100TorqueReferencia2,
+            }) => (
               <tr key={rpm}>
                 <td>
                   <strong>{rpm}</strong>
                 </td>
                 <td>
-                  <p className="datoEnsayo" {...register(`rpm${rpm}CurrentF`)}>{rpm100CurrentF}</p>
+                  <p className="datoEnsayo" {...register(`rpm${rpm}CurrentF`)}>
+                    {rpm100CurrentF}
+                  </p>
                 </td>
                 <td>
                   <input

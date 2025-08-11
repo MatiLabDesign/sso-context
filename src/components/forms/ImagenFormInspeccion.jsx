@@ -6,19 +6,21 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useImagenData from "../../hooks/useImagenData";
 
-const ImagenForm = () => {
+const ImagenFormInspeccion = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
+  const modeloEquipo =  window.localStorage.getItem("modeloEquipo");
+  const tipoEquipo =  window.localStorage.getItem("tipoEquipo");
   const navigate = useNavigate();
   const [imagen, setImagen] = useState(null);
   const [urlTemporal, setUrlTemporal] = useState(null);
   const inputRef = useRef();
 
-  const { newImagenRecepcion, updateImagenRecepcion } = useImagenData(imagen);
+  const { newImagenInspeccionVh60, updateImagenInspeccion } = useImagenData(imagen);
 
   const handleImagenChange = (file) => {
     setImagen(file);
@@ -30,6 +32,7 @@ const ImagenForm = () => {
   };
 
   const imgRecepcionId = window.localStorage.getItem("recepcionId");
+  const imgInspeccionId = window.localStorage.getItem("inspeccionVh60Id");
 
   const onSubmit = async (data) => {
     console.log("📤 Datos del formulario:", data);
@@ -55,13 +58,13 @@ const ImagenForm = () => {
       // También enviar los datos como campos individuales en caso de que el backend los espere así
       formData.append("descripcion", data.descripcion || "");
       formData.append("publicar", data.publicar ? "true" : "false");
-      formData.append("recepcionId", imgRecepcionId || null);
-      //
+      formData.append("inspeccionPcpVh60Id", imgInspeccionId || null);
+      //inspeccionPcpVh60Id Cambie esto a HARDCODEADO>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
       
       
       // Enviar al backend ----ARREGLADO
-      const response = await newImagenRecepcion(formData);
+      const response = await newImagenInspeccionVh60(formData);
       
       console.log("✅ Imagen guardada exitosamente:", response.data);
       
@@ -78,7 +81,7 @@ const ImagenForm = () => {
       setUrlTemporal(null);
       
       // Navegar a la página de recepción PCP
-      navigate("/dashboard/etapa/recepcionPCP");
+      navigate("/dashboard/etapa/inspeccionPcpvh60A");
       
     } catch (error) {
       console.error("❌ Error al guardar la imagen:", error);
@@ -136,5 +139,5 @@ const ImagenForm = () => {
   );
 };
 
-export default ImagenForm;
+export default ImagenFormInspeccion;
 

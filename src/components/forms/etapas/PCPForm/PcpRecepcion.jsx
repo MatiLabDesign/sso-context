@@ -14,15 +14,20 @@ import inspeccionPcpDv1 from "./../../../../data/inspeccionPCPDv1";
 import inspeccionPcpMiniG from "./../../../../data/inspeccionPCPminiG";
 import inspeccionPcpCoguar from "./../../../../data/inspeccionPCPCougar";
 import useImagenData from "../../../../hooks/useImagenData";
+import { RECEPCION_ITEMS } from "../../../../constants/RECEPCION_ITEMS";
 
 const PcpRecepcion = () => {
+  
   const { register, handleSubmit, reset, watch, formState: { isDirty },
   } = useForm({ defaultValues: recepcionPCP });
 
   const ordenId = localStorage.getItem("ordenId");
+  const tipoEquipo=localStorage.getItem("tipoEquipo");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
   const [recepcionId, setRecepcionId] = useState(null);
   const [inspeccionId, setInspeccionId] = useState(null);
   const [tipoInspeccion, setTipoInspeccion] = useState(null);
+  
   
   const navigate = useNavigate();
 
@@ -33,7 +38,7 @@ const PcpRecepcion = () => {
   createRecepcion, updateRecepcion
   } = useRecepcionData(recepcionId, reset);
 
-  const { createInspeccion } = useInspeccionData(inspeccionId);
+  const { newInspeccion } = useInspeccionData(inspeccionId);
 
   const { newImagen } = useImagenData();
 
@@ -99,12 +104,9 @@ const PcpRecepcion = () => {
   }, [otActual]);
 
   useEffect(() => {
-    if (otActual?.inspeccionPcpVh60?.id) {
-      setTipoInspeccion(
-        "inspeccionPcpVh60"
-      );
-    }
-  }, [otActual]);
+  
+    setTipoInspeccion(`${tipoEquipo}${modeloEquipo}`);
+}, [otActual]);
 
   
 
@@ -146,7 +148,7 @@ const PcpRecepcion = () => {
         // footer: '¿Quieres editar esta imagen?'
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate("/dashboard/imagen-form");
+          navigate("/dashboard/imagen-update-form");
         }
       });
     } else {
@@ -183,10 +185,11 @@ const PcpRecepcion = () => {
 
         if (result.isConfirmed) {
           await updateRecepcion(recepcionId, data);
+        
 
           if (!inspeccionId) {
             // Solo crear si NO hay una inspección existente
-            const nuevaInspeccion = await createInspeccion(data);
+            const nuevaInspeccion = await newInspeccion(data, modeloEquipo);
             const nuevaInspeccionId = nuevaInspeccion?.id;
 
             if (nuevaInspeccionId) {
@@ -267,7 +270,6 @@ const PcpRecepcion = () => {
 
     if (imagenGuardada?.url) {
       const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
-
       // Asegurarse de que la URL comience con '/' si no es absoluta
       const cleanUrl = imagenGuardada.url.startsWith("/")
         ? imagenGuardada.url
@@ -302,33 +304,8 @@ const PcpRecepcion = () => {
       </div>
 
       <div className="lista-container">
-        {[
-          ["cgestado", "cgrequerimiento", "cgobservacion", "Cubre Grampa"],
-          ["cvestado", "cvrequerimiento", "cvobservacion", "Cubre Polea"],
-          [
-            "gaestado",
-            "garequerimiento",
-            "gaobservacion",
-            "Grampa Anti Eyección",
-          ],
-          ["ecestado", "ecrequerimiento", "ecobservacion", "Estructura Chasis"],
-          [
-            "lsestado",
-            "lsrequerimiento",
-            "lsobservacion",
-            "Linterna Separador",
-          ],
-          ["mmestado", "mmrequerimiento", "mmobservacion", "Mesa de Motor"],
-          ["rmestado", "rmrequerimiento", "rmobservacion", "Rieles de Motor"],
-          [
-            "stestado",
-            "strequerimiento",
-            "stobservacion",
-            "Soporte de Transporte",
-          ],
-          ["pcestado", "pcrequerimiento", "pcobservacion", "Polea Conducida"],
-        ].map(([estadoKey, reqKey, obsKey, label]) => (
-          <div className="item-section" key={estadoKey}>
+        {RECEPCION_ITEMS.map(({ estado, requerimiento, observacion, label }) => (
+          <div className="item-section" key={estado}>
             <div className="item-field">
               <div className="item-tittle">
                 <h4 className="item-title">{label}</h4>
@@ -338,21 +315,21 @@ const PcpRecepcion = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`itemRecepcion.${estadoKey}`)}
-                  checked={watch(`itemRecepcion.${estadoKey}`)}
+                  {...register(`itemRecepcion.${estado}`)}
+                  checked={watch(`itemRecepcion.${estado}`)}
                 />
               </div>
               <div className="item-tittle">
                 <input
                   className="form-input"
-                  {...register(`itemRecepcion.${reqKey}`)}
+                  {...register(`itemRecepcion.${requerimiento}`)}
                   placeholder="Requerimiento"
                 />
               </div>
               <div className="item-tittle">
                 <input
                   className="form-input"
-                  {...register(`itemRecepcion.${obsKey}`)}
+                  {...register(`itemRecepcion.${observacion}`)}
                   placeholder="Observación"
                 />
               </div>

@@ -20,7 +20,7 @@ class ClienteService {
   }
   // Eliminar un cliente de forma lógica (soft delete)
   softDeleteCliente(id) {
-    return axios.patch(`${CLIENTE_URL}/${id}`, { eliminado: true });
+    return axios.patch(`${CLIENTE_URL}/${id}/softdelete`, { eliminado: true });
   }
 }
 

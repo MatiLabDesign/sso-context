@@ -19,7 +19,7 @@ class SalidaService {
   }
 
   softDeleteSalida(id) {
-    return axios.patch(`${SALIDA_URL}/${id}`, { eliminado: true });
+    return axios.patch(`${SALIDA_URL}/${id}/softdelete`, { eliminado: true });
   }
 
   

@@ -9,9 +9,11 @@ import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 import Swal from "sweetalert2";
 import ImagenService from "../../../../../services/ImagenService";
-import { IMAGEN } from "../../../../../config/routes/paths";
+import { IMAGEN_INSPECCION } from "../../../../../config/routes/paths";
+import { INSPECCION_A_ITEMS } from "../../../../../constants/INSPECCION_ITEMS";
 
 const PcpInspeccionVH60A = () => {
+  
   const {
     register,
     handleSubmit,
@@ -26,46 +28,39 @@ const PcpInspeccionVH60A = () => {
   const [urlsTemporales, setUrlsTemporales] = useState(Array(6).fill(null));
 
   const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
+  const ordenId = localStorage.getItem("ordenId");
   const recepcionIdGuardada = localStorage.getItem("recepcionId");
   const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
   const modeloGuardada = localStorage.getItem("modelo");
-  //Logica para ver el tipo y el modelo del equipo
-  const inspeccionIdGuardada = ()=>{
-    if (inspeccionId) {
-      
-    }
-  }
+   const inspeccionId = localStorage.getItem("inspeccionVh60Id");
 
-  console.log(recepcionIdGuardada);
+  //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  const inspeccionIdGuardada = inspeccionId;
+
+  console.log(inspeccionIdGuardada);
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   useEffect(() => {
-    const fetchImagenes = async () => {
-      // Solo ejecutar si existe un ID de recepción
-      if (!recepcionIdGuardada) return;
+  const fetchImagenes = async () => {
+    if (!inspeccionIdGuardada) return; // usar el ID real
 
-      try {
-        const response = await ImagenService.getImagenByRecepcionId(
-          recepcionIdGuardada
-        );
-        if (response.data) {
-          setImagenesGuardadas(response.data);
-          console.log(imagenesGuardadas);
-        }
-      } catch (error) {
-        setError("Error al obtener las imágenes de la recepción");
-        console.error("Error al obtener las imágenes:", error);
-      }
-    };
+    try {
+      const response = await ImagenService.getImagenByInspeccionVh60Id(inspeccionIdGuardada);
+      setImagenesGuardadas(response.data || []); // si no hay datos, usar array vacío
+    } catch (error) {
+      console.error("Error al obtener las imágenes:", error);
+    }
+  };
 
-    fetchImagenes();
-  }, [recepcionIdGuardada]);
+  fetchImagenes();
+}, [inspeccionIdGuardada]);
 
   // Si quieres ver el valor actualizado de imagenesGuardadas, muévelo a otro useEffect
   useEffect(() => {
     console.log(imagenesGuardadas);
   }, [imagenesGuardadas]);
 
-  const ordenId = localStorage.getItem("ordenId");
+  
 
   const navigate = useNavigate();
 
@@ -78,7 +73,7 @@ const PcpInspeccionVH60A = () => {
       console.log("✅ Datos recibidos:", otActual);
 
       if (otActual.inspeccionPcpVh60 && otActual.inspeccionPcpVh60.id) {
-        setInspecionId(otActual.inspeccionPcpVh60.id);
+        // setInspecionId(otActual.inspeccionPcpVh60.id);
       } else {
         console.warn(
           "⚠️ Advertencia: `otActual.inspeccionPcpVh60` no tiene un ID válido."
@@ -87,8 +82,9 @@ const PcpInspeccionVH60A = () => {
       }
     }
   }, [otActual]);
-
-  const [inspeccionId, setInspecionId] = useState(null);
+    
+ 
+  // const [inspeccionId, setInspecionId] = useState(null);>REVISAR>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   useEffect(() => {
     if (inspeccionId) {
@@ -96,8 +92,7 @@ const PcpInspeccionVH60A = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, createInspeccion, updateInspeccion } =
-    useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion, } = useInspeccionData(inspeccionId, reset);
 
   useEffect(() => {
     if (inspeccionActual) {
@@ -108,9 +103,9 @@ const PcpInspeccionVH60A = () => {
   const etapaSiguiente = 4;
 
   const handleImagenChange = (index, file) => {
-    const nuevasImagenes = [...imagenes];
+    const nuevasImagenes = [...imagenesGuardadas];
     nuevasImagenes[index] = file;
-    setImagenes(nuevasImagenes);
+    setImagenesGuardadas(nuevasImagenes);
 
     const nuevasUrls = [...urlsTemporales];
     nuevasUrls[index] = URL.createObjectURL(file);
@@ -142,11 +137,11 @@ const PcpInspeccionVH60A = () => {
         // footer: '¿Quieres editar esta imagen?'
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate("/dashboard/imagen-form");
+          navigate("/dashboard/update-imagen-form-inspeccion");
         }
       });
     } else {
-      navigate("/dashboard/imagen-form");
+      navigate("/dashboard/imagen-form-inspeccion");
     }
   };
 
@@ -200,46 +195,6 @@ const PcpInspeccionVH60A = () => {
         }
       } else {
         console.log("🚀 Creando nueva inspección...");
-
-        // const nuevaInspeccion = await createInspeccion(data);
-        // console.log("✅ Nueva inspección creada:", nuevaInspeccion);
-
-        // const nuevaInspeccionId = nuevaInspeccion?.id;
-        // if (nuevaInspeccionId) {
-        //   console.log("🔄 Actualizando OT con ID de nueva inspección...");
-
-        //   const updatedOt = {
-        //     ...otActual,
-        //     inspeccionPcpVh60: { id: nuevaInspeccionId },
-        //     etapaActual: etapaSiguiente,
-        //   };
-
-        //   await Swal.fire({
-        //     title: "Perfecto!",
-        //     text: "Inspección creada con éxito",
-        //     icon: "success",
-        //     confirmButtonColor: "#059080",
-        //   });
-
-        //   console.log("🔍 JSON enviado a la API:", updatedOt);
-
-        //   await updateOt(ordenId, updatedOt);
-
-        //   console.log("✅ OT actualizada con éxito.");
-
-        //   if (modeloEquipoActual && tipoEquipoActual) {
-        //     navigate(
-        //       `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}B`
-        //     );
-        //   } else {
-        //     console.error("❌ Error: Modelo de equipo no definido.");
-        //   }
-        // } else {
-        //   console.error(
-        //     "❌ Error: No se pudo obtener el ID de la nueva inspección."
-        //   );
-        //   return;
-        // }
       }
     } catch (error) {
       console.error("❌ Error al procesar la inspección:", error);
@@ -256,67 +211,9 @@ const PcpInspeccionVH60A = () => {
     navigate(`/dashboard/etapa/recepcionPCP`);
   };
 
-  const lubricantes = [
-    {
-      ok: "lbprOk",
-      pm: "lbprPM",
-      agua: "lbprAgua",
-      sucio: "lbprSucio",
-      esp: "lbprEsp",
-      label: "Lubricante Block Porta Rodamientos",
-    },
-    {
-      ok: "lsfOk",
-      pm: "lsfPM",
-      agua: "lsfAgua",
-      sucio: "lsfSucio",
-      esp: "lsfEsp",
-      label: "Lubricante Sello Frontal",
-    },
-  ];
-
-  const items = [
-    {
-      ok: "emOk",
-      reten: "emAlRet",
-      rodamiento: "emAlRod",
-      diametro: "emDiam",
-      deformado: "emDef",
-      esp: "emEsp",
-      label: "Eje Motriz",
-    },
-    {
-      ok: "bcOk",
-      reten: "bcAlRet",
-      rodamiento: "bcAlRod",
-      diametro: "bcDiam",
-      deformado: "bcDef",
-      esp: "bcEsp",
-      label: "Block Cabezal",
-    },
-    {
-      ok: "piOk",
-      reten: "piAlRet",
-      rodamiento: "piAlRod",
-      diametro: "piDiam",
-      deformado: "piDef",
-      esp: "piEsp",
-      label: "Placa Inferior",
-    },
-    {
-      ok: "psOk",
-      reten: "psAlRet",
-      rodamiento: "psAlRod",
-      diametro: "psDiam",
-      deformado: "psDef",
-      esp: "psEsp",
-      label: "Placa Superior",
-    },
-  ];
-
   const dataImagen = () => {
     localStorage.setItem("inspeccionVh60Id", inspeccionId);
-    navigate(IMAGEN);
+    navigate(IMAGEN_INSPECCION);
   };
 
   const obtenerSrcImagen = (index) => {
@@ -365,7 +262,7 @@ const PcpInspeccionVH60A = () => {
       </div>
       <div className="lista-container">
         <h3>Lubricantes</h3>
-        {lubricantes.map(({ ok, pm, agua, sucio, esp, label }) => (
+        {INSPECCION_A_ITEMS.lubricantes.map(({ ok, pm, agua, sucio, esp, label }) => (
           <div className="item-section" key={ok}>
             <div className="item-field">
               <div className="item-tittle">
@@ -419,7 +316,7 @@ const PcpInspeccionVH60A = () => {
         ))}
 
         <h3>Item</h3>
-        {items.map((item) => (
+        {INSPECCION_A_ITEMS.items.map((item) => (
           <div className="item-section" key={item.label}>
             <div className="item-tittle">
               <h4 className="item-title">{item.label}</h4>

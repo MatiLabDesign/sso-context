@@ -18,10 +18,6 @@ class RecepcionService {
     return axios.put(`${RECEPCION_URL}/${id}`, recepcion);
   }
 
-  // updateRecepcionImagen(id, imagenesFormData) {
-  //   return axios.put(`${RECEPCION_URL}/${id}/subir-imagen`, imagenesFormData);
-  // }
-
   updateRecepcionImagen(id, datosJson, imagenes) {
     const formData = new FormData();
     formData.append("jsonData", JSON.stringify(datosJson));
@@ -39,7 +35,7 @@ class RecepcionService {
   }
 
   softDeleteRecepcion(id) {
-    return axios.patch(`${RECEPCION_URL}/${id}`, { eliminado: true });
+    return axios.patch(`${RECEPCION_URL}/${id}/softdelete`, { eliminado: true });
   }
 }
 

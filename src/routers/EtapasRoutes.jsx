@@ -8,6 +8,7 @@ import {
   INSPECCIONBM,
   INSPECCIONUCL,
   PCP_ENSAYO,
+  PCP_ENSAYO_VH60_B,
   PCP_INGRESO,
   PCP_INSPECCION_COUGAR_A,
   PCP_INSPECCION_COUGAR_B,
@@ -58,10 +59,11 @@ import PcpInspeccionCougarB from "./../components/forms/etapas/PCPForm/PcpInspec
 import PcpInspeccionCougarC from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarC";
 import PcpInspeccionVH60A from "../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionVH60A";
 import PcpEnsayoVH60A from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVh60A";
+import PcpEnsayoVH60B from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVH60B";
 
-const EtapasRoutes = () => {
+export const EtapasRoutes = () => {
   return (
-    <React.Fragment>
+    <Route path="etapa" element={<Etapas/>}>
     
       <Route path={PCP_INGRESO} element={<PcpIngreso />} />
 
@@ -81,6 +83,7 @@ const EtapasRoutes = () => {
       <Route path={PCP_RECEPCION} element={<PcpRecepcion />} />
 
       <Route path={PCP_ENSAYO} element={<PcpEnsayoVH60A />} />
+      <Route path={PCP_ENSAYO_VH60_B} element={<PcpEnsayoVH60B/>}/>
 
       <Route path={PCP_SALIDA} element={<PcpSalida />} />
 
@@ -94,8 +97,7 @@ const EtapasRoutes = () => {
       <Route path={INSPECCIONBM} element={<BombaInspeccion />} />
       <Route path={ENSAYOBM} element={<BombaEnsayo />} />
       <Route path={SALIDABM} element={<BombaSalida />} />
-      </React.Fragment>
+    </Route>
   );
 };
 
-export default EtapasRoutes;

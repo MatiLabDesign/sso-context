@@ -2,15 +2,13 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "../PcpEnsayo.css";
 import { Link, useNavigate } from "react-router-dom";
-import EnsayoService from "../../../../../services/EnsayoService";
 import ensayoPCPVH60 from "../../../../../data/ensayoPCPVH60";
 import useEnsayoCalc from "../../../../../hooks/useEnsayoCalc";
 import useOrdenData from "../../../../../hooks/useOrdenData";
 import useEnsayoData from "../../../../../hooks/useEnsayoData";
-import { IoIosArrowRoundForward } from "react-icons/io";
-import { IoIosArrowRoundBack } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
+import { ENSAYO_B_ITEMS } from "../../../../../constants/ENSAYO_ITEMS";
 
 const PcpEnsayoVH60B = () => {
   const { register, handleSubmit, watch, reset } = useForm({
@@ -53,10 +51,10 @@ const PcpEnsayoVH60B = () => {
         });
 
         const updatedOt = {
-            ...otActual,
-            ensayoVh60: { id: newEnsayo.id },
-            etapaActual: etapaSiguiente,
-          };
+          ...otActual,
+          ensayoVh60: { id: newEnsayo.id },
+          etapaActual: etapaSiguiente,
+        };
         if (newEnsayo?.id) {
           await updateOt(ordenId, updatedOt);
         }
@@ -88,75 +86,52 @@ const PcpEnsayoVH60B = () => {
 
       {/* Campo para comentario */}
       <div className="form-group">
-              <div className="label-input">
-                <label className="form-label">Comentario</label>
-                <input {...register("comentario")} placeholder="Comentario" />
-              </div>
-              <button className="form-button-2">
-                <Link onClick={handleClickA}>
-                  <FaArrowLeft />
-                </Link>
-              </button>
-              <button className="form-button-2">
-                <Link onClick={handleClick}>
-                  <FaArrowRight />
-                </Link>
-              </button>
-              <button type="submit" className="form-button">
-                Guardar
-              </button>
-            </div>
-
-      {/* Iterar sobre cada propiedad en itemRecepcion */}
-
-      <div className="lista-container2">
-        {/* [["cargaAxialOK", "cargaAxialObservacion", "Carga Axial"],
-          ["temperaturaOK", "temperaturaObservacion", "Temperatura"],
-          ["nivelDeRuidoOK", "nivelDeRuidoObservacion", "Nivel de Ruido"],
-          ["nivelDeVibracionOK", "nivelDeVibracionObservacion", "Nivel de Vibración"],
-          ["fugaDeAceiteOK", "fugaDeAceiteObservacion", "Fuga de Aceite"],
-          ["nivelDeAceiteOK", "nivelDeAceiteObservacion", "Nivel de Aceite"],
-          ["pinturaOK", "pinturaObservacion", "Pintura"],
-          ] */}
-
-      
-      {[
-        "cargaAxial",
-        "temperatura",
-        "nivelDeRuido",
-        "nivelDeVibracion",
-        "fugaDeAceite",
-        "nivelDeAceite",
-        "pintura",
-      ].map((itemKey) => (
-        <div className="item-section" key={itemKey}>
-          <div className="item-field">
-            <div className="item-tittle">
-              <h4 className="item-title">{itemKey}</h4>
-            </div>
-            <div className="item-tittle">
-              <label className="form-label-1">Ok</label>
-              <input
-                className="radio-input"
-                type="checkbox"
-                {...register(`itemRecepcion.${itemKey}.estado`)}
-                checked={watch(`itemRecepcion.${itemKey}.estado`)}
-              />
-            </div>
-           
-            <div className="item-tittle">
-              <input
-                className="form-input"
-                {...register(`itemRecepcion.${itemKey}.observacion`)}
-                placeholder="Observación"
-              />
-            </div>
-          </div>
+        <div className="label-input">
+          <label className="form-label">Comentario</label>
+          <input {...register("comentario")} placeholder="Comentario" />
         </div>
-      ))}
+        <button className="form-button-2">
+          <Link onClick={handleClickA}>
+            <FaArrowLeft />
+          </Link>
+        </button>
+        <button className="form-button-2">
+          <Link onClick={handleClick}>
+            <FaArrowRight />
+          </Link>
+        </button>
+        <button type="submit" className="form-button">
+          Guardar
+        </button>
       </div>
 
-      
+      <div className="lista-container2">
+        {ENSAYO_B_ITEMS.map((itemKey) => (
+          <div className="item-section" key={itemKey}>
+            <div className="item-field">
+              <div className="item-tittle">
+                <h4 className="item-title">{itemKey}</h4>
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">Ok</label>
+                <input
+                  className="radio-input"
+                  type="checkbox"
+                  {...register(`itemRecepcion.${itemKey}.estado`)}
+                  checked={watch(`itemRecepcion.${itemKey}.estado`)}
+                />
+              </div>
+              <div className="item-tittle">
+                <input
+                  className="form-input"
+                  {...register(`itemRecepcion.${itemKey}.observacion`)}
+                  placeholder="Observación"
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </form>
   );
 };

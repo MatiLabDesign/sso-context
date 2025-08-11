@@ -1,0 +1,185 @@
+// Arriba del archivo
+export const INSPECCION_A_ITEMS = {
+  lubricantes: [
+    {
+      ok: "lbprOk",
+      pm: "lbprPM",
+      agua: "lbprAgua",
+      sucio: "lbprSucio",
+      esp: "lbprEsp",
+      label: "Lubricante Block Porta Rodamientos",
+    },
+    {
+      ok: "lsfOk",
+      pm: "lsfPM",
+      agua: "lsfAgua",
+      sucio: "lsfSucio",
+      esp: "lsfEsp",
+      label: "Lubricante Sello Frontal",
+    },
+  ],
+  items: [
+    {
+      ok: "emOk",
+      reten: "emAlRet",
+      rodamiento: "emAlRod",
+      diametro: "emDiam",
+      deformado: "emDef",
+      esp: "emEsp",
+      label: "Eje Motriz",
+    },
+    {
+      ok: "bcOk",
+      reten: "bcAlRet",
+      rodamiento: "bcAlRod",
+      diametro: "bcDiam",
+      deformado: "bcDef",
+      esp: "bcEsp",
+      label: "Block Cabezal",
+    },
+    {
+      ok: "piOk",
+      reten: "piAlRet",
+      rodamiento: "piAlRod",
+      diametro: "piDiam",
+      deformado: "piDef",
+      esp: "piEsp",
+      label: "Placa Inferior",
+    },
+    {
+      ok: "psOk",
+      reten: "psAlRet",
+      rodamiento: "psAlRod",
+      diametro: "psDiam",
+      deformado: "psDef",
+      esp: "psEsp",
+      label: "Placa Superior",
+    },
+  ],
+};
+
+export const INSPECCION_B_ITEMS = {
+  rodamientos: [
+    {
+      ok: "axOk",
+      picado: "axPic",
+      laminado: "axLam",
+      fallaEnJaula: "axFj",
+      desgaste: "axDesg",
+      esp: "axEsp",
+      label: "Axial 294158",
+    },
+    {
+      ok: "gsOk",
+      picado: "gsPic",
+      laminado: "guiaSup6022.laminado",
+      fallaEnJaula: "gsFj",
+      desgaste: "gsDesg",
+      esp: "gsEsp",
+      label: "Guía Superior 6022",
+    },
+    {
+      ok: "giOk",
+      picado: "giPic",
+      laminado: "giLam",
+      fallaEnJaula: "giFj",
+      desgaste: "giDesg",
+      esp: "giEsp",
+      label: "Guía Inferior 6017",
+    },
+    {
+      ok: "frOk",
+      picado: "frPic",
+      laminado: "frLam",
+      fallaEnJaula: "frFj",
+      desgaste: "frDesg",
+      esp: "frEsp",
+      label: "Freno 6005-1RS-Z",
+    },
+    {
+      ok: "arOk",
+      picado: "arPic",
+      laminado: "arLamo",
+      fallaEnJaula: "arFj",
+      desgaste: "arDesg",
+      esp: "arEsp",
+      label: "Antirretorno CSK25-PP-C3",
+    },
+  ],
+
+  transmision: [
+    {
+      ok: "corOk",
+      picado: "corPic",
+      desgastado: "corDesg",
+      roto: "corRot",
+      esp: "corEsp",
+      label: "Corona",
+    },
+    {
+      ok: "pinOk",
+      picado: "pinPic",
+      desgastado: "piDesg",
+      roto: "pinRot",
+      esp: "pinEsp",
+      label: "Piñón",
+    },
+    {
+      ok: "pfOk",
+      picado: "pfPic",
+      desgastado: "pfDesg",
+      roto: "pfRot",
+      esp: "pfEsp",
+      label: "Pastillas de Freno",
+    },
+  ],
+};
+
+export const INSPECCION_C_ITEMS = {
+  sistemaHidraulicoPcpVh60: [
+    {
+      ok: "bomOk",
+      fuga: "bomFug",
+      roto: "bomRot",
+      eficiencia: "bomEf",
+      esp: "bomEsp",
+      label: "Bomba",
+    },
+    {
+      ok: "manOk",
+      fuga: "manFug",
+      roto: "manRot",
+      eficiencia: "manEf",
+      esp: "manEsp",
+      label: "Manifold",
+    },
+    {
+      ok: "calOk",
+      fuga: "calFug",
+      roto: "calRot",
+      eficiencia: "calEf",
+      esp: "calEsp",
+      label: "Cáliper",
+    },
+    {
+      ok: "cmOk",
+      fuga: "cmFug",
+      roto: "cmRot",
+      eficiencia: "cmEf",
+      esp: "cmEsp",
+      label: "Conjunto Mangueras",
+    },
+  ],
+  poleaPcpVh60: [
+    {
+      ok: "bomOk",
+      fisura: "alojRod",
+      poros: "alojRet",
+      diametroInad: "diam",
+      numTraz: "def",
+      esp: "esp",
+      label: "Bomba",
+    },
+  ],
+}
+

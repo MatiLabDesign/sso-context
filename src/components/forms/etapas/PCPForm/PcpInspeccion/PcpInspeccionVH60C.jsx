@@ -1,30 +1,65 @@
-import React, { useState, useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
-import "../PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import "../PcpRecepcion2.css";
 import { useNavigate, Link } from "react-router-dom";
-import InspeccionService from "../../../../../services/InspeccionService";
+import inspeccionPCPVH60 from "../../../../../data/inspeccionPCPVH60";
 import useOrdenData from "../../../../../hooks/useOrdenData";
 import useInspeccionData from "../../../../../hooks/useInspeccionData";
-import { IoIosArrowRoundForward } from "react-icons/io";
-import { IoIosArrowRoundBack } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 import Swal from "sweetalert2";
+import ImagenService from "../../../../../services/ImagenService";
+import { IMAGEN_INSPECCION } from "../../../../../config/routes/paths";
+import { INSPECCION_C_ITEMS } from "../../../../../constants/INSPECCION_ITEMS";
 
 const PcpInspeccionVH60C = () => {
   const {
-    handleSubmit,
-    control,
     register,
+    handleSubmit,
     reset,
     watch,
     formState: { isDirty },
-  } = useForm();
+  } = useForm({
+    defaultValues: inspeccionPCPVH60,
+  });
 
-  const ordenId = window.localStorage.getItem("ordenId");
-
-  const [imagenes, setImagenes] = useState([null, null, null]);
+  const [imagenes, setImagenes] = useState(Array(6).fill(null));
   const [urlsTemporales, setUrlsTemporales] = useState(Array(6).fill(null));
+
+  const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
+  const ordenId = localStorage.getItem("ordenId");
+  const recepcionIdGuardada = localStorage.getItem("recepcionId");
+  const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
+  const modeloGuardada = localStorage.getItem("modelo");
+   const inspeccionId = localStorage.getItem("inspeccionVh60Id");
+
+  //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  const inspeccionIdGuardada = inspeccionId;
+
+  console.log(inspeccionIdGuardada);
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+  useEffect(() => {
+  const fetchImagenes = async () => {
+    if (!inspeccionIdGuardada) return; // usar el ID real
+
+    try {
+      const response = await ImagenService.getImagenByInspeccionVh60Id(inspeccionIdGuardada);
+      setImagenesGuardadas(response.data || []); // si no hay datos, usar array vacío
+    } catch (error) {
+      console.error("Error al obtener las imágenes:", error);
+    }
+  };
+
+  fetchImagenes();
+}, [inspeccionIdGuardada]);
+
+  // Si quieres ver el valor actualizado de imagenesGuardadas, muévelo a otro useEffect
+  useEffect(() => {
+    console.log(imagenesGuardadas);
+  }, [imagenesGuardadas]);
+
+  
 
   const navigate = useNavigate();
 
@@ -37,7 +72,7 @@ const PcpInspeccionVH60C = () => {
       console.log("✅ Datos recibidos:", otActual);
 
       if (otActual.inspeccionPcpVh60 && otActual.inspeccionPcpVh60.id) {
-        setInspecionId(otActual.inspeccionPcpVh60.id);
+        // setInspecionId(otActual.inspeccionPcpVh60.id);
       } else {
         console.warn(
           "⚠️ Advertencia: `otActual.inspeccionPcpVh60` no tiene un ID válido."
@@ -46,10 +81,9 @@ const PcpInspeccionVH60C = () => {
       }
     }
   }, [otActual]);
-
-  const [inspeccionId, setInspecionId] = useState(null);
-
-  const etapaSiguiente = 6;
+    
+ 
+  // const [inspeccionId, setInspecionId] = useState(null);>REVISAR>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   useEffect(() => {
     if (inspeccionId) {
@@ -57,14 +91,58 @@ const PcpInspeccionVH60C = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, createInspeccion, updateInspeccion } =
-    useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion } = useInspeccionData(inspeccionId, reset);
 
   useEffect(() => {
     if (inspeccionActual) {
       console.log("✅ Datos Inspección actual:", inspeccionActual);
     }
   }, [inspeccionActual]);
+
+  const etapaSiguiente = 6;
+
+  const handleImagenChange = (index, file) => {
+    const nuevasImagenes = [...imagenesGuardadas];
+    nuevasImagenes[index] = file;
+    setImagenesGuardadas(nuevasImagenes);
+
+    const nuevasUrls = [...urlsTemporales];
+    nuevasUrls[index] = URL.createObjectURL(file);
+    setUrlsTemporales(nuevasUrls);
+  };
+
+  const handleImagenClick = (index, e) => {
+    e.preventDefault();
+
+    localStorage.setItem("inspeccionId", inspeccionId);
+    localStorage.setItem("imagenIndex", index);
+
+    // Obtener descripción si existe en imagenesGuardadas
+    const descripcion =
+      imagenesGuardadas[index]?.descripcion || "Imagen sin descripción";
+
+    const imagenSrc = obtenerSrcImagen(index);
+    if (imagenSrc) {
+      Swal.fire({
+        title: descripcion,
+        imageUrl: imagenSrc,
+        imageHeight: 350,
+        imageAlt: `Imagen ${index + 1}`,
+        confirmButtonColor: "#eb7302",
+        cancelButtonColor: "#059080",
+        showCancelButton: true,
+        confirmButtonText: "Editar",
+        cancelButtonText: "Cerrar",
+        // footer: '¿Quieres editar esta imagen?'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/dashboard/update-imagen-form-inspeccion");
+        }
+      });
+    } else {
+      navigate("/dashboard/imagen-form-inspeccion");
+    }
+  };
 
   const onSubmit = async (data) => {
     try {
@@ -80,13 +158,6 @@ const PcpInspeccionVH60C = () => {
 
       const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
       const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
-
-      const updatedOt = {
-        ...otActual,
-        etapaActual: etapaSiguiente,
-      };
-
-      await updateOt(ordenId, updatedOt);
 
       if (inspeccionId) {
         console.log("Inspección existente:", inspeccionId);
@@ -105,9 +176,16 @@ const PcpInspeccionVH60C = () => {
         if (result.isConfirmed) {
           await updateInspeccion(inspeccionId, data);
           console.log("✅ Inspección actualizada correctamente:", data);
+          const updatedOt = {
+            ...otActual,
+            etapaActual: etapaSiguiente,
+          };
+          await updateOt(ordenId, updatedOt);
 
           if (modeloEquipoActual && tipoEquipoActual) {
-            navigate(`/dashboard/etapa/ensayo${tipoEquipoActual}`);
+            navigate(
+              `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}C`
+            );
           } else {
             console.error("❌ Error: Modelo de equipo no definido.");
           }
@@ -115,102 +193,48 @@ const PcpInspeccionVH60C = () => {
           console.log("❌ Acción cancelada por el usuario.");
         }
       } else {
-        console.log("🚀 La inspección no existe...");
+        console.log("🚀 Creando nueva inspección...");
       }
     } catch (error) {
       console.error("❌ Error al procesar la inspección:", error);
     }
   };
 
-  const handleImagenChange = (index, file) => {
-    const nuevasImagenes = [...imagenes];
-    nuevasImagenes[index] = file;
-    setImagenes(nuevasImagenes);
-
-    const nuevasUrls = [...urlsTemporales];
-    nuevasUrls[index] = URL.createObjectURL(file);
-    setUrlsTemporales(nuevasUrls);
-  };
-
-  const handleImagenClick = (index, e) => {
-    if (urlsTemporales[index]) {
-      Swal.fire({
-        title: `Imagen ${index + 1}`,
-        imageUrl: urlsTemporales[index],
-        imageHeight: 350,
-        imageAlt: `Imagen ${index + 1}`,
-        confirmButtonColor: "#059080",
-      });
-    }
-    e.preventDefault();
-  };
-
   const handleClick = (e) => {
     e.preventDefault();
     navigate(`/dashboard/etapa/ensayoPCP`);
   };
+
   const handleClickA = (e) => {
     e.preventDefault();
     navigate(`/dashboard/etapa/inspeccionPCPVh60B`);
   };
 
-  const sistemaHidraulicoPcpVh60 = [
-    {
-      ok: "bomOk",
-      fuga: "bomFug",
-      roto: "bomRot",
-      eficiencia: "bomEf",
-      esp: "bomEsp",
-      label: "Bomba",
-    },
-    {
-      ok: "manOk",
-      fuga: "manFug",
-      roto: "manRot",
-      eficiencia: "manEf",
-      esp: "manEsp",
-      label: "Manifold",
-    },
-    {
-      ok: "calOk",
-      fuga: "calFug",
-      roto: "calRot",
-      eficiencia: "calEf",
-      esp: "calEsp",
-      label: "Cáliper",
-    },
-    {
-      ok: "cmOk",
-      fuga: "cmFug",
-      roto: "cmRot",
-      eficiencia: "cmEf",
-      esp: "cmEsp",
-      label: "Conjunto Mangueras",
-    },
-  ];
+  const dataImagen = () => {
+    localStorage.setItem("inspeccionVh60Id", inspeccionId);
+    navigate(IMAGEN_INSPECCION);
+  };
 
-  const poleaPcpVh60 = [
-    {
-      ok: "bomOk",
-      fisura: "alojRod",
-      poros: "alojRet",
-      diametroInad: "diam",
-      numTraz: "def",
-      esp: "esp",
-      label: "Bomba",
-    },
-  ];
+  const obtenerSrcImagen = (index) => {
+    if (urlsTemporales[index]) {
+      return urlsTemporales[index];
+    }
 
-  // const onSubmit = async (data) => {
-  //   try {
-  //     const inspeccion = data;
-  //     await InspeccionService.updateInspeccion(inspeccionId, inspeccion);
-  //     console.log("Datos enviados exitosamente:", inspeccion);
-  //     navigate("/dashboard/etapa/ensayoMiniGA");
-  //   } catch (error) {
-  //     console.error("Error al enviar los datos:", error);
-  //   }
-  // };
+    const imagenGuardada = imagenesGuardadas[index];
+
+    if (imagenGuardada?.url) {
+      const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+
+      // Asegurarse de que la URL comience con '/' si no es absoluta
+      const cleanUrl = imagenGuardada.url.startsWith("/")
+        ? imagenGuardada.url
+        : `/${imagenGuardada.url}`;
+
+      return `${base}${cleanUrl}`;
+    }
+
+    return null;
+  };
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
@@ -239,7 +263,7 @@ const PcpInspeccionVH60C = () => {
 
       {/* Iterar sobre cada propiedad en sistemaHidraulicoPcpVh60 */}
       <h3>Items</h3>
-      {sistemaHidraulicoPcpVh60.map((item) => (
+      {INSPECCION_C_ITEMS.sistemaHidraulicoPcpVh60.map((item) => (
         <div className="item-section" key={item.label}>
           <div className="item-tittle">
             <h4 className="item-title">{item.label}</h4>
@@ -291,19 +315,19 @@ const PcpInspeccionVH60C = () => {
       ))}
 
       <h3>Polea</h3>
-      {["polea"].map((itemKey) => (
+      {INSPECCION_C_ITEMS.poleaPcpVh60.map((itemKey) => (
         <div className="item-section" key={itemKey}>
           <div className="item-field">
             <div className="item-tittle">
-              <h4 className="item-title">{itemKey}</h4>
+              <h4 className="item-title">{itemKey.label}</h4>
             </div>
             <div className="item-tittle">
               <label className="form-label-1">Ok</label>
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`poleaPcpVh60.${itemKey}.ok`)}
-                checked={watch(`poleaPcpVh60.${itemKey}.ok`)}
+                {...register(`poleaPcpVh60.${itemKey.ok}`)}
+                checked={watch(`poleaPcpVh60.${itemKey.ok}`)}
               />
             </div>
             <div className="item-tittle">
@@ -311,8 +335,8 @@ const PcpInspeccionVH60C = () => {
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`poleaPcpVh60.${itemKey}.fisura`)}
-                checked={watch(`poleaPcpVh60.${itemKey}.fisura`)}
+                {...register(`poleaPcpVh60.${itemKey.fisura}`)}
+                checked={watch(`poleaPcpVh60.${itemKey.fisura}`)}
               />
             </div>
             <div className="item-tittle">
@@ -320,8 +344,8 @@ const PcpInspeccionVH60C = () => {
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`poleaPcpVh60.${itemKey}.poros`)}
-                checked={watch(`poleaPcpVh60.${itemKey}.poros`)}
+                {...register(`poleaPcpVh60.${itemKey.poros}`)}
+                checked={watch(`poleaPcpVh60.${itemKey.poros}`)}
               />
             </div>
             <div className="item-tittle">
@@ -329,8 +353,8 @@ const PcpInspeccionVH60C = () => {
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`poleaPcpVh60.${itemKey}.disenoInadecuado`)}
-                checked={watch(`poleaPcpVh60.${itemKey}.disenoInadecuado`)}
+                {...register(`poleaPcpVh60.${itemKey.diametroInad}`)}
+                checked={watch(`poleaPcpVh60.${itemKey.diametroInad}`)}
               />
             </div>
             <div className="item-tittle">
@@ -338,15 +362,15 @@ const PcpInspeccionVH60C = () => {
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`poleaPcpVh60.${itemKey}.numeroTrazabilidad`)}
-                checked={watch(`poleaPcpVh60.${itemKey}.numeroTrazabilidad`)}
+                {...register(`poleaPcpVh60.${itemKey.numTraz}`)}
+                checked={watch(`poleaPcpVh60.${itemKey.numTraz}`)}
               />
             </div>
 
             <div className="item-tittle">
               <input
                 className="form-input"
-                {...register(`poleaPcpVh60.${itemKey}.especificar`)}
+                {...register(`poleaPcpVh60.${itemKey.esp}`)}
                 placeholder="Especificar"
               />
             </div>
@@ -354,26 +378,35 @@ const PcpInspeccionVH60C = () => {
         </div>
       ))}
       <div className="imagenes">
-        {[0, 1, 2].map((index) => (
-          <label key={index} className="imagen-prueba">
-            {imagenes[index] ? (
+        {[0, 1, 2, 3, 4, 5].map((index) => {
+          const imagenSrc = obtenerSrcImagen(index);
+
+          return imagenSrc ? (
+            <label key={index} className="imagen-prueba">
               <img
-                src={urlsTemporales[index]}
+                src={imagenSrc}
                 alt={`Imagen ${index + 1}`}
                 className="imagen-preview"
                 onClick={(e) => handleImagenClick(index, e)}
               />
-            ) : (
-              "+"
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={(e) => handleImagenChange(index, e.target.files[0])}
-            />
-          </label>
-        ))}
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={(e) => handleImagenChange(index, e.target.files[0])}
+              />
+            </label>
+          ) : (
+            <div key={index} className="imagen-prueba">
+              <div
+                className="boton-agregar-imagen"
+                onClick={() => dataImagen()}
+              >
+                <span>+</span>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </form>
   );

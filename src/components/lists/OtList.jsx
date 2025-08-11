@@ -1,7 +1,7 @@
 import { useState } from "react";
 import style from "./ListStyle.module.css";
 import { useNavigate } from "react-router-dom";
-import { IoIosCopy } from "react-icons/io";
+import { IoIosCopy, IoIosDownload } from "react-icons/io";
 import useOrdenData from "../../hooks/useOrdenData";
 import ETAPA_LIST from "../../constants/ETAPA_LIST";
 
@@ -157,7 +157,7 @@ const OtList = () => {
                       <IoIosCopy />
                     </button>
                   </td>
-                  <td className={style.list_content_T}>{!activa && "T"}</td>
+                  <td className={style.list_content_T}>{!activa && <button className={style.button2} style={{ backgroundColor: '#eb7302' }}><IoIosDownload /></button>}</td>
                 </tr>
               )
             )}

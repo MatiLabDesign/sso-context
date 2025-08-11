@@ -19,7 +19,7 @@ class OtService {
   }
 
   softDeleteOt(id) {
-    return axios.patch(`${OT_URL}/${id}`, { eliminado: true });
+    return axios.patch(`${OT_URL}/${id}/softdelete`, { eliminado: true });
   }
 }
 

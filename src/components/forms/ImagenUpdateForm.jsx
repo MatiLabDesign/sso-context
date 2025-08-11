@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import "./ImagenForm.css";
 import style from "./FormStyle.module.css";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { IMAGEN_URL } from "../../constants/API_URL";
 import Swal from "sweetalert2";
 import useImagenData from "../../hooks/useImagenData";
 
-const ImagenForm = () => {
+const ImagenUpdateForm = () => {
+
   const {
     register,
     formState: { errors },
@@ -18,7 +21,7 @@ const ImagenForm = () => {
   const [urlTemporal, setUrlTemporal] = useState(null);
   const inputRef = useRef();
 
-  const { newImagenRecepcion, updateImagenRecepcion } = useImagenData(imagen);
+  const { updateImagenRecepcion } = useImagenData(imagen);
 
   const handleImagenChange = (file) => {
     setImagen(file);
@@ -61,7 +64,7 @@ const ImagenForm = () => {
       
       
       // Enviar al backend ----ARREGLADO
-      const response = await newImagenRecepcion(formData);
+      const response = await updateImagenRecepcion(formData);
       
       console.log("✅ Imagen guardada exitosamente:", response.data);
       
@@ -95,7 +98,7 @@ const ImagenForm = () => {
 
   return (
     <div>
-      <h2>Cargar imagen</h2>
+      <h2>Actualizar imagen</h2>
       <form onSubmit={handleSubmit(onSubmit)} className={style.form_equipo_b}>
         <div className="Imagen_container" onClick={handleContenedorClick}>
           <input
@@ -136,5 +139,5 @@ const ImagenForm = () => {
   );
 };
 
-export default ImagenForm;
+export default ImagenUpdateForm;
 

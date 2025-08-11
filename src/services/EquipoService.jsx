@@ -19,7 +19,7 @@ class EquipoService {
   }
 
   softDeleteEquipo(id) {
-    return axios.patch(`${EQUIPO_URL}/${id}`, { eliminado: true });
+    return axios.patch(`${EQUIPO_URL}/${id}/softdelete`, { eliminado: true });
   }
 }
 

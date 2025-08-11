@@ -30,9 +30,9 @@ const useInspeccionData = (inspeccionId, reset) => {
   }, [inspeccionId, reset]);
 
   // Crear una nueva Inspección
-  const createInspeccion = async (data) => {
+  const newInspeccion = async (data, modeloEquipo) => {
     try {
-      const nuevaInspeccion = await InspeccionService.createInspeccion(data);
+      const nuevaInspeccion = await InspeccionService.createInspeccion(data, modeloEquipo);
       if (nuevaInspeccion?.data) {
         setInspeccionActual(nuevaInspeccion.data);
       }
@@ -53,7 +53,7 @@ const useInspeccionData = (inspeccionId, reset) => {
       throw err;
     }
   };
-  return { inspeccionActual, loading, error, createInspeccion, updateInspeccion };
+  return { inspeccionActual, loading, error, newInspeccion, updateInspeccion };
 };
 
 export default useInspeccionData;

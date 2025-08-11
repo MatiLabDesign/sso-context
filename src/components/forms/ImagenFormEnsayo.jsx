@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./ImagenForm.css";
 import style from "./FormStyle.module.css";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { IMAGEN_URL } from "../../constants/API_URL";
 import Swal from "sweetalert2";
 import useImagenData from "../../hooks/useImagenData";
 
@@ -18,7 +20,7 @@ const ImagenForm = () => {
   const [urlTemporal, setUrlTemporal] = useState(null);
   const inputRef = useRef();
 
-  const { newImagenRecepcion, updateImagenRecepcion } = useImagenData(imagen);
+  const { newImagenRecepcion } = useImagenData(imagen);
 
   const handleImagenChange = (file) => {
     setImagen(file);
