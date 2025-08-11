@@ -32,7 +32,7 @@ const PcpInspeccionVH60A = () => {
   const recepcionIdGuardada = localStorage.getItem("recepcionId");
   const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
   const modeloGuardada = localStorage.getItem("modelo");
-   const inspeccionId = localStorage.getItem("inspeccionVh60Id");
+   const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const inspeccionIdGuardada = inspeccionId;
@@ -51,6 +51,7 @@ const PcpInspeccionVH60A = () => {
       console.error("Error al obtener las imágenes:", error);
     }
   };
+  console.log("inspeccion id" + inspeccionId)
 
   fetchImagenes();
 }, [inspeccionIdGuardada]);
