@@ -24,7 +24,9 @@ const PcpRecepcion = () => {
   const ordenId = localStorage.getItem("ordenId");
   const tipoEquipo=localStorage.getItem("tipoEquipo");
   const modeloEquipo = localStorage.getItem("modeloEquipo");
-  const [recepcionId, setRecepcionId] = useState(null);
+  // const [recepcionId, setRecepcionId] = useState(null);
+  const recepcionId = localStorage.getItem("recepcionId");
+  console.log({recepcionId});
   const [inspeccionId, setInspeccionId] = useState(null);
   const [tipoInspeccion, setTipoInspeccion] = useState(null);
   
@@ -49,17 +51,16 @@ const PcpRecepcion = () => {
 
   const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
 
-  const recepcionIdGuardada = localStorage.getItem("recepcionId");
-  console.log(recepcionIdGuardada);
+  
 
   useEffect(() => {
     const fetchImagenes = async () => {
       // Solo ejecutar si existe un ID de recepción
-      if (!recepcionIdGuardada) return;
+      if (!recepcionId) return;
 
       try {
         const response = await ImagenService.getImagenByRecepcionId(
-          recepcionIdGuardada
+          recepcionId
         );
         if (response.data) {
           setImagenesGuardadas(response.data);
@@ -72,20 +73,20 @@ const PcpRecepcion = () => {
     };
 
     fetchImagenes();
-  }, [recepcionIdGuardada]);
+  }, [recepcionId]);
 
   // Si quieres ver el valor actualizado de imagenesGuardadas, muévelo a otro useEffect
   useEffect(() => {
-    console.log(imagenesGuardadas);
+    console.log({imagenesGuardadas});
   }, [imagenesGuardadas]);
 
   
 
-  useEffect(() => {
-    if (otActual?.recepcion?.id) {
-      setRecepcionId(otActual.recepcion.id);
-    }
-  }, [otActual]);
+  // useEffect(() => {
+  //   if (otActual?.recepcion?.id) {
+  //     setRecepcionId(otActual.recepcion.id);
+  //   }
+  // }, [otActual]);
 
   useEffect(() => {
     if (
@@ -198,6 +199,9 @@ const PcpRecepcion = () => {
                 inspeccionPcpVh60: { id: nuevaInspeccionId },
                 etapaActual: etapaSiguiente,
               };
+
+              localStorage.setItem("inspeccionVh60Id", nuevaInspeccionId)
+              localStorage.removeItem("NOinspeccionId")
 
               await updateOt(ordenId, updatedOt);
               localStorage.setItem("Tipo Inspección", tipoInspeccion);

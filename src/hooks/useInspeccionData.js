@@ -13,7 +13,7 @@ const useInspeccionData = (inspeccionId, reset) => {
 
       setLoading(true);
       try {
-        const response = await InspeccionService.getInspeccionById(inspeccionId);
+        const response = await InspeccionService.getInspeccionVh60ById(inspeccionId);
         if (response.data) {
           setInspeccionActual(response.data);
           reset(response.data); // Rellena el formulario
@@ -45,7 +45,7 @@ const useInspeccionData = (inspeccionId, reset) => {
 
   const updateInspeccion = async (id, data) => {
     try {
-      const response = await InspeccionService.updateInspeccion(id, data);
+      const response = await InspeccionService.updateInspeccionVh60(id, data);
       setInspeccionActual(response.data);
       return response;
     } catch (err) {

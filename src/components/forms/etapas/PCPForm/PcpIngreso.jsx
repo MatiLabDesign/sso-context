@@ -88,6 +88,8 @@ const PcpIngreso = () => {
             etapaActual: etapaSiguiente,
           };
 
+          localStorage.setItem("recepcionId", nuevaRecepcionId);
+
           await updateOt(ordenId, updatedOt);
 
           await Swal.fire({

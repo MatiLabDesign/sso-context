@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ENSAYO_URL } from "../constants/API_URL";
+import { ENSAYO_PCPCOUGAR_URL, ENSAYO_PCPDV1_URL, ENSAYO_PCPMINIG_URL, ENSAYO_PCPVH60_URL, ENSAYO_URL } from "../constants/API_URL";
 
 class EnsayoService {
   getAllEnsayos() {

@@ -12,6 +12,7 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 import { ENSAYO_A_ITEMS } from "../../../../../constants/ENSAYO_ITEMS";
+import useEnsayoCalculo from "../../../../../hooks/useEnsayoCalculo";
 
 const PcpEnsayoVH60A = () => {
   const { register, handleSubmit, watch, reset } = useForm({
@@ -23,9 +24,10 @@ const PcpEnsayoVH60A = () => {
   const navigate = useNavigate();
 
   const { fuerzas } = useEnsayoCalc(formValues);
+  const { torqueFrenado } = useEnsayoCalculo(formValues);
   const { otActual, updateOt } = useOrdenData(ordenId);
   const [ensayoId, setEnsayoId] = useState(null);
-  const { ensayoActual, createEnsayo, updateEnsayo } = useEnsayoData(
+  const { ensayoActual, newEnsayoVh60, updateEnsayoVh60 } = useEnsayoData(
     ensayoId,
     reset
   );
@@ -37,6 +39,7 @@ const PcpEnsayoVH60A = () => {
     if (otActual?.ensayo?.id) {
       setEnsayoId(otActual.ensayo.id);
     }
+    console.log("Valores de torque:", torqueFrenado);
   }, [otActual]);
 
   // Submit handler
@@ -46,9 +49,12 @@ const PcpEnsayoVH60A = () => {
       const tipoEquipo = otActual?.equipo?.tipoEquipo?.tipo;
 
       if (ensayoId) {
-        await updateEnsayo(ensayoId, { ...data, fuerzasCalculadas: fuerzas });
+        await updateEnsayoVh60(ensayoId, {
+          ...data,
+          fuerzasCalculadas: fuerzas,
+        });
       } else {
-        const nuevoEnsayo = await createEnsayo({
+        const nuevoEnsayo = await newEnsayoVh60({
           ...data,
           fuerzasCalculadas: fuerzas,
         });
@@ -114,87 +120,104 @@ const PcpEnsayoVH60A = () => {
         <thead>
           <tr>
             <th>RPM</th>
-            <th>Corriente</th>
-            <th>Voltaje</th>
+            <th>Current F</th>
+            <th>Iout</th>
+            <th>Uout</th>
             <th>Pos 1</th>
             <th>Pos 2</th>
-            <th>Torque 1</th>
-            <th>Torque 2</th>
+            {/* <th>Torque 1</th> */}
+            <th>Torque</th>
+            {/* <th>Torque 2</th> */}
             <th>Ref 1</th>
             <th>Ref 2</th>
-            <th>Temperatura</th>
+            <th>T°</th>
           </tr>
         </thead>
         <tbody>
-          {ENSAYO_A_ITEMS.map(
-            ({
-              rpm,
-              currentF: rpm100CurrentF,
-              torqueRef1: rpm100TorqueReferencia1,
-              torqueRef2: rpm100TorqueReferencia2,
-            }) => (
-              <tr key={rpm}>
-                <td>
-                  <strong>{rpm}</strong>
-                </td>
-                <td>
-                  <p className="datoEnsayo" {...register(`rpm${rpm}CurrentF`)}>
-                    {rpm100CurrentF}
-                  </p>
-                </td>
-                <td>
+          {ENSAYO_A_ITEMS.map((item) => (
+            <tr key={item.rpm}>
+              <td>
+                <strong>{item.rpm}</strong>
+              </td>
+              <td>
+                <input
+                  className="inputEnsayo"
+                  {...register(`rpm${item.rpm}CurrentF`)}
+                  value={item.currentF}
+                  readOnly
+                />
+              </td>
+              <td>
+                <input
+                  className="inputEnsayo"
+                  {...register(`rpm${item.rpm}CorrienteSalida`)}
+                  type="number"
+                />
+              </td>
+              <td>
+                <input
+                  className="inputEnsayo"
+                  {...register(`rpm${item.rpm}VoltajeSalida`)}
+                  type="number"
+                />
+              </td>
+              <td>
+                <input
+                  className="inputEnsayo"
+                  {...register(`rpm${item.rpm}PosicionSalida1`)}
+                  type="number"
+                />
+              </td>
+              <td>
+                <input
+                  className="inputEnsayo"
+                  {...register(`rpm${item.rpm}PosicionSalida2`)}
+                  type="number"
+                />
+              </td>
+              <td>
+                <input
+                  className="inputEnsayo"
+                  {...register("rpm100TorqueFrenado")}
+                  value={torqueFrenado}
+                  readOnly
+                />
+
+                {/* <p>{torqueFrenado[0]}</p> */}
+              </td>
+              {/* <td>
                   <input
                     className="inputEnsayo"
-                    {...register(`rpm${rpm}VoltajeSalida`)}
+                    {...register(`rpm${item.rpm}TorqueFrenado2`)}
                     type="number"
                   />
-                </td>
-                <td>
-                  <input
-                    className="inputEnsayo"
-                    {...register(`rpm${rpm}PosicionSalida1`)}
-                    type="number"
-                  />
-                </td>
-                <td>
-                  <input
-                    className="inputEnsayo"
-                    {...register(`rpm${rpm}PosicionSalida2`)}
-                    type="number"
-                  />
-                </td>
-                <td>
-                  <input
-                    className="inputEnsayo"
-                    {...register(`rpm${rpm}TorqueFrenado1`)}
-                    type="number"
-                  />
-                </td>
-                <td>
-                  <input
-                    className="inputEnsayo"
-                    {...register(`rpm${rpm}TorqueFrenado2`)}
-                    type="number"
-                  />
-                </td>
-                <td>
-                  <p className="datoEnsayo">{rpm100TorqueReferencia1}</p>
-                </td>
-                <td>
-                  <p className="datoEnsayo">{rpm100TorqueReferencia2}</p>
-                </td>
-                <td>
-                  <input
-                    className="inputEnsayo"
-                    {...register(`rpm${rpm}TemperaturaCarcazaC`)}
-                    type="number"
-                  />
-                </td>
-              </tr>
-            )
-          )}
+                </td> */}
+              <td>
+                <input
+                  className="inputEnsayo"
+                  value={item.torqueRef1}
+                  readOnly
+                />
+              </td>
+              <td>
+                <input
+                  className="inputEnsayo"
+                  value={item.torqueRef2}
+                  readOnly
+                />
+              </td>
+              <td>
+                <input
+                  className="inputEnsayo"
+                  {...register(`rpm${item.rpm}TemperaturaCarcazaC`)}
+                  type="number"
+                />
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
+      <span>Calculo torque de frenado = 7 x Uout x Iout / RPM</span>
     </form>
   );
 };

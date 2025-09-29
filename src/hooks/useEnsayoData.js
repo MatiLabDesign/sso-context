@@ -13,7 +13,7 @@ const useEnsayoData = (ensayoId, reset) => {
 
       setLoading(true);
       try {
-        const response = await EnsayoService.getEnsayoById(ensayoId);
+        const response = await EnsayoService.getEnsayoVh60ById(ensayoId);
         if (response.data) {
           setEnsayoActual(response.data);
           reset(response.data); // Rellena el formulario
@@ -30,9 +30,45 @@ const useEnsayoData = (ensayoId, reset) => {
   }, [ensayoId, reset]);
 
   // Crear una nueva Inspección
-  const createEnsayo = async (data) => {
+  const newEnsayoVh60 = async (data) => {
     try {
-      const nuevaEnsayo = await EnsayoService.createEnsayo(data);
+      const nuevaEnsayo = await EnsayoService.createEnsayoVh60(data);
+      if (nuevaEnsayo?.data) {
+        setEnsayoActual(nuevaEnsayo.data);
+      }
+      return nuevaEnsayo?.data;
+    } catch (error) {
+      console.error("Error al crear la Inspección:", error);
+      throw error;
+    }
+  };
+  const newEnsayoDv1 = async (data) => {
+    try {
+      const nuevaEnsayo = await EnsayoService.createEnsayoDv1(data);
+      if (nuevaEnsayo?.data) {
+        setEnsayoActual(nuevaEnsayo.data);
+      }
+      return nuevaEnsayo?.data;
+    } catch (error) {
+      console.error("Error al crear la Inspección:", error);
+      throw error;
+    }
+  };
+  const newEnsayoMinig = async (data) => {
+    try {
+      const nuevaEnsayo = await EnsayoService.createEnsayoMinig(data);
+      if (nuevaEnsayo?.data) {
+        setEnsayoActual(nuevaEnsayo.data);
+      }
+      return nuevaEnsayo?.data;
+    } catch (error) {
+      console.error("Error al crear la Inspección:", error);
+      throw error;
+    }
+  };
+  const newEnsayoCougar = async (data) => {
+    try {
+      const nuevaEnsayo = await EnsayoService.createEnsayoCougar(data);
       if (nuevaEnsayo?.data) {
         setEnsayoActual(nuevaEnsayo.data);
       }
@@ -43,9 +79,9 @@ const useEnsayoData = (ensayoId, reset) => {
     }
   };
 
-  const updateEnsayo = async (id, data) => {
+  const updateEnsayoVh60 = async (id, data) => {
     try {
-      const response = await EnsayoService.updateEnsayo(id, data);
+      const response = await EnsayoService.updateEnsayoVh60(id, data);
       setEnsayoActual(response.data);
       return response;
     } catch (err) {
@@ -53,7 +89,50 @@ const useEnsayoData = (ensayoId, reset) => {
       throw err;
     }
   };
-  return { ensayoActual, loading, error, createEnsayo, updateEnsayo };
+  const updateEnsayoDv1 = async (id, data) => {
+    try {
+      const response = await EnsayoService.updateEnsayoDv1(id, data);
+      setEnsayoActual(response.data);
+      return response;
+    } catch (err) {
+      setError("Error al actualizar la inspección");
+      throw err;
+    }
+  };
+  const updateEnsayoMinig = async (id, data) => {
+    try {
+      const response = await EnsayoService.updateEnsayoMinig(id, data);
+      setEnsayoActual(response.data);
+      return response;
+    } catch (err) {
+      setError("Error al actualizar la inspección");
+      throw err;
+    }
+  };
+  const updateEnsayoCougar = async (id, data) => {
+    try {
+      const response = await EnsayoService.updateEnsayoCougar(id, data);
+      setEnsayoActual(response.data);
+      return response;
+    } catch (err) {
+      setError("Error al actualizar la inspección");
+      throw err;
+    }
+  };
+
+  
+  const updateEnsayo = async (id, data) => {
+    try {
+      const response = await EnsayoService.updateEnsayoVh60(id, data);
+      setEnsayoActual(response.data);
+      return response;
+    } catch (err) {
+      setError("Error al actualizar la inspección");
+      throw err;
+    }
+  };
+  
+  return { ensayoActual, loading, error, newEnsayoVh60, newEnsayoDv1, newEnsayoMinig, newEnsayoCougar, updateEnsayo, updateEnsayoVh60, updateEnsayoDv1, updateEnsayoMinig, updateEnsayoCougar };
 };
 
 export default useEnsayoData;

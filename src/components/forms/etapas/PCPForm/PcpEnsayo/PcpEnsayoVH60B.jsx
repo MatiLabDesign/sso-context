@@ -22,7 +22,7 @@ const PcpEnsayoVH60B = () => {
   const { fuerzas } = useEnsayoCalc(formValues);
   const { otActual, updateOt } = useOrdenData(ordenId);
   const [ensayoId, setEnsayoId] = useState(null);
-  const { ensayoActual, createEnsayo, updateEnsayo } = useEnsayoData(
+  const { ensayoActual, updateEnsayoVh60 } = useEnsayoData(
     ensayoId,
     reset
   );
@@ -42,13 +42,13 @@ const PcpEnsayoVH60B = () => {
       const tipoEquipo = otActual?.equipo?.tipoEquipo?.tipo;
 
       if (ensayoId) {
-        await updateEnsayo(ensayoId, { ...data, fuerzasCalculadas: fuerzas });
+        await updateEnsayoVh60(ensayoId, { ...data, fuerzasCalculadas: fuerzas });
         console.log("ensayo datatatatatta" + data);
       } else {
-        const newEnsayo = await createEnsayo({
-          ...data,
-          fuerzasCalculadas: fuerzas,
-        });
+        // const newEnsayo = await createEnsayo({
+        //   ...data,
+        //   fuerzasCalculadas: fuerzas,
+        // });
 
         const updatedOt = {
           ...otActual,
@@ -117,14 +117,14 @@ const PcpEnsayoVH60B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`itemRecepcion.${itemKey}.estado`)}
-                  checked={watch(`itemRecepcion.${itemKey}.estado`)}
+                  {...register(`${itemKey}.estado`)}
+                  checked={watch(`${itemKey}.estado`)}
                 />
               </div>
               <div className="item-tittle">
                 <input
                   className="form-input"
-                  {...register(`itemRecepcion.${itemKey}.observacion`)}
+                  {...register(`.${itemKey}.observacion`)}
                   placeholder="Observación"
                 />
               </div>

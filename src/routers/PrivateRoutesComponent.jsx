@@ -14,6 +14,7 @@ import {
   IMAGENUPDATE,
   CONSULTA,
   LOGOUT,
+  IMAGENUPDATEINSPECCION,
 } from "../config/routes/paths";
 
 import PrivateRoutes from "../components/router/PrivateRoutes";
@@ -48,6 +49,7 @@ export const PrivateRoutesComponent = () => (
       <Route path={IMAGEN} element={<ImagenForm />} />
       <Route path={IMAGEN_INSPECCION} element={<ImagenFormInspeccion />} />
       <Route path={IMAGENUPDATE} element={<ImagenUpdateForm />} />
+      <Route path={IMAGENUPDATEINSPECCION} element={<ImagenUpdateForm />} />
       <Route path={CONSULTA} element={<ConsultarOt />} />
 
       {EtapasRoutes()}

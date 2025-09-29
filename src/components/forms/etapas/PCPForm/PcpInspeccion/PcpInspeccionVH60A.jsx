@@ -32,7 +32,7 @@ const PcpInspeccionVH60A = () => {
   const recepcionIdGuardada = localStorage.getItem("recepcionId");
   const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
   const modeloGuardada = localStorage.getItem("modelo");
-   const inspeccionId = localStorage.getItem("inspeccionId");
+   const inspeccionId = localStorage.getItem("inspeccionVh60Id");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const inspeccionIdGuardada = inspeccionId;
@@ -79,7 +79,7 @@ const PcpInspeccionVH60A = () => {
         console.warn(
           "⚠️ Advertencia: `otActual.inspeccionPcpVh60` no tiene un ID válido."
         );
-        setInspecionId(null); // Limpia el estado para evitar errores posteriores
+        // setInspecionId(null); // Limpia el estado para evitar errores posteriores
       }
     }
   }, [otActual]);
@@ -116,7 +116,7 @@ const PcpInspeccionVH60A = () => {
   const handleImagenClick = (index, e) => {
     e.preventDefault();
 
-    localStorage.setItem("inspeccionId", inspeccionId);
+    // localStorage.setItem("inspeccionId", inspeccionId);
     localStorage.setItem("imagenIndex", index);
 
     // Obtener descripción si existe en imagenesGuardadas
@@ -213,7 +213,7 @@ const PcpInspeccionVH60A = () => {
   };
 
   const dataImagen = () => {
-    localStorage.setItem("inspeccionVh60Id", inspeccionId);
+    // localStorage.setItem("inspeccionVh60Id", inspeccionId);
     navigate(IMAGEN_INSPECCION);
   };
 

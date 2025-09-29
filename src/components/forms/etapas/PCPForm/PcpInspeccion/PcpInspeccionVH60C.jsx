@@ -11,6 +11,8 @@ import Swal from "sweetalert2";
 import ImagenService from "../../../../../services/ImagenService";
 import { IMAGEN_INSPECCION } from "../../../../../config/routes/paths";
 import { INSPECCION_C_ITEMS } from "../../../../../constants/INSPECCION_ITEMS";
+import useEnsayoData from "../../../../../hooks/useEnsayoData";
+
 
 const PcpInspeccionVH60C = () => {
   const {
@@ -32,6 +34,7 @@ const PcpInspeccionVH60C = () => {
   const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
   const modeloGuardada = localStorage.getItem("modelo");
    const inspeccionId = localStorage.getItem("inspeccionVh60Id");
+   const ensayoId = localStorage.getItem("ensayoVh60Id");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const inspeccionIdGuardada = inspeccionId;
@@ -77,7 +80,7 @@ const PcpInspeccionVH60C = () => {
         console.warn(
           "⚠️ Advertencia: `otActual.inspeccionPcpVh60` no tiene un ID válido."
         );
-        setInspecionId(null); // Limpia el estado para evitar errores posteriores
+        // setInspecionId(null); // Limpia el estado para evitar errores posteriores
       }
     }
   }, [otActual]);
@@ -92,7 +95,7 @@ const PcpInspeccionVH60C = () => {
   }, [inspeccionId]);
 
   const { inspeccionActual, updateInspeccion } = useInspeccionData(inspeccionId, reset);
-
+  const { newEnsayoVh60  } = useEnsayoData(ensayoId);
   useEffect(() => {
     if (inspeccionActual) {
       console.log("✅ Datos Inspección actual:", inspeccionActual);
@@ -224,6 +227,7 @@ const PcpInspeccionVH60C = () => {
 
     if (imagenGuardada?.url) {
       const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+
 
       // Asegurarse de que la URL comience con '/' si no es absoluta
       const cleanUrl = imagenGuardada.url.startsWith("/")

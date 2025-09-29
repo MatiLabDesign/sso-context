@@ -32,7 +32,11 @@ const OtList = () => {
     inspeccionPcpVh60,
     inspeccionPcpCoguar,
     inspeccionPcpMiniG,
-    inspeccionPcpDV1
+    inspeccionPcpDV1,
+    ensayoPcpVh60,
+    ensayoPcpCoguar,
+    ensayoPcpMiniG,
+    ensayoPcpDV1
   ) => {
     const ordenId = id;
     const tipoEquipo = equipo.tipoEquipo.tipo;
@@ -42,21 +46,38 @@ const OtList = () => {
     const inspeccionMiniGId = inspeccionPcpMiniG?.id;
     const inspeccionDv1Id = inspeccionPcpDV1?.id;
     const inspeccionCougarId = inspeccionPcpCoguar?.id;
+    const ensayoVh60Id = ensayoPcpVh60?.id;
+    const ensayoMiniGId = ensayoPcpMiniG?.id;
+    const ensayoDv1Id = ensayoPcpDV1?.id;
+    const ensayoCougarId = ensayoPcpCoguar?.id;
 
     window.localStorage.setItem("ordenId", ordenId);
     window.localStorage.setItem("recepcionId", recepcionId);
     window.localStorage.setItem("tipoEquipo", tipoEquipo);
     window.localStorage.setItem("modeloEquipo", modeloEquipo);
+
     if (inspeccionVh60Id != null) {
-      window.localStorage.setItem("inspeccionId", inspeccionVh60Id);
+      window.localStorage.setItem("inspeccionVh60Id", inspeccionVh60Id);
     } else if (inspeccionMiniGId != null) {
-      window.localStorage.setItem("inspeccionId", inspeccionMiniGId);
+      window.localStorage.setItem("inspeccionMinigId", inspeccionMiniGId);
     } else if (inspeccionDv1Id != null) {
-      window.localStorage.setItem("inspeccionId", inspeccionDv1Id);
+      window.localStorage.setItem("inspeccionDv1Id", inspeccionDv1Id);
     } else if (inspeccionCougarId != null) {
-      window.localStorage.setItem("inspeccionId", inspeccionCougarId);
+      window.localStorage.setItem("inspeccionCougarId", inspeccionCougarId);
     } else {
-      window.localStorage.setItem("inspeccionId", null);
+      window.localStorage.setItem("NOinspeccionId", null);
+    }
+
+    if (ensayoVh60Id != null) {
+      window.localStorage.setItem("ensayoVh60Id", ensayoVh60Id);
+    } else if (ensayoMiniGId != null) {
+      window.localStorage.setItem("ensayoMinigId", ensayoMiniGId);
+    } else if (ensayoDv1Id != null) {
+      window.localStorage.setItem("ensayoDv1Id", ensayoDv1Id);
+    } else if (ensayoCougarId != null) {
+      window.localStorage.setItem("ensayoCougarId", ensayoCougarId);
+    } else {
+      window.localStorage.setItem("NOensayoId", null);
     }
 
     navigate(`/dashboard/etapa/consultarOt`);
