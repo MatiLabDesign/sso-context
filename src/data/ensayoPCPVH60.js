@@ -1,4 +1,8 @@
 const ensayoVH60 = {
+
+  id: 0,
+  imagenesVh60: [],
+  
   // RPM 100
   rpm100CurrentF: 17.9,
   rpm100CorrienteSalida: 0.0,

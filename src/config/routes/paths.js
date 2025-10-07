@@ -1,6 +1,8 @@
 export const HOME = '/';
 export const LOGIN = '/login';
 export const CLIENTE_VIEW = '/cliente'
+export const CLIENTE_EQUIPOS = '/cliente-equipos'
+export const CLIENTE_NUEVOSERVICIO = '/cliente-servicio'
 export const PRIVATE = '/dashboard';
 export const LOGOUT = '/dashboard/logout';
 export const CLIENT = 'client';

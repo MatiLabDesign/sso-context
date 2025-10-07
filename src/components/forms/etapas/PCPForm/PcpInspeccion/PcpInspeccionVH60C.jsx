@@ -95,7 +95,7 @@ const PcpInspeccionVH60C = () => {
   }, [inspeccionId]);
 
   const { inspeccionActual, updateInspeccion } = useInspeccionData(inspeccionId, reset);
-  const { newEnsayoVh60  } = useEnsayoData(ensayoId);
+  const { newEnsayoVh60  } = useEnsayoData();
   useEffect(() => {
     if (inspeccionActual) {
       console.log("✅ Datos Inspección actual:", inspeccionActual);
@@ -185,9 +185,67 @@ const PcpInspeccionVH60C = () => {
           };
           await updateOt(ordenId, updatedOt);
 
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>          
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>          
+//>>>>>>>>>>>>>>>>CREAR ENSAYO Y ACTUALIZAR ENSAYO ID EN OT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>          
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>          
+
+          // Reemplazar el bloque por este:
+const ensayoExisteEnOt = !!otActual?.ensayoPcpVh60?.id;
+
+if (!ensayoExisteEnOt) {
+  // Crear ensayo y actualizar OT con el nuevo ensayoId
+try {
+  const resp = await newEnsayoVh60(data);
+  console.log("Respuesta de creación de ensayo:", resp);
+
+  // Manejar diferentes formatos de respuesta
+  const nuevoEnsayoId = resp?.data?.id ?? resp?.id;
+  if (!nuevoEnsayoId) {
+    throw new Error("No se obtuvo un ID válido del nuevo ensayo.");
+  }
+
+  // Actualizar OT con el ensayo creado
+  const updatedOt = {
+    ...otActual,
+    ensayoVh60: { id: nuevoEnsayoId },
+    etapaActual: etapaSiguiente, // mantener coherencia en la etapa
+  };
+
+  await updateOt(ordenId, updatedOt);
+
+  // Guardar en localStorage
+  localStorage.setItem("ensayoVh60Id", String(nuevoEnsayoId));
+  console.log("✅ OT actualizada con nuevo ensayo:", nuevoEnsayoId);
+
+  await Swal.fire({
+    title: "Perfecto!",
+    text: "Ensayo creado y vinculado a la OT con éxito",
+    icon: "success",
+    confirmButtonColor: "#059080",
+  });
+
+} catch (error) {
+  console.error("❌ Error al crear ensayo y actualizar OT:", error);
+  await Swal.fire({
+    title: "Error",
+    text: "No se pudo crear el ensayo o actualizar la OT",
+    icon: "error",
+    confirmButtonColor: "#f09898",
+  });
+}
+
+} else {
+  console.log("Ya existe un ensayo asociado a la OT. ID:", otActual?.enspeccionPcpVh60?.id);
+}
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
           if (modeloEquipoActual && tipoEquipoActual) {
             navigate(
-              `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}C`
+              `/dashboard/etapa/ensayo${tipoEquipoActual}`
             );
           } else {
             console.error("❌ Error: Modelo de equipo no definido.");
