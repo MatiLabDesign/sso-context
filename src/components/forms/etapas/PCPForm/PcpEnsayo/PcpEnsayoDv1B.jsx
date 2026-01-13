@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import ensayoPCPMiniG from "../../../../../data/ensayoPCPMiniG";
 import EnsayoService from "../../../../../services/EnsayoService";
 
-const PcpEnsayoDv1A = () => {
+const PcpEnsayoDv1B  = () => {
   const { register, handleSubmit } = useForm({defaultValues:ensayoPCPMiniG});
 
   const tipoEquipo = window.localStorage.getItem("tipoEquipo");
@@ -60,7 +60,7 @@ const PcpEnsayoDv1A = () => {
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
       <h3 className="form-title">
         {/* Recepción | {tipoEquipo} - OT N°{numeroOT} */}
-        Ensayo PCP Dv 1
+        Ensayo PCP MiniG A
       </h3>
 
       {/* Campo para comentario */}
@@ -136,4 +136,4 @@ const PcpEnsayoDv1A = () => {
   );
 };
 
-export default PcpEnsayoDv1A;
+export default PcpEnsayoDv1B;

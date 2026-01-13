@@ -2,138 +2,141 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "../PcpEnsayo.css";
 import { Link, useNavigate } from "react-router-dom";
-import ensayoPCPVH60 from "../../../../../data/ensayoPCPVH60";
-import useEnsayoCalc from "../../../../../hooks/useEnsayoCalc";
 import useOrdenData from "../../../../../hooks/useOrdenData";
 import useEnsayoData from "../../../../../hooks/useEnsayoData";
-import { FaArrowRight } from "react-icons/fa";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { ENSAYO_B_ITEMS } from "../../../../../constants/ENSAYO_ITEMS";
+import ensayoVH60 from "../../../../../data/ensayoPCPVH60";
 
 const PcpEnsayoVH60B = () => {
-  const { register, handleSubmit, watch, reset } = useForm({
-    defaultValues: ensayoPCPVH60,
-  });
-
-  const formValues = watch();
   const ordenId = localStorage.getItem("ordenId");
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
+  const ensayoVh60Id = localStorage.getItem("ensayoVh60Id");
+
   const navigate = useNavigate();
 
-  const { fuerzas } = useEnsayoCalc(formValues);
-  const { otActual, updateOt } = useOrdenData(ordenId);
-  const [ensayoId, setEnsayoId] = useState(null);
-  const { ensayoActual, updateEnsayoVh60 } = useEnsayoData(
-    ensayoId,
-    reset
-  );
+  // Formulario
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+  } = useForm({
+    defaultValues: ensayoVH60,
+  });
 
-  const etapaSiguiente = 8;
-  // Carga inicial de datos
+  // Hooks de datos
+  const { otActual } = useOrdenData(ordenId);
+  const { ensayoActual, updateEnsayoVh60 } = useEnsayoData(ensayoVh60Id);
+
+  // ⬇️ Cargar datos reales desde backend cuando llegan
   useEffect(() => {
-    if (otActual?.ensayo?.id) {
-      setEnsayoId(otActual.ensayo.id);
+    if (ensayoActual) {
+      reset(ensayoActual);
     }
-  }, [otActual]);
+  }, [ensayoActual, reset]);
 
-  // Submit handler
+  // ⬇️ Guardar ensayo
   const onSubmit = async (data) => {
     try {
-      const modeloEquipo = otActual?.equipo?.tipoEquipo?.modelo;
-      const tipoEquipo = otActual?.equipo?.tipoEquipo?.tipo;
+      if (ensayoVh60Id) {
+        // EDITAR ENSAYO EXISTENTE
+        await updateEnsayoVh60({
+          id: ensayoVh60Id,   // <- 🔥 ESTE ID ES LA CLAVE
+          ...data,
+        });
 
-      if (ensayoId) {
-        await updateEnsayoVh60(ensayoId, { ...data, fuerzasCalculadas: fuerzas });
-        console.log("ensayo datatatatatta" + data);
       } else {
-        // const newEnsayo = await createEnsayo({
-        //   ...data,
-        //   fuerzasCalculadas: fuerzas,
-        // });
-
-        const updatedOt = {
-          ...otActual,
-          ensayoVh60: { id: newEnsayo.id },
-          etapaActual: etapaSiguiente,
-        };
-        if (newEnsayo?.id) {
-          await updateOt(ordenId, updatedOt);
-        }
+        // CREACIÓN (si alguna vez lo necesitás)
+        console.warn("No existe ensayoVh60Id — no se creó un nuevo ensayo.");
       }
 
-      if (modeloEquipo && tipoEquipo) {
-        navigate(`/dashboard/etapa/salida${tipoEquipo}`);
-      }
+      navigate(`/dashboard/etapa/salidaPCP`);
+
     } catch (error) {
-      console.error("Error al procesar el ensayo:", error);
+      console.error("Error al guardar ensayo:", error);
     }
   };
 
-  const handleClick = (e) => {
+  // Navegación manual
+  const handleClickNext = (e) => {
     e.preventDefault();
     navigate(`/dashboard/etapa/salidaPCP`);
   };
-  const handleClickA = (e) => {
+
+  const handleClickPrev = (e) => {
     e.preventDefault();
     navigate(`/dashboard/etapa/ensayoPCP`);
   };
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">
-        {/* Recepción | {tipoEquipo} - OT N°{numeroOT} */}
-        Ensayo PCP VH60 B
-      </h3>
+      
+      <h3 className="form-title">Ensayo PCP VH60 B</h3>
 
-      {/* Campo para comentario */}
+      {/* Comentario */}
       <div className="form-group">
         <div className="label-input">
           <label className="form-label">Comentario</label>
           <input {...register("comentario")} placeholder="Comentario" />
         </div>
+
         <button className="form-button-2">
-          <Link onClick={handleClickA}>
+          <Link onClick={handleClickPrev}>
             <FaArrowLeft />
           </Link>
         </button>
+
         <button className="form-button-2">
-          <Link onClick={handleClick}>
+          <Link onClick={handleClickNext}>
             <FaArrowRight />
           </Link>
         </button>
+
         <button type="submit" className="form-button">
           Guardar
         </button>
       </div>
 
+      {/* Lista de ítems */}
       <div className="lista-container2">
-        {ENSAYO_B_ITEMS.map((itemKey) => (
-          <div className="item-section" key={itemKey}>
+        {ENSAYO_B_ITEMS.map((item) => (
+          <div className="item-section" key={item.estado}>
+
             <div className="item-field">
-              <div className="item-tittle">
-                <h4 className="item-title">{itemKey}</h4>
+
+              <div className="item-title">
+                <h4>{item.label}</h4>
               </div>
+
               <div className="item-tittle">
                 <label className="form-label-1">Ok</label>
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`${itemKey}.estado`)}
-                  checked={watch(`${itemKey}.estado`)}
+                  {...register(item.estado)}
                 />
               </div>
+
               <div className="item-tittle">
                 <input
                   className="form-input"
-                  {...register(`.${itemKey}.observacion`)}
+                  {...register(item.observacion)}
                   placeholder="Observación"
                 />
               </div>
+
             </div>
+
           </div>
         ))}
       </div>
+
     </form>
   );
 };
 
 export default PcpEnsayoVH60B;
+
+

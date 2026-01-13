@@ -1,6 +1,7 @@
-// INSPECCIÓN GENERICA VH60 A
-export const INSPECCION_A_ITEMS = {
-  lubricantes: [
+
+// INSPECCIÓN COUGAR A
+export const INSPECCION_PCPCOUGARA_ITEMS = {
+  lubricantePcpCoguar: [
     {
       ok: "lbprOk",
       pm: "lbprPM",
@@ -18,7 +19,7 @@ export const INSPECCION_A_ITEMS = {
       label: "Lubricante Sello Frontal",
     },
   ],
-  items: [
+  itemPcpCoguar: [
     {
       ok: "emOk",
       reten: "emAlRet",
@@ -58,129 +59,10 @@ export const INSPECCION_A_ITEMS = {
   ],
 };
 
-// INSPECCIÓN VH60 A
-export const INSPECCION_VH60A_ITEMS = {
-  lubricantes: [
-    {
-      ok: "lbprOk",
-      pm: "lbprPM",
-      agua: "lbprAgua",
-      sucio: "lbprSucio",
-      esp: "lbprEsp",
-      label: "Lubricante Block Porta Rodamientos",
-    },
-    {
-      ok: "lsfOk",
-      pm: "lsfPM",
-      agua: "lsfAgua",
-      sucio: "lsfSucio",
-      esp: "lsfEsp",
-      label: "Lubricante Sello Frontal",
-    },
-  ],
-  items: [
-    {
-      ok: "emOk",
-      reten: "emAlRet",
-      rodamiento: "emAlRod",
-      diametro: "emDiam",
-      deformado: "emDef",
-      esp: "emEsp",
-      label: "Eje Motriz",
-    },
-    {
-      ok: "bcOk",
-      reten: "bcAlRet",
-      rodamiento: "bcAlRod",
-      diametro: "bcDiam",
-      deformado: "bcDef",
-      esp: "bcEsp",
-      label: "Block Cabezal",
-    },
-    {
-      ok: "piOk",
-      reten: "piAlRet",
-      rodamiento: "piAlRod",
-      diametro: "piDiam",
-      deformado: "piDef",
-      esp: "piEsp",
-      label: "Placa Inferior",
-    },
-    {
-      ok: "psOk",
-      reten: "psAlRet",
-      rodamiento: "psAlRod",
-      diametro: "psDiam",
-      deformado: "psDef",
-      esp: "psEsp",
-      label: "Placa Superior",
-    },
-  ],
-};
+// INSPECCIÓN COUGAR B
 
-// INSPECCIÓN DV 1 A
-export const INSPECCION_DV1A_ITEMS = {
-  lubricantePcpDV1: [
-    {
-      ok: "lbprOk",
-      pm: "lbprPM",
-      agua: "lbprAgua",
-      sucio: "lbprSucio",
-      esp: "lbprEsp",
-      label: "Lubricante Block Porta Rodamientos",
-    },
-    {
-      ok: "lsfOk",
-      pm: "lsfPM",
-      agua: "lsfAgua",
-      sucio: "lsfSucio",
-      esp: "lsfEsp",
-      label: "Lubricante Sello Frontal",
-    },
-  ],
-  itemPcpDV1: [
-    {
-      ok: "emOk",
-      reten: "emAlRet",
-      rodamiento: "emAlRod",
-      diametro: "emDiam",
-      deformado: "emDef",
-      esp: "emEsp",
-      label: "Eje Motriz",
-    },
-    {
-      ok: "bcOk",
-      reten: "bcAlRet",
-      rodamiento: "bcAlRod",
-      diametro: "bcDiam",
-      deformado: "bcDef",
-      esp: "bcEsp",
-      label: "Block Cabezal",
-    },
-    {
-      ok: "piOk",
-      reten: "piAlRet",
-      rodamiento: "piAlRod",
-      diametro: "piDiam",
-      deformado: "piDef",
-      esp: "piEsp",
-      label: "Placa Inferior",
-    },
-    {
-      ok: "psOk",
-      reten: "psAlRet",
-      rodamiento: "psAlRod",
-      diametro: "psDiam",
-      deformado: "psDef",
-      esp: "psEsp",
-      label: "Placa Superior",
-    },
-  ],
-};
-
-
-export const INSPECCION_B_ITEMS = {
-  rodamientos: [
+export const INSPECCION_PCPCOUGARB_ITEMS = {
+  rodamientoPcpCoguar: [
     {
       ok: "axOk",
       picado: "axPic",
@@ -228,7 +110,7 @@ export const INSPECCION_B_ITEMS = {
     },
   ],
 
-  transmision: [
+  transmisionFrenoPcpCoguar: [
     {
       ok: "corOk",
       picado: "corPic",
@@ -256,8 +138,10 @@ export const INSPECCION_B_ITEMS = {
   ],
 };
 
-export const INSPECCION_C_ITEMS = {
-  sistemaHidraulicoPcpVh60: [
+// INSPECCIÓN COUGAR C
+
+export const INSPECCION_PCPCOUGARC_ITEMS = {
+  sistemaHidraulicoPcpCoguar: [
     {
       ok: "bomOk",
       fuga: "bomFug",
@@ -291,7 +175,7 @@ export const INSPECCION_C_ITEMS = {
       label: "Conjunto Mangueras",
     },
   ],
-  poleaPcpVh60: [
+  poleaPcpCoguar: [
     {
       ok: "bomOk",
       fisura: "alojRod",

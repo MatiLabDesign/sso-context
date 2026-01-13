@@ -102,6 +102,7 @@ const PcpRecepcion = () => {
           otActual?.inspeccionPcpCoguar?.id
       );
     }
+    console.log("este es el numeroooooo de iinssspeccion"+ {inspeccionId});
   }, [otActual]);
 
   useEffect(() => {
@@ -287,7 +288,7 @@ const PcpRecepcion = () => {
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">Recepción PCP</h3>
+      <h3 className="form-title">Recepción PCP Esta es la funcional</h3>
 
       <div className="form-group">
         <div className="label-container">

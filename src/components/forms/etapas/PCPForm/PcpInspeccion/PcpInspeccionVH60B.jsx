@@ -10,7 +10,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import Swal from "sweetalert2";
 import ImagenService from "../../../../../services/ImagenService";
 import { IMAGEN_INSPECCION } from "../../../../../config/routes/paths";
-import { INSPECCION_B_ITEMS } from "../../../../../constants/INSPECCION_ITEMS";
+import { INSPECCION_VH60B_ITEMS } from "../../../../../constants/INSPECCION_PCPVH60_ITEMS";
 
 const PcpInspeccionVH60B = () => {
   const {
@@ -263,7 +263,7 @@ const PcpInspeccionVH60B = () => {
       </div>
       <div className="lista-container">
         <h3>Rodamientos</h3>
-        {INSPECCION_B_ITEMS.rodamientos.map((item, index) => (
+        {INSPECCION_VH60B_ITEMS.rodamientoPcpVh60.map((item, index) => (
           <div className="item-section" key={index}>
             <div className="item-field">
               <div className="item-tittle">
@@ -326,7 +326,7 @@ const PcpInspeccionVH60B = () => {
         ))}
 
         <h3>Transmisión freno</h3>
-        {INSPECCION_B_ITEMS.transmision.map((item, index) => (
+        {INSPECCION_VH60B_ITEMS.transmisionFrenoPcpVh60.map((item, index) => (
           <div className="item-section" key={index}>
             <div className="item-field">
               <div className="item-tittle">

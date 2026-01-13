@@ -57,27 +57,27 @@ const OtList = () => {
     window.localStorage.setItem("modeloEquipo", modeloEquipo);
 
     if (inspeccionVh60Id != null) {
-      window.localStorage.setItem("inspeccionVh60Id", inspeccionVh60Id);
+      window.localStorage.setItem("inspeccionId", inspeccionVh60Id);
     } else if (inspeccionMiniGId != null) {
-      window.localStorage.setItem("inspeccionMinigId", inspeccionMiniGId);
+      window.localStorage.setItem("inspeccionId", inspeccionMiniGId);
     } else if (inspeccionDv1Id != null) {
-      window.localStorage.setItem("inspeccionDv1Id", inspeccionDv1Id);
+      window.localStorage.setItem("inspeccionId", inspeccionDv1Id);
     } else if (inspeccionCougarId != null) {
-      window.localStorage.setItem("inspeccionCougarId", inspeccionCougarId);
+      window.localStorage.setItem("inspeccionId", inspeccionCougarId);
     } else {
-      window.localStorage.setItem("NOinspeccionId", null);
+      window.localStorage.setItem("inspeccionId", "El id inspeccion esta vacio");
     }
 
     if (ensayoVh60Id != null) {
-      window.localStorage.setItem("ensayoVh60Id", ensayoVh60Id);
+      window.localStorage.setItem("ensayoId", ensayoVh60Id);
     } else if (ensayoMiniGId != null) {
-      window.localStorage.setItem("ensayoMinigId", ensayoMiniGId);
+      window.localStorage.setItem("ensayoId", ensayoMiniGId);
     } else if (ensayoDv1Id != null) {
-      window.localStorage.setItem("ensayoDv1Id", ensayoDv1Id);
+      window.localStorage.setItem("ensayoId", ensayoDv1Id);
     } else if (ensayoCougarId != null) {
-      window.localStorage.setItem("ensayoCougarId", ensayoCougarId);
+      window.localStorage.setItem("ensayoId", ensayoCougarId);
     } else {
-      window.localStorage.setItem("NOensayoId", null);
+      window.localStorage.setItem("ensayoId", "El id ensayo esta vacio");
     }
 
     navigate(`/dashboard/etapa/consultarOt`);

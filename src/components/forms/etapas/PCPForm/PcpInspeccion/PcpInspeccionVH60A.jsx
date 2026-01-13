@@ -10,7 +10,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import Swal from "sweetalert2";
 import ImagenService from "../../../../../services/ImagenService";
 import { IMAGEN_INSPECCION } from "../../../../../config/routes/paths";
-import { INSPECCION_A_ITEMS } from "../../../../../constants/INSPECCION_ITEMS";
+import { INSPECCION_VH60A_ITEMS } from "../../../../../constants/INSPECCION_PCPVH60_ITEMS";
 
 const PcpInspeccionVH60A = () => {
   
@@ -43,7 +43,6 @@ const PcpInspeccionVH60A = () => {
   useEffect(() => {
   const fetchImagenes = async () => {
     if (!inspeccionIdGuardada) return; // usar el ID real
-
     try {
       const response = await ImagenService.getImagenByInspeccionVh60Id(inspeccionIdGuardada);
       setImagenesGuardadas(response.data || []); // si no hay datos, usar array vacío
@@ -263,7 +262,7 @@ const PcpInspeccionVH60A = () => {
       </div>
       <div className="lista-container">
         <h3>Lubricantes</h3>
-        {INSPECCION_A_ITEMS.lubricantes.map(({ ok, pm, agua, sucio, esp, label }) => (
+        {INSPECCION_VH60A_ITEMS.lubricantePcpVh60.map(({ ok, pm, agua, sucio, esp, label }) => (
           <div className="item-section" key={ok}>
             <div className="item-field">
               <div className="item-tittle">
@@ -317,7 +316,7 @@ const PcpInspeccionVH60A = () => {
         ))}
 
         <h3>Item</h3>
-        {INSPECCION_A_ITEMS.items.map((item) => (
+        {INSPECCION_VH60A_ITEMS.itemPcpVh60.map((item) => (
           <div className="item-section" key={item.label}>
             <div className="item-tittle">
               <h4 className="item-title">{item.label}</h4>

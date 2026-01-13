@@ -1,66 +1,8 @@
-// INSPECCIÓN GENERICA VH60 A
-export const INSPECCION_A_ITEMS = {
-  lubricantes: [
-    {
-      ok: "lbprOk",
-      pm: "lbprPM",
-      agua: "lbprAgua",
-      sucio: "lbprSucio",
-      esp: "lbprEsp",
-      label: "Lubricante Block Porta Rodamientos",
-    },
-    {
-      ok: "lsfOk",
-      pm: "lsfPM",
-      agua: "lsfAgua",
-      sucio: "lsfSucio",
-      esp: "lsfEsp",
-      label: "Lubricante Sello Frontal",
-    },
-  ],
-  items: [
-    {
-      ok: "emOk",
-      reten: "emAlRet",
-      rodamiento: "emAlRod",
-      diametro: "emDiam",
-      deformado: "emDef",
-      esp: "emEsp",
-      label: "Eje Motriz",
-    },
-    {
-      ok: "bcOk",
-      reten: "bcAlRet",
-      rodamiento: "bcAlRod",
-      diametro: "bcDiam",
-      deformado: "bcDef",
-      esp: "bcEsp",
-      label: "Block Cabezal",
-    },
-    {
-      ok: "piOk",
-      reten: "piAlRet",
-      rodamiento: "piAlRod",
-      diametro: "piDiam",
-      deformado: "piDef",
-      esp: "piEsp",
-      label: "Placa Inferior",
-    },
-    {
-      ok: "psOk",
-      reten: "psAlRet",
-      rodamiento: "psAlRod",
-      diametro: "psDiam",
-      deformado: "psDef",
-      esp: "psEsp",
-      label: "Placa Superior",
-    },
-  ],
-};
 
 // INSPECCIÓN VH60 A
+//revisado el 28/12 modificado ok
 export const INSPECCION_VH60A_ITEMS = {
-  lubricantes: [
+  lubricantePcpVh60: [
     {
       ok: "lbprOk",
       pm: "lbprPM",
@@ -78,7 +20,7 @@ export const INSPECCION_VH60A_ITEMS = {
       label: "Lubricante Sello Frontal",
     },
   ],
-  items: [
+  itemPcpVh60: [
     {
       ok: "emOk",
       reten: "emAlRet",
@@ -118,69 +60,10 @@ export const INSPECCION_VH60A_ITEMS = {
   ],
 };
 
-// INSPECCIÓN DV 1 A
-export const INSPECCION_DV1A_ITEMS = {
-  lubricantePcpDV1: [
-    {
-      ok: "lbprOk",
-      pm: "lbprPM",
-      agua: "lbprAgua",
-      sucio: "lbprSucio",
-      esp: "lbprEsp",
-      label: "Lubricante Block Porta Rodamientos",
-    },
-    {
-      ok: "lsfOk",
-      pm: "lsfPM",
-      agua: "lsfAgua",
-      sucio: "lsfSucio",
-      esp: "lsfEsp",
-      label: "Lubricante Sello Frontal",
-    },
-  ],
-  itemPcpDV1: [
-    {
-      ok: "emOk",
-      reten: "emAlRet",
-      rodamiento: "emAlRod",
-      diametro: "emDiam",
-      deformado: "emDef",
-      esp: "emEsp",
-      label: "Eje Motriz",
-    },
-    {
-      ok: "bcOk",
-      reten: "bcAlRet",
-      rodamiento: "bcAlRod",
-      diametro: "bcDiam",
-      deformado: "bcDef",
-      esp: "bcEsp",
-      label: "Block Cabezal",
-    },
-    {
-      ok: "piOk",
-      reten: "piAlRet",
-      rodamiento: "piAlRod",
-      diametro: "piDiam",
-      deformado: "piDef",
-      esp: "piEsp",
-      label: "Placa Inferior",
-    },
-    {
-      ok: "psOk",
-      reten: "psAlRet",
-      rodamiento: "psAlRod",
-      diametro: "psDiam",
-      deformado: "psDef",
-      esp: "psEsp",
-      label: "Placa Superior",
-    },
-  ],
-};
+// INSPECCIÓN VH60 B
 
-
-export const INSPECCION_B_ITEMS = {
-  rodamientos: [
+export const INSPECCION_VH60B_ITEMS = {
+  rodamientoPcpVh60: [
     {
       ok: "axOk",
       picado: "axPic",
@@ -193,7 +76,7 @@ export const INSPECCION_B_ITEMS = {
     {
       ok: "gsOk",
       picado: "gsPic",
-      laminado: "guiaSup6022.laminado",
+      laminado: "gsLam",
       fallaEnJaula: "gsFj",
       desgaste: "gsDesg",
       esp: "gsEsp",
@@ -220,7 +103,7 @@ export const INSPECCION_B_ITEMS = {
     {
       ok: "arOk",
       picado: "arPic",
-      laminado: "arLamo",
+      laminado: "arLam",
       fallaEnJaula: "arFj",
       desgaste: "arDesg",
       esp: "arEsp",
@@ -228,7 +111,7 @@ export const INSPECCION_B_ITEMS = {
     },
   ],
 
-  transmision: [
+  transmisionFrenoPcpVh60: [
     {
       ok: "corOk",
       picado: "corPic",
@@ -240,7 +123,7 @@ export const INSPECCION_B_ITEMS = {
     {
       ok: "pinOk",
       picado: "pinPic",
-      desgastado: "piDesg",
+      desgastado: "pinDesg",
       roto: "pinRot",
       esp: "pinEsp",
       label: "Piñón",
@@ -256,7 +139,9 @@ export const INSPECCION_B_ITEMS = {
   ],
 };
 
-export const INSPECCION_C_ITEMS = {
+// INSPECCIÓN VH60 C
+
+export const INSPECCION_VH60C_ITEMS = {
   sistemaHidraulicoPcpVh60: [
     {
       ok: "bomOk",
@@ -293,13 +178,13 @@ export const INSPECCION_C_ITEMS = {
   ],
   poleaPcpVh60: [
     {
-      ok: "bomOk",
-      fisura: "alojRod",
-      poros: "alojRet",
-      diametroInad: "diam",
-      numTraz: "def",
+      ok: "ok",
+      fisura: "fisura",
+      poros: "poros",
+      diametroInad: "diametroInad",
+      numTraz: "numTraz",
       esp: "esp",
-      label: "Bomba",
+      label: "Polea",
     },
   ],
 }

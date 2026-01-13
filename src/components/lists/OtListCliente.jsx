@@ -15,7 +15,8 @@ const OtListCliente = () => {
   const cliente = "Matias"
 
   const searcher = (e) => {
-    setSearch(e.target.value);
+    setSearch(cliente);
+    // setSearch(e.target.value);
   };
 
   // Filtrado por búsqueda y por estado (activa o no)
@@ -72,15 +73,15 @@ const OtListCliente = () => {
     }
 
     if (ensayoVh60Id != null) {
-      window.localStorage.setItem("ensayoVh60Id", ensayoVh60Id);
+      window.localStorage.setItem("ensayoId", ensayoVh60Id);
     } else if (ensayoMiniGId != null) {
-      window.localStorage.setItem("ensayoMinigId", ensayoMiniGId);
+      window.localStorage.setItem("ensayoId", ensayoMiniGId);
     } else if (ensayoDv1Id != null) {
-      window.localStorage.setItem("ensayoDv1Id", ensayoDv1Id);
+      window.localStorage.setItem("ensayoId", ensayoDv1Id);
     } else if (ensayoCougarId != null) {
-      window.localStorage.setItem("ensayoCougarId", ensayoCougarId);
+      window.localStorage.setItem("ensayoId", ensayoCougarId);
     } else {
-      window.localStorage.setItem("NOensayoId", null);
+      window.localStorage.setItem("ensayoId", "No hay ensayo");
     }
 
     navigate(`/dashboard/etapa/consultarOt`);
@@ -91,7 +92,7 @@ const OtListCliente = () => {
       <h2>Este es Ot List del CLIENTE</h2>
       <div className={style.search_container}>
         <input
-          value={search}
+          value={cliente}
           onChange={searcher}
           type="text"
           placeholder="Filtrar por Razón Social Cliente"

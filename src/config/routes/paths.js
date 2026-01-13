@@ -57,16 +57,16 @@ export const PCP_INSPECCION_COUGAR_C = '/dashboard/etapa/inspeccionPCPCougarC';
 export const PCP_ENSAYO = '/dashboard/etapa/ensayoPCP';
 export const PCP_ENSAYO_VH60_A = '/dashboard/etapa/ensayoPCPVh60A';
 export const PCP_ENSAYO_VH60_B = '/dashboard/etapa/ensayoPCPVh60B';
-export const PCP_ENSAYO_VH60_C = '/dashboard/etapa/ensayoPCPVh60C';
+
 export const PCP_ENSAYO_DV1_A = '/dashboard/etapa/ensayoPCPDv1A';
 export const PCP_ENSAYO_DV1_B = '/dashboard/etapa/ensayoPCPDv1B';
-export const PCP_ENSAYO_DV1_C = '/dashboard/etapa/ensayoPCPDv1C';
+
 export const PCP_ENSAYO_MINIG_A = '/dashboard/etapa/ensayoPCPMiniGA';
 export const PCP_ENSAYO_MINIG_B = '/dashboard/etapa/ensayoPCPMiniGB';
-export const PCP_ENSAYO_MINIG_C = '/dashboard/etapa/ensayoPCPMiniGC';
+
 export const PCP_ENSAYO_COUGAR_A = '/dashboard/etapa/ensayoPCPCougarA';
 export const PCP_ENSAYO_COUGAR_B = '/dashboard/etapa/ensayoPCPCougarB';
-export const PCP_ENSAYO_COUGAR_C = '/dashboard/etapa/ensayoPCPCougarC';
+
 
 export const PCP_SALIDA = '/dashboard/etapa/salidaPCP';
 

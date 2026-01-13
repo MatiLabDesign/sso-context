@@ -1,13 +1,12 @@
 import { useForm } from "react-hook-form";
 import "../PcpEnsayo.css"; // Asegúrate de tener el archivo CSS
-// import RecepcionService from "../../../../services/RecepcionService";
+import RecepcionService from "../../../../../services/RecepcionService";
 import { useNavigate } from "react-router-dom";
-// import ensayoPCPMiniG from "../../../../data/ensayoPCPMiniG";
+import ensayoPCPMiniG from "../../../../../data/ensayoPCPMiniG";
 import EnsayoService from "../../../../../services/EnsayoService";
-import ensayoPCPVH60 from "../../../../../data/ensayoPCPVH60";
 
-const PcpEnsayoVH60A = () => {
-  const { register, handleSubmit } = useForm(ensayoPCPVH60);
+const PcpEnsayoCougarB = () => {
+  const { register, handleSubmit } = useForm({defaultValues:ensayoPCPMiniG});
 
   const tipoEquipo = window.localStorage.getItem("tipoEquipo");
   const etapaActual = window.localStorage.getItem("etapaActual");
@@ -40,7 +39,6 @@ const PcpEnsayoVH60A = () => {
   const onSubmit = async (data) => {
     try {
       const ensayo = data;
-      
       await EnsayoService.createEnsayo(ensayo);
 
       console.log("Datos enviados exitosamente:", ensayo);
@@ -50,11 +48,19 @@ const PcpEnsayoVH60A = () => {
     }
   };
 
+  const itemEnsayoCougar = [
+    ["100", "17.9", "137", "80", "200"],
+    ["200", "35.7", "258", "95", "250"],
+    ["230", "41.1", "289", "150", "300"],
+    ["300", "53.6", "0", "0", "0"],
+  ];
+  // [rpm, currentF, uOut, torqueRefP1, torqueRefP2]
+
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
       <h3 className="form-title">
         {/* Recepción | {tipoEquipo} - OT N°{numeroOT} */}
-        Ensayo PCP VH60 A
+        Ensayo PCP MiniG A
       </h3>
 
       {/* Campo para comentario */}
@@ -64,6 +70,7 @@ const PcpEnsayoVH60A = () => {
       </div>
 
       {/* Iterar sobre cada propiedad en itemRecepcion */}
+      
       {[
         "rpm200",
         "rpm300",
@@ -129,4 +136,4 @@ const PcpEnsayoVH60A = () => {
   );
 };
 
-export default PcpEnsayoVH60A;
+export default PcpEnsayoCougarB;

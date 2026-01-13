@@ -8,6 +8,13 @@ import {
   INSPECCIONBM,
   INSPECCIONUCL,
   PCP_ENSAYO,
+  PCP_ENSAYO_COUGAR_A,
+  PCP_ENSAYO_COUGAR_B,
+  PCP_ENSAYO_DV1_A,
+  PCP_ENSAYO_DV1_B,
+  PCP_ENSAYO_MINIG_A,
+  PCP_ENSAYO_MINIG_B,
+  PCP_ENSAYO_VH60_A,
   PCP_ENSAYO_VH60_B,
   PCP_INGRESO,
   PCP_INSPECCION_COUGAR_A,
@@ -28,6 +35,7 @@ import {
   RECEPCIONUCL,
   SALIDABM,
   SALIDAUCL,
+  UCL_INSPECCION_A,
 } from "../config/routes/paths";
 
 import Etapas from "../components/forms/etapas/Etapas";
@@ -58,8 +66,15 @@ import PcpInspeccionCougarA from "./../components/forms/etapas/PCPForm/PcpInspec
 import PcpInspeccionCougarB from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarB";
 import PcpInspeccionCougarC from "./../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionCougarC";
 import PcpInspeccionVH60A from "../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionVH60A";
-import PcpEnsayoVH60A from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVh60A";
 import PcpEnsayoVH60B from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVH60B";
+import PcpEnsayoVH60A from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVH60A";
+import UclInspeccionA from "../components/forms/etapas/UCLForm/UclInspeccionA";
+import PcpEnsayoDv1A from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoDv1B";
+import PcpEnsayoMiniGA from './../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoMiniGA';
+import PcpEnsayoMiniGB from './../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoMiniGB';
+import PcpEnsayoCougarA from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoCougarB";
+import PcpEnsayoDv1B from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoDv1B";
+import PcpEnsayoCougarB from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoCougarB";
 
 export const EtapasRoutes = () => {
   return (
@@ -83,13 +98,22 @@ export const EtapasRoutes = () => {
       <Route path={PCP_RECEPCION} element={<PcpRecepcion />} />
 
       <Route path={PCP_ENSAYO} element={<PcpEnsayoVH60A />} />
+      <Route path={PCP_ENSAYO_VH60_A} element={<PcpEnsayoVH60A />} />
       <Route path={PCP_ENSAYO_VH60_B} element={<PcpEnsayoVH60B/>}/>
+      <Route path={PCP_ENSAYO_DV1_A} element={<PcpEnsayoDv1A />} />
+      <Route path={PCP_ENSAYO_DV1_B} element={<PcpEnsayoDv1B/>}/>
+      <Route path={PCP_ENSAYO_MINIG_A} element={<PcpEnsayoMiniGA />} />
+      <Route path={PCP_ENSAYO_MINIG_B} element={<PcpEnsayoMiniGB/>}/>
+      <Route path={PCP_ENSAYO_COUGAR_A} element={<PcpEnsayoCougarA />} />
+      <Route path={PCP_ENSAYO_COUGAR_B} element={<PcpEnsayoCougarB/>}/>
+
 
       <Route path={PCP_SALIDA} element={<PcpSalida />} />
 
       <Route path={INGRESOUCL} element={<UclIngreso />} />
       <Route path={RECEPCIONUCL} element={<UclRecepcion />} />
       <Route path={INSPECCIONUCL} element={<UclInspeccion />} />
+      <Route path={UCL_INSPECCION_A} element={<UclInspeccionA/>}/>
       <Route path={ENSAYOUCL} element={<UclEnsayo />} />
       <Route path={SALIDAUCL} element={<UclSalida />} />
       <Route path={INGRESOBM} element={<BombaIngreso />} />
