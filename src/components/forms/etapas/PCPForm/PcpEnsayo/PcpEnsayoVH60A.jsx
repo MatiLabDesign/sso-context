@@ -95,7 +95,7 @@ useEffect(() => {
       if (ensayoId) {
         await updateEnsayoVh60(ensayoId, {
           ...data,
-          id: (ensayoId),
+          id: Number(ensayoId),
         });
       }
 

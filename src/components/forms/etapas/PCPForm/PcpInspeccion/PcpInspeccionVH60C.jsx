@@ -193,57 +193,62 @@ const PcpInspeccionVH60C = () => {
 
           // Reemplazar el bloque por este:
 const ensayoExisteEnOt = otActual?.ensayoVh60?.id;
-console.log("Verificando existencia de ensayo en OT>>>>>>>>>>>>>>>>>>>>>>:", ensayoExisteEnOt);
+console.log(
+  "Verificando existencia de ensayo en OT:",
+  ensayoExisteEnOt
+);
 
 if (!ensayoExisteEnOt) {
-  // Crear ensayo y actualizar OT con el nuevo ensayoId
-try {
-  const resp = await newEnsayoVh60(data);
-  console.log("Respuesta de creación de ensayo:", resp);
+  try {
+    // 🔹 Crear ensayo en backend
+    const resp = await newEnsayoVh60(data);
+    console.log("Respuesta de creación de ensayo:", resp);
 
-  // Manejar diferentes formatos de respuesta
-  // const nuevoEnsayoId = resp?.data?.id ?? resp?.id;
-  const nuevoEnsayoId = otActual?.ensayoVh60.id;
-  //>>>>Revisar<<<<<<<<<<
+    // 🔹 Obtener ID del ensayo recién creado
+    const nuevoEnsayoId = resp?.id ?? resp?.data?.id;
 
-  
-  if (!nuevoEnsayoId) {
-    throw new Error("No se obtuvo un ID válido del nuevo ensayo.");
+    if (!nuevoEnsayoId) {
+      throw new Error("No se obtuvo un ID válido del nuevo ensayo.");
+    }
+
+    // 🔹 Actualizar OT vinculando el nuevo ensayo
+    const updatedOt = {
+      ...otActual,
+      ensayoVh60: { id: nuevoEnsayoId },
+      etapaActual: etapaSiguiente,
+    };
+
+    await updateOt(ordenId, updatedOt);
+
+    // 🔹 Persistir ID para los siguientes pasos
+    localStorage.setItem("ensayoId", nuevoEnsayoId);
+
+    console.log("✅ OT actualizada con nuevo ensayo:", nuevoEnsayoId);
+
+    await Swal.fire({
+      title: "Perfecto!",
+      text: "Ensayo creado y vinculado a la OT con éxito",
+      icon: "success",
+      confirmButtonColor: "#059080",
+    });
+
+  } catch (error) {
+    console.error("❌ Error al crear ensayo y actualizar OT:", error);
+
+    await Swal.fire({
+      title: "Error",
+      text: "No se pudo crear el ensayo o actualizar la OT",
+      icon: "error",
+      confirmButtonColor: "#f09898",
+    });
   }
-
-  // Actualizar OT con el ensayo creado
-  const updatedOt = {
-    ...otActual,
-    ensayoVh60: { id: nuevoEnsayoId },
-    etapaActual: etapaSiguiente, // mantener coherencia en la etapa
-  };
-
-  await updateOt(ordenId, updatedOt);
-
-  // Guardar en localStorage
-  localStorage.setItem("ensayoId", nuevoEnsayoId);
-  console.log("✅ OT actualizada con nuevo ensayo:", nuevoEnsayoId);
-
-  await Swal.fire({
-    title: "Perfecto!",
-    text: "Ensayo creado y vinculado a la OT con éxito",
-    icon: "success",
-    confirmButtonColor: "#059080",
-  });
-
-} catch (error) {
-  console.error("❌ Error al crear ensayo y actualizar OT:", error);
-  await Swal.fire({
-    title: "Error",
-    text: "No se pudo crear el ensayo o actualizar la OT",
-    icon: "error",
-    confirmButtonColor: "#f09898",
-  });
-}
-
 } else {
-  console.log("Ya existe un ensayo asociado a la OT. ID:", otActual?.ensayoVh60?.id);
+  console.log(
+    "ℹ️ Ya existe un ensayo asociado a la OT. ID:",
+    ensayoExisteEnOt
+  );
 }
+
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
