@@ -33,7 +33,7 @@ const PcpInspeccionVH60C = () => {
   const recepcionIdGuardada = localStorage.getItem("recepcionId");
   const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
   const modeloGuardada = localStorage.getItem("modelo");
-   const inspeccionId = localStorage.getItem("inspeccionVh60Id");
+   const inspeccionId = localStorage.getItem("inspeccionId");
    const ensayoId = localStorage.getItem("ensayoVh60Id");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -192,7 +192,8 @@ const PcpInspeccionVH60C = () => {
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>          
 
           // Reemplazar el bloque por este:
-const ensayoExisteEnOt = !!otActual?.ensayoPcpVh60?.id;
+const ensayoExisteEnOt = otActual?.ensayoVh60?.id;
+console.log("Verificando existencia de ensayo en OT>>>>>>>>>>>>>>>>>>>>>>:", ensayoExisteEnOt);
 
 if (!ensayoExisteEnOt) {
   // Crear ensayo y actualizar OT con el nuevo ensayoId
@@ -201,7 +202,11 @@ try {
   console.log("Respuesta de creación de ensayo:", resp);
 
   // Manejar diferentes formatos de respuesta
-  const nuevoEnsayoId = resp?.data?.id ?? resp?.id;
+  // const nuevoEnsayoId = resp?.data?.id ?? resp?.id;
+  const nuevoEnsayoId = otActual?.ensayoVh60.id;
+  //>>>>Revisar<<<<<<<<<<
+
+  
   if (!nuevoEnsayoId) {
     throw new Error("No se obtuvo un ID válido del nuevo ensayo.");
   }
@@ -216,7 +221,7 @@ try {
   await updateOt(ordenId, updatedOt);
 
   // Guardar en localStorage
-  localStorage.setItem("ensayoVh60Id", String(nuevoEnsayoId));
+  localStorage.setItem("ensayoId", nuevoEnsayoId);
   console.log("✅ OT actualizada con nuevo ensayo:", nuevoEnsayoId);
 
   await Swal.fire({
@@ -237,7 +242,7 @@ try {
 }
 
 } else {
-  console.log("Ya existe un ensayo asociado a la OT. ID:", otActual?.enspeccionPcpVh60?.id);
+  console.log("Ya existe un ensayo asociado a la OT. ID:", otActual?.ensayoVh60?.id);
 }
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

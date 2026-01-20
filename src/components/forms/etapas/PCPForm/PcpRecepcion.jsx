@@ -24,6 +24,13 @@ const PcpRecepcion = () => {
   const ordenId = localStorage.getItem("ordenId");
   const tipoEquipo=localStorage.getItem("tipoEquipo");
   const modeloEquipo = localStorage.getItem("modeloEquipo");
+
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  const normalizeModelo = (value) =>
+  value ? value.toLowerCase().trim() : "";
+
+  const modelo = normalizeModelo(modeloEquipo); 
+
   // const [recepcionId, setRecepcionId] = useState(null);
   const recepcionId = localStorage.getItem("recepcionId");
   console.log({recepcionId});
@@ -191,22 +198,24 @@ const PcpRecepcion = () => {
 
           if (!inspeccionId) {
             // Solo crear si NO hay una inspección existente
-            const nuevaInspeccion = await newInspeccion(data, modeloEquipo);
+            const nuevaInspeccion = await newInspeccion(data, modelo);
             const nuevaInspeccionId = nuevaInspeccion?.id;
 
             if (nuevaInspeccionId) {
+              const inspeccionKey = `inspeccionPcp${modeloEquipo}`;
+
               const updatedOt = {
                 ...otActual,
-                inspeccionPcpVh60: { id: nuevaInspeccionId },
+                [inspeccionKey]: { id: nuevaInspeccionId },
                 etapaActual: etapaSiguiente,
               };
 
-              localStorage.setItem("inspeccionVh60Id", nuevaInspeccionId)
-              localStorage.removeItem("NOinspeccionId")
+              localStorage.setItem("inspeccionId", nuevaInspeccionId)
+              // localStorage.removeItem("NOinspeccionId")
 
               await updateOt(ordenId, updatedOt);
-              localStorage.setItem("Tipo Inspección", tipoInspeccion);
-              console.log("localstore = tipoInspeccion guardado");
+              // localStorage.setItem("tipoInspección", tipoInspeccion);
+              // console.log("localstore = tipoInspeccion guardado");
 
               await Swal.fire({
                 title: "Perfecto!",
@@ -288,7 +297,7 @@ const PcpRecepcion = () => {
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">Recepción PCP Esta es la funcional</h3>
+      <h3 className="form-title">Recepción PCP {modeloEquipo}</h3>
 
       <div className="form-group">
         <div className="label-container">

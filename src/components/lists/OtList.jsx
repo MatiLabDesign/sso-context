@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { IoIosCopy, IoIosDownload } from "react-icons/io";
 import useOrdenData from "../../hooks/useOrdenData";
 import ETAPA_LIST from "../../constants/ETAPA_LIST";
+import ensayoDv1 from './../../data/ensayoPCPDv1';
+import ensayoMiniG from './../../data/ensayoPCPMiniG';
+import ensayoVH60 from './../../data/ensayoPCPVH60';
+import ensayoPCPCougar from './../../data/ensayoPCPCougar';
 
 const OtList = () => {
   const [search, setSearch] = useState("");
@@ -25,60 +29,48 @@ const OtList = () => {
     return coincideBusqueda && coincideEstado;
   });
 
-  const verDetalle = (
-    id,
-    equipo,
-    recepcion,
-    inspeccionPcpVh60,
-    inspeccionPcpCoguar,
-    inspeccionPcpMiniG,
-    inspeccionPcpDV1,
-    ensayoPcpVh60,
-    ensayoPcpCoguar,
-    ensayoPcpMiniG,
-    ensayoPcpDV1
-  ) => {
+  const verDetalle = (id, equipo, recepcion, inspeccionPcpVh60,
+  inspeccionPcpCoguar,
+  inspeccionPcpMiniG,
+  inspeccionPcpDV1, ensayoDv1, ensayoMiniG, ensayoCougar, ensayoVh60) => {
+
     const ordenId = id;
     const tipoEquipo = equipo.tipoEquipo.tipo;
     const modeloEquipo = equipo.tipoEquipo.modelo;
     const recepcionId = recepcion?.id;
-    const inspeccionVh60Id = inspeccionPcpVh60?.id;
-    const inspeccionMiniGId = inspeccionPcpMiniG?.id;
-    const inspeccionDv1Id = inspeccionPcpDV1?.id;
-    const inspeccionCougarId = inspeccionPcpCoguar?.id;
-    const ensayoVh60Id = ensayoPcpVh60?.id;
-    const ensayoMiniGId = ensayoPcpMiniG?.id;
-    const ensayoDv1Id = ensayoPcpDV1?.id;
-    const ensayoCougarId = ensayoPcpCoguar?.id;
+
+    const inspeccion =
+    inspeccionPcpVh60 ??
+    inspeccionPcpCoguar ??
+    inspeccionPcpMiniG ??
+    inspeccionPcpDV1;
+
+  const inspeccionId = inspeccion?.id ?? null;
+
+  const ensayo =
+    ensayoVh60 ??
+    ensayoCougar ??
+    ensayoMiniG ??
+    ensayoDv1;
+
+  const ensayoId = ensayo?.id ?? null;
+
 
     window.localStorage.setItem("ordenId", ordenId);
     window.localStorage.setItem("recepcionId", recepcionId);
     window.localStorage.setItem("tipoEquipo", tipoEquipo);
     window.localStorage.setItem("modeloEquipo", modeloEquipo);
 
-    if (inspeccionVh60Id != null) {
-      window.localStorage.setItem("inspeccionId", inspeccionVh60Id);
-    } else if (inspeccionMiniGId != null) {
-      window.localStorage.setItem("inspeccionId", inspeccionMiniGId);
-    } else if (inspeccionDv1Id != null) {
-      window.localStorage.setItem("inspeccionId", inspeccionDv1Id);
-    } else if (inspeccionCougarId != null) {
-      window.localStorage.setItem("inspeccionId", inspeccionCougarId);
-    } else {
-      window.localStorage.setItem("inspeccionId", "El id inspeccion esta vacio");
-    }
-
-    if (ensayoVh60Id != null) {
-      window.localStorage.setItem("ensayoId", ensayoVh60Id);
-    } else if (ensayoMiniGId != null) {
-      window.localStorage.setItem("ensayoId", ensayoMiniGId);
-    } else if (ensayoDv1Id != null) {
-      window.localStorage.setItem("ensayoId", ensayoDv1Id);
-    } else if (ensayoCougarId != null) {
-      window.localStorage.setItem("ensayoId", ensayoCougarId);
-    } else {
-      window.localStorage.setItem("ensayoId", "El id ensayo esta vacio");
-    }
+    if (inspeccionId) {
+    window.localStorage.setItem("inspeccionId", inspeccionId);
+  } else {
+    window.localStorage.removeItem("inspeccionId");
+  }
+    if (ensayoId) {
+    window.localStorage.setItem("ensayoId", ensayoId);
+  } else {
+    window.localStorage.removeItem("ensayoId");
+  }
 
     navigate(`/dashboard/etapa/consultarOt`);
   };
@@ -151,6 +143,10 @@ const OtList = () => {
                 inspeccionPcpCoguar,
                 inspeccionPcpDV1,
                 inspeccionPcpMiniG,
+                ensayoDv1,
+                ensayoMiniG,
+                ensayoVh60,
+                ensayoCougar
               }) => (
                 <tr className={style.table_row} key={id}>
                   <td className={style.list_content2}>{numeroOT}</td>
@@ -171,7 +167,12 @@ const OtList = () => {
                           inspeccionPcpVh60,
                           inspeccionPcpCoguar,
                           inspeccionPcpMiniG,
-                          inspeccionPcpDV1
+                          inspeccionPcpDV1,
+                          ensayoDv1,
+                          ensayoMiniG,
+                          ensayoVh60,
+                          ensayoCougar
+                    
                         )
                       }
                     >

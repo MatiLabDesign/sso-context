@@ -17,6 +17,15 @@ import {
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
+  const limpiarLocalStorage = () => {
+  localStorage.removeItem("ordenId");
+  localStorage.removeItem("recepcionId");
+  localStorage.removeItem("inspeccionId");
+  localStorage.removeItem("ensayoId");
+  localStorage.removeItem("tipoEquipo");
+  localStorage.removeItem("modeloEquipo");
+};
+
   return (
     <div className={style.menu_container}>
       <div className={style.img_row}>
@@ -26,24 +35,43 @@ const Sidebar = () => {
         {/* <Link className={''} to={CLIENTE_VIEW}>
           <button className={style.bbtn2}>Cliente View</button>
         </Link> */}
-        <Link className={''} to={OT}>
+        <Link className={""} to={OT}>
           <button className={style.bbtn}>Nueva OT</button>
         </Link>
         <ul className={style.list}>
           <div className={style.list_item_container}>
             <li className={style.list_item}>
-              
-              <Link to={OTLIST}><div className={style.icon}><CgPlayPauseR /> </div>Consultar OT</Link>
+              <Link
+                to={OTLIST}
+                onClick={() => {
+                  limpiarLocalStorage();
+                }}
+              >
+                <div className={style.icon}>
+                  <CgPlayPauseR />{" "}
+                </div>
+                Consultar OT
+              </Link>
             </li>
           </div>
           <div className={style.list_item_container}>
             <li className={style.list_item}>
-              <Link to={CLIENT}><div className={style.icon}><LuUsers2 /></div>Clientes</Link>
+              <Link to={CLIENT}>
+                <div className={style.icon}>
+                  <LuUsers2 />
+                </div>
+                Clientes
+              </Link>
             </li>
           </div>
           <div className={style.list_item_container}>
             <li className={style.list_item}>
-              <Link to={EQUIPO}><div className={style.icon}><LuServer  /></div>Equipos</Link>
+              <Link to={EQUIPO}>
+                <div className={style.icon}>
+                  <LuServer />
+                </div>
+                Equipos
+              </Link>
             </li>
           </div>
           {/* <div className={style.list_item_container}>
@@ -54,7 +82,12 @@ const Sidebar = () => {
         </ul>
       </div>
       <div className={style.logout_row}>
-        <Link to={LOGOUT}>Cerrar Sesión<div className={style.icon_exit}><RxExit /></div></Link>
+        <Link to={LOGOUT}>
+          Cerrar Sesión
+          <div className={style.icon_exit}>
+            <RxExit />
+          </div>
+        </Link>
       </div>
     </div>
   );

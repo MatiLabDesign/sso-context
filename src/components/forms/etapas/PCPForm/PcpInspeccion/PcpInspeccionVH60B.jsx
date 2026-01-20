@@ -31,7 +31,7 @@ const PcpInspeccionVH60B = () => {
   const recepcionIdGuardada = localStorage.getItem("recepcionId");
   const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
   const modeloGuardada = localStorage.getItem("modelo");
-   const inspeccionId = localStorage.getItem("inspeccionVh60Id");
+   const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const inspeccionIdGuardada = inspeccionId;
@@ -77,7 +77,7 @@ const PcpInspeccionVH60B = () => {
         console.warn(
           "⚠️ Advertencia: `otActual.inspeccionPcpVh60` no tiene un ID válido."
         );
-        setInspecionId(null); // Limpia el estado para evitar errores posteriores
+        // setInspecionId(null); // Limpia el estado para evitar errores posteriores
       }
     }
   }, [otActual]);
@@ -193,7 +193,7 @@ const PcpInspeccionVH60B = () => {
           console.log("❌ Acción cancelada por el usuario.");
         }
       } else {
-        console.log("🚀 Creando nueva inspección...");
+        console.log("Entra acá porque no hay inspeccionVh60Id...");
       }
     } catch (error) {
       console.error("❌ Error al procesar la inspección:", error);

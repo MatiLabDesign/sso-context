@@ -32,11 +32,11 @@ const useEnsayoData = (ensayoId, reset) => {
   // Crear una nueva Inspección
   const newEnsayoVh60 = async (data) => {
     try {
-      const nuevaEnsayo = await EnsayoService.createEnsayoVh60(data);
-      if (nuevaEnsayo?.data) {
-        setEnsayoActual(nuevaEnsayo.data);
+      const nuevoEnsayo = await EnsayoService.createEnsayoVh60(data);
+      if (nuevoEnsayo?.data) {
+        setEnsayoActual(nuevoEnsayo.data);
       }
-      return nuevaEnsayo?.data;
+      return nuevoEnsayo?.data;
     } catch (error) {
       console.error("Error al crear la Inspección:", error);
       throw error;
@@ -44,11 +44,11 @@ const useEnsayoData = (ensayoId, reset) => {
   };
   const newEnsayoDv1 = async (data) => {
     try {
-      const nuevaEnsayo = await EnsayoService.createEnsayoDv1(data);
-      if (nuevaEnsayo?.data) {
-        setEnsayoActual(nuevaEnsayo.data);
+      const nuevoEnsayo = await EnsayoService.createEnsayoDv1(data);
+      if (nuevoEnsayo?.data) {
+        setEnsayoActual(nuevoEnsayo.data);
       }
-      return nuevaEnsayo?.data;
+      return nuevoEnsayo?.data;
     } catch (error) {
       console.error("Error al crear la Inspección:", error);
       throw error;
@@ -56,11 +56,11 @@ const useEnsayoData = (ensayoId, reset) => {
   };
   const newEnsayoMinig = async (data) => {
     try {
-      const nuevaEnsayo = await EnsayoService.createEnsayoMinig(data);
-      if (nuevaEnsayo?.data) {
-        setEnsayoActual(nuevaEnsayo.data);
+      const nuevoEnsayo = await EnsayoService.createEnsayoMinig(data);
+      if (nuevoEnsayo?.data) {
+        setEnsayoActual(nuevoEnsayo.data);
       }
-      return nuevaEnsayo?.data;
+      return nuevoEnsayo?.data;
     } catch (error) {
       console.error("Error al crear la Inspección:", error);
       throw error;
@@ -68,11 +68,11 @@ const useEnsayoData = (ensayoId, reset) => {
   };
   const newEnsayoCougar = async (data) => {
     try {
-      const nuevaEnsayo = await EnsayoService.createEnsayoCougar(data);
-      if (nuevaEnsayo?.data) {
-        setEnsayoActual(nuevaEnsayo.data);
+      const nuevoEnsayo = await EnsayoService.createEnsayoCougar(data);
+      if (nuevoEnsayo?.data) {
+        setEnsayoActual(nuevoEnsayo.data);
       }
-      return nuevaEnsayo?.data;
+      return nuevoEnsayo?.data;
     } catch (error) {
       console.error("Error al crear la Inspección:", error);
       throw error;

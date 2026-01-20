@@ -32,7 +32,7 @@ const PcpInspeccionVH60A = () => {
   const recepcionIdGuardada = localStorage.getItem("recepcionId");
   const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
   const modeloGuardada = localStorage.getItem("modelo");
-   const inspeccionId = localStorage.getItem("inspeccionVh60Id");
+   const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const inspeccionIdGuardada = inspeccionId;
@@ -73,6 +73,7 @@ const PcpInspeccionVH60A = () => {
       console.log("✅ Datos recibidos:", otActual);
 
       if (otActual.inspeccionPcpVh60 && otActual.inspeccionPcpVh60.id) {
+        console.log("✅ ID de Inspección VH60 encontrado:", otActual.inspeccionPcpVh60.id);
         // setInspecionId(otActual.inspeccionPcpVh60.id);
       } else {
         console.warn(
@@ -92,7 +93,7 @@ const PcpInspeccionVH60A = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion, } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion, updateInspeccionVh60 } = useInspeccionData(inspeccionId, reset);
 
   useEffect(() => {
     if (inspeccionActual) {
