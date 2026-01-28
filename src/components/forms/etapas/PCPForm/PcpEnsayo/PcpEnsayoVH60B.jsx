@@ -7,6 +7,7 @@ import useEnsayoData from "../../../../../hooks/useEnsayoData";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { ENSAYO_B_ITEMS } from "../../../../../constants/ENSAYO_ITEMS";
 import ensayoVH60 from "../../../../../data/ensayoPCPVH60";
+import Swal from "sweetalert2";
 
 const PcpEnsayoVH60B = () => {
   const ordenId = localStorage.getItem("ordenId");
@@ -51,24 +52,74 @@ const PcpEnsayoVH60B = () => {
 
   // 💾 GUARDAR
   const onSubmit = async (data) => {
-    try {
-      if (!isDirty) return;
-
-      if (!ensayoVh60Id) {
-        console.warn("No existe ensayoVh60Id");
-        return;
-      }
-
-      await updateEnsayoVh60(ensayoVh60Id,{
-        ...data,
-        id: Number(ensayoVh60Id),
+  try {
+    // 🔹 No hay cambios
+    if (!isDirty) {
+      await Swal.fire({
+        title: "Sin cambios",
+        text: "No se detectaron modificaciones para guardar",
+        icon: "info",
+        confirmButtonColor: "#059080",
       });
-
-      navigate("/dashboard/etapa/salidaPCP");
-    } catch (error) {
-      console.error("❌ Error al guardar ensayo:", error);
+      return;
     }
-  };
+
+    // 🔹 Validación de ID
+    if (!ensayoVh60Id) {
+      await Swal.fire({
+        title: "Error",
+        text: "No existe un ensayo asociado para guardar",
+        icon: "error",
+        confirmButtonColor: "#f09898",
+      });
+      console.warn("No existe ensayoVh60Id");
+      return;
+    }
+
+    // 🔹 Confirmación
+    const result = await Swal.fire({
+      title: "¿Guardar cambios?",
+      text: "Los cambios realizados se guardarán en el ensayo",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#059080",
+      cancelButtonColor: "#f09898",
+      confirmButtonText: "Sí, guardar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (!result.isConfirmed) return;
+
+    // 🔹 Guardado
+    await updateEnsayoVh60(ensayoVh60Id, {
+      ...data,
+      id: Number(ensayoVh60Id),
+    });
+
+    // 🔹 Éxito
+    // await Swal.fire({
+    //   title: "Guardado",
+    //   text: "El ensayo se guardó correctamente",
+    //   icon: "success",
+    //   confirmButtonColor: "#059080",
+    // });
+
+    // 🔹 Navegación
+    navigate("/dashboard/etapa/salidaPCP");
+
+  } catch (error) {
+    console.error("❌ Error al guardar ensayo:", error);
+
+    // 🔹 Error
+    await Swal.fire({
+      title: "Error",
+      text: "Ocurrió un problema al guardar el ensayo",
+      icon: "error",
+      confirmButtonColor: "#f09898",
+    });
+  }
+};
+
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>

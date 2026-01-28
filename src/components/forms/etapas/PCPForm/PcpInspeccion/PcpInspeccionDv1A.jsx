@@ -9,7 +9,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import Swal from "sweetalert2";
 import ImagenService from "../../../../../services/ImagenService";
 import { IMAGEN_INSPECCION } from "../../../../../config/routes/paths";
-import inspeccionPcpDv1 from "../../../../../data/inspeccionPCPDv1";
+import inspeccionPcpDv1 from "../../../../../data/inspeccionPcpDv1";
 import { INSPECCION_PCPDV1A_ITEMS } from "../../../../../constants/INSPECCION_PCPDV1_ITEMS";
 
 const PcpInspeccionDv1A = () => {
@@ -29,10 +29,10 @@ const PcpInspeccionDv1A = () => {
 
   const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
   const ordenId = localStorage.getItem("ordenId");
-  const recepcionIdGuardada = localStorage.getItem("recepcionId");
-  const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
-  const modeloGuardada = localStorage.getItem("modelo");
-   const inspeccionId = localStorage.getItem("inspeccionDv1Id");
+  const recepcionId = localStorage.getItem("recepcionId");
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
+   const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const inspeccionIdGuardada = inspeccionId;
@@ -204,12 +204,12 @@ const PcpInspeccionDv1A = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/dashboard/etapa/inspeccionPCPDv1B`);
+    navigate(`/dashboard/etapa/inspeccion${tipoEquipo}${modeloEquipo}B`);
   };
 
   const handleClickA = (e) => {
     e.preventDefault();
-    navigate(`/dashboard/etapa/recepcionPCP`);
+    navigate(`/dashboard/etapa/recepcion${tipoEquipo}`);
   };
 
   const dataImagen = () => {

@@ -57,10 +57,15 @@ const OtList = () => {
 
 
     window.localStorage.setItem("ordenId", ordenId);
-    window.localStorage.setItem("recepcionId", recepcionId);
+    // window.localStorage.setItem("recepcionId", recepcionId);
     window.localStorage.setItem("tipoEquipo", tipoEquipo);
     window.localStorage.setItem("modeloEquipo", modeloEquipo);
 
+    if (recepcionId) {
+    window.localStorage.setItem("recepcionId", recepcionId);
+  } else {
+    window.localStorage.removeItem("recepcionId");
+  }
     if (inspeccionId) {
     window.localStorage.setItem("inspeccionId", inspeccionId);
   } else {

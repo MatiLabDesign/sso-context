@@ -1,40 +1,307 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import "../PcpRecepcion2.css"; // Asegúrate de tener el archivo CSS
 import { Link, useNavigate } from "react-router-dom";
-import InspeccionService from "../../../../../services/InspeccionService";
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
+import Swal from "sweetalert2";
+import ImagenService from "../../../../../services/ImagenService";
+import { IMAGEN_INSPECCION } from "../../../../../config/routes/paths";
+import useEnsayoData from "../../../../../hooks/useEnsayoData";
+import inspeccionPcpMiniG from "../../../../../data/inspeccionPCPminiG";
+import { INSPECCION_PCPMINIGC_ITEMS } from "../../../../../constants/INSPECCION_PCPMINIG_ITEMS";
+import useOrdenData from "../../../../../hooks/useOrdenData";
+import useInspeccionData from "../../../../../hooks/useInspeccionData";
 
-const PcpInspeccionMiniGC = () => {
-  const { handleSubmit, control, register } = useForm();
+const PcpInspeccionMinigC = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { isDirty },
+  } = useForm({
+    defaultValues: inspeccionPcpMiniG,
+  });
 
-  const tipoEquipo = window.localStorage.getItem("tipoEquipo");
-  const etapaActual = window.localStorage.getItem("etapaActual");
-  const numeroOT = window.localStorage.getItem("numeroOT");
-  const inspeccionId = window.localStorage.getItem("ordenId");
+  const [imagenes, setImagenes] = useState(Array(6).fill(null));
+  const [urlsTemporales, setUrlsTemporales] = useState(Array(6).fill(null));
+
+  const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
+  const ordenId = localStorage.getItem("ordenId");
+  const recepcionIdGuardada = localStorage.getItem("recepcionId");
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
+  const inspeccionId = localStorage.getItem("inspeccionId");
+  const ensayoId = localStorage.getItem("ensayoId");
+
+  //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  const inspeccionIdGuardada = inspeccionId;
+
+  console.log(inspeccionIdGuardada);
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+  useEffect(() => {
+    const fetchImagenes = async () => {
+      if (!inspeccionIdGuardada) return; // usar el ID real
+
+      try {
+        const response =
+          await ImagenService.getImagenByInspeccionDv1Id(inspeccionIdGuardada);
+        setImagenesGuardadas(response.data || []); // si no hay datos, usar array vacío
+      } catch (error) {
+        console.error("Error al obtener las imágenes:", error);
+      }
+    };
+
+    fetchImagenes();
+  }, [inspeccionIdGuardada]);
+
+  // Si quieres ver el valor actualizado de imagenesGuardadas, muévelo a otro useEffect
+  useEffect(() => {
+    console.log(imagenesGuardadas);
+  }, [imagenesGuardadas]);
 
   const navigate = useNavigate();
 
+  console.log(ordenId);
+
+  const { allOts, otActual, updateOt, loading, error } = useOrdenData(ordenId);
+
+  useEffect(() => {
+    if (otActual) {
+      console.log("✅ Datos recibidos:", otActual);
+
+      if (otActual.inspeccionPcpMinig && otActual.inspeccionPcpMinig.id) {
+        // setInspecionId(otActual.inspeccionPcpVh60.id);
+      } else {
+        console.warn(
+          "⚠️ Advertencia: `otActual.inspeccionPcpMinig` no tiene un ID válido.",
+        );
+        // setInspecionId(null); // Limpia el estado para evitar errores posteriores
+      }
+    }
+  }, [otActual]);
+
+  // const [inspeccionId, setInspecionId] = useState(null);>REVISAR>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+  useEffect(() => {
+    if (inspeccionId) {
+      console.log("✅ Este es el id de Inspección:", inspeccionId);
+    }
+  }, [inspeccionId]);
+
+  const { inspeccionActual, updateInspeccion, updateInspeccionMinig } = useInspeccionData(
+    inspeccionId,
+    reset,
+  );
+  const { newEnsayoMinig } = useEnsayoData();
+  useEffect(() => {
+    if (inspeccionActual) {
+      console.log("✅ Datos Inspección actual:", inspeccionActual);
+    }
+  }, [inspeccionActual]);
+
+  const etapaSiguiente = 6;
+
+  const handleImagenChange = (index, file) => {
+    const nuevasImagenes = [...imagenesGuardadas];
+    nuevasImagenes[index] = file;
+    setImagenesGuardadas(nuevasImagenes);
+
+    const nuevasUrls = [...urlsTemporales];
+    nuevasUrls[index] = URL.createObjectURL(file);
+    setUrlsTemporales(nuevasUrls);
+  };
+
+  const handleImagenClick = (index, e) => {
+    e.preventDefault();
+
+    localStorage.setItem("inspeccionId", inspeccionId);
+    localStorage.setItem("imagenIndex", index);
+
+    // Obtener descripción si existe en imagenesGuardadas
+    const descripcion =
+      imagenesGuardadas[index]?.descripcion || "Imagen sin descripción";
+
+    const imagenSrc = obtenerSrcImagen(index);
+    if (imagenSrc) {
+      Swal.fire({
+        title: descripcion,
+        imageUrl: imagenSrc,
+        imageHeight: 350,
+        imageAlt: `Imagen ${index + 1}`,
+        confirmButtonColor: "#eb7302",
+        cancelButtonColor: "#059080",
+        showCancelButton: true,
+        confirmButtonText: "Editar",
+        cancelButtonText: "Cerrar",
+        // footer: '¿Quieres editar esta imagen?'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/dashboard/update-imagen-form-inspeccion");
+        }
+      });
+    } else {
+      navigate("/dashboard/imagen-form-inspeccion");
+    }
+  };
+
   const onSubmit = async (data) => {
     try {
-      const inspeccion = data;
-      await InspeccionService.updateInspeccion(inspeccionId, inspeccion);
-      console.log("Datos enviados exitosamente:", inspeccion);
-      navigate("/dashboard/etapa/ensayoPCP");
+      if (!isDirty) {
+        await Swal.fire({
+          title: "Sin cambios",
+          text: "No se detectaron modificaciones para guardar.",
+          icon: "info",
+          confirmButtonColor: "#059080",
+        });
+        return;
+      }
+
+      const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
+      const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
+
+      if (inspeccionId) {
+        console.log("Inspección existente:", inspeccionId);
+
+        const result = await Swal.fire({
+          title: "¿Quiere guardar los datos?",
+          text: "Los cambios son irreversibles",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#059080",
+          cancelButtonColor: "#f09898",
+          confirmButtonText: "Sí, guardar!",
+          cancelButtonText: "Cancelar",
+        });
+
+        if (result.isConfirmed) {
+          await updateInspeccionMinig(inspeccionId, data);
+          console.log("✅ Inspección actualizada correctamente:", data);
+          const updatedOt = {
+            ...otActual,
+            etapaActual: etapaSiguiente,
+          };
+          await updateOt(ordenId, updatedOt);
+
+          //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          //>>>>>>>>>>>>>>>>CREAR ENSAYO Y ACTUALIZAR ENSAYO ID EN OT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+          // Reemplazar el bloque por este:
+          const ensayoExisteEnOt = otActual?.ensayoMiniG?.id;
+          console.log(
+            "Verificando existencia de ensayo en OT:",
+            ensayoExisteEnOt,
+          );
+
+          if (!ensayoExisteEnOt) {
+            try {
+              // 🔹 Crear ensayo en backend
+              const resp = await newEnsayoMinig(data);
+              console.log("Respuesta de creación de ensayo:", resp);
+
+              // 🔹 Obtener ID del ensayo recién creado
+              const nuevoEnsayoId = resp?.id ?? resp?.data?.id;
+
+              if (!nuevoEnsayoId) {
+                throw new Error("No se obtuvo un ID válido del nuevo ensayo.");
+              }
+
+              // 🔹 Actualizar OT vinculando el nuevo ensayo
+              const updatedOt = {
+                ...otActual,
+                ensayoMiniG: { id: nuevoEnsayoId },
+                etapaActual: etapaSiguiente,
+              };
+
+              await updateOt(ordenId, updatedOt);
+
+              // 🔹 Persistir ID para los siguientes pasos
+              localStorage.setItem("ensayoId", nuevoEnsayoId);
+
+              console.log("✅ OT actualizada con nuevo ensayo:", nuevoEnsayoId);
+
+              await Swal.fire({
+                title: "Perfecto!",
+                text: "Ensayo creado y vinculado a la OT con éxito",
+                icon: "success",
+                confirmButtonColor: "#059080",
+              });
+            } catch (error) {
+              console.error("❌ Error al crear ensayo y actualizar OT:", error);
+
+              await Swal.fire({
+                title: "Error",
+                text: "No se pudo crear el ensayo o actualizar la OT",
+                icon: "error",
+                confirmButtonColor: "#f09898",
+              });
+            }
+          } else {
+            console.log(
+              "ℹ️ Ya existe un ensayo asociado a la OT. ID:",
+              ensayoExisteEnOt,
+            );
+          }
+
+          //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          if (modeloEquipoActual && tipoEquipoActual) {
+            navigate(`/dashboard/etapa/ensayo${tipoEquipoActual}`);
+          } else {
+            console.error("❌ Error: Modelo de equipo no definido.");
+          }
+        } else {
+          console.log("❌ Acción cancelada por el usuario.");
+        }
+      } else {
+        console.log("❌ Inspección ID no encontrado.");
+      }
     } catch (error) {
-      console.error("Error al enviar los datos:", error);
+      console.error("❌ Error al procesar la inspección:", error);
     }
   };
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/dashboard/etapa/ensayoPCP`);
+    navigate(`/dashboard/etapa/ensayo${tipoEquipo}`);
   };
 
   const handleClickA = (e) => {
     e.preventDefault();
-    navigate(`/dashboard/etapa/inspeccionPCPMiniGB`);
+    navigate(`/dashboard/etapa/inspeccion${tipoEquipo}${modeloEquipo}B`);
+  };
+
+  const dataImagen = () => {
+    // localStorage.setItem("inspeccionVh60Id", inspeccionId);
+    navigate(IMAGEN_INSPECCION);
+  };
+
+  const obtenerSrcImagen = (index) => {
+    if (urlsTemporales[index]) {
+      return urlsTemporales[index];
+    }
+
+    const imagenGuardada = imagenesGuardadas[index];
+
+    if (imagenGuardada?.url) {
+      const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+
+
+      // Asegurarse de que la URL comience con '/' si no es absoluta
+      const cleanUrl = imagenGuardada.url.startsWith("/")
+        ? imagenGuardada.url
+        : `/${imagenGuardada.url}`;
+
+      return `${base}${cleanUrl}`;
+    }
+
+    return null;
   };
 
   return (
@@ -62,85 +329,82 @@ const PcpInspeccionMiniGC = () => {
         </button>
       </div>
 
-      {/* Iterar sobre cada propiedad en itemRecepcion */}
-      <h3>Sistema Hidraulico</h3>
-      {[
-        "zapataDeFreno",
-        "ferodo",
-        "levaS",
-        "vastagoDeResortes",
-        "resortes",
-      ].map((itemKey) => (
-        <div className="item-section" key={itemKey}>
-          <div className="item-field">
-            <div className="item-tittle">
-              <h4 className="item-title">{itemKey}</h4>
-            </div>
-            <div className="item-tittle">
-              <label className="form-label-1">Ok</label>
-              <input
-                className="radio-input"
-                type="checkbox"
-                {...register(`items.${itemKey}.ok`)}
-              />
-            </div>
-            <div className="item-tittle">
-              <label className="form-label-1">Desgastado</label>
-              <input
-                className="radio-input"
-                type="checkbox"
-                {...register(`items.${itemKey}.fuga`)}
-              />
-            </div>
-            <div className="item-tittle">
-              <label className="form-label-1">Deformado</label>
-              <input
-                className="radio-input"
-                type="checkbox"
-                {...register(`items.${itemKey}.roto`)}
-              />
-            </div>
-            <div className="item-tittle">
-              <label className="form-label-1">Roto</label>
-              <input
-                className="radio-input"
-                type="checkbox"
-                {...register(`items.${itemKey}.eficiencia`)}
-              />
-            </div>
-
-            <div className="item-tittle">
-              <input
-                className="form-input"
-                {...register(`items.${itemKey}.especificar`)}
-                placeholder="Especificar"
-              />
-            </div>
+      {/* Iterar sobre cada propiedad en sistemaHidraulicoPcpVh60 */}
+      <h3>Items</h3>
+      {INSPECCION_PCPMINIGC_ITEMS.sistemaHidraulicoPcpMiniG.map((item) => (
+        <div className="item-section" key={item.label}>
+          <div className="item-tittle">
+            <h4 className="item-title">{item.label}</h4>
+          </div>
+          <div className="item-tittle">
+            <label className="form-label">Ok</label>
+            <input
+              type="checkbox"
+              className="radio-input"
+              {...register(`sistemaHidraulicoPcpMiniG.${item.ok}`)}
+              checked={watch(`sistemaHidraulicoPcpMiniG.${item.ok}`)}
+            />
+          </div>
+          <div className="item-tittle">
+            <label className="form-label">Fugas</label>
+            <input
+              type="checkbox"
+              className="radio-input"
+              {...register(`sistemaHidraulicoPcpMiniG.${item.fuga}`)}
+              checked={watch(`sistemaHidraulicoPcpMiniG.${item.fuga}`)}
+            />
+          </div>
+          <div className="item-tittle">
+            <label className="form-label">Roto</label>
+            <input
+              type="checkbox"
+              className="radio-input"
+              {...register(`sistemaHidraulicoPcpMiniG.${item.roto}`)}
+              checked={watch(`sistemaHidraulicoPcpMiniG.${item.roto}`)}
+            />
+          </div>
+          <div className="item-tittle">
+            <label className="form-label">Eficiencia</label>
+            <input
+              type="checkbox"
+              className="radio-input"
+              {...register(`sistemaHidraulicoPcpMiniG.${item.eficiencia}`)}
+              checked={watch(`sistemaHidraulicoPcpMiniG.${item.eficiencia}`)}
+            />
+          </div>
+          <div className="item-tittle">
+            <input
+              className="form-input"
+              {...register(`sistemaHidraulicoPcpMiniG.${item.esp}`)}
+              placeholder="Especificar"
+            />
           </div>
         </div>
       ))}
 
       <h3>Polea</h3>
-      {["polea"].map((itemKey) => (
+      {INSPECCION_PCPMINIGC_ITEMS.poleaPcpMiniG.map((itemKey) => (
         <div className="item-section" key={itemKey}>
           <div className="item-field">
             <div className="item-tittle">
-              <h4 className="item-title">{itemKey}</h4>
+              <h4 className="item-title">{itemKey.label}</h4>
             </div>
             <div className="item-tittle">
               <label className="form-label-1">Ok</label>
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`polea.${itemKey}.ok`)}
+                {...register(`poleaPcpMiniG.${itemKey.ok}`)}
+                checked={watch(`poleaPcpMiniG.${itemKey.ok}`)}
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label-1">Fisuras</label>
+              <label className="form-label-1">Fisura</label>
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`polea.${itemKey}.fisuras`)}
+                {...register(`poleaPcpMiniG.${itemKey.fisura}`)}
+                checked={watch(`poleaPcpMiniG.${itemKey.fisura}`)}
               />
             </div>
             <div className="item-tittle">
@@ -148,15 +412,17 @@ const PcpInspeccionMiniGC = () => {
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`polea.${itemKey}.poros`)}
+                {...register(`poleaPcpMiniG.${itemKey.poros}`)}
+                checked={watch(`poleaPcpMiniG.${itemKey.poros}`)}
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label-1">D.Inadec.</label>
+              <label className="form-label-1">D. Inadec.</label>
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`polea.${itemKey}.inadecuado`)}
+                {...register(`poleaPcpMiniG.${itemKey.diametroInad}`)}
+                checked={watch(`poleaPcpMiniG.${itemKey.diametroInad}`)}
               />
             </div>
             <div className="item-tittle">
@@ -164,24 +430,55 @@ const PcpInspeccionMiniGC = () => {
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`polea.${itemKey}.trazabilidad`)}
+                {...register(`poleaPcpMiniG.${itemKey.numTraz}`)}
+                checked={watch(`poleaPcpMiniG.${itemKey.numTraz}`)}
               />
             </div>
 
             <div className="item-tittle">
               <input
                 className="form-input"
-                {...register(`polea.${itemKey}.especificar`)}
+                {...register(`poleaPcpMiniG.${itemKey.esp}`)}
                 placeholder="Especificar"
               />
             </div>
           </div>
         </div>
       ))}
+      <div className="imagenes">
+        {[0, 1, 2, 3, 4, 5].map((index) => {
+          const imagenSrc = obtenerSrcImagen(index);
 
-      
+          return imagenSrc ? (
+            <label key={index} className="imagen-prueba">
+              <img
+                src={imagenSrc}
+                alt={`Imagen ${index + 1}`}
+                className="imagen-preview"
+                onClick={(e) => handleImagenClick(index, e)}
+              />
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={(e) => handleImagenChange(index, e.target.files[0])}
+              />
+            </label>
+          ) : (
+            <div key={index} className="imagen-prueba">
+              <div
+                className="boton-agregar-imagen"
+                onClick={() => dataImagen()}
+              >
+                <span>+</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </form>
   );
 };
 
-export default PcpInspeccionMiniGC;
+export default PcpInspeccionMinigC;
+

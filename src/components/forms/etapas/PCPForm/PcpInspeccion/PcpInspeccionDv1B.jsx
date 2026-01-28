@@ -10,8 +10,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import Swal from "sweetalert2";
 import ImagenService from "../../../../../services/ImagenService";
 import { IMAGEN_INSPECCION } from "../../../../../config/routes/paths";
-import { INSPECCION_VH60B_ITEMS } from "../../../../../constants/INSPECCION_PCPVH60_ITEMS";
-import inspeccionPcpDv1 from "../../../../../data/inspeccionPCPDv1";
+import inspeccionPcpDv1 from "../../../../../data/inspeccionPcpDv1";
 import { INSPECCION_PCPDV1B_ITEMS } from "../../../../../constants/INSPECCION_PCPDV1_ITEMS";
 
 const PcpInspeccionDv1B = () => {
@@ -33,7 +32,7 @@ const PcpInspeccionDv1B = () => {
   const recepcionIdGuardada = localStorage.getItem("recepcionId");
   const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
   const modeloGuardada = localStorage.getItem("modelo");
-   const inspeccionId = localStorage.getItem("inspeccionVh60Id");
+   const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const inspeccionIdGuardada = inspeccionId;
@@ -93,7 +92,7 @@ const PcpInspeccionDv1B = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion, updateInspeccionDv1 } = useInspeccionData(inspeccionId, reset);
 
   useEffect(() => {
     if (inspeccionActual) {
@@ -176,7 +175,7 @@ const PcpInspeccionDv1B = () => {
         });
 
         if (result.isConfirmed) {
-          await updateInspeccion(inspeccionId, data);
+          await updateInspeccionDv1(inspeccionId, data);
           console.log("✅ Inspección actualizada correctamente:", data);
           const updatedOt = {
             ...otActual,
@@ -195,7 +194,7 @@ const PcpInspeccionDv1B = () => {
           console.log("❌ Acción cancelada por el usuario.");
         }
       } else {
-        console.log("🚀 Creando nueva inspección...");
+        console.log("El id inspección no es correcto...");
       }
     } catch (error) {
       console.error("❌ Error al procesar la inspección:", error);
@@ -276,8 +275,8 @@ const PcpInspeccionDv1B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpVh60.${item.ok}`)}
-                  checked={watch(`rodamientoPcpVh60.${item.ok}`)}
+                  {...register(`rodamientoPcpDv1.${item.ok}`)}
+                  checked={watch(`rodamientoPcpDv1.${item.ok}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -285,8 +284,8 @@ const PcpInspeccionDv1B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpVh60.${item.picado}`)}
-                  checked={watch(`rodamientoPcpVh60.${item.picado}`)}
+                  {...register(`rodamientoPcpDv1.${item.picado}`)}
+                  checked={watch(`rodamientoPcpDv1.${item.picado}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -294,8 +293,8 @@ const PcpInspeccionDv1B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpVh60.${item.laminado}`)}
-                  checked={watch(`rodamientoPcpVh60.${item.laminado}`)}
+                  {...register(`rodamientoPcpDv1.${item.laminado}`)}
+                  checked={watch(`rodamientoPcpDv1.${item.laminado}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -303,8 +302,8 @@ const PcpInspeccionDv1B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpVh60.${item.fallaEnJaula}`)}
-                  checked={watch(`rodamientoPcpVh60.${item.fallaEnJaula}`)}
+                  {...register(`rodamientoPcpDv1.${item.fallaEnJaula}`)}
+                  checked={watch(`rodamientoPcpDv1.${item.fallaEnJaula}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -312,14 +311,14 @@ const PcpInspeccionDv1B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpVh60.${item.desgaste}`)}
-                  checked={watch(`rodamientoPcpVh60.${item.desgaste}`)}
+                  {...register(`rodamientoPcpDv1.${item.desgaste}`)}
+                  checked={watch(`rodamientoPcpDv1.${item.desgaste}`)}
                 />
               </div>
               <div className="item-tittle">
                 <input
                   className="form-input"
-                  {...register(`rodamientoPcpVh60.${item.esp}`)}
+                  {...register(`rodamientoPcpDv1.${item.esp}`)}
                   placeholder="Especificar"
                 />
               </div>

@@ -204,7 +204,7 @@ const PcpInspeccionMiniGA = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/dashboard/etapa/inspeccionPCPDV1B`);
+    navigate(`/dashboard/etapa/inspeccionPcpMinigB`);
   };
 
   const handleClickA = (e) => {

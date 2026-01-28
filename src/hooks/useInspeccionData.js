@@ -29,6 +29,96 @@ const useInspeccionData = (inspeccionId, reset) => {
     fetchInspeccionData();
   }, [inspeccionId, reset]);
 
+  // Obtener los datos de la inspección
+  useEffect(() => {
+    const fetchInspeccionVh60Data = async () => {
+      if (!inspeccionId) return;
+
+      setLoading(true);
+      try {
+        const response = await InspeccionService.getInspeccionVh60ById(inspeccionId);
+        if (response.data) {
+          setInspeccionActual(response.data);
+          reset(response.data); // Rellena el formulario
+        }
+      } catch (error) {
+        setError("Error al obtener los datos de recepción");
+        console.error("Error al obtener los datos de recepción:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInspeccionVh60Data();
+  }, [inspeccionId, reset]);
+
+
+  useEffect(() => {
+    const fetchInspeccionDv1Data = async () => {
+      if (!inspeccionId) return;
+
+      setLoading(true);
+      try {
+        const response = await InspeccionService.getInspeccionDv1ById(inspeccionId);
+        if (response.data) {
+          setInspeccionActual(response.data);
+          reset(response.data); // Rellena el formulario
+        }
+      } catch (error) {
+        setError("Error al obtener los datos de recepción");
+        console.error("Error al obtener los datos de recepción:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInspeccionDv1Data();
+  }, [inspeccionId, reset]);
+
+  useEffect(() => {
+    const fetchInspeccionMinigData = async () => {
+      if (!inspeccionId) return;
+
+      setLoading(true);
+      try {
+        const response = await InspeccionService.getInspeccionMinigById(inspeccionId);
+        if (response.data) {
+          setInspeccionActual(response.data);
+          reset(response.data); // Rellena el formulario
+        }
+      } catch (error) {
+        setError("Error al obtener los datos de recepción");
+        console.error("Error al obtener los datos de recepción:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInspeccionMinigData();
+  }, [inspeccionId, reset]);
+  
+  useEffect(() => {
+    const fetchInspeccionCougarData = async () => {
+      if (!inspeccionId) return;
+
+      setLoading(true);
+      try {
+        const response = await InspeccionService.getInspeccionCougarById(inspeccionId);
+        if (response.data) {
+          setInspeccionActual(response.data);
+          reset(response.data); // Rellena el formulario
+        }
+      } catch (error) {
+        setError("Error al obtener los datos de recepción");
+        console.error("Error al obtener los datos de recepción:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInspeccionCougarData();
+  }, [inspeccionId, reset]);
+
   
   // Crear una nueva Inspección
   const newInspeccion = async (inspeccion, modeloEquipo) => {

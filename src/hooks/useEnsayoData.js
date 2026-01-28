@@ -29,6 +29,72 @@ const useEnsayoData = (ensayoId, reset) => {
     fetchEnsayoData();
   }, [ensayoId, reset]);
 
+  useEffect(() => {
+    const fetchEnsayoDv1Data = async () => {
+      if (!ensayoId) return;
+
+      setLoading(true);
+      try {
+        const response = await EnsayoService.getEnsayoDv1ById(ensayoId);
+        if (response.data) {
+          setEnsayoActual(response.data);
+          reset(response.data); // Rellena el formulario
+        }
+      } catch (error) {
+        setError("Error al obtener los datos de recepción");
+        console.error("Error al obtener los datos de recepción:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEnsayoDv1Data();
+  }, [ensayoId, reset]);
+
+  useEffect(() => {
+    const fetchEnsayoMinigData = async () => {
+      if (!ensayoId) return;
+
+      setLoading(true);
+      try {
+        const response = await EnsayoService.getEnsayoMinigById(ensayoId);
+        if (response.data) {
+          setEnsayoActual(response.data);
+          reset(response.data); // Rellena el formulario
+        }
+      } catch (error) {
+        setError("Error al obtener los datos de recepción");
+        console.error("Error al obtener los datos de recepción:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEnsayoMinigData();
+  }, [ensayoId, reset]);
+
+  useEffect(() => {
+    const fetchEnsayoCougarData = async () => {
+      if (!ensayoId) return;
+
+      setLoading(true);
+      try {
+        const response = await EnsayoService.getEnsayoCougarById(ensayoId);
+        if (response.data) {
+          setEnsayoActual(response.data);
+          reset(response.data); // Rellena el formulario
+        }
+      } catch (error) {
+        setError("Error al obtener los datos de recepción");
+        console.error("Error al obtener los datos de recepción:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEnsayoCougarData();
+  }, [ensayoId, reset]);
+
   // Crear una nueva Inspección
   const newEnsayoVh60 = async (data) => {
     try {

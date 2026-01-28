@@ -33,7 +33,7 @@ const PcpInspeccionMiniGB = () => {
   const recepcionIdGuardada = localStorage.getItem("recepcionId");
   const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
   const modeloGuardada = localStorage.getItem("modelo");
-   const inspeccionId = localStorage.getItem("inspeccionVh60Id");
+   const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const inspeccionIdGuardada = inspeccionId;
@@ -73,13 +73,13 @@ const PcpInspeccionMiniGB = () => {
     if (otActual) {
       console.log("✅ Datos recibidos:", otActual);
 
-      if (otActual.inspeccionPcpVh60 && otActual.inspeccionPcpVh60.id) {
+      if (otActual.inspeccionPcpMiniG && otActual.inspeccionPcpMiniG.id) {
         // setInspecionId(otActual.inspeccionPcpVh60.id);
       } else {
         console.warn(
           "⚠️ Advertencia: `otActual.inspeccionPcpVh60` no tiene un ID válido."
         );
-        setInspecionId(null); // Limpia el estado para evitar errores posteriores
+        //setInspecionId(null); // Limpia el estado para evitar errores posteriores
       }
     }
   }, [otActual]);
@@ -93,7 +93,7 @@ const PcpInspeccionMiniGB = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion, updateInspeccionMinig } = useInspeccionData(inspeccionId, reset);
 
   useEffect(() => {
     if (inspeccionActual) {
@@ -176,7 +176,7 @@ const PcpInspeccionMiniGB = () => {
         });
 
         if (result.isConfirmed) {
-          await updateInspeccion(inspeccionId, data);
+          await updateInspeccionMinig(inspeccionId, data);
           console.log("✅ Inspección actualizada correctamente:", data);
           const updatedOt = {
             ...otActual,
@@ -204,12 +204,12 @@ const PcpInspeccionMiniGB = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/dashboard/etapa/inspeccionPCPVh60C`);
+    navigate(`/dashboard/etapa/inspeccionPcpMinigC`);
   };
 
   const handleClickA = (e) => {
     e.preventDefault();
-    navigate(`/dashboard/etapa/inspeccionPCPVh60A`);
+    navigate(`/dashboard/etapa/inspeccionPcpMinigA`);
   };
 
   const dataImagen = () => {
@@ -242,7 +242,7 @@ const PcpInspeccionMiniGB = () => {
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">Inspección VH60 B</h3>
+      <h3 className="form-title">Inspección MINIG B</h3>
 
       <div className="form-group">
         <div className="label-input">
@@ -265,7 +265,7 @@ const PcpInspeccionMiniGB = () => {
       </div>
       <div className="lista-container">
         <h3>Rodamientos</h3>
-        {INSPECCION_PCPMINIGB_ITEMS.itemCuboPcpMiniG.map((item, index) => (
+        {INSPECCION_PCPMINIGB_ITEMS.rodamientoPcpMiniG.map((item, index) => (
           <div className="item-section" key={index}>
             <div className="item-field">
               <div className="item-tittle">
@@ -328,7 +328,7 @@ const PcpInspeccionMiniGB = () => {
         ))}
 
         <h3>Transmisión freno</h3>
-        {INSPECCION_PCPMINIGB_ITEMS.transmisionFrenoPcpVh60.map((item, index) => (
+        {INSPECCION_PCPMINIGB_ITEMS.itemCuboPcpMiniG.map((item, index) => (
           <div className="item-section" key={index}>
             <div className="item-field">
               <div className="item-tittle">

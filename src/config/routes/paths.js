@@ -22,67 +22,71 @@ export const OTLIST = '/dashboard/listar-ot';
 export const ETAPA = '/dashboard/etapa';
 export const CONSULTA = '/dashboard/etapa/consultarOt';
 
-export const INGRESOBM = '/dashboard/etapa/ingresoBM';
-export const BM_INGRESO = '/dashboard/etapa/ingresoBM';
+export const INGRESOBM = '/dashboard/etapa/ingresoBmec';
+export const BM_INGRESO = '/dashboard/etapa/ingresoBmec';
 
-export const RECEPCIONBM = '/dashboard/etapa/recepcionBM';
-export const BM_RECEPCION = '/dashboard/etapa/recepcionBM';
+export const RECEPCIONBM = '/dashboard/etapa/recepcionBmec';
+export const BM_RECEPCION = '/dashboard/etapa/recepcionBmec';
 
-export const INSPECCIONBM = '/dashboard/etapa/inspeccionBM';
-export const BM_INSPECCION = '/dashboard/etapa/inspeccionBM';
+export const INSPECCIONBM = '/dashboard/etapa/inspeccionBmec';
+export const BM_INSPECCION = '/dashboard/etapa/inspeccionBmec';
 
-export const ENSAYOBM = '/dashboard/etapa/ensayoBM';
-export const BM_UCL = '/dashboard/etapa/ensayoBM';
+export const ENSAYOBM = '/dashboard/etapa/ensayoBmec';
+export const BM_UCL = '/dashboard/etapa/ensayoBmec';
 
-export const SALIDABM = '/dashboard/etapa/salidaBM';
-export const BM_SALIDA = '/dashboard/etapa/salidaBM';
+export const SALIDABM = '/dashboard/etapa/salidaBmec';
+export const BM_SALIDA = '/dashboard/etapa/salidaBmec';
 
-export const PCP_INGRESO = '/dashboard/etapa/ingresoPCP';
+//todos lo PCP cambiados a Pcp
 
-export const PCP_RECEPCION = '/dashboard/etapa/recepcionPCP';
+export const PCP_INGRESO = '/dashboard/etapa/ingresoPcp';
 
-export const PCP_INSPECCION_VH60_A = '/dashboard/etapa/inspeccionPCPVh60A';
-export const PCP_INSPECCION_VH60_B = '/dashboard/etapa/inspeccionPCPVh60B';
-export const PCP_INSPECCION_VH60_C = '/dashboard/etapa/inspeccionPCPVh60C';
-export const PCP_INSPECCION_DV1_A = '/dashboard/etapa/inspeccionPCPDv1A';
-export const PCP_INSPECCION_DV1_B = '/dashboard/etapa/inspeccionPCPDv1B';
-export const PCP_INSPECCION_DV1_C = '/dashboard/etapa/inspeccionPCPDv1C';
-export const PCP_INSPECCION_MINIG_A = '/dashboard/etapa/inspeccionPCPMiniGA';
-export const PCP_INSPECCION_MINIG_B = '/dashboard/etapa/inspeccionPCPMiniGB';
-export const PCP_INSPECCION_MINIG_C = '/dashboard/etapa/inspeccionPCPMiniGC';
-export const PCP_INSPECCION_COUGAR_A = '/dashboard/etapa/inspeccionPCPCougarA';
-export const PCP_INSPECCION_COUGAR_B = '/dashboard/etapa/inspeccionPCPCougarB';
-export const PCP_INSPECCION_COUGAR_C = '/dashboard/etapa/inspeccionPCPCougarC';
+export const PCP_RECEPCION = '/dashboard/etapa/recepcionPcp';
 
-export const PCP_ENSAYO = '/dashboard/etapa/ensayoPCP';
-export const PCP_ENSAYO_VH60_A = '/dashboard/etapa/ensayoPCPVh60A';
-export const PCP_ENSAYO_VH60_B = '/dashboard/etapa/ensayoPCPVh60B';
+export const PCP_INSPECCION_VH60_A = '/dashboard/etapa/inspeccionPcpVh60A';
+export const PCP_INSPECCION_VH60_B = '/dashboard/etapa/inspeccionPcpVh60B';
+export const PCP_INSPECCION_VH60_C = '/dashboard/etapa/inspeccionPcpVh60C';
+export const PCP_INSPECCION_DV1_A = '/dashboard/etapa/inspeccionPcpDv1A';
+export const PCP_INSPECCION_DV1_B = '/dashboard/etapa/inspeccionPcpDv1B';
+export const PCP_INSPECCION_DV1_C = '/dashboard/etapa/inspeccionPcpDv1C';
+export const PCP_INSPECCION_MINIG_A = '/dashboard/etapa/inspeccionPcpMiniGA';
+export const PCP_INSPECCION_MINIG_B = '/dashboard/etapa/inspeccionPcpMiniGB';
+export const PCP_INSPECCION_MINIG_C = '/dashboard/etapa/inspeccionPcpMiniGC';
+export const PCP_INSPECCION_COUGAR_A = '/dashboard/etapa/inspeccionPcpCougarA';
+export const PCP_INSPECCION_COUGAR_B = '/dashboard/etapa/inspeccionPcpCougarB';
+export const PCP_INSPECCION_COUGAR_C = '/dashboard/etapa/inspeccionPcpCougarC';
 
-export const PCP_ENSAYO_DV1_A = '/dashboard/etapa/ensayoPCPDv1A';
-export const PCP_ENSAYO_DV1_B = '/dashboard/etapa/ensayoPCPDv1B';
+export const PCP_ENSAYO = '/dashboard/etapa/ensayoPcp';
+export const PCP_ENSAYO_VH60_A = '/dashboard/etapa/ensayoPcpVh60A';
+export const PCP_ENSAYO_VH60_B = '/dashboard/etapa/ensayoPcpVh60B';
 
-export const PCP_ENSAYO_MINIG_A = '/dashboard/etapa/ensayoPCPMiniGA';
-export const PCP_ENSAYO_MINIG_B = '/dashboard/etapa/ensayoPCPMiniGB';
+export const PCP_ENSAYO_DV1_A = '/dashboard/etapa/ensayoPcpDv1A';
+export const PCP_ENSAYO_DV1_B = '/dashboard/etapa/ensayoPcpDv1B';
 
-export const PCP_ENSAYO_COUGAR_A = '/dashboard/etapa/ensayoPCPCougarA';
-export const PCP_ENSAYO_COUGAR_B = '/dashboard/etapa/ensayoPCPCougarB';
+export const PCP_ENSAYO_MINIG_A = '/dashboard/etapa/ensayoPcpMiniGA';
+export const PCP_ENSAYO_MINIG_B = '/dashboard/etapa/ensayoPcpMiniGB';
+
+export const PCP_ENSAYO_COUGAR_A = '/dashboard/etapa/ensayoPcpCougarA';
+export const PCP_ENSAYO_COUGAR_B = '/dashboard/etapa/ensayoPcpCougarB';
 
 
-export const PCP_SALIDA = '/dashboard/etapa/salidaPCP';
+export const PCP_SALIDA = '/dashboard/etapa/salidaPcp';
 
-export const INGRESOUCL = '/dashboard/etapa/ingresoUCL';
+//todos lo UCL cambiados a Ucl
+
+export const INGRESOUCL = '/dashboard/etapa/ingresoUcl';
 // export const UCL_INGRESO = '/dashboard/etapa/ingresoUCL';
 
-export const RECEPCIONUCL = '/dashboard/etapa/recepcionUCL';
-export const UCL_RECEPCION = '/dashboard/etapa/recepcionUCL';
+export const RECEPCIONUCL = '/dashboard/etapa/recepcionUcl';
+export const UCL_RECEPCION = '/dashboard/etapa/recepcionUcl';
 
-export const INSPECCIONUCL = '/dashboard/etapa/inspeccionUCL';
-export const UCL_INSPECCION_A = '/dashboard/etapa/inspeccionUCLA';
-export const UCL_INSPECCION_B = '/dashboard/etapa/inspeccionUCLB';
-export const UCL_INSPECCION_C = '/dashboard/etapa/inspeccionUCLC';
+export const INSPECCIONUCL = '/dashboard/etapa/inspeccionUcl';
+export const UCL_INSPECCION_A = '/dashboard/etapa/inspeccionUclA';
+export const UCL_INSPECCION_B = '/dashboard/etapa/inspeccionUclB';
+export const UCL_INSPECCION_C = '/dashboard/etapa/inspeccionUclC';
 
-export const ENSAYOUCL = '/dashboard/etapa/ensayoUCL';
-export const UCL_ENSAYO = '/dashboard/etapa/ensayoUCL';
+export const ENSAYOUCL = '/dashboard/etapa/ensayoUcl';
+export const UCL_ENSAYO = '/dashboard/etapa/ensayoUcl';
 
-export const SALIDAUCL = '/dashboard/etapa/salidaUCL';
-export const UCL_SALIDA = '/dashboard/etapa/salidaUCL';
+export const SALIDAUCL = '/dashboard/etapa/salidaUcl';
+export const UCL_SALIDA = '/dashboard/etapa/salidaUcl';

@@ -7,6 +7,7 @@ import useEnsayoData from "../../../../../hooks/useEnsayoData";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { ENSAYO_A_ITEMS } from "../../../../../constants/ENSAYO_ITEMS";
 import ensayoVH60 from "../../../../../data/ensayoPCPVH60";
+import Swal from "sweetalert2";
 
 const PcpEnsayoVH60A = () => {
   const {
@@ -26,31 +27,6 @@ const PcpEnsayoVH60A = () => {
   const { updateEnsayoVh60 } = useEnsayoData(ensayoId);
 
   const etapaSiguiente = 7;
-
-  /* ================================
-     🔁 CARGA CORRECTA DEL ENSAYO
-  ================================= */
-  // useEffect(() => {
-  //   if (otActual?.ensayoVh60) {
-  //     reset({
-  //       ...ensayoVH60,
-  //       ...otActual.ensayoVh60,
-  //     });
-  //   }
-  // }, [otActual, reset]);
-
-//   useEffect(() => {
-//   if (otActual?.ensayoVh60) {
-//     reset({
-//       ...otActual.ensayoVh60,
-
-//       // 🔒 FORZAMOS CurrentF DESDE DEFAULT
-//       rpm100CurrentF: ensayoVH60.rpm100CurrentF,
-//       rpm200CurrentF: ensayoVH60.rpm200CurrentF,
-//       rpm300CurrentF: ensayoVH60.rpm300CurrentF,
-//     });
-//   }
-// }, [otActual, reset]);
 
 useEffect(() => {
   if (otActual?.ensayoVh60) {
@@ -88,32 +64,69 @@ useEffect(() => {
   /* ================================
      💾 SUBMIT
   ================================= */
-  const onSubmit = async (data) => {
-    try {
-      console.log("Ensayo enviado:", data);
+ const onSubmit = async (data) => {
+  try {
 
-      if (ensayoId) {
-        await updateEnsayoVh60(ensayoId, {
-          ...data,
-          id: Number(ensayoId),
-        });
-      }
+    
+    // 🔹 Confirmación antes de guardar
+    const result = await Swal.fire({
+      title: "¿Guardar cambios?",
+      text: "Los cambios realizados se guardarán en el ensayo",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#059080",
+      cancelButtonColor: "#f09898",
+      confirmButtonText: "Sí, guardar",
+      cancelButtonText: "Cancelar",
+    });
 
-      await updateOt(ordenId, {
-        ...otActual,
-        etapaActual: etapaSiguiente,
+    if (!result.isConfirmed) return;
+
+    console.log("Ensayo enviado:", data);
+
+    // 🔹 Actualizar ensayo
+    if (ensayoId) {
+      await updateEnsayoVh60(ensayoId, {
+        ...data,
+        id: Number(ensayoId),
       });
-
-      const modeloEquipo = otActual?.equipo?.tipoEquipo?.modelo;
-      const tipoEquipo = otActual?.equipo?.tipoEquipo?.tipo;
-
-      if (modeloEquipo && tipoEquipo) {
-        navigate(`/dashboard/etapa/ensayo${tipoEquipo}${modeloEquipo}B`);
-      }
-    } catch (error) {
-      console.error("❌ Error al guardar el ensayo:", error);
     }
-  };
+
+    // 🔹 Actualizar etapa de la OT
+    await updateOt(ordenId, {
+      ...otActual,
+      etapaActual: etapaSiguiente,
+    });
+
+    // 🔹 Mensaje de éxito
+    // await Swal.fire({
+    //   title: "Guardado",
+    //   text: "El ensayo se guardó correctamente",
+    //   icon: "success",
+    //   confirmButtonColor: "#059080",
+    // });
+
+    // 🔹 Navegación
+    const modeloEquipo = otActual?.equipo?.tipoEquipo?.modelo;
+    const tipoEquipo = otActual?.equipo?.tipoEquipo?.tipo;
+
+    if (modeloEquipo && tipoEquipo) {
+      navigate(`/dashboard/etapa/ensayo${tipoEquipo}${modeloEquipo}B`);
+    }
+
+  } catch (error) {
+    console.error("❌ Error al guardar el ensayo:", error);
+
+    // 🔹 Alerta de error
+    await Swal.fire({
+      title: "Error",
+      text: "Ocurrió un problema al guardar el ensayo",
+      icon: "error",
+      confirmButtonColor: "#f09898",
+    });
+  }
+};
+
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>

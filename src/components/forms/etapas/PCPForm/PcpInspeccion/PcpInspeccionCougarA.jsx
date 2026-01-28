@@ -1,59 +1,249 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "../PcpInspeccion.css";
 import "../PcpRecepcion2.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import inspeccionPCPVH60 from "../../../../../data/inspeccionPCPVH60";
+import useOrdenData from "../../../../../hooks/useOrdenData";
+import useInspeccionData from "../../../../../hooks/useInspeccionData";
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
-import inspeccionPcpCoguar from './../../../../../data/inspeccionPCPCougar';
+import Swal from "sweetalert2";
+import ImagenService from "../../../../../services/ImagenService";
+import { IMAGEN_INSPECCION } from "../../../../../config/routes/paths";
+import { INSPECCION_PCPCOUGARA_ITEMS } from "../../../../../constants/INSPECCION_PCPCOUGAR_ITEMS";
+import inspeccionPcpCoguar from "../../../../../data/inspeccionPCPCougar";
 
 const PcpInspeccionCougarA = () => {
+  
   const {
     register,
     handleSubmit,
-    control,
-    formState: { errors },
+    reset,
+    watch,
+    formState: { isDirty },
   } = useForm({
     defaultValues: inspeccionPcpCoguar,
   });
 
-  const tipoEquipo = window.localStorage.getItem("tipoEquipo");
-  const etapaActual = window.localStorage.getItem("etapaActual");
-  const numeroOT = window.localStorage.getItem("numeroOT");
+  const [imagenes, setImagenes] = useState(Array(6).fill(null));
+  const [urlsTemporales, setUrlsTemporales] = useState(Array(6).fill(null));
+
+  const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
+  const ordenId = localStorage.getItem("ordenId");
+  const recepcionIdGuardada = localStorage.getItem("recepcionId");
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
+   const inspeccionId = localStorage.getItem("inspeccionId");
+
+  //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  const inspeccionIdGuardada = inspeccionId;
+
+  console.log(inspeccionIdGuardada);
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+  useEffect(() => {
+  const fetchImagenes = async () => {
+    if (!inspeccionIdGuardada) return; // usar el ID real
+    try {
+      const response = await ImagenService.getImagenByInspeccionVh60Id(inspeccionIdGuardada);
+      setImagenesGuardadas(response.data || []); // si no hay datos, usar array vacío
+    } catch (error) {
+      console.error("Error al obtener las imágenes:", error);
+    }
+  };
+  console.log("inspeccion id" + inspeccionId)
+
+  fetchImagenes();
+}, [inspeccionIdGuardada]);
+
+  // Si quieres ver el valor actualizado de imagenesGuardadas, muévelo a otro useEffect
+  useEffect(() => {
+    console.log(imagenesGuardadas);
+  }, [imagenesGuardadas]);
+
+  
 
   const navigate = useNavigate();
 
+  console.log(ordenId);
+
+  const { allOts, otActual, updateOt, loading, error } = useOrdenData(ordenId);
+
+  useEffect(() => {
+    if (otActual) {
+      console.log("✅ Datos recibidos:", otActual);
+
+      if (otActual.inspeccionPcpCougar && otActual.inspeccionPcpCougar.id) {
+        console.log("✅ ID de Inspección Cougar encontrado:", otActual.inspeccionPcpCougar.id);
+        // setInspecionId(otActual.inspeccionPcpVh60.id);
+      } else {
+        console.warn(
+          "⚠️ Advertencia: `otActual.inspeccionPcpCougar` no tiene un ID válido."
+        );
+        // setInspecionId(null); // Limpia el estado para evitar errores posteriores
+      }
+    }
+  }, [otActual]);
+    
+ 
+  // const [inspeccionId, setInspecionId] = useState(null);>REVISAR>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+  useEffect(() => {
+    if (inspeccionId) {
+      console.log("✅ Este es el id de Inspección:", inspeccionId);
+    }
+  }, [inspeccionId]);
+
+  const { inspeccionActual, updateInspeccion, updateInspeccionCougar } = useInspeccionData(inspeccionId, reset);
+
+  useEffect(() => {
+    if (inspeccionActual) {
+      console.log("✅ Datos Inspección actual:", inspeccionActual);
+    }
+  }, [inspeccionActual]);
+
+  const etapaSiguiente = 4;
+
+  const handleImagenChange = (index, file) => {
+    const nuevasImagenes = [...imagenesGuardadas];
+    nuevasImagenes[index] = file;
+    setImagenesGuardadas(nuevasImagenes);
+
+    const nuevasUrls = [...urlsTemporales];
+    nuevasUrls[index] = URL.createObjectURL(file);
+    setUrlsTemporales(nuevasUrls);
+  };
+
+  const handleImagenClick = (index, e) => {
+    e.preventDefault();
+
+    // localStorage.setItem("inspeccionId", inspeccionId);
+    localStorage.setItem("imagenIndex", index);
+
+    // Obtener descripción si existe en imagenesGuardadas
+    const descripcion =
+      imagenesGuardadas[index]?.descripcion || "Imagen sin descripción";
+
+    const imagenSrc = obtenerSrcImagen(index);
+    if (imagenSrc) {
+      Swal.fire({
+        title: descripcion,
+        imageUrl: imagenSrc,
+        imageHeight: 350,
+        imageAlt: `Imagen ${index + 1}`,
+        confirmButtonColor: "#eb7302",
+        cancelButtonColor: "#059080",
+        showCancelButton: true,
+        confirmButtonText: "Editar",
+        cancelButtonText: "Cerrar",
+        // footer: '¿Quieres editar esta imagen?'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/dashboard/update-imagen-form-inspeccion");
+        }
+      });
+    } else {
+      navigate("/dashboard/imagen-form-inspeccion");
+    }
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      if (!isDirty) {
+        await Swal.fire({
+          title: "Sin cambios",
+          text: "No se detectaron modificaciones para guardar.",
+          icon: "info",
+          confirmButtonColor: "#059080",
+        });
+        return;
+      }
+
+      const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
+      const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
+
+      if (inspeccionId) {
+        console.log("Inspección existente:", inspeccionId);
+
+        const result = await Swal.fire({
+          title: "¿Quiere guardar los datos?",
+          text: "Los cambios son irreversibles",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#059080",
+          cancelButtonColor: "#f09898",
+          confirmButtonText: "Sí, guardar!",
+          cancelButtonText: "Cancelar",
+        });
+
+        if (result.isConfirmed) {
+          await updateInspeccionCougar(inspeccionId, data);
+          console.log("✅ Inspección actualizada correctamente:", data);
+          const updatedOt = {
+            ...otActual,
+            etapaActual: etapaSiguiente,
+          };
+          await updateOt(ordenId, updatedOt);
+
+          if (modeloEquipoActual && tipoEquipoActual) {
+            navigate(
+              `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}B`
+            );
+          } else {
+            console.error("❌ Error: Modelo de equipo no definido.");
+          }
+        } else {
+          console.log("❌ Acción cancelada por el usuario.");
+        }
+      } else {
+        console.log("🚀 Creando nueva inspección...");
+      }
+    } catch (error) {
+      console.error("❌ Error al procesar la inspección:", error);
+    }
+  };
+
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/dashboard/etapa/inspeccionPCPCougarB`);
+    navigate(`/dashboard/etapa/inspeccion${tipoEquipo}${modeloEquipo}B`);
   };
 
   const handleClickA = (e) => {
     e.preventDefault();
     navigate(`/dashboard/etapa/recepcionPCP`);
   };
-  
 
-  const onSubmit = async (data) => {
-    try {
-      const inspeccion = data;
-      // await InspeccionService.createInspeccion(inspeccion);
+  const dataImagen = () => {
+    // localStorage.setItem("inspeccionVh60Id", inspeccionId);
+    navigate(IMAGEN_INSPECCION);
+  };
 
-      console.log("Datos enviados exitosamente:", inspeccion);
-      navigate("/dashboard/etapa/inspeccionPCPMiniGB");
-    } catch (error) {
-      console.error("Error al enviar los datos:", error);
+  const obtenerSrcImagen = (index) => {
+    if (urlsTemporales[index]) {
+      return urlsTemporales[index];
     }
+
+    const imagenGuardada = imagenesGuardadas[index];
+
+    if (imagenGuardada?.url) {
+      const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+
+      // Asegurarse de que la URL comience con '/' si no es absoluta
+      const cleanUrl = imagenGuardada.url.startsWith("/")
+        ? imagenGuardada.url
+        : `/${imagenGuardada.url}`;
+
+      return `${base}${cleanUrl}`;
+    }
+
+    return null;
   };
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">
-        {/* Inspección A | {tipoEquipo} - OT N°{numeroOT} */}
-        Inspección Cougar A
-      </h3>
+      <h3 className="form-title">Inspección COUGAR A</h3>
 
-      {/* Campo para comentario */}
       <div className="form-group">
         <div className="label-input">
           <label className="form-label">Comentario</label>
@@ -73,126 +263,153 @@ const PcpInspeccionCougarA = () => {
           Guardar
         </button>
       </div>
+      <div className="lista-container">
+        <h3>Lubricantes</h3>
+        {INSPECCION_PCPCOUGARA_ITEMS.lubricantePcpCoguar.map(({ ok, pm, agua, sucio, esp, label }) => (
+          <div className="item-section" key={ok}>
+            <div className="item-field">
+              <div className="item-tittle">
+                <h4 className="item-title2">{label}</h4>
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">Ok</label>
+                <input
+                  type="checkbox"
+                  className="radio-input"
+                  {...register(`lubricantePcpCougar.${ok}`)}
+                  checked={watch(`lubricantePcpCougar.${ok}`)}
+                />
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">PM</label>
+                <input
+                  type="checkbox"
+                  className="radio-input"
+                  {...register(`lubricantePcpCougar.${pm}`)}
+                  checked={watch(`lubricantePcpCougar.${pm}`)}
+                />
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">Agua</label>
+                <input
+                  type="checkbox"
+                  className="radio-input"
+                  {...register(`lubricantePcpCougar.${agua}`)}
+                  checked={watch(`lubricantePcpCougar.${agua}`)}
+                />
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">Sucio</label>
+                <input
+                  type="checkbox"
+                  className="radio-input"
+                  {...register(`lubricantePcpCougar.${sucio}`)}
+                  checked={watch(`lubricantePcpCougar.${sucio}`)}
+                />
+              </div>
+              <div className="item-tittle">
+                <input
+                  className="form-input"
+                  placeholder="Especificar"
+                  {...register(`lubricantePcpCougar.${esp}`)}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
 
-      {/* Iterar sobre cada propiedad en itemRecepcion */}
-      <h3>Lubricantes</h3>
-
-      {/* //modificar nombre de acuerdo al Json */}
-      {["lubBlockPortaRod"].map((itemKey) => (
-        <div className="item-section" key={itemKey}>
-          <div className="item-field">
+        <h3>Item</h3>
+        {INSPECCION_PCPCOUGARA_ITEMS.itemPcpCoguar.map((item) => (
+          <div className="item-section" key={item.label}>
             <div className="item-tittle">
-              <h4 className="item-title">{itemKey}</h4>
+              <h4 className="item-title">{item.label}</h4>
             </div>
             <div className="item-tittle">
-              <label className="form-label-1">Ok</label>
+              <label className="form-label">Ok</label>
               <input
-                className="radio-input"
                 type="checkbox"
-                {...register(`lubricantePcpVh60.${itemKey}.ok`)}
+                className="radio-input"
+                {...register(`itemPcpCougar.${item.ok}`)}
+                checked={watch(`itemPcpCougar.${item.ok}`)}
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label-1">PM</label>
+              <label className="form-label">Retén</label>
               <input
-                className="radio-input"
                 type="checkbox"
-                {...register(
-                  `lubricantePcpVh60.${itemKey}.particulasMetalicas`
-                )}
+                className="radio-input"
+                {...register(`itemPcpCougar.${item.reten}`)}
+                checked={watch(`itemPcpCougar.${item.reten}`)}
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label-1">Agua</label>
+              <label className="form-label">Rodamiento</label>
               <input
-                className="radio-input"
                 type="checkbox"
-                {...register(`lubricantePcpVh60.${itemKey}.agua`)}
+                className="radio-input"
+                {...register(`itemPcpCougar.${item.rodamiento}`)}
+                checked={watch(`itemPcpCougar.${item.rodamiento}`)}
               />
             </div>
             <div className="item-tittle">
-              <label className="form-label-1">Sucio</label>
+              <label className="form-label">Diámetro</label>
               <input
-                className="radio-input"
                 type="checkbox"
-                {...register(`lubricantePcpVh60.${itemKey}.sucio`)}
+                className="radio-input"
+                {...register(`itemPcpCougar.${item.diametro}`)}
+                checked={watch(`itemPcpCougar.${item.diametro}`)}
               />
             </div>
-
+            <div className="item-tittle">
+              <label className="form-label">Deformado</label>
+              <input
+                type="checkbox"
+                className="radio-input"
+                {...register(`itemPcpCougar.${item.deformado}`)}
+                checked={watch(`itemPcpCougar.${item.deformado}`)}
+              />
+            </div>
             <div className="item-tittle">
               <input
                 className="form-input"
-                {...register(`lubricantePcpVh60.${itemKey}.especificar`)}
+                {...register(`itemPcpCougar.${item.esp}`)}
                 placeholder="Especificar"
               />
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+      <div className="imagenes">
+        {[0, 1, 2, 3, 4, 5].map((index) => {
+          const imagenSrc = obtenerSrcImagen(index);
 
-      <h3>Item</h3>
-      {["ejeMotriz", "blockCabezal", "placaInferior"].map((itemKey) => (
-        <div className="item-section" key={itemKey}>
-          <div className="item-tittle">
-            <h4 className="item-title">{itemKey}</h4>
-          </div>
-          <div className="item-tittle">
-            <label className="form-label">Ok</label>
-            <input
-              type="checkbox"
-              name="check aceite"
-              className="radio-input"
-              {...register(`itemPcpVh60.${itemKey}.ok`)}
-            />
-          </div>
-          <div className="item-tittle">
-            <label className="form-label">Retén</label>
-            <input
-              type="checkbox"
-              name="check aceite"
-              className="radio-input"
-              {...register(`itemPcpVh60.${itemKey}.alojamientoReten`)}
-            />
-          </div>
-          <div className="item-tittle">
-            <label className="form-label">Rodamiento</label>
-            <input
-              type="checkbox"
-              name="check aceite"
-              className="radio-input"
-              {...register(`itemPcpVh60.${itemKey}.alojamientoRodamiento`)}
-            />
-          </div>
-          <div className="item-tittle">
-            <label className="form-label">Diametro</label>
-            <input
-              type="checkbox"
-              name="check aceite"
-              className="radio-input"
-              {...register(`itemPcpVh60.${itemKey}.diametro`)}
-            />
-          </div>
-          <div className="item-tittle">
-            <label className="form-label">Deformado</label>
-            <input
-              type="checkbox"
-              name="check aceite"
-              className="radio-input"
-              {...register(`itemPcpVh60.${itemKey}.deformado`)}
-            />
-          </div>
-
-          <div className="item-tittle">
-            <input
-              className="form-input"
-              {...register(`itemPcpVh60.${itemKey}.especificar`)}
-              placeholder="Especificar"
-            />
-          </div>
-        </div>
-      ))}
-
-      
+          return imagenSrc ? (
+            <label key={index} className="imagen-prueba">
+              <img
+                src={imagenSrc}
+                alt={`Imagen ${index + 1}`}
+                className="imagen-preview"
+                onClick={(e) => handleImagenClick(index, e)}
+              />
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={(e) => handleImagenChange(index, e.target.files[0])}
+              />
+            </label>
+          ) : (
+            <div key={index} className="imagen-prueba">
+              <div
+                className="boton-agregar-imagen"
+                onClick={() => dataImagen()}
+              >
+                <span>+</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </form>
   );
 };

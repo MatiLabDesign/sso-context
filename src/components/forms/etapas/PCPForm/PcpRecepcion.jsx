@@ -10,9 +10,6 @@ import Swal from "sweetalert2";
 import { FaArrowRight } from "react-icons/fa";
 import { IMAGEN } from "../../../../config/routes/paths";
 import ImagenService from "../../../../services/ImagenService";
-import inspeccionPcpDv1 from "./../../../../data/inspeccionPCPDv1";
-import inspeccionPcpMiniG from "./../../../../data/inspeccionPCPminiG";
-import inspeccionPcpCoguar from "./../../../../data/inspeccionPCPCougar";
 import useImagenData from "../../../../hooks/useImagenData";
 import { RECEPCION_ITEMS } from "../../../../constants/RECEPCION_ITEMS";
 
@@ -267,7 +264,7 @@ const PcpRecepcion = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/dashboard/etapa/inspeccionPCPVh60A`);
+    navigate(`/dashboard/etapa/inspeccion${tipoEquipo}${modeloEquipo}A`);
   };
 
   const dataImagen = () => {
