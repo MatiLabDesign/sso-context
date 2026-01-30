@@ -8,6 +8,7 @@ import useInspeccionData from "../../../../../hooks/useInspeccionData";
 import useEnsayoData from "../../../../../hooks/useEnsayoData";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { INSPECCION_PCPDV1C_ITEMS } from "../../../../../constants/INSPECCION_PCPDV1_ITEMS";
+import Swal from "sweetalert2";
 
 const PcpInspeccionDv1C = () => {
   const {
@@ -87,7 +88,7 @@ const PcpInspeccionDv1C = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion, updateInspeccionDv1 } = useInspeccionData(
+  const { inspeccionActual, updateInspeccionDv1 } = useInspeccionData(
     inspeccionId,
     reset,
   );

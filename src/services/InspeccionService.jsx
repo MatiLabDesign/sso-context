@@ -46,7 +46,7 @@ class InspeccionService {
     return axios.put(`${INSPECCION_PCPMINIG_URL}/${id}`, inspeccion);
   }
   updateInspeccionCougar(id, inspeccion) {
-    return axios.put(`${INSPECCION_PCPCOUGAR_URL}${id}`, inspeccion);
+    return axios.put(`${INSPECCION_PCPCOUGAR_URL}/${id}`, inspeccion);
   }
 
   softDeleteInspeccionVh60(id) {

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "../PcpRecepcion2.css";
 import { useNavigate, Link } from "react-router-dom";
-import inspeccionPCPVH60 from "../../../../../data/inspeccionPCPVH60";
 import useOrdenData from "../../../../../hooks/useOrdenData";
 import useInspeccionData from "../../../../../hooks/useInspeccionData";
 import { FaArrowRight } from "react-icons/fa";
@@ -29,9 +28,9 @@ const PcpInspeccionDv1B = () => {
 
   const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
   const ordenId = localStorage.getItem("ordenId");
-  const recepcionIdGuardada = localStorage.getItem("recepcionId");
-  const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
-  const modeloGuardada = localStorage.getItem("modelo");
+  const recepcionId = localStorage.getItem("recepcionId");
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
    const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -72,11 +71,11 @@ const PcpInspeccionDv1B = () => {
     if (otActual) {
       console.log("✅ Datos recibidos:", otActual);
 
-      if (otActual.inspeccionPcpVh60 && otActual.inspeccionPcpVh60.id) {
+      if (otActual.inspeccionPcpDV1 && otActual.inspeccionPcpDV1.id) {
         // setInspecionId(otActual.inspeccionPcpVh60.id);
       } else {
         console.warn(
-          "⚠️ Advertencia: `otActual.inspeccionPcpVh60` no tiene un ID válido."
+          "⚠️ Advertencia: `otActual.inspeccionPcpDV1` no tiene un ID válido."
         );
         // setInspecionId(null); // Limpia el estado para evitar errores posteriores
       }
@@ -92,7 +91,7 @@ const PcpInspeccionDv1B = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion, updateInspeccionDv1 } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccionDv1 } = useInspeccionData(inspeccionId, reset);
 
   useEffect(() => {
     if (inspeccionActual) {
@@ -115,7 +114,7 @@ const PcpInspeccionDv1B = () => {
   const handleImagenClick = (index, e) => {
     e.preventDefault();
 
-    localStorage.setItem("inspeccionId", inspeccionId);
+    // localStorage.setItem("inspeccionId", inspeccionId);
     localStorage.setItem("imagenIndex", index);
 
     // Obtener descripción si existe en imagenesGuardadas

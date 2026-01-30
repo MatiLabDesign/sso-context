@@ -93,7 +93,7 @@ const PcpInspeccionDv1A = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion, } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion, updateInspeccionDv1 } = useInspeccionData(inspeccionId, reset);
 
   useEffect(() => {
     if (inspeccionActual) {
@@ -176,7 +176,7 @@ const PcpInspeccionDv1A = () => {
         });
 
         if (result.isConfirmed) {
-          await updateInspeccion(inspeccionId, data);
+          await updateInspeccionDv1(inspeccionId, data);
           console.log("✅ Inspección actualizada correctamente:", data);
           const updatedOt = {
             ...otActual,

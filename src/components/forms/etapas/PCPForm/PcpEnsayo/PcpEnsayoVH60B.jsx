@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useOrdenData from "../../../../../hooks/useOrdenData";
 import useEnsayoData from "../../../../../hooks/useEnsayoData";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
-import { ENSAYO_B_ITEMS } from "../../../../../constants/ENSAYO_ITEMS";
+import { ENSAYO_B_ITEMS, ENSAYO_VH60_B_ITEMS } from "../../../../../constants/ENSAYO_ITEMS";
 import ensayoVH60 from "../../../../../data/ensayoPCPVH60";
 import Swal from "sweetalert2";
 
@@ -155,7 +155,7 @@ const PcpEnsayoVH60B = () => {
 
       {/* Ítems */}
       <div className="lista-container2">
-        {ENSAYO_B_ITEMS.map(({ estado, observacion, label }) => (
+        {ENSAYO_VH60_B_ITEMS.map(({ estado, observacion, label }) => (
           <div className="item-section" key={estado}>
             <div className="item-field">
               <div className="item-title">

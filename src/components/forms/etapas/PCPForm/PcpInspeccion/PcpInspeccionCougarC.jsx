@@ -13,7 +13,6 @@ import useEnsayoData from "../../../../../hooks/useEnsayoData";
 import inspeccionPcpCoguar from "../../../../../data/inspeccionPCPCougar";
 import { INSPECCION_PCPCOUGARC_ITEMS } from "../../../../../constants/INSPECCION_PCPCOUGAR_ITEMS";
 
-
 const PcpInspeccionCougarC = () => {
   const {
     register,
@@ -33,8 +32,8 @@ const PcpInspeccionCougarC = () => {
   const recepcionId = localStorage.getItem("recepcionId");
   const tipoEquipo = localStorage.getItem("tipoEquipo");
   const modeloEquipo = localStorage.getItem("modeloEquipo");
-   const inspeccionId = localStorage.getItem("inspeccionId");
-   const ensayoId = localStorage.getItem("ensayoId");
+  const inspeccionId = localStorage.getItem("inspeccionId");
+  const ensayoId = localStorage.getItem("ensayoId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const inspeccionIdGuardada = inspeccionId;
@@ -43,26 +42,25 @@ const PcpInspeccionCougarC = () => {
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   useEffect(() => {
-  const fetchImagenes = async () => {
-    if (!inspeccionIdGuardada) return; // usar el ID real
+    const fetchImagenes = async () => {
+      if (!inspeccionIdGuardada) return; // usar el ID real
 
-    try {
-      const response = await ImagenService.getImagenByInspeccionVh60Id(inspeccionIdGuardada);
-      setImagenesGuardadas(response.data || []); // si no hay datos, usar array vacío
-    } catch (error) {
-      console.error("Error al obtener las imágenes:", error);
-    }
-  };
+      try {
+        const response =
+          await ImagenService.getImagenByInspeccionVh60Id(inspeccionIdGuardada);
+        setImagenesGuardadas(response.data || []); // si no hay datos, usar array vacío
+      } catch (error) {
+        console.error("Error al obtener las imágenes:", error);
+      }
+    };
 
-  fetchImagenes();
-}, [inspeccionIdGuardada]);
+    fetchImagenes();
+  }, [inspeccionIdGuardada]);
 
   // Si quieres ver el valor actualizado de imagenesGuardadas, muévelo a otro useEffect
   useEffect(() => {
     console.log(imagenesGuardadas);
   }, [imagenesGuardadas]);
-
-  
 
   const navigate = useNavigate();
 
@@ -78,14 +76,13 @@ const PcpInspeccionCougarC = () => {
         // setInspecionId(otActual.inspeccionPcpVh60.id);
       } else {
         console.warn(
-          "⚠️ Advertencia: `otActual.inspeccionPcpCougar` no tiene un ID válido."
+          "⚠️ Advertencia: `otActual.inspeccionPcpCougar` no tiene un ID válido.",
         );
         // setInspecionId(null); // Limpia el estado para evitar errores posteriores
       }
     }
   }, [otActual]);
-    
- 
+
   // const [inspeccionId, setInspecionId] = useState(null);>REVISAR>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   useEffect(() => {
@@ -94,8 +91,9 @@ const PcpInspeccionCougarC = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion, updateInspeccionCougar } = useInspeccionData(inspeccionId, reset);
-  const { newEnsayoCougar  } = useEnsayoData();
+  const { inspeccionActual, updateInspeccion, updateInspeccionCougar } =
+    useInspeccionData(inspeccionId, reset);
+  const { newEnsayoCougar } = useEnsayoData();
   useEffect(() => {
     if (inspeccionActual) {
       console.log("✅ Datos Inspección actual:", inspeccionActual);
@@ -185,78 +183,74 @@ const PcpInspeccionCougarC = () => {
           };
           await updateOt(ordenId, updatedOt);
 
-
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>          
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>          
-//>>>>>>>>>>>>>>>>CREAR ENSAYO Y ACTUALIZAR ENSAYO ID EN OT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>          
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>          
+          //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          //>>>>>>>>>>>>>>>>CREAR ENSAYO Y ACTUALIZAR ENSAYO ID EN OT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
           // Reemplazar el bloque por este:
-const ensayoExisteEnOt = otActual?.ensayoCougar?.id;
-console.log(
-  "Verificando existencia de ensayo en OT:",
-  ensayoExisteEnOt
-);
+          const ensayoExisteEnOt = otActual?.ensayoCougar?.id;
+          console.log(
+            "Verificando existencia de ensayo en OT:",
+            ensayoExisteEnOt,
+          );
 
-if (!ensayoExisteEnOt) {
-  try {
-    // 🔹 Crear ensayo en backend
-    const resp = await newEnsayoCougar(data);
-    console.log("Respuesta de creación de ensayo:", resp);
+          if (!ensayoExisteEnOt) {
+            try {
+              // 🔹 Crear ensayo en backend
+              const resp = await newEnsayoCougar(data);
+              console.log("Respuesta de creación de ensayo:", resp);
 
-    // 🔹 Obtener ID del ensayo recién creado
-    const nuevoEnsayoId = resp?.id ?? resp?.data?.id;
+              // 🔹 Obtener ID del ensayo recién creado
+              const nuevoEnsayoId = resp?.id ?? resp?.data?.id;
 
-    if (!nuevoEnsayoId) {
-      throw new Error("No se obtuvo un ID válido del nuevo ensayo.");
-    }
+              if (!nuevoEnsayoId) {
+                throw new Error("No se obtuvo un ID válido del nuevo ensayo.");
+              }
 
-    // 🔹 Actualizar OT vinculando el nuevo ensayo
-    const updatedOt = {
-      ...otActual,
-      ensayoCougar: { id: nuevoEnsayoId },
-      etapaActual: etapaSiguiente,
-    };
+              // 🔹 Actualizar OT vinculando el nuevo ensayo
+              const updatedOt = {
+                ...otActual,
+                ensayoCougar: { id: nuevoEnsayoId },
+                etapaActual: etapaSiguiente,
+              };
 
-    await updateOt(ordenId, updatedOt);
+              await updateOt(ordenId, updatedOt);
 
-    // 🔹 Persistir ID para los siguientes pasos
-    localStorage.setItem("ensayoId", nuevoEnsayoId);
+              // 🔹 Persistir ID para los siguientes pasos
+              localStorage.setItem("ensayoId", nuevoEnsayoId);
 
-    console.log("✅ OT actualizada con nuevo ensayo:", nuevoEnsayoId);
+              console.log("✅ OT actualizada con nuevo ensayo:", nuevoEnsayoId);
 
-    await Swal.fire({
-      title: "Perfecto!",
-      text: "Ensayo creado y vinculado a la OT con éxito",
-      icon: "success",
-      confirmButtonColor: "#059080",
-    });
+              await Swal.fire({
+                title: "Perfecto!",
+                text: "Ensayo creado y vinculado a la OT con éxito",
+                icon: "success",
+                confirmButtonColor: "#059080",
+              });
+            } catch (error) {
+              console.error("❌ Error al crear ensayo y actualizar OT:", error);
 
-  } catch (error) {
-    console.error("❌ Error al crear ensayo y actualizar OT:", error);
-
-    await Swal.fire({
-      title: "Error",
-      text: "No se pudo crear el ensayo o actualizar la OT",
-      icon: "error",
-      confirmButtonColor: "#f09898",
-    });
-  }
-} else {
-  console.log(
-    "ℹ️ Ya existe un ensayo asociado a la OT. ID:",
-    ensayoExisteEnOt
-  );
-}
-
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-          if (modeloEquipoActual && tipoEquipoActual) {
-            navigate(
-              `/dashboard/etapa/ensayo${tipoEquipoActual}`
+              await Swal.fire({
+                title: "Error",
+                text: "No se pudo crear el ensayo o actualizar la OT",
+                icon: "error",
+                confirmButtonColor: "#f09898",
+              });
+            }
+          } else {
+            console.log(
+              "ℹ️ Ya existe un ensayo asociado a la OT. ID:",
+              ensayoExisteEnOt,
             );
+          }
+
+          //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          if (modeloEquipoActual && tipoEquipoActual) {
+            navigate(`/dashboard/etapa/ensayo${tipoEquipoActual}`);
           } else {
             console.error("❌ Error: Modelo de equipo no definido.");
           }
@@ -264,7 +258,7 @@ if (!ensayoExisteEnOt) {
           console.log("❌ Acción cancelada por el usuario.");
         }
       } else {
-        console.log("🚀 Creando nueva inspección...");
+        console.log("NO EXISTE EL ENSAYO ID...");
       }
     } catch (error) {
       console.error("❌ Error al procesar la inspección:", error);
@@ -295,7 +289,6 @@ if (!ensayoExisteEnOt) {
 
     if (imagenGuardada?.url) {
       const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
-
 
       // Asegurarse de que la URL comience con '/' si no es absoluta
       const cleanUrl = imagenGuardada.url.startsWith("/")

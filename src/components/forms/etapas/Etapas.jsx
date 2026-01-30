@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./Etapas.css";
 import { Link, Outlet } from "react-router-dom";
 import useOrdenData from "../../../hooks/useOrdenData";
@@ -43,7 +43,7 @@ const etapasMap = {
   1: `ingreso${otActual?.equipo.tipoEquipo.tipo || ""}`,
   2: `recepcion${otActual?.equipo.tipoEquipo.tipo || ""}`,
   3: `inspeccion${otActual?.equipo.tipoEquipo.tipo || ""}${otActual?.equipo.tipoEquipo.modelo || ""}A`,
-  4: `ensayo${otActual?.equipo.tipoEquipo.tipo || ""}`,
+  4: `ensayo${otActual?.equipo.tipoEquipo.tipo || ""}${otActual?.equipo.tipoEquipo.modelo || ""}A`,
   5: `salida${otActual?.equipo.tipoEquipo.tipo || ""}`
 };
 

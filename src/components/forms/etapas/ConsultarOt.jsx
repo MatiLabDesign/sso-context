@@ -30,11 +30,13 @@ const ConsultarOt = () => {
       otActual?.equipo.tipoEquipo.modelo || ""
     }B`,
     8: `salida${otActual?.equipo.tipoEquipo.tipo || ""}`,
+    9: `salida${otActual?.equipo.tipoEquipo.tipo || ""}`,
   };
 
   ///////////////////ACA TENGO QUE REVISAR LAS URL/////////////////
   const handleClick = () => {
     console.log("Evento antes de navegar...");
+    // navigate(`/dashboard/etapa/salida${otActual?.equipo.tipoEquipo.tipo || ""}`);
     navigate(`/dashboard/etapa/${etapasMap[otActual?.etapaActual]}`);
   };
 

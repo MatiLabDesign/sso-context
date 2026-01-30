@@ -9,8 +9,9 @@ import { IMAGEN } from "../../../../config/routes/paths";
 
 const PcpSalida = () => {
   const numeroOrden = window.localStorage.getItem("numeroOT");
-  const tipoEquipo = window.localStorage.getItem("tipoEquipo");
   const ordenId = localStorage.getItem("ordenId");
+  const tipoEquipo = window.localStorage.getItem("tipoEquipo");
+  const modeloEquipo = window.localStorage.getItem("modeloEquipo");
 
   const {
     register,
@@ -97,7 +98,7 @@ const PcpSalida = () => {
 
   return (
     <div className="recepcion-form">
-      <h3 className="form-title">Salida PCP</h3>
+      <h3 className="form-title">Salida {tipoEquipo} {modeloEquipo}</h3>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-groupS">
@@ -168,10 +169,18 @@ const PcpSalida = () => {
           </div> */}
 
           <div className="button-container">
+            {otActual?.activa == false && (
+              <h4 className="terminada">Ot TERMINADA</h4>
+              
+            )}
+
+          </div>
+          <div className="button-container">
             {otActual?.activa !== false && (
               <button type="submit" className="btn-salida">
                 Terminar
               </button>
+              
             )}
 
           </div>

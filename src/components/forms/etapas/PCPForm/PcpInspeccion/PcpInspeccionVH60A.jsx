@@ -29,9 +29,9 @@ const PcpInspeccionVH60A = () => {
 
   const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
   const ordenId = localStorage.getItem("ordenId");
-  const recepcionIdGuardada = localStorage.getItem("recepcionId");
-  const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
-  const modeloGuardada = localStorage.getItem("modelo");
+  const recepcionId = localStorage.getItem("recepcionId");
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
    const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -204,12 +204,12 @@ const PcpInspeccionVH60A = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/dashboard/etapa/inspeccionPCPVh60B`);
+    navigate(`/dashboard/etapa/inspeccion${tipoEquipo}${modeloEquipo}B`);
   };
 
   const handleClickA = (e) => {
     e.preventDefault();
-    navigate(`/dashboard/etapa/recepcionPCP`);
+    navigate(`/dashboard/etapa/recepcion${tipoEquipo}`);
   };
 
   const dataImagen = () => {

@@ -69,10 +69,10 @@ import PcpInspeccionVH60A from "../components/forms/etapas/PCPForm/PcpInspeccion
 import PcpEnsayoVH60B from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVH60B";
 import PcpEnsayoVH60A from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVH60A";
 import UclInspeccionA from "../components/forms/etapas/UCLForm/UclInspeccionA";
-import PcpEnsayoDv1A from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoDv1B";
+import PcpEnsayoDv1A from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoDv1A";
 import PcpEnsayoMiniGA from './../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoMiniGA';
 import PcpEnsayoMiniGB from './../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoMiniGB';
-import PcpEnsayoCougarA from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoCougarB";
+import PcpEnsayoCougarA from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoCougarA";
 import PcpEnsayoDv1B from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoDv1B";
 import PcpEnsayoCougarB from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoCougarB";
 

@@ -269,7 +269,7 @@ const PcpInspeccionMinigC = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/dashboard/etapa/ensayo${tipoEquipo}`);
+    navigate(`/dashboard/etapa/ensayo${tipoEquipo}${modeloEquipo}A`);
   };
 
   const handleClickA = (e) => {

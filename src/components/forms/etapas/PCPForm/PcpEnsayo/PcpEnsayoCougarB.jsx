@@ -1,137 +1,205 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import "../PcpEnsayo.css"; // Asegúrate de tener el archivo CSS
-import RecepcionService from "../../../../../services/RecepcionService";
+import "../PcpEnsayo.css";
 import { useNavigate } from "react-router-dom";
-import ensayoPCPMiniG from "../../../../../data/ensayoPCPMiniG";
-import EnsayoService from "../../../../../services/EnsayoService";
+import useOrdenData from "../../../../../hooks/useOrdenData";
+import useEnsayoData from "../../../../../hooks/useEnsayoData";
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { ENSAYO_COUGAR_B_ITEMS } from "../../../../../constants/ENSAYO_ITEMS";
+import Swal from "sweetalert2";
+import ensayoPCPCougar from "../../../../../data/ensayoPCPCougar";
 
 const PcpEnsayoCougarB = () => {
-  const { register, handleSubmit } = useForm({defaultValues:ensayoPCPMiniG});
-
-  const tipoEquipo = window.localStorage.getItem("tipoEquipo");
-  const etapaActual = window.localStorage.getItem("etapaActual");
-  const numeroOT = window.localStorage.getItem("numeroOT");
-  const ordenId = window.localStorage.getItem("ordenId");
+  const ordenId = localStorage.getItem("ordenId");
+  const ensayoId = localStorage.getItem("ensayoId");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
 
   const navigate = useNavigate();
 
-  // Efecto para cargar los datos persistidos//////////
-  //  useEffect(() => {
-  //   const fetchRecepcionData = async () => {
-  //     try {
-  //       const response = await RecepcionService.getRecepcionById(ordenId);
-  //       if (response.data) {
-  //         reset(response.data);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error al obtener los datos de recepción:", error);
-  //     }
-  //   };
+  // FORM
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { isDirty },
+  } = useForm({
+    defaultValues: ensayoPCPCougar,
+  });
 
-  //   fetchRecepcionData();
-  // }, [numeroOT, reset]);
-  /////////////////////////////////////////
-  
-  const calcularTorque = () => {
-    //acá la formula para calcular el torque
-  }
+  // DATA
+  const { otActual } = useOrdenData(ordenId);
+  const { ensayoActual, updateEnsayoCougar } = useEnsayoData(ensayoId);
 
+  // 🔁 CARGA CONTROLADA (igual que Recepción)
+  useEffect(() => {
+    if (ensayoActual) {
+      reset({
+        ...ensayoPCPCougar,
+
+        // 🔒 FORZADOS DESDE DEFAULT (NO VIENEN DEL BACKEND)
+
+        // RPM 100
+        rpm100CurrentF: ensayoPCPCougar.rpm100CurrentF,
+        rpm100VoltajeSalida: ensayoPCPCougar.rpm100VoltajeSalida,
+        rpm100TorqueReferencia1: ensayoPCPCougar.rpm100TorqueReferencia1,
+        rpm100TorqueReferencia2: ensayoPCPCougar.rpm100TorqueReferencia2,
+
+        // RPM 200
+        rpm200CurrentF: ensayoPCPCougar.rpm200CurrentF,
+        rpm200VoltajeSalida: ensayoPCPCougar.rpm200VoltajeSalida,
+        rpm200TorqueReferencia1: ensayoPCPCougar.rpm200TorqueReferencia1,
+        rpm200TorqueReferencia2: ensayoPCPCougar.rpm200TorqueReferencia2,
+
+        // RPM 230
+        rpm230CurrentF: ensayoPCPCougar.rpm230CurrentF,
+        rpm230VoltajeSalida: ensayoPCPCougar.rpm230VoltajeSalida,
+        rpm230TorqueReferencia1: ensayoPCPCougar.rpm230TorqueReferencia1,
+        rpm230TorqueReferencia2: ensayoPCPCougar.rpm230TorqueReferencia2,
+
+        // RPM 300
+        rpm300CurrentF: ensayoPCPCougar.rpm300CurrentF,
+        rpm300VoltajeSalida: ensayoPCPCougar.rpm300VoltajeSalida,
+        rpm300TorqueReferencia1: ensayoPCPCougar.rpm300TorqueReferencia1,
+        rpm300TorqueReferencia2: ensayoPCPCougar.rpm300TorqueReferencia2,
+      });
+    }
+  }, [ensayoActual, reset]);
+
+  // 💾 GUARDAR
   const onSubmit = async (data) => {
     try {
-      const ensayo = data;
-      await EnsayoService.createEnsayo(ensayo);
+      // 🔹 No hay cambios
+      if (!isDirty) {
+        await Swal.fire({
+          title: "Sin cambios",
+          text: "No se detectaron modificaciones para guardar",
+          icon: "info",
+          confirmButtonColor: "#059080",
+        });
+        return;
+      }
 
-      console.log("Datos enviados exitosamente:", ensayo);
-      navigate("/dashboard/etapa/salidaPcp");
+      // 🔹 Validación de ID
+      if (!ensayoId) {
+        await Swal.fire({
+          title: "Error",
+          text: "No existe un ensayo asociado para guardar",
+          icon: "error",
+          confirmButtonColor: "#f09898",
+        });
+        console.warn("No existe ensayoId");
+        return;
+      }
+
+      // 🔹 Confirmación
+      const result = await Swal.fire({
+        title: "¿Guardar cambios?",
+        text: "Los cambios realizados se guardarán en el ensayo",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#059080",
+        cancelButtonColor: "#f09898",
+        confirmButtonText: "Sí, guardar",
+        cancelButtonText: "Cancelar",
+      });
+
+      if (!result.isConfirmed) return;
+
+      // 🔹 Guardado
+      await updateEnsayoMinig(ensayoId, {
+        ...data,
+        id: Number(ensayoId),
+      });
+
+      // 🔹 Éxito
+      // await Swal.fire({
+      //   title: "Guardado",
+      //   text: "El ensayo se guardó correctamente",
+      //   icon: "success",
+      //   confirmButtonColor: "#059080",
+      // });
+
+      // 🔹 Navegación
+      navigate("/dashboard/etapa/salidaPCP");
     } catch (error) {
-      console.error("Error al enviar los datos:", error);
+      console.error("❌ Error al guardar ensayo:", error);
+
+      // 🔹 Error
+      await Swal.fire({
+        title: "Error",
+        text: "Ocurrió un problema al guardar el ensayo",
+        icon: "error",
+        confirmButtonColor: "#f09898",
+      });
     }
   };
-
-  const itemEnsayoCougar = [
-    ["100", "17.9", "137", "80", "200"],
-    ["200", "35.7", "258", "95", "250"],
-    ["230", "41.1", "289", "150", "300"],
-    ["300", "53.6", "0", "0", "0"],
-  ];
-  // [rpm, currentF, uOut, torqueRefP1, torqueRefP2]
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
       <h3 className="form-title">
-        {/* Recepción | {tipoEquipo} - OT N°{numeroOT} */}
-        Ensayo PCP MiniG A
+        Ensayo {tipoEquipo} {modeloEquipo} B
       </h3>
 
-      {/* Campo para comentario */}
+      {/* Comentario + navegación */}
       <div className="form-group">
-        <label className="form-label">Comentario</label>
-        <input {...register("comentario")} placeholder="Comentario" />
+        <div className="label-input">
+          <label className="form-label">Comentario</label>
+          <input {...register("comentario")} placeholder="Comentario" />
+        </div>
+
+        <button
+          type="button"
+          className="form-button-2"
+          onClick={() =>
+            navigate(`/dashboard/etapa/ensayo${tipoEquipo}${modeloEquipo}A`)
+          }
+        >
+          <FaArrowLeft />
+        </button>
+
+        <button
+          type="button"
+          className="form-button-2"
+          onClick={() => navigate(`/dashboard/etapa/salida${tipoEquipo}`)}
+        >
+          <FaArrowRight />
+        </button>
+
+        <button type="submit" className="form-button">
+          Guardar
+        </button>
       </div>
 
-      {/* Iterar sobre cada propiedad en itemRecepcion */}
-      
-      {[
-        "rpm200",
-        "rpm300",
-        "rpm400",
-        "rpm500",
-      ].map((itemKey) => (
-        <div className="item-section" key={itemKey}>
-          <div className="item-field">
-            <div className="item-tittle">
-              <h4 className="item-title">{itemKey}</h4>
-            </div>
-            <div className="item-tittle">
-              <input
-                className="form-input"
-                {...register(`itemRecepcion.${itemKey}.requerimiento`)}
-                placeholder="Current F"
-              />
-            </div>
-            <div className="item-tittle">
-              <input
-                className="form-input"
-                {...register(`itemRecepcion.${itemKey}.requerimiento`)}
-                placeholder="U Out"
-              />
-            </div>
-            <div className="item-tittle">
-              <input
-                className="form-input"
-                {...register(`itemRecepcion.${itemKey}.requerimiento`)}
-                placeholder="Active I Out"
-              />
-            </div>
-            <div className="item-tittle">
-              <input
-                className="form-input"
-                {...register(`itemRecepcion.${itemKey}.requerimiento`)}
-                placeholder="Torque Fren"
-              />
-            </div>
-            <div className="item-tittle">
-              <p className="torque">15.5</p>
-              {/* <input
-                className="form-input"
-                {...register(`itemRecepcion.${itemKey}.requerimiento`)}
-                placeholder="Torque Fabrica"
-              /> */}
-            </div>
-            <div className="item-tittle">
-              <input
-                className="form-input"
-                {...register(`itemRecepcion.${itemKey}.requerimiento`)}
-                placeholder="T° Carcaza"
-              />
+      {/* Ítems */}
+      <div className="lista-container2">
+        {ENSAYO_COUGAR_B_ITEMS.map(({ estado, observacion, label }) => (
+          <div className="item-section" key={estado}>
+            <div className="item-field">
+              <div className="item-title">
+                <h4>{label}</h4>
+              </div>
+
+              <div className="item-tittle">
+                <label className="form-label-1">Ok</label>
+                <input
+                  className="radio-input"
+                  type="checkbox"
+                  {...register(estado)}
+                />
+              </div>
+
+              <div className="item-tittle">
+                <input
+                  className="form-input"
+                  {...register(observacion)}
+                  placeholder="Observación"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-
-      <button type="submit" className="form-button">
-        Guardar
-      </button>
+        ))}
+      </div>
     </form>
   );
 };

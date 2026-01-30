@@ -160,7 +160,6 @@ useEffect(() => {
         </button>
       </div>
 
-      {/* Tabla de ensayo */}
       <table className="ensayoTable">
         <thead>
           <tr>
@@ -180,15 +179,10 @@ useEffect(() => {
         <tbody>
           {ENSAYO_A_ITEMS.map((item) => (
             <tr key={item.rpm}>
+
               <td><strong>{item.rpm}</strong></td>
 
-              <td>
-                <input
-                  className="inputEnsayo"
-                  {...register(`rpm${item.rpm}CurrentF`)}
-                  readOnly
-                />
-              </td>
+              <td><strong>{item.currentF}</strong></td>
 
               <td>
                 <input
@@ -240,21 +234,9 @@ useEffect(() => {
                 />
               </td>
 
-              <td>
-                <input
-                  className="inputEnsayo"
-                  {...register(`rpm${item.rpm}TorqueReferencia1`)}
-                  readOnly
-                />
-              </td>
+              <td><strong>{item.torqueRef1}</strong></td>
 
-              <td>
-                <input
-                  className="inputEnsayo"
-                  {...register(`rpm${item.rpm}TorqueReferencia2`)}
-                  readOnly
-                />
-              </td>
+              <td><strong>{item.torqueRef2}</strong></td>
 
               <td>
                 <input

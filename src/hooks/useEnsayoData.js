@@ -16,7 +16,7 @@ const useEnsayoData = (ensayoId, reset) => {
         const response = await EnsayoService.getEnsayoVh60ById(ensayoId);
         if (response.data) {
           setEnsayoActual(response.data);
-          reset(response.data); // Rellena el formulario
+          // reset(response.data); // Rellena el formulario
         }
       } catch (error) {
         setError("Error al obtener los datos de recepción");
@@ -38,7 +38,7 @@ const useEnsayoData = (ensayoId, reset) => {
         const response = await EnsayoService.getEnsayoDv1ById(ensayoId);
         if (response.data) {
           setEnsayoActual(response.data);
-          reset(response.data); // Rellena el formulario
+          // reset(response.data); // Rellena el formulario
         }
       } catch (error) {
         setError("Error al obtener los datos de recepción");
@@ -60,7 +60,7 @@ const useEnsayoData = (ensayoId, reset) => {
         const response = await EnsayoService.getEnsayoMinigById(ensayoId);
         if (response.data) {
           setEnsayoActual(response.data);
-          reset(response.data); // Rellena el formulario
+          // reset(response.data); // Rellena el formulario
         }
       } catch (error) {
         setError("Error al obtener los datos de recepción");
@@ -82,7 +82,7 @@ const useEnsayoData = (ensayoId, reset) => {
         const response = await EnsayoService.getEnsayoCougarById(ensayoId);
         if (response.data) {
           setEnsayoActual(response.data);
-          reset(response.data); // Rellena el formulario
+          // reset(response.data); // Rellena el formulario
         }
       } catch (error) {
         setError("Error al obtener los datos de recepción");

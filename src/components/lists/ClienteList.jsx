@@ -56,7 +56,7 @@ const ClienteList = () => {
         <table className="table-auto">
           <thead className={style.table_head}>
             <tr className={style.table_row2}>
-              <div className={style.row_box}>
+              {/* <div className={style.row_box}> */}
                 <th className={style.lists_tittles} scope="col">
                   Razón Social
                 </th>
@@ -66,8 +66,8 @@ const ClienteList = () => {
                 <th className={style.lists_tittles} scope="col">
                   Cuit
                 </th>
-              </div>
-              <div className={style.row_box}>
+              {/* </div> */}
+              {/* <div className={style.row_box}> */}
                 <th className={style.lists_tittles} scope="col">
                   Area
                 </th>
@@ -80,27 +80,27 @@ const ClienteList = () => {
                 <th className={style.lists_tittles} scope="col">
                   Email
                 </th>
-              </div>
+              {/* </div> */}
             </tr>
           </thead>
           <tbody className={style.table_body}>
             {results.map((cliente) => (
               <tr className={style.table_row} key={cliente.id}>
-                <div className={style.row_box}>
+                {/* <div className={style.row_box}> */}
                   <td className={style.list_content}>{cliente.razonSocial}</td>
                   <td className={style.list_content}>
                     {cliente.nombreFantasia}
                   </td>
                   <td className={style.list_content}>{cliente.cuit}</td>
-                </div>
-                <div className={style.row_box}>
+                {/* </div> */}
+                {/* <div className={style.row_box}> */}
                   <td className={style.list_content}>{cliente.area}</td>
                   <td className={style.list_content}>
                     {cliente.nombreContacto}
                   </td>
                   <td className={style.list_content}>{cliente.telefono}</td>
                   <td className={style.list_content}>{cliente.mail}</td>
-                </div>
+                {/* </div> */}
               </tr>
             ))}
           </tbody>
