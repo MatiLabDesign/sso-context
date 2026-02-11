@@ -1,5 +1,5 @@
 import axios from "axios";
-import { RECEPCION_URL } from "../constants/API_URL";
+import { RECEPCION_URL, UCL_RECEPCION_URL } from "../constants/API_URL";
 
 class RecepcionService {
   getAllRecepcion() {
@@ -12,6 +12,9 @@ class RecepcionService {
 
   createRecepcion(recepcion) {
     return axios.post(RECEPCION_URL, recepcion);
+  }
+  createUclRecepcion(recepcion) {
+    return axios.post(UCL_RECEPCION_URL, recepcion);
   }
 
   updateRecepcion(id, recepcion) {

@@ -144,6 +144,18 @@ const useEnsayoData = (ensayoId, reset) => {
       throw error;
     }
   };
+  const newEnsayoUcl = async (data) => {
+    try {
+      const nuevoEnsayo = await EnsayoService.createEnsayoUcl(data);
+      if (nuevoEnsayo?.data) {
+        setEnsayoActual(nuevoEnsayo.data);
+      }
+      return nuevoEnsayo?.data;
+    } catch (error) {
+      console.error("Error al crear la Inspección:", error);
+      throw error;
+    }
+  };
 
   const updateEnsayoVh60 = async (id, data) => {
     try {
@@ -185,6 +197,16 @@ const useEnsayoData = (ensayoId, reset) => {
       throw err;
     }
   };
+  const updateEnsayoUcl = async (id, data) => {
+    try {
+      const response = await EnsayoService.updateEnsayoUcl(id, data);
+      setEnsayoActual(response.data);
+      return response;
+    } catch (err) {
+      setError("Error al actualizar la inspección");
+      throw err;
+    }
+  };
 
   
   const updateEnsayo = async (id, data) => {
@@ -198,7 +220,7 @@ const useEnsayoData = (ensayoId, reset) => {
     }
   };
   
-  return { ensayoActual, loading, error, newEnsayoVh60, newEnsayoDv1, newEnsayoMinig, newEnsayoCougar, updateEnsayo, updateEnsayoVh60, updateEnsayoDv1, updateEnsayoMinig, updateEnsayoCougar };
+  return { ensayoActual, loading, error, newEnsayoVh60, newEnsayoDv1, newEnsayoMinig, newEnsayoCougar, newEnsayoUcl, updateEnsayo, updateEnsayoVh60, updateEnsayoDv1, updateEnsayoMinig, updateEnsayoCougar, updateEnsayoUcl };
 };
 
 export default useEnsayoData;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ENSAYO_PCPCOUGAR_URL, ENSAYO_PCPDV1_URL, ENSAYO_PCPMINIG_URL, ENSAYO_PCPVH60_URL, ENSAYO_URL } from "../constants/API_URL";
+import { ENSAYO_PCPCOUGAR_URL, ENSAYO_PCPDV1_URL, ENSAYO_PCPMINIG_URL, ENSAYO_PCPVH60_URL, ENSAYO_UCL_URL, ENSAYO_URL } from "../constants/API_URL";
 
 class EnsayoService {
   getAllEnsayos() {
@@ -17,6 +17,9 @@ class EnsayoService {
   }
   createEnsayoCougar(ensayo) {
     return axios.post(`${ENSAYO_PCPCOUGAR_URL}`, ensayo);
+  }
+  createEnsayoUcl(ensayo) {
+    return axios.post(`${ENSAYO_UCL_URL}`, ensayo);
   }
 
 
@@ -44,6 +47,9 @@ class EnsayoService {
   }
   updateEnsayoCougar(id, ensayo) {
     return axios.put(`${ENSAYO_PCPCOUGAR_URL}/${id}`, ensayo);
+  }
+  updateEnsayoUcl(id, ensayo) {
+    return axios.put(`${ENSAYO_UCL_URL}/${id}`, ensayo);
   }
 
   softDeleteEnsayoVh60(id) {

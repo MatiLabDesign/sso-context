@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import "../PcpEnsayo.css";
+import "../../PCPForm/PcpEnsayo.css";
 import { useNavigate } from "react-router-dom";
 import useOrdenData from "../../../../../hooks/useOrdenData";
 import useEnsayoData from "../../../../../hooks/useEnsayoData";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
-import { ENSAYO_B_ITEMS } from "../../../../../constants/ENSAYO_ITEMS";
+import { ENSAYO_VH60_B_ITEMS } from "../../../../../constants/ENSAYO_ITEMS";
 import Swal from "sweetalert2";
-import ensayoDv1 from "../../../../../data/ensayoPCPDv1";
+import ensayoUCL from './../../../../../data/ensayoUCL';
+import tiposEquipo from './../../../../../data/tipoEquipoData';
 
-const PcpEnsayoDv1B = () => {
+const UclEnsayoA = () => {
   const ordenId = localStorage.getItem("ordenId");
   const ensayoId = localStorage.getItem("ensayoId");
   const tipoEquipo = localStorage.getItem("tipoEquipo");
@@ -24,12 +25,12 @@ const PcpEnsayoDv1B = () => {
     reset,
     formState: { isDirty },
   } = useForm({
-    defaultValues: ensayoDv1,
+    defaultValues: ensayoUCL,
   });
 
   // DATA
   const { otActual } = useOrdenData(ordenId);
-  const { ensayoActual, updateEnsayoDv1 } = useEnsayoData(ensayoId);
+  const { ensayoActual, updateEnsayoUcl } = useEnsayoData(ensayoId);
 
   // 🔁 CARGA CONTROLADA (igual que Recepción)
   useEffect(() => {
@@ -37,18 +38,17 @@ const PcpEnsayoDv1B = () => {
       reset({
         ...ensayoActual,
 
-         // 🔒 FORZADOS DESDE DEFAULT (valores ≠ 0.0)
-      presion10CurrentF: ensayoDv1.presion10CurrentF,
-      presion10TorqueFabricaReferencia: ensayoDv1.presion10TorqueFabricaReferencia,
+        // 🔒 FORZAMOS VALORES TÉCNICOS DESDE DEFAULT
+        // rpm100CurrentF: ensayoVH60.rpm100CurrentF,
+        // rpm200CurrentF: ensayoVH60.rpm200CurrentF,
+        // rpm300CurrentF: ensayoVH60.rpm300CurrentF,
 
-      presion20CurrentF: ensayoDv1.presion20CurrentF,
-      presion20TorqueFabricaReferencia: ensayoDv1.presion20TorqueFabricaReferencia,
-
-      presion70CurrentF: ensayoDv1.presion70CurrentF,
-      presion70TorqueFabricaReferencia: ensayoDv1.presion70TorqueFabricaReferencia,
-
-      presion100CurrentF: ensayoDv1.presion100CurrentF,
-      presion100TorqueFabricaReferencia: ensayoDv1.presion100TorqueFabricaReferencia,
+        // rpm100TorqueReferencia1: ensayoVH60.rpm100TorqueReferencia1,
+        // rpm100TorqueReferencia2: ensayoVH60.rpm100TorqueReferencia2,
+        // rpm200TorqueReferencia1: ensayoVH60.rpm200TorqueReferencia1,
+        // rpm200TorqueReferencia2: ensayoVH60.rpm200TorqueReferencia2,
+        // rpm300TorqueReferencia1: ensayoVH60.rpm300TorqueReferencia1,
+        // rpm300TorqueReferencia2: ensayoVH60.rpm300TorqueReferencia2,
       });
     }
   }, [ensayoActual, reset]);
@@ -94,7 +94,7 @@ const PcpEnsayoDv1B = () => {
     if (!result.isConfirmed) return;
 
     // 🔹 Guardado
-    await updateEnsayoDv1(ensayoId, {
+    await updateEnsayoUcl(ensayoId, {
       ...data,
       id: Number(ensayoId),
     });
@@ -108,7 +108,7 @@ const PcpEnsayoDv1B = () => {
     // });
 
     // 🔹 Navegación
-    navigate(`/dashboard/etapa/salida${tipoEquipo}`);
+    navigate(`/dashboard/etapa/ensayo${tipoEquipo}B`);
 
   } catch (error) {
     console.error("❌ Error al guardar ensayo:", error);
@@ -126,7 +126,7 @@ const PcpEnsayoDv1B = () => {
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">Ensayo {tipoEquipo} {modeloEquipo} en construcción B</h3>
+      <h3 className="form-title">Ensayo UCL A</h3>
 
       {/* Comentario + navegación */}
       <div className="form-group">
@@ -138,7 +138,7 @@ const PcpEnsayoDv1B = () => {
         <button
           type="button"
           className="form-button-2"
-          onClick={() => navigate(`/dashboard/etapa/ensayo${tipoEquipo}${modeloEquipo}A`)}
+          onClick={() => navigate(`/dashboard/etapa/inspeccion${tipoEquipo}C`)}
         >
           <FaArrowLeft />
         </button>
@@ -146,7 +146,7 @@ const PcpEnsayoDv1B = () => {
         <button
           type="button"
           className="form-button-2"
-          onClick={() => navigate("/dashboard/etapa/salidaPCP")}
+          onClick={() => navigate(`/dashboard/etapa/ensayo${tipoEquipo}B`)}
         >
           <FaArrowRight />
         </button>
@@ -158,7 +158,7 @@ const PcpEnsayoDv1B = () => {
 
       {/* Ítems */}
       <div className="lista-container2">
-        {ENSAYO_B_ITEMS.map(({ estado, observacion, label }) => (
+        {ENSAYO_VH60_B_ITEMS.map(({ estado, observacion, label }) => (
           <div className="item-section" key={estado}>
             <div className="item-field">
               <div className="item-title">
@@ -189,4 +189,4 @@ const PcpEnsayoDv1B = () => {
   );
 };
 
-export default PcpEnsayoDv1B;
+export default UclEnsayoA;

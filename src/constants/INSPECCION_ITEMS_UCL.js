@@ -99,7 +99,7 @@ export const INSPECCION_A_ITEMS_UCL = {
   ],
 };
 
-export const INSPECCION_B_ITEMS = {
+export const INSPECCION_B_ITEMS_UCL = {
   rodamientos: [
     {
       ok: "axOk",
@@ -176,7 +176,7 @@ export const INSPECCION_B_ITEMS = {
   ],
 };
 
-export const INSPECCION_C_ITEMS = {
+export const INSPECCION_C_ITEMS_UCL = {
   sistemaHidraulicoPcpVh60: [
     {
       ok: "bomOk",

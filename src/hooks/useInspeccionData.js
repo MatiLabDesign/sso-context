@@ -185,6 +185,18 @@ const useInspeccionData = (inspeccionId, reset) => {
       throw error;
     }
   };
+  const newInspeccionUcl = async (data) => {
+    try {
+      const nuevaInspeccion = await InspeccionService.createInspeccionUcl(data);
+      if (nuevaInspeccion?.data) {
+        setInspeccionActual(nuevaInspeccion.data);
+      }
+      return nuevaInspeccion?.data;
+    } catch (error) {
+      console.error("Error al crear la Inspección:", error);
+      throw error;
+    }
+  };
 
   //////////////////////////////////////////////////////////////////////////////////
 
@@ -240,10 +252,20 @@ const useInspeccionData = (inspeccionId, reset) => {
       throw err;
     }
   };
+  const updateInspeccionUcl = async (id, data) => {
+    try {
+      const response = await InspeccionService.updateInspeccionUcl(id, data);
+      setInspeccionActual(response.data);
+      return response;
+    } catch (err) {
+      setError("Error al actualizar la inspección");
+      throw err;
+    }
+  };
 
   //////////////////////////////////////////////////////////////////////////////////
 
-  return { inspeccionActual, loading, error, newInspeccion, newInspeccionVh60, newInspeccionDv1, newInspeccionCougar, newInspeccionMinig, updateInspeccion, updateInspeccionVh60, updateInspeccionDv1, updateInspeccionMinig, updateInspeccionCougar};
+  return { inspeccionActual, loading, error,  newInspeccion, newInspeccionVh60, newInspeccionDv1, newInspeccionCougar, newInspeccionMinig, newInspeccionUcl, updateInspeccion, updateInspeccionVh60, updateInspeccionDv1, updateInspeccionMinig, updateInspeccionCougar, updateInspeccionUcl};
 };
 
 export default useInspeccionData;

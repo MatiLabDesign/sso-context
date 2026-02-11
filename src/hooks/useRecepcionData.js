@@ -43,6 +43,18 @@ const useRecepcionData = (recepcionId, reset) => {
       throw error;
     }
   };
+  const createUclRecepcion = async (data) => {
+    try {
+      const nuevaRecepcion = await RecepcionService.createUclRecepcion(data);
+      if (nuevaRecepcion?.data) {
+        setRecepcionActual(nuevaRecepcion.data);
+      }
+      return nuevaRecepcion?.data;
+    } catch (error) {
+      console.error("Error al crear la recepción:", error);
+      throw error;
+    }
+  };
 
   const updateRecepcion = async (id, data) => {
     try {
@@ -54,7 +66,7 @@ const useRecepcionData = (recepcionId, reset) => {
       throw err;
     }
   };
-  return { recepcionActual, loading, error, createRecepcion, updateRecepcion };
+  return { recepcionActual, loading, error, createRecepcion, createUclRecepcion, updateRecepcion };
 };
 
 export default useRecepcionData;

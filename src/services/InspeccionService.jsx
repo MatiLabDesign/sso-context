@@ -1,5 +1,5 @@
 import axios from "axios";
-import { INSPECCION_PCPCOUGAR_URL, INSPECCION_PCPDV1_URL, INSPECCION_PCPMINIG_URL, INSPECCION_PCPVH60_URL, INSPECCION_URL } from "../constants/API_URL";
+import { INSPECCION_PCPCOUGAR_URL, INSPECCION_PCPDV1_URL, INSPECCION_PCPMINIG_URL, INSPECCION_PCPVH60_URL, INSPECCION_UCL_URL, INSPECCION_URL } from "../constants/API_URL";
 
 class InspeccionService {
   getAllInspecciones() {
@@ -21,6 +21,9 @@ class InspeccionService {
   }
   createInspeccionCougar(inspeccion) {
     return axios.post(`${INSPECCION_PCPCOUGAR_URL}`, inspeccion);
+  }
+  createInspeccionUcl(inspeccion) {
+    return axios.post(`${INSPECCION_UCL_URL}`, inspeccion);
   }
 
   getInspeccionVh60ById(id) {
@@ -47,6 +50,9 @@ class InspeccionService {
   }
   updateInspeccionCougar(id, inspeccion) {
     return axios.put(`${INSPECCION_PCPCOUGAR_URL}/${id}`, inspeccion);
+  }
+  updateInspeccionUcl(id, inspeccion) {
+    return axios.put(`${INSPECCION_UCL_URL}/${id}`, inspeccion);
   }
 
   softDeleteInspeccionVh60(id) {

@@ -44,7 +44,7 @@ const ConsultarOt = () => {
     <div className="consultar_container">
       <div className="header">
         <div className="left_column">
-          <h2>Consultar OT</h2>
+          <h2>Consultar OT ESte es el que edite</h2>
         </div>
         <div className="right_column">
           <div className="header_row">

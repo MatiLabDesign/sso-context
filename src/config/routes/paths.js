@@ -77,16 +77,15 @@ export const PCP_SALIDA = '/dashboard/etapa/salidaPcp';
 export const INGRESOUCL = '/dashboard/etapa/ingresoUcl';
 // export const UCL_INGRESO = '/dashboard/etapa/ingresoUCL';
 
-export const RECEPCIONUCL = '/dashboard/etapa/recepcionUcl';
+
 export const UCL_RECEPCION = '/dashboard/etapa/recepcionUcl';
 
-export const INSPECCIONUCL = '/dashboard/etapa/inspeccionUcl';
-export const UCL_INSPECCION_A = '/dashboard/etapa/inspeccionUclA';
+export const UCL_INSPECCION_A = '/dashboard/etapa/inspeccionUcl900-1100A';
 export const UCL_INSPECCION_B = '/dashboard/etapa/inspeccionUclB';
 export const UCL_INSPECCION_C = '/dashboard/etapa/inspeccionUclC';
 
-export const ENSAYOUCL = '/dashboard/etapa/ensayoUcl';
-export const UCL_ENSAYO = '/dashboard/etapa/ensayoUcl';
+export const UCL_ENSAYO_A = '/dashboard/etapa/ensayoUcl900-1100A';
+export const UCL_ENSAYO_B = '/dashboard/etapa/ensayoUclB';
 
 export const SALIDAUCL = '/dashboard/etapa/salidaUcl';
 export const UCL_SALIDA = '/dashboard/etapa/salidaUcl';

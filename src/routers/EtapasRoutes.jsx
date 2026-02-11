@@ -1,12 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import {
   ENSAYOBM,
-  ENSAYOUCL,
   ETAPA,
   INGRESOBM,
   INGRESOUCL,
   INSPECCIONBM,
-  INSPECCIONUCL,
   PCP_ENSAYO,
   PCP_ENSAYO_COUGAR_A,
   PCP_ENSAYO_COUGAR_B,
@@ -32,10 +30,14 @@ import {
   PCP_RECEPCION,
   PCP_SALIDA,
   RECEPCIONBM,
-  RECEPCIONUCL,
   SALIDABM,
   SALIDAUCL,
+  UCL_ENSAYO_A,
+  UCL_ENSAYO_B,
   UCL_INSPECCION_A,
+  UCL_INSPECCION_B,
+  UCL_INSPECCION_C,
+  UCL_RECEPCION,
 } from "../config/routes/paths";
 
 import Etapas from "../components/forms/etapas/Etapas";
@@ -44,7 +46,7 @@ import PcpRecepcion from "../components/forms/etapas/PCPForm/PcpRecepcion";
 
 import PcpEnsayo from "../components/forms/etapas/PCPForm/PcpEnsayo";
 import PcpSalida from "../components/forms/etapas/PCPForm/PcpSalida";
-import UclEnsayo from "../components/forms/etapas/UCLForm/UclEnsayo";
+import UclEnsayo from "../components/forms/etapas/UCLForm/UCLEnsayo/UclEnsayo";
 import UclInspeccion from "../components/forms/etapas/UCLForm/UclInspeccion";
 import UclRecepcion from "../components/forms/etapas/UCLForm/UclRecepcion";
 import UclIngreso from "../components/forms/etapas/UCLForm/UclIngreso";
@@ -68,18 +70,21 @@ import PcpInspeccionCougarC from "./../components/forms/etapas/PCPForm/PcpInspec
 import PcpInspeccionVH60A from "../components/forms/etapas/PCPForm/PcpInspeccion/PcpInspeccionVH60A";
 import PcpEnsayoVH60B from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVH60B";
 import PcpEnsayoVH60A from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoVH60A";
-import UclInspeccionA from "../components/forms/etapas/UCLForm/UclInspeccionA";
+import UclInspeccionA from "../components/forms/etapas/UCLForm/UCLInspeccion/UclInspeccionA";
 import PcpEnsayoDv1A from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoDv1A";
-import PcpEnsayoMiniGA from './../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoMiniGA';
-import PcpEnsayoMiniGB from './../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoMiniGB';
+import PcpEnsayoMiniGA from "./../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoMiniGA";
+import PcpEnsayoMiniGB from "./../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoMiniGB";
 import PcpEnsayoCougarA from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoCougarA";
 import PcpEnsayoDv1B from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoDv1B";
 import PcpEnsayoCougarB from "../components/forms/etapas/PCPForm/PcpEnsayo/PcpEnsayoCougarB";
+import UclInspeccionB from "../components/forms/etapas/UCLForm/UCLInspeccion/UclInspeccionB";
+import UclInspeccionC from "../components/forms/etapas/UCLForm/UCLInspeccion/UclInspeccionC";
+import UclEnsayoA from "../components/forms/etapas/UCLForm/UCLEnsayo/UclEnsayoA";
+import UclEnsayoB from "../components/forms/etapas/UCLForm/UCLEnsayo/UclEnsayoB";
 
 export const EtapasRoutes = () => {
   return (
-    <Route path="etapa" element={<Etapas/>}>
-    
+    <Route path="etapa" element={<Etapas />}>
       <Route path={PCP_INGRESO} element={<PcpIngreso />} />
 
       <Route path={PCP_INSPECCION_VH60_A} element={<PcpInspeccionVH60A />} />
@@ -91,30 +96,42 @@ export const EtapasRoutes = () => {
       <Route path={PCP_INSPECCION_DV1_A} element={<PcpInspeccionDv1A />} />
       <Route path={PCP_INSPECCION_DV1_B} element={<PcpInspeccionDv1B />} />
       <Route path={PCP_INSPECCION_DV1_C} element={<PcpInspeccionDv1C />} />
-      <Route path={PCP_INSPECCION_COUGAR_A} element={<PcpInspeccionCougarA />} />
-      <Route path={PCP_INSPECCION_COUGAR_B} element={<PcpInspeccionCougarB />} />
-      <Route path={PCP_INSPECCION_COUGAR_C} element={<PcpInspeccionCougarC />} />
+      <Route
+        path={PCP_INSPECCION_COUGAR_A}
+        element={<PcpInspeccionCougarA />}
+      />
+      <Route
+        path={PCP_INSPECCION_COUGAR_B}
+        element={<PcpInspeccionCougarB />}
+      />
+      <Route
+        path={PCP_INSPECCION_COUGAR_C}
+        element={<PcpInspeccionCougarC />}
+      />
 
       <Route path={PCP_RECEPCION} element={<PcpRecepcion />} />
 
       <Route path={PCP_ENSAYO} element={<PcpEnsayoVH60A />} />
       <Route path={PCP_ENSAYO_VH60_A} element={<PcpEnsayoVH60A />} />
-      <Route path={PCP_ENSAYO_VH60_B} element={<PcpEnsayoVH60B/>}/>
+      <Route path={PCP_ENSAYO_VH60_B} element={<PcpEnsayoVH60B />} />
       <Route path={PCP_ENSAYO_DV1_A} element={<PcpEnsayoDv1A />} />
-      <Route path={PCP_ENSAYO_DV1_B} element={<PcpEnsayoDv1B/>}/>
+      <Route path={PCP_ENSAYO_DV1_B} element={<PcpEnsayoDv1B />} />
       <Route path={PCP_ENSAYO_MINIG_A} element={<PcpEnsayoMiniGA />} />
-      <Route path={PCP_ENSAYO_MINIG_B} element={<PcpEnsayoMiniGB/>}/>
+      <Route path={PCP_ENSAYO_MINIG_B} element={<PcpEnsayoMiniGB />} />
       <Route path={PCP_ENSAYO_COUGAR_A} element={<PcpEnsayoCougarA />} />
-      <Route path={PCP_ENSAYO_COUGAR_B} element={<PcpEnsayoCougarB/>}/>
-
+      <Route path={PCP_ENSAYO_COUGAR_B} element={<PcpEnsayoCougarB />} />
 
       <Route path={PCP_SALIDA} element={<PcpSalida />} />
 
       <Route path={INGRESOUCL} element={<UclIngreso />} />
-      <Route path={RECEPCIONUCL} element={<UclRecepcion />} />
-      <Route path={INSPECCIONUCL} element={<UclInspeccion />} />
-      <Route path={UCL_INSPECCION_A} element={<UclInspeccionA/>}/>
-      <Route path={ENSAYOUCL} element={<UclEnsayo />} />
+      <Route path={UCL_RECEPCION} element={<UclRecepcion />} />
+
+      <Route path={UCL_INSPECCION_A} element={<UclInspeccionA />} />
+      <Route path={UCL_INSPECCION_B} element={<UclInspeccionB />} />
+      <Route path={UCL_INSPECCION_C} element={<UclInspeccionC />} />
+
+      <Route path={UCL_ENSAYO_A} element={<UclEnsayoA />} />
+      <Route path={UCL_ENSAYO_B} element={<UclEnsayoB />} />
       <Route path={SALIDAUCL} element={<UclSalida />} />
       <Route path={INGRESOBM} element={<BombaIngreso />} />
       <Route path={RECEPCIONBM} element={<BombaRecepcion />} />
@@ -124,4 +141,3 @@ export const EtapasRoutes = () => {
     </Route>
   );
 };
-

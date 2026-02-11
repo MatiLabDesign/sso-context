@@ -43,7 +43,7 @@ import PcpSalida from './../forms/etapas/PCPForm/PcpSalida';
 import UclIngreso from './../forms/etapas/UCLForm/UclIngreso';
 import UclRecepcion from './../forms/etapas/UCLForm/UclRecepcion';
 import UclInspeccion from './../forms/etapas/UCLForm/UclInspeccion';
-import UclEnsayo from './../forms/etapas/UCLForm/UclEnsayo';
+import UclEnsayo from '../forms/etapas/UCLForm/UCLEnsayo/UclEnsayo';
 import UclSalida from './../forms/etapas/UCLForm/UclSalida';
 import BombaIngreso from './../forms/etapas/BombaForm/BombaIngreso';
 import BombaRecepcion from './../forms/etapas/BombaForm/BombaRecepcion';

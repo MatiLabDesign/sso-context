@@ -1,10 +1,10 @@
 import React from "react";
-import './UclFormStyle.css';
+import '../UclFormStyle.css';
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import InspeccionService from "../../../../services/InspeccionService";
+import EnsayoService from "../../../../../services/EnsayoService";
 
-const UclInspeccionB = () => {
+const UclEnsayo = () => {
 
   const {
     register,
@@ -15,16 +15,14 @@ const UclInspeccionB = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    const inspeccion = data;
-    
-    InspeccionService.createInspeccion(inspeccion);
-    navigate("/dashboard/etapa/ensayoUCL");
-    console.log(inspeccion);
+    const ensayo = data;
+    EnsayoService.createEnsayo(ensayo);
+    navigate("/dashboard/etapa/salidaUCL");
+    console.log(ensayo);
   };
-
   return (
     <div>
-      <h1>UNIDAD DE CARRERA LARGA INSPECCIÓN</h1>
+      <h1>UCL A</h1>
       <form onSubmit={handleSubmit(onSubmit)} className='form'>
         <div className='{style.input_cliente}'>
           <label>Comentario</label>
@@ -46,4 +44,4 @@ const UclInspeccionB = () => {
   );
 };
 
-export default UclInspeccionB;
+export default UclEnsayo;

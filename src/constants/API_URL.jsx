@@ -6,11 +6,14 @@ export const EQUIPO_URL = "http://localhost:8080/api/equipos";
 export const OT_URL = "http://localhost:8080/api/ordenes";
 
 export const RECEPCION_URL = "http://localhost:8080/api/recepciones";
+export const UCL_RECEPCION_URL = "http://localhost:8080/api/recepcionesucl";
 
 export const INSPECCION_PCPVH60_URL = "http://localhost:8080/api/inspecciones/vh60";
 export const INSPECCION_PCPDV1_URL = "http://localhost:8080/api/inspecciones/dv1";
 export const INSPECCION_PCPMINIG_URL = "http://localhost:8080/api/inspecciones/minig";
 export const INSPECCION_PCPCOUGAR_URL = "http://localhost:8080/api/inspecciones/cougar";
+export const INSPECCION_UCL_URL = "http://localhost:8080/api/inspeccionesUCL";
+
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>REVISAR COMO GENERICA>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 export const INSPECCION_URL = "http://localhost:8080/api/inspecciones";
@@ -20,6 +23,7 @@ export const ENSAYO_PCPVH60_URL = "http://localhost:8080/api/ensayos/vh60";
 export const ENSAYO_PCPDV1_URL = "http://localhost:8080/api/ensayos/dv1";
 export const ENSAYO_PCPMINIG_URL = "http://localhost:8080/api/ensayos/minig";
 export const ENSAYO_PCPCOUGAR_URL = "http://localhost:8080/api/ensayos/cougar";
+export const ENSAYO_UCL_URL = "http://localhost:8080/api/ensayosUCL";
 
 export const ENSAYO_URL = "http://localhost:8080/api/ensayos";
 

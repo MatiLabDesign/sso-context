@@ -1,11 +1,14 @@
-import React from "react";
 import './UclFormStyle.css';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import RecepcionService from "../../../../services/RecepcionService";
 import { RECEPCION_ITEMS_UCL } from "../../../../constants/RECEPCION_ITEMS_UCL";
+import tiposEquipo from './../../../../data/tipoEquipoData';
 
 const UclRecepcion = () => {
+
+  const tipoEquipo = localStorage.getItem('tipoEquipo');
+  const modeloEquipo = localStorage.getItem('modeloEquipo');
 
   const {
     register,
@@ -19,14 +22,14 @@ const UclRecepcion = () => {
 
   const onSubmit = (data) => {
     const recepcion = data;
-    RecepcionService.createRecepcion(recepcion);
-    navigate("/dashboard/etapa/inspeccionUCLA");
+    RecepcionService.createUclRecepcion(recepcion);
+    navigate(`/dashboard/etapa/inspeccion${tipoEquipo}${modeloEquipo}A`);
     console.log(recepcion);
   };
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">Recepción Unidad de Carrera Larga</h3>
+      <h3 className="form-title">Recepción UCL</h3>
 
       <div className="form-group">
         <div className="label-container">
@@ -34,9 +37,9 @@ const UclRecepcion = () => {
           <input {...register("comentario")} placeholder="Comentario" />
         </div>
         <button type="button" className="form-button-2">
-          {/* <Link onClick={handleClick}>
+          <Link onClick={handleClick}>
             <FaArrowRight />
-          </Link> */}
+          </Link>
         </button>
 
         <div className="button-container">
