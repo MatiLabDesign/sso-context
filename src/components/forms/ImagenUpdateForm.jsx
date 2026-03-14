@@ -32,7 +32,8 @@ const ImagenUpdateForm = () => {
     inputRef.current?.click();
   };
 
-  const imgRecepcionId = window.localStorage.getItem("recepcionId");
+  const recepcionId = window.localStorage.getItem("recepcionId");
+  const imgRecepcionId = window.localStorage.getItem("imgRecepcionId");
 
   const onSubmit = async (data) => {
     console.log("📤 Datos del formulario:", data);
@@ -58,13 +59,13 @@ const ImagenUpdateForm = () => {
       // También enviar los datos como campos individuales en caso de que el backend los espere así
       formData.append("descripcion", data.descripcion || "");
       formData.append("publicar", data.publicar ? "true" : "false");
-      formData.append("recepcionId", imgRecepcionId || null);
+      formData.append("imgRecepcionId", imgRecepcionId || null);
       //
 
       
       
       // Enviar al backend ----ARREGLADO
-      const response = await updateImagenRecepcion(formData);
+      const response = await updateImagenRecepcion(imgRecepcionId, formData);
       
       console.log("✅ Imagen guardada exitosamente:", response.data);
       

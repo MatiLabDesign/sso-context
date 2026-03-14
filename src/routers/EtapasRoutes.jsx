@@ -2,6 +2,11 @@ import { Routes, Route } from "react-router-dom";
 import {
   ENSAYOBM,
   ETAPA,
+  GENERICO_ENSAYO,
+  GENERICO_INGRESO,
+  GENERICO_INSPECCION,
+  GENERICO_RECEPCION,
+  GENERICO_SALIDA,
   INGRESOBM,
   INGRESOUCL,
   INSPECCIONBM,
@@ -81,6 +86,11 @@ import UclInspeccionB from "../components/forms/etapas/UCLForm/UCLInspeccion/Ucl
 import UclInspeccionC from "../components/forms/etapas/UCLForm/UCLInspeccion/UclInspeccionC";
 import UclEnsayoA from "../components/forms/etapas/UCLForm/UCLEnsayo/UclEnsayoA";
 import UclEnsayoB from "../components/forms/etapas/UCLForm/UCLEnsayo/UclEnsayoB";
+import GenericoIngreso from "../components/forms/etapas/GenericoForm/GenericoIngreso";
+import GenericoRecepcion from "../components/forms/etapas/GenericoForm/GenericoRecepcion";
+import GenericoInspeccion from "../components/forms/etapas/GenericoForm/GenericoInspeccion";
+import GenericoEnsayo from "../components/forms/etapas/GenericoForm/GenericoEnsayo";
+import GenericoSalida from "../components/forms/etapas/GenericoForm/GenericoSalida";
 
 export const EtapasRoutes = () => {
   return (
@@ -138,6 +148,11 @@ export const EtapasRoutes = () => {
       <Route path={INSPECCIONBM} element={<BombaInspeccion />} />
       <Route path={ENSAYOBM} element={<BombaEnsayo />} />
       <Route path={SALIDABM} element={<BombaSalida />} />
+      <Route path={GENERICO_INGRESO} element={<GenericoIngreso/>} />
+      <Route path={GENERICO_RECEPCION} element={<GenericoRecepcion />} />
+      <Route path={GENERICO_INSPECCION} element={<GenericoInspeccion />} />
+      <Route path={GENERICO_ENSAYO} element={<GenericoEnsayo />} />
+      <Route path={GENERICO_SALIDA} element={<GenericoSalida />} />
     </Route>
   );
 };

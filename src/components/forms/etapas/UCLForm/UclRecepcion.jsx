@@ -1,9 +1,10 @@
 import './UclFormStyle.css';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import RecepcionService from "../../../../services/RecepcionService";
 import { RECEPCION_ITEMS_UCL } from "../../../../constants/RECEPCION_ITEMS_UCL";
 import tiposEquipo from './../../../../data/tipoEquipoData';
+import { FaArrowRight } from 'react-icons/fa';
 
 const UclRecepcion = () => {
 
@@ -14,7 +15,8 @@ const UclRecepcion = () => {
     register,
     formState: { errors },
     handleSubmit,
-    watch
+    watch,
+    handleClick
     
   } = useForm();
 

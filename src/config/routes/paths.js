@@ -89,3 +89,12 @@ export const UCL_ENSAYO_B = '/dashboard/etapa/ensayoUclB';
 
 export const SALIDAUCL = '/dashboard/etapa/salidaUcl';
 export const UCL_SALIDA = '/dashboard/etapa/salidaUcl';
+
+
+//todos lo Genericos
+
+export const GENERICO_INGRESO = '/dashboard/etapa/ingresoGenerico';
+export const GENERICO_RECEPCION = '/dashboard/etapa/recepcionGenerico';
+export const GENERICO_INSPECCION = '/dashboard/etapa/inspeccionGenerico';
+export const GENERICO_ENSAYO = '/dashboard/etapa/ensayoGenerico';
+export const GENERICO_SALIDA = '/dashboard/etapa/salidaGenerico';

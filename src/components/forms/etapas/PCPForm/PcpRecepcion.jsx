@@ -134,6 +134,7 @@ const PcpRecepcion = () => {
 
     localStorage.setItem("recepcionId", recepcionId);
     localStorage.setItem("imagenIndex", index);
+    localStorage.setItem("imgRecepcionId", index + 1);
 
     // Obtener descripción si existe en imagenesGuardadas
     const descripcion =

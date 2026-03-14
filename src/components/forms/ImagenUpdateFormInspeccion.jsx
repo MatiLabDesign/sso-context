@@ -3,24 +3,25 @@ import { useNavigate } from "react-router-dom";
 import "./ImagenForm.css";
 import style from "./FormStyle.module.css";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { IMAGEN_URL } from "../../constants/API_URL";
 import Swal from "sweetalert2";
 import useImagenData from "../../hooks/useImagenData";
 
-const ImagenFormInspeccion = () => {
+const ImagenUpdateFormInspeccion = () => {
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
-  const modeloEquipo =  window.localStorage.getItem("modeloEquipo");
-  const tipoEquipo =  window.localStorage.getItem("tipoEquipo");
   const navigate = useNavigate();
   const [imagen, setImagen] = useState(null);
   const [urlTemporal, setUrlTemporal] = useState(null);
   const inputRef = useRef();
 
-  const { newImagenInspeccionVh60, newImagenInspeccionDv1, newImagenInspeccionCougar, newImagenInspeccionMiniG, newImagenInspeccionUcl, newImagenInspeccionGenerico, updateImagenInspeccion } = useImagenData(imagen);
+  const { updateImagenInspeccion } = useImagenData(imagen);
 
   const handleImagenChange = (file) => {
     setImagen(file);
@@ -32,7 +33,7 @@ const ImagenFormInspeccion = () => {
   };
 
   const imgRecepcionId = window.localStorage.getItem("recepcionId");
-  const imgInspeccionId = window.localStorage.getItem("imgInspeccionId");
+  const imgInspeccionId = window.localStorage.getItem("inspeccionId");
 
   const onSubmit = async (data) => {
     console.log("📤 Datos del formulario:", data);
@@ -59,12 +60,11 @@ const ImagenFormInspeccion = () => {
       formData.append("descripcion", data.descripcion || "");
       formData.append("publicar", data.publicar ? "true" : "false");
       formData.append("inspeccionId", imgInspeccionId || null);
-      //inspeccionPcpVh60Id Cambie esto a HARDCODEADO>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
       
       
       // Enviar al backend ----ARREGLADO
-      const response = await newImagenInspeccionVh60(formData);
+      const response = await updateImagenInspeccion(imgInspeccionId, formData);
       
       console.log("✅ Imagen guardada exitosamente:", response.data);
       
@@ -79,11 +79,10 @@ const ImagenFormInspeccion = () => {
       // Limpiar el formulario
       setImagen(null);
       setUrlTemporal(null);
-
-      
       
       // Navegar a la página de recepción PCP
-      navigate("/dashboard/etapa/inspeccionPcpvh60A");
+      // navigate("/dashboard/etapa/recepcionPCP");
+      ////////////////////////////////////////////////////////////////////////////////////
       
     } catch (error) {
       console.error("❌ Error al guardar la imagen:", error);
@@ -100,7 +99,7 @@ const ImagenFormInspeccion = () => {
 
   return (
     <div>
-      <h2>Cargar imagen</h2>
+      <h2>Actualizar imagen</h2>
       <form onSubmit={handleSubmit(onSubmit)} className={style.form_equipo_b}>
         <div className="Imagen_container" onClick={handleContenedorClick}>
           <input
@@ -141,5 +140,4 @@ const ImagenFormInspeccion = () => {
   );
 };
 
-export default ImagenFormInspeccion;
-
+export default ImagenUpdateFormInspeccion;

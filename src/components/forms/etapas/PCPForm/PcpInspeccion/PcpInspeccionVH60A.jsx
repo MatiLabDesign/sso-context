@@ -223,6 +223,7 @@ const PcpInspeccionVH60A = () => {
     }
 
     const imagenGuardada = imagenesGuardadas[index];
+    localStorage.setItem("imgInspeccionId", index + 1);
 
     if (imagenGuardada?.url) {
       const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
