@@ -46,7 +46,7 @@ const PcpInspeccionCougarA = () => {
   const fetchImagenes = async () => {
     if (!inspeccionIdGuardada) return; // usar el ID real
     try {
-      const response = await ImagenService.getImagenByInspeccionVh60Id(inspeccionIdGuardada);
+      const response = await ImagenService.getImagenByInspeccionCougarId(inspeccionIdGuardada);
       setImagenesGuardadas(response.data || []); // si no hay datos, usar array vacío
     } catch (error) {
       console.error("Error al obtener las imágenes:", error);

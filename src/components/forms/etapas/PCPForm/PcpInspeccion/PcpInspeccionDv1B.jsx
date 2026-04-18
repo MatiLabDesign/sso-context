@@ -44,7 +44,7 @@ const PcpInspeccionDv1B = () => {
     if (!inspeccionIdGuardada) return; // usar el ID real
 
     try {
-      const response = await ImagenService.getImagenByInspeccionVh60Id(inspeccionIdGuardada);
+      const response = await ImagenService.getImagenByInspeccionDv1Id(inspeccionIdGuardada);
       setImagenesGuardadas(response.data || []); // si no hay datos, usar array vacío
     } catch (error) {
       console.error("Error al obtener las imágenes:", error);
@@ -267,7 +267,7 @@ const PcpInspeccionDv1B = () => {
           <div className="item-section" key={index}>
             <div className="item-field">
               <div className="item-tittle">
-                <h4 className="item-title">{item.label}</h4>
+                <h4 className="item-title2">{item.label}</h4>
               </div>
               <div className="item-tittle">
                 <label className="form-label-1">Ok</label>
@@ -330,7 +330,7 @@ const PcpInspeccionDv1B = () => {
           <div className="item-section" key={index}>
             <div className="item-field">
               <div className="item-tittle">
-                <h4 className="item-title">{item.label}</h4>
+                <h4 className="item-title2">{item.label}</h4>
               </div>
               <div className="item-tittle">
                 <label className="form-label-1">Ok</label>

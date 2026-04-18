@@ -15,6 +15,7 @@ import {
   CONSULTA,
   LOGOUT,
   IMAGENUPDATEINSPECCION,
+  IMAGEN_SALIDA,
 } from "../config/routes/paths";
 
 import PrivateRoutes from "../components/router/PrivateRoutes";
@@ -34,6 +35,7 @@ import ConsultarOt from "../components/forms/etapas/ConsultarOt";
 import Logout from "../views/Logout";
 
 import { EtapasRoutes } from "./EtapasRoutes";
+import ImagenFormSalida from "../components/forms/ImagenFormSalida";
 
 export const PrivateRoutesComponent = () => (
   <Route path={PRIVATE} element={<PrivateRoutes />}>
@@ -48,6 +50,7 @@ export const PrivateRoutesComponent = () => (
       <Route path={OTLIST} element={<Ot />} />
       <Route path={IMAGEN} element={<ImagenForm />} />
       <Route path={IMAGEN_INSPECCION} element={<ImagenFormInspeccion />} />
+      <Route path={IMAGEN_SALIDA} element={<ImagenFormSalida />} />
       <Route path={IMAGENUPDATE} element={<ImagenUpdateForm />} />
       <Route path={IMAGENUPDATEINSPECCION} element={<ImagenUpdateForm />} />
       <Route path={CONSULTA} element={<ConsultarOt />} />

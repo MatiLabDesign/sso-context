@@ -94,7 +94,7 @@ const PcpInspeccionVH60C = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccionVh60 } = useInspeccionData(inspeccionId, reset);
   const { newEnsayoVh60  } = useEnsayoData();
   useEffect(() => {
     if (inspeccionActual) {
@@ -177,7 +177,7 @@ const PcpInspeccionVH60C = () => {
         });
 
         if (result.isConfirmed) {
-          await updateInspeccion(inspeccionId, data);
+          await updateInspeccionVh60(inspeccionId, data);
           console.log("✅ Inspección actualizada correctamente:", data);
           const updatedOt = {
             ...otActual,
@@ -338,7 +338,7 @@ if (!ensayoExisteEnOt) {
       {INSPECCION_C_ITEMS.sistemaHidraulicoPcpVh60.map((item) => (
         <div className="item-section" key={item.label}>
           <div className="item-tittle">
-            <h4 className="item-title">{item.label}</h4>
+            <h4 className="item-title2">{item.label}</h4>
           </div>
           <div className="item-tittle">
             <label className="form-label">Ok</label>
@@ -391,7 +391,7 @@ if (!ensayoExisteEnOt) {
         <div className="item-section" key={itemKey}>
           <div className="item-field">
             <div className="item-tittle">
-              <h4 className="item-title">{itemKey.label}</h4>
+              <h4 className="item-title2">{itemKey.label}</h4>
             </div>
             <div className="item-tittle">
               <label className="form-label-1">Ok</label>

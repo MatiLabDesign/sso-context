@@ -32,7 +32,7 @@ const PcpInspeccionDv1A = () => {
   const recepcionId = localStorage.getItem("recepcionId");
   const tipoEquipo = localStorage.getItem("tipoEquipo");
   const modeloEquipo = localStorage.getItem("modeloEquipo");
-   const inspeccionId = localStorage.getItem("inspeccionId");
+  const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const inspeccionIdGuardada = inspeccionId;
@@ -42,10 +42,10 @@ const PcpInspeccionDv1A = () => {
 
   useEffect(() => {
   const fetchImagenes = async () => {
-    if (!inspeccionIdGuardada) return; // usar el ID real
+    if (!inspeccionId) return; // usar el ID real
 
     try {
-      const response = await ImagenService.getImagenByInspeccionDv1Id(inspeccionIdGuardada);
+      const response = await ImagenService.getImagenByInspeccionDv1Id(inspeccionId);
       setImagenesGuardadas(response.data || []); // si no hay datos, usar array vacío
     } catch (error) {
       console.error("Error al obtener las imágenes:", error);
@@ -54,7 +54,7 @@ const PcpInspeccionDv1A = () => {
   console.log("inspeccion id" + inspeccionId)
 
   fetchImagenes();
-}, [inspeccionIdGuardada]);
+}, [inspeccionId]);
 
   // Si quieres ver el valor actualizado de imagenesGuardadas, muévelo a otro useEffect
   useEffect(() => {
@@ -158,8 +158,8 @@ const PcpInspeccionDv1A = () => {
         return;
       }
 
-      const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
-      const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
+      // const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
+      // const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
 
       if (inspeccionId) {
         console.log("Inspección existente:", inspeccionId);
@@ -177,6 +177,8 @@ const PcpInspeccionDv1A = () => {
 
         if (result.isConfirmed) {
           await updateInspeccionDv1(inspeccionId, data);
+
+          
           console.log("✅ Inspección actualizada correctamente:", data);
           const updatedOt = {
             ...otActual,
@@ -184,9 +186,9 @@ const PcpInspeccionDv1A = () => {
           };
           await updateOt(ordenId, updatedOt);
 
-          if (modeloEquipoActual && tipoEquipoActual) {
+          if (modeloEquipo && tipoEquipo) {
             navigate(
-              `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}B`
+              `/dashboard/etapa/inspeccion${tipoEquipo}${modeloEquipo}B`
             );
           } else {
             console.error("❌ Error: Modelo de equipo no definido.");
@@ -320,7 +322,7 @@ const PcpInspeccionDv1A = () => {
         {INSPECCION_PCPDV1A_ITEMS.itemPcpDV1.map((item) => (
           <div className="item-section" key={item.label}>
             <div className="item-tittle">
-              <h4 className="item-title">{item.label}</h4>
+              <h4 className="item-title2">{item.label}</h4>
             </div>
             <div className="item-tittle">
               <label className="form-label">Ok</label>

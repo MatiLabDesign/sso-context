@@ -45,5 +45,9 @@ export const IMAGEN_ENSAYO_PCPDV1_URL= "http://localhost:8080/api/imagenes/ensay
 export const IMAGEN_ENSAYO_PCPMINIG_URL= "http://localhost:8080/api/imagenes/ensayo/minig"
 export const IMAGEN_ENSAYO_PCPCOUGAR_URL= "http://localhost:8080/api/imagenes/ensayo/cougar"
 
+
+//Acá hay que ver imagenes de salida en el back
+export const IMAGEN_SALIDA_URL= "http://localhost:8080/api/imagenes/salida"
+
 //>>>>>>>>>>>>>>>>>>>>>>REVISAR COMO GENERICAS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 export const IMAGEN_INSPECCION_URL_GET= "http://localhost:8080/api/imagenes/inspeccion"

@@ -159,7 +159,7 @@ const PcpEnsayoVH60B = () => {
           <div className="item-section" key={estado}>
             <div className="item-field">
               <div className="item-title">
-                <h4>{label}</h4>
+                <h4 className="item-title3">{label}</h4>
               </div>
 
               <div className="item-tittle">

@@ -7,6 +7,7 @@ import axios from "axios";
 import { IMAGEN_URL } from "../../constants/API_URL";
 import Swal from "sweetalert2";
 import useImagenData from "../../hooks/useImagenData";
+import tiposEquipo from './../../data/tipoEquipoData';
 
 const ImagenUpdateFormInspeccion = () => {
 
@@ -20,6 +21,10 @@ const ImagenUpdateFormInspeccion = () => {
   const [imagen, setImagen] = useState(null);
   const [urlTemporal, setUrlTemporal] = useState(null);
   const inputRef = useRef();
+
+  const tipoEquipo = window.localStorage.getItem("tipoEquipo");
+  const modeloEquipo = window.localStorage.getItem("modeloEquipo");
+  const inspeccionId = window.localStorage.getItem("inspeccionId");
 
   const { updateImagenInspeccion } = useImagenData(imagen);
 
@@ -60,7 +65,8 @@ const ImagenUpdateFormInspeccion = () => {
       formData.append("descripcion", data.descripcion || "");
       formData.append("publicar", data.publicar ? "true" : "false");
       formData.append("inspeccionId", imgInspeccionId || null);
-
+      
+      // const imagenEquipo = `updateImagenInspeccion${tipoEquipo}${modeloEquipo}`;
       
       
       // Enviar al backend ----ARREGLADO

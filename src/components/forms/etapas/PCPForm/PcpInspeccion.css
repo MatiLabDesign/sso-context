@@ -28,8 +28,14 @@ input[type="checkbox"]:checked{
 }
 
 .item-title2{
-    width: 300px;
+    width:300px;
     color: #555;
+    font-weight: 400;
+}
+.item-title3{
+    width: 450px;
+    color: #555;
+    font-weight: 400;
 }
 
 .iconos{

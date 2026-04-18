@@ -9,6 +9,7 @@ export const CLIENT = 'client';
 export const TIPOEQUIPO = 'tipoequipo';
 export const EQUIPO = 'equipo';
 export const IMAGEN = '/dashboard/imagen-form';
+export const IMAGEN_SALIDA = '/dashboard/imagen-form-salida';
 export const IMAGEN_INSPECCION = '/dashboard/imagen-form-inspeccion';
 export const IMAGENUPDATE = '/dashboard/imagen-update-form';
 export const IMAGENUPDATEINSPECCION = '/dashboard/update-imagen-form-inspeccion';

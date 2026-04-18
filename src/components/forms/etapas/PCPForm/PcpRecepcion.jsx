@@ -14,37 +14,49 @@ import useImagenData from "../../../../hooks/useImagenData";
 import { RECEPCION_ITEMS } from "../../../../constants/RECEPCION_ITEMS";
 
 const PcpRecepcion = () => {
-  
-  const { register, handleSubmit, reset, watch, formState: { isDirty },
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { isDirty },
   } = useForm({ defaultValues: recepcionPCP });
 
   const ordenId = localStorage.getItem("ordenId");
-  const tipoEquipo=localStorage.getItem("tipoEquipo");
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
   const modeloEquipo = localStorage.getItem("modeloEquipo");
 
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  const normalizeModelo = (value) =>
-  value ? value.toLowerCase().trim() : "";
+  const normalizeModelo = (value) => (value ? value.toLowerCase().trim() : "");
 
-  const modelo = normalizeModelo(modeloEquipo); 
+  const modelo = normalizeModelo(modeloEquipo);
 
   // const [recepcionId, setRecepcionId] = useState(null);
   const recepcionId = localStorage.getItem("recepcionId");
-  console.log({recepcionId});
+  console.log({ recepcionId });
   const [inspeccionId, setInspeccionId] = useState(null);
   const [tipoInspeccion, setTipoInspeccion] = useState(null);
-  
-  
+
   const navigate = useNavigate();
 
   //  CUSTOM HOOKS
   const { allOts, otActual, updateOt } = useOrdenData(ordenId);
 
-  const { recepcionActual, loading: recepcionLoading, error: recepcionError,
-  createRecepcion, updateRecepcion
+  const {
+    recepcionActual,
+    loading: recepcionLoading,
+    error: recepcionError,
+    createRecepcion,
+    updateRecepcion,
   } = useRecepcionData(recepcionId, reset);
 
-  const { newInspeccion } = useInspeccionData(inspeccionId);
+  const {
+    newInspeccion,
+    newInspeccionVh60,
+    newInspeccionDv1,
+    newInspeccionCougar,
+    newInspeccionMiniG,
+  } = useInspeccionData(inspeccionId);
 
   const { newImagen } = useImagenData();
 
@@ -55,17 +67,14 @@ const PcpRecepcion = () => {
 
   const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
 
-  
-
   useEffect(() => {
     const fetchImagenes = async () => {
       // Solo ejecutar si existe un ID de recepción
       if (!recepcionId) return;
 
       try {
-        const response = await ImagenService.getImagenByRecepcionId(
-          recepcionId
-        );
+        const response =
+          await ImagenService.getImagenByRecepcionId(recepcionId);
         if (response.data) {
           setImagenesGuardadas(response.data);
           console.log(imagenesGuardadas);
@@ -81,10 +90,8 @@ const PcpRecepcion = () => {
 
   // Si quieres ver el valor actualizado de imagenesGuardadas, muévelo a otro useEffect
   useEffect(() => {
-    console.log({imagenesGuardadas});
+    console.log({ imagenesGuardadas });
   }, [imagenesGuardadas]);
-
-  
 
   // useEffect(() => {
   //   if (otActual?.recepcion?.id) {
@@ -93,28 +100,20 @@ const PcpRecepcion = () => {
   // }, [otActual]);
 
   useEffect(() => {
-    if (
-      otActual?.inspeccionPcpVh60?.id ||
-      otActual?.inspeccionPcpDV1?.id ||
-      otActual?.inspeccionPcpMiniG?.id ||
-      otActual?.inspeccionPcpCoguar?.id
-    ) {
-      setInspeccionId(
-        otActual?.inspeccionPcpVh60?.id ||
-          otActual?.inspeccionPcpDV1?.id ||
-          otActual?.inspeccionPcpMiniG?.id ||
-          otActual?.inspeccionPcpCoguar?.id
-      );
-    }
-    console.log("este es el numeroooooo de iinssspeccion"+ {inspeccionId});
-  }, [otActual]);
+  if (!otActual || !tipoEquipo || !modeloEquipo) return;
 
-  useEffect(() => {
-  
-    setTipoInspeccion(`${tipoEquipo}${modeloEquipo}`);
-}, [otActual]);
+  const inspeccionKey = `inspeccion${tipoEquipo}${modeloEquipo}`;
 
-  
+  const inspeccionId = otActual?.[inspeccionKey]?.id;
+
+  console.log("Estos son los datos de la Inspeccion construida:", inspeccionKey, tipoEquipo, modeloEquipo);
+
+  if (inspeccionId) {
+    setInspeccionId(inspeccionId);
+  }
+
+  console.log("inspeccionId:", inspeccionId);
+}, [otActual, tipoEquipo, modeloEquipo]);
 
   const etapaSiguiente = 3;
   const etapaInspeccion = 4;
@@ -134,7 +133,10 @@ const PcpRecepcion = () => {
 
     localStorage.setItem("recepcionId", recepcionId);
     localStorage.setItem("imagenIndex", index);
-    localStorage.setItem("imgRecepcionId", index + 1);
+    localStorage.setItem(
+      "imgRecepcionId",
+      otActual.recepcion.imagenes[index].id,
+    );
 
     // Obtener descripción si existe en imagenesGuardadas
     const descripcion =
@@ -192,15 +194,41 @@ const PcpRecepcion = () => {
 
         if (result.isConfirmed) {
           await updateRecepcion(recepcionId, data);
-        
 
           if (!inspeccionId) {
             // Solo crear si NO hay una inspección existente
-            const nuevaInspeccion = await newInspeccion(data, modelo);
+            // const nuevaInspeccion = await newInspeccion(data, modelo);
+            // const nuevaInspeccionId = nuevaInspeccion?.id;
+            const createNewInspeccion = {
+              Vh60: newInspeccionVh60,
+              Dv1: newInspeccionDv1,
+              MiniG: newInspeccionMiniG,
+              Cougar: newInspeccionCougar,
+            };
+
+            const creator = createNewInspeccion[modeloEquipo];
+
+            if (!creator) {
+              console.error("Modelo no soportado:", modeloEquipo);
+              return;
+            }
+
+            const nuevaInspeccion = await creator(data);
             const nuevaInspeccionId = nuevaInspeccion?.id;
 
+            localStorage.setItem("inspeccionId", nuevaInspeccionId);
+
             if (nuevaInspeccionId) {
-              const inspeccionKey = `inspeccionPcp${modeloEquipo}`;
+              
+              const inspeccionKeys = {
+                Vh60: "inspeccionPcpVh60",
+                Dv1: "inspeccionPcpDV1",
+                Minig: "inspeccionPcpMiniG",
+                Cougar: "inspeccionPcpCougar",
+              };
+
+              const inspeccionKey = inspeccionKeys[modeloEquipo];
+              // const inspeccionKey = `inspeccionPcp${modeloEquipo}`;
 
               const updatedOt = {
                 ...otActual,
@@ -208,7 +236,7 @@ const PcpRecepcion = () => {
                 etapaActual: etapaSiguiente,
               };
 
-              localStorage.setItem("inspeccionId", nuevaInspeccionId)
+              localStorage.setItem("inspeccionId", nuevaInspeccionId);
               // localStorage.removeItem("NOinspeccionId")
 
               await updateOt(ordenId, updatedOt);
@@ -226,7 +254,7 @@ const PcpRecepcion = () => {
 
           if (modeloEquipoActual && tipoEquipoActual) {
             navigate(
-              `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}A`
+              `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}A`,
             );
           }
         }
@@ -253,7 +281,7 @@ const PcpRecepcion = () => {
 
           if (modeloEquipoActual && tipoEquipoActual) {
             navigate(
-              `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}A`
+              `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}A`,
             );
           }
         }
@@ -316,38 +344,40 @@ const PcpRecepcion = () => {
       </div>
 
       <div className="lista-container">
-        {RECEPCION_ITEMS.map(({ estado, requerimiento, observacion, label }) => (
-          <div className="item-section" key={estado}>
-            <div className="item-field">
-              <div className="item-tittle">
-                <h4 className="item-title">{label}</h4>
-              </div>
-              <div className="item-tittle">
-                <label className="form-label-1">Ok</label>
-                <input
-                  className="radio-input"
-                  type="checkbox"
-                  {...register(`itemRecepcion.${estado}`)}
-                  checked={watch(`itemRecepcion.${estado}`)}
-                />
-              </div>
-              <div className="item-tittle">
-                <input
-                  className="form-input"
-                  {...register(`itemRecepcion.${requerimiento}`)}
-                  placeholder="Requerimiento"
-                />
-              </div>
-              <div className="item-tittle">
-                <input
-                  className="form-input"
-                  {...register(`itemRecepcion.${observacion}`)}
-                  placeholder="Observación"
-                />
+        {RECEPCION_ITEMS.map(
+          ({ estado, requerimiento, observacion, label }) => (
+            <div className="item-section" key={estado}>
+              <div className="item-field">
+                <div className="item-tittle">
+                  <h4 className="item-title2">{label}</h4>
+                </div>
+                <div className="item-tittle">
+                  <label className="form-label-1">Ok</label>
+                  <input
+                    className="radio-input"
+                    type="checkbox"
+                    {...register(`itemRecepcion.${estado}`)}
+                    checked={watch(`itemRecepcion.${estado}`)}
+                  />
+                </div>
+                <div className="item-tittle">
+                  <input
+                    className="form-input"
+                    {...register(`itemRecepcion.${requerimiento}`)}
+                    placeholder="Requerimiento"
+                  />
+                </div>
+                <div className="item-tittle">
+                  <input
+                    className="form-input"
+                    {...register(`itemRecepcion.${observacion}`)}
+                    placeholder="Observación"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ),
+        )}
       </div>
 
       <div className="imagenes">

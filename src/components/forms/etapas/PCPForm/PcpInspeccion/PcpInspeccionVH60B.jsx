@@ -28,9 +28,9 @@ const PcpInspeccionVH60B = () => {
 
   const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
   const ordenId = localStorage.getItem("ordenId");
-  const recepcionIdGuardada = localStorage.getItem("recepcionId");
-  const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
-  const modeloGuardada = localStorage.getItem("modelo");
+  const recepcionId = localStorage.getItem("recepcionId");
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
+  const modeloEquipo = localStorage.getItem("modelo");
    const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -91,7 +91,7 @@ const PcpInspeccionVH60B = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion, updateInspeccionVh60 } = useInspeccionData(inspeccionId, reset);
 
   useEffect(() => {
     if (inspeccionActual) {
@@ -174,7 +174,7 @@ const PcpInspeccionVH60B = () => {
         });
 
         if (result.isConfirmed) {
-          await updateInspeccion(inspeccionId, data);
+          await updateInspeccionVh60(inspeccionId, data);
           console.log("✅ Inspección actualizada correctamente:", data);
           const updatedOt = {
             ...otActual,
@@ -267,7 +267,7 @@ const PcpInspeccionVH60B = () => {
           <div className="item-section" key={index}>
             <div className="item-field">
               <div className="item-tittle">
-                <h4 className="item-title">{item.label}</h4>
+                <h4 className="item-title2">{item.label}</h4>
               </div>
               <div className="item-tittle">
                 <label className="form-label-1">Ok</label>
@@ -330,7 +330,7 @@ const PcpInspeccionVH60B = () => {
           <div className="item-section" key={index}>
             <div className="item-field">
               <div className="item-tittle">
-                <h4 className="item-title">{item.label}</h4>
+                <h4 className="item-title2">{item.label}</h4>
               </div>
               <div className="item-tittle">
                 <label className="form-label-1">Ok</label>

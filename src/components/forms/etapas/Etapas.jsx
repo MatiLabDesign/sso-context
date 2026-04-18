@@ -3,13 +3,10 @@ import "./Etapas.css";
 import { Link, Outlet } from "react-router-dom";
 import useOrdenData from "../../../hooks/useOrdenData";
 
-
 const Etapas = () => {
-
   const ordenId = window.localStorage.getItem("ordenId");
 
   const { allOts, otActual, updateOt, loading, error } = useOrdenData(ordenId);
-
 
   const [tipoEquipo, setTipoEquipo] = useState();
   const [modeloEquipo, setModeloEquipo] = useState();
@@ -17,41 +14,43 @@ const Etapas = () => {
 
   useEffect(() => {
     const fetchEtapasData = async () => {
-        try {
-            if (otActual) {
-                setTipoEquipo(otActual?.equipo?.tipoEquipo?.tipo || "N/A");
-                setModeloEquipo(otActual?.equipo?.tipoEquipo?.modelo || "N/A");
-                setNumeroOT(otActual?.numeroOT || "Sin número OT");
+      try {
+        if (otActual) {
+          setTipoEquipo(otActual?.equipo?.tipoEquipo?.tipo || "N/A");
+          setModeloEquipo(otActual?.equipo?.tipoEquipo?.modelo || "N/A");
+          setNumeroOT(otActual?.numeroOT || "Sin número OT");
 
-                console.log("✅ Datos recibidos:", otActual);
-                console.log(tipoEquipo);
-                console.log(modeloEquipo);
-            } else {
-                console.error("❌ Error: `otActual` no está definido.");
-            }
-        } catch (error) {
-            console.error("Error al obtener los datos de recepción:", error);
+          console.log("✅ Datos recibidos:", otActual);
+          console.log(tipoEquipo);
+          console.log(modeloEquipo);
+        } else {
+          console.error("❌ Error: `otActual` no está definido.");
         }
+      } catch (error) {
+        console.error("Error al obtener los datos de recepción:", error);
+      }
     };
 
     if (!loading) {
-        fetchEtapasData();
+      fetchEtapasData();
     }
-}, [otActual, loading]); // <-- Se agrega `otActual` y `loading` a las dependencias
-  
-const etapasMap = {
-  1: `ingreso${otActual?.equipo.tipoEquipo.tipo || ""}`,
-  2: `recepcion${otActual?.equipo.tipoEquipo.tipo || ""}`,
-  3: `inspeccion${otActual?.equipo.tipoEquipo.tipo || ""}${otActual?.equipo.tipoEquipo.modelo || ""}A`,
-  4: `ensayo${otActual?.equipo.tipoEquipo.tipo || ""}${otActual?.equipo.tipoEquipo.modelo || ""}A`,
-  5: `salida${otActual?.equipo.tipoEquipo.tipo || ""}`
-};
+  }, [otActual, loading]); // <-- Se agrega `otActual` y `loading` a las dependencias
 
-console.log(otActual);
-  
+  const etapasMap = {
+    1: `ingreso${otActual?.equipo.tipoEquipo.tipo || ""}`,
+    2: `recepcion${otActual?.equipo.tipoEquipo.tipo || ""}`,
+    3: `inspeccion${otActual?.equipo.tipoEquipo.tipo || ""}${otActual?.equipo.tipoEquipo.modelo || ""}A`,
+    4: `ensayo${otActual?.equipo.tipoEquipo.tipo || ""}${otActual?.equipo.tipoEquipo.modelo || ""}A`,
+    5: `salida${otActual?.equipo.tipoEquipo.tipo || ""}`,
+  };
+
+  console.log(otActual);
 
   return (
     <div className="etapas-container">
+      {/* <h2>
+        {tipoEquipo} - {modeloEquipo} | OT N° {numeroOT}
+      </h2> */}
       <nav className="nav-container">
         <Link to={etapasMap[1]}>
           <div className="round-button">

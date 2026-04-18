@@ -47,7 +47,7 @@ const PcpInspeccionMinigC = () => {
 
       try {
         const response =
-          await ImagenService.getImagenByInspeccionDv1Id(inspeccionIdGuardada);
+          await ImagenService.getImagenByInspeccionMiniGId(inspeccionIdGuardada);
         setImagenesGuardadas(response.data || []); // si no hay datos, usar array vacío
       } catch (error) {
         console.error("Error al obtener las imágenes:", error);
@@ -117,7 +117,7 @@ const PcpInspeccionMinigC = () => {
   const handleImagenClick = (index, e) => {
     e.preventDefault();
 
-    localStorage.setItem("inspeccionId", inspeccionId);
+    // localStorage.setItem("inspeccionId", inspeccionId);
     localStorage.setItem("imagenIndex", index);
 
     // Obtener descripción si existe en imagenesGuardadas

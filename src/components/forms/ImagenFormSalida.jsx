@@ -8,7 +8,7 @@ import { IMAGEN_URL } from "../../constants/API_URL";
 import Swal from "sweetalert2";
 import useImagenData from "../../hooks/useImagenData";
 
-const ImagenForm = () => {
+const ImagenFormSalida = () => {
   const {
     register,
     formState: { errors },
@@ -20,7 +20,7 @@ const ImagenForm = () => {
   const [urlTemporal, setUrlTemporal] = useState(null);
   const inputRef = useRef();
 
-  const { newImagenRecepcion } = useImagenData(imagen);
+  const { newImagenRecepcion, newImagenSalida } = useImagenData(imagen);
 
   const handleImagenChange = (file) => {
     setImagen(file);
@@ -31,7 +31,7 @@ const ImagenForm = () => {
     inputRef.current?.click();
   };
 
-  const imgRecepcionId = window.localStorage.getItem("recepcionId");
+  const imgSalidaId = window.localStorage.getItem("salidaId");
 
   const onSubmit = async (data) => {
     console.log("📤 Datos del formulario:", data);
@@ -57,13 +57,13 @@ const ImagenForm = () => {
       // También enviar los datos como campos individuales en caso de que el backend los espere así
       formData.append("descripcion", data.descripcion || "");
       formData.append("publicar", data.publicar ? "true" : "false");
-      formData.append("recepcionId", imgRecepcionId || null);
+      formData.append("salidaId", imgSalidaId || null);
       //
 
       
       
       // Enviar al backend ----ARREGLADO
-      const response = await newImagenRecepcion(formData);
+      const response = await newImagenSalida(formData);
       
       console.log("✅ Imagen guardada exitosamente:", response.data);
       
@@ -80,7 +80,7 @@ const ImagenForm = () => {
       setUrlTemporal(null);
       
       // Navegar a la página de recepción PCP
-      navigate("/dashboard/etapa/recepcionPCP");
+      navigate("/dashboard/etapa/salidaPcp");
       
     } catch (error) {
       console.error("❌ Error al guardar la imagen:", error);
@@ -138,5 +138,5 @@ const ImagenForm = () => {
   );
 };
 
-export default ImagenForm;
+export default ImagenFormSalida;
 

@@ -30,9 +30,9 @@ const PcpInspeccionMiniGB = () => {
 
   const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
   const ordenId = localStorage.getItem("ordenId");
-  const recepcionIdGuardada = localStorage.getItem("recepcionId");
-  const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
-  const modeloGuardada = localStorage.getItem("modelo");
+  const recepcionId = localStorage.getItem("recepcionId");
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
+  const modeloEquipo = localStorage.getItem("modelo");
    const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -43,10 +43,10 @@ const PcpInspeccionMiniGB = () => {
 
   useEffect(() => {
   const fetchImagenes = async () => {
-    if (!inspeccionIdGuardada) return; // usar el ID real
+    if (!inspeccionId) return; // usar el ID real
 
     try {
-      const response = await ImagenService.getImagenByInspeccionVh60Id(inspeccionIdGuardada);
+      const response = await ImagenService.getImagenByInspeccionMiniGId(inspeccionId);
       setImagenesGuardadas(response.data || []); // si no hay datos, usar array vacío
     } catch (error) {
       console.error("Error al obtener las imágenes:", error);
@@ -54,7 +54,7 @@ const PcpInspeccionMiniGB = () => {
   };
 
   fetchImagenes();
-}, [inspeccionIdGuardada]);
+}, [inspeccionId]);
 
   // Si quieres ver el valor actualizado de imagenesGuardadas, muévelo a otro useEffect
   useEffect(() => {
@@ -74,10 +74,10 @@ const PcpInspeccionMiniGB = () => {
       console.log("✅ Datos recibidos:", otActual);
 
       if (otActual.inspeccionPcpMiniG && otActual.inspeccionPcpMiniG.id) {
-        // setInspecionId(otActual.inspeccionPcpVh60.id);
+        
       } else {
         console.warn(
-          "⚠️ Advertencia: `otActual.inspeccionPcpVh60` no tiene un ID válido."
+          "⚠️ Advertencia: `otActual.inspeccionPcpMiniG` no tiene un ID válido."
         );
         //setInspecionId(null); // Limpia el estado para evitar errores posteriores
       }
@@ -116,7 +116,7 @@ const PcpInspeccionMiniGB = () => {
   const handleImagenClick = (index, e) => {
     e.preventDefault();
 
-    localStorage.setItem("inspeccionId", inspeccionId);
+   
     localStorage.setItem("imagenIndex", index);
 
     // Obtener descripción si existe en imagenesGuardadas
@@ -158,8 +158,6 @@ const PcpInspeccionMiniGB = () => {
         return;
       }
 
-      const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
-      const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
 
       if (inspeccionId) {
         console.log("Inspección existente:", inspeccionId);
@@ -184,9 +182,9 @@ const PcpInspeccionMiniGB = () => {
           };
           await updateOt(ordenId, updatedOt);
 
-          if (modeloEquipoActual && tipoEquipoActual) {
+          if (modeloEquipo && tipoEquipo) {
             navigate(
-              `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}C`
+              `/dashboard/etapa/inspeccion${tipoEquipo}${modeloEquipo}C`
             );
           } else {
             console.error("❌ Error: Modelo de equipo no definido.");
@@ -213,7 +211,7 @@ const PcpInspeccionMiniGB = () => {
   };
 
   const dataImagen = () => {
-    localStorage.setItem("inspeccionVh60Id", inspeccionId);
+    localStorage.setItem("inspeccionImagenMiniGId", inspeccionId);
     navigate(IMAGEN_INSPECCION);
   };
 

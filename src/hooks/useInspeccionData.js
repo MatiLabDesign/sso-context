@@ -161,9 +161,9 @@ const useInspeccionData = (inspeccionId, reset) => {
       throw error;
     }
   };
-  const newInspeccionMinig = async (data) => {
+  const newInspeccionMiniG = async (data) => {
     try {
-      const nuevaInspeccion = await InspeccionService.createInspeccionMinig(data);
+      const nuevaInspeccion = await InspeccionService.createInspeccionMiniG(data);
       if (nuevaInspeccion?.data) {
         setInspeccionActual(nuevaInspeccion.data);
       }
@@ -265,7 +265,7 @@ const useInspeccionData = (inspeccionId, reset) => {
 
   //////////////////////////////////////////////////////////////////////////////////
 
-  return { inspeccionActual, loading, error,  newInspeccion, newInspeccionVh60, newInspeccionDv1, newInspeccionCougar, newInspeccionMinig, newInspeccionUcl, updateInspeccion, updateInspeccionVh60, updateInspeccionDv1, updateInspeccionMinig, updateInspeccionCougar, updateInspeccionUcl};
+  return { inspeccionActual, loading, error,  newInspeccion, newInspeccionVh60, newInspeccionDv1, newInspeccionCougar, newInspeccionMiniG, newInspeccionUcl, updateInspeccion, updateInspeccionVh60, updateInspeccionDv1, updateInspeccionMinig, updateInspeccionCougar, updateInspeccionUcl};
 };
 
 export default useInspeccionData;

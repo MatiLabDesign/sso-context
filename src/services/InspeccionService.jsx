@@ -16,7 +16,7 @@ class InspeccionService {
   createInspeccionDv1(inspeccion) {
     return axios.post(`${INSPECCION_PCPDV1_URL}`, inspeccion);
   }
-  createInspeccionMinig(inspeccion) {
+  createInspeccionMiniG(inspeccion) {
     return axios.post(`${INSPECCION_PCPMINIG_URL}`, inspeccion);
   }
   createInspeccionCougar(inspeccion) {

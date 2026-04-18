@@ -118,6 +118,7 @@ const PcpInspeccionVH60A = () => {
 
     // localStorage.setItem("inspeccionId", inspeccionId);
     localStorage.setItem("imagenIndex", index);
+    localStorage.setItem("imgInspeccionId", otActual.inspeccionPcpVh60.imagenesVH60[index].id);
 
     // Obtener descripción si existe en imagenesGuardadas
     const descripcion =
@@ -158,8 +159,8 @@ const PcpInspeccionVH60A = () => {
         return;
       }
 
-      const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
-      const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
+      // const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
+      // const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
 
       if (inspeccionId) {
         console.log("Inspección existente:", inspeccionId);
@@ -176,7 +177,7 @@ const PcpInspeccionVH60A = () => {
         });
 
         if (result.isConfirmed) {
-          await updateInspeccion(inspeccionId, data);
+          await updateInspeccionVh60(inspeccionId, data);
           console.log("✅ Inspección actualizada correctamente:", data);
           const updatedOt = {
             ...otActual,
@@ -184,9 +185,9 @@ const PcpInspeccionVH60A = () => {
           };
           await updateOt(ordenId, updatedOt);
 
-          if (modeloEquipoActual && tipoEquipoActual) {
+          if (modeloEquipo && tipoEquipo) {
             navigate(
-              `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}B`
+              `/dashboard/etapa/inspeccion${tipoEquipo}${modeloEquipo}B`
             );
           } else {
             console.error("❌ Error: Modelo de equipo no definido.");
@@ -213,7 +214,6 @@ const PcpInspeccionVH60A = () => {
   };
 
   const dataImagen = () => {
-    // localStorage.setItem("inspeccionVh60Id", inspeccionId);
     navigate(IMAGEN_INSPECCION);
   };
 
@@ -321,7 +321,7 @@ const PcpInspeccionVH60A = () => {
         {INSPECCION_VH60A_ITEMS.itemPcpVh60.map((item) => (
           <div className="item-section" key={item.label}>
             <div className="item-tittle">
-              <h4 className="item-title">{item.label}</h4>
+              <h4 className="item-title2">{item.label}</h4>
             </div>
             <div className="item-tittle">
               <label className="form-label">Ok</label>

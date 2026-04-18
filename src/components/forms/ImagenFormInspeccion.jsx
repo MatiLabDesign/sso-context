@@ -15,6 +15,7 @@ const ImagenFormInspeccion = () => {
 
   const modeloEquipo =  window.localStorage.getItem("modeloEquipo");
   const tipoEquipo =  window.localStorage.getItem("tipoEquipo");
+  const inspeccionId = window.localStorage.getItem("inspeccionId");
   const navigate = useNavigate();
   const [imagen, setImagen] = useState(null);
   const [urlTemporal, setUrlTemporal] = useState(null);
@@ -59,8 +60,7 @@ const ImagenFormInspeccion = () => {
       formData.append("descripcion", data.descripcion || "");
       formData.append("publicar", data.publicar ? "true" : "false");
       formData.append("inspeccionId", imgInspeccionId || null);
-      //inspeccionPcpVh60Id Cambie esto a HARDCODEADO>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+      formData.append("inspeccionPcpVh60Id", inspeccionId);
       
       
       // Enviar al backend ----ARREGLADO

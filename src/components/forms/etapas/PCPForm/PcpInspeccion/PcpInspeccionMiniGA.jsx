@@ -29,15 +29,15 @@ const PcpInspeccionMiniGA = () => {
 
   const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
   const ordenId = localStorage.getItem("ordenId");
-  const recepcionIdGuardada = localStorage.getItem("recepcionId");
-  const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
-  const modeloGuardada = localStorage.getItem("modelo");
+  const recepcionId = localStorage.getItem("recepcionId");
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
+  const modeloEquipo = localStorage.getItem("modelo");
    const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const inspeccionIdGuardada = inspeccionId;
 
-  console.log(inspeccionIdGuardada);
+  console.log(inspeccionId);
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const PcpInspeccionMiniGA = () => {
     if (!inspeccionIdGuardada) return; // usar el ID real
 
     try {
-      const response = await ImagenService.getImagenByInspeccionVh60Id(inspeccionIdGuardada);
+      const response = await ImagenService.getImagenByInspeccionMiniGId(inspeccionIdGuardada);
       setImagenesGuardadas(response.data || []); // si no hay datos, usar array vacío
     } catch (error) {
       console.error("Error al obtener las imágenes:", error);
@@ -73,11 +73,11 @@ const PcpInspeccionMiniGA = () => {
     if (otActual) {
       console.log("✅ Datos recibidos:", otActual);
 
-      if (otActual.inspeccionPcpDV1 && otActual.inspeccionPcpDV1.id) {
+      if (otActual.inspeccionPcpMiniG && otActual.inspeccionPcpMiniG.id) {
         // setInspecionId(otActual.inspeccionPcpVh60.id);
       } else {
         console.warn(
-          "⚠️ Advertencia: `otActual..inspeccionPcpDV1` no tiene un ID válido."
+          "⚠️ Advertencia: `otActual.inspeccionPcpMiniG` no tiene un ID válido."
         );
         // setInspecionId(null); // Limpia el estado para evitar errores posteriores
       }
@@ -93,7 +93,7 @@ const PcpInspeccionMiniGA = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion, } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion, updateInspeccionMinig } = useInspeccionData(inspeccionId, reset);
 
   useEffect(() => {
     if (inspeccionActual) {
@@ -116,8 +116,9 @@ const PcpInspeccionMiniGA = () => {
   const handleImagenClick = (index, e) => {
     e.preventDefault();
 
-    // localStorage.setItem("inspeccionId", inspeccionId);
     localStorage.setItem("imagenIndex", index);
+        localStorage.setItem("imgInspeccionId", otActual.inspeccionPcpVh60.imagenesVH60[index].id);
+
 
     // Obtener descripción si existe en imagenesGuardadas
     const descripcion =
@@ -158,8 +159,6 @@ const PcpInspeccionMiniGA = () => {
         return;
       }
 
-      const modeloEquipoActual = otActual?.equipo?.tipoEquipo?.modelo;
-      const tipoEquipoActual = otActual?.equipo?.tipoEquipo?.tipo;
 
       if (inspeccionId) {
         console.log("Inspección existente:", inspeccionId);
@@ -176,7 +175,7 @@ const PcpInspeccionMiniGA = () => {
         });
 
         if (result.isConfirmed) {
-          await updateInspeccion(inspeccionId, data);
+          await updateInspeccionMinig(inspeccionId, data);
           console.log("✅ Inspección actualizada correctamente:", data);
           const updatedOt = {
             ...otActual,
@@ -184,9 +183,9 @@ const PcpInspeccionMiniGA = () => {
           };
           await updateOt(ordenId, updatedOt);
 
-          if (modeloEquipoActual && tipoEquipoActual) {
+          if (modeloEquipo && tipoEquipo) {
             navigate(
-              `/dashboard/etapa/inspeccion${tipoEquipoActual}${modeloEquipoActual}B`
+              `/dashboard/etapa/inspeccion${tipoEquipo}${modeloEquipo}B`
             );
           } else {
             console.error("❌ Error: Modelo de equipo no definido.");
@@ -213,7 +212,7 @@ const PcpInspeccionMiniGA = () => {
   };
 
   const dataImagen = () => {
-    // localStorage.setItem("inspeccionVh60Id", inspeccionId);
+ 
     navigate(IMAGEN_INSPECCION);
   };
 

@@ -30,8 +30,13 @@ const useImagenData = (imagenId, reset, modeloEquipo) => {
     fetchImagenData();
   }, [imagenId, reset]);
 
-  
-  // Crear una nueva imagen ------ARREGLADO
+
+  // Crear una nueva imagen ------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  // Crear una nueva imagen ------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  // Crear una nueva imagen ------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+  //RECEPCION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
   const newImagenRecepcion = async (data) => {
     try {
       const nuevaImagen = await ImagenService.createImagenRecepcion(data);
@@ -44,6 +49,8 @@ const useImagenData = (imagenId, reset, modeloEquipo) => {
       throw error;
     }
   };
+
+  //INSPECCION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   const newImagenInspeccionVh60 = async (data) => {
     try {
@@ -119,10 +126,9 @@ const useImagenData = (imagenId, reset, modeloEquipo) => {
   };
 
 
-
-  const newImagenInspeccion2 = async (data) => {
+  const newImagenEnsayoVh60 = async (data) => {
     try {
-      const nuevaImagen = await ImagenService.createImagenInspeccionPcpVh60(data);
+      const nuevaImagen = await ImagenService.createImagenEnsayoPcpVh60(data);
       if (nuevaImagen?.data) {
         setImagen(nuevaImagen.data);
       }
@@ -132,14 +138,9 @@ const useImagenData = (imagenId, reset, modeloEquipo) => {
       throw error;
     }
   };
-  // Crear una nueva imagen ------ARREGLADO
-  const newImagen = async (data) => {
-  // const newImagenInspeccionPcp = async (data) => {
+  const newImagenEnsayoDv1 = async (data) => {
     try {
-      const nuevaImagen = await ImagenService.createImagenRecepcion(data);
-      //REVISAR BIEN LOS ENDPOINTS----------------------------------------------->>>>>
-
-      
+      const nuevaImagen = await ImagenService.createImagenEnsayoPcpDv1(data);
       if (nuevaImagen?.data) {
         setImagen(nuevaImagen.data);
       }
@@ -149,6 +150,52 @@ const useImagenData = (imagenId, reset, modeloEquipo) => {
       throw error;
     }
   };
+  const newImagenEnsayoMiniG = async (data) => {
+    try {
+      const nuevaImagen = await ImagenService.createImagenEnsayoPcpMiniG(data);
+      if (nuevaImagen?.data) {
+        setImagen(nuevaImagen.data);
+      }
+      return nuevaImagen?.data;
+    } catch (error) {
+      console.error("Error al cargar la imagen :", error);
+      throw error;
+    }
+  };
+  const newImagenEnsayoCougar = async (data) => {
+    try {
+      const nuevaImagen = await ImagenService.createImagenEnsayoPcpCougar(data);
+      if (nuevaImagen?.data) {
+        setImagen(nuevaImagen.data);
+      }
+      return nuevaImagen?.data;
+    } catch (error) {
+      console.error("Error al cargar la imagen :", error);
+      throw error;
+    }
+  };
+
+  //SALIDA>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+  const newImagenSalida = async (data) => {
+    try {
+      const nuevaImagen = await ImagenService.createImagenSalida(data);
+      if (nuevaImagen?.data) {
+        setImagen(nuevaImagen.data);
+      }
+      return nuevaImagen?.data;
+    } catch (error) {
+      console.error("Error al cargar la imagen :", error);
+      throw error;
+    }
+  };
+
+
+  //Update imagenes>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  //Update imagenes>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  //Update imagenes>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+  //RECEPCION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   const updateImagenRecepcion = async (imagenId, data) => {
     try {
@@ -162,6 +209,57 @@ const useImagenData = (imagenId, reset, modeloEquipo) => {
       throw err;
     }
   };
+
+  //INSPECCION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+  const updateImagenInspeccionVh60 = async (data) => {
+    try {
+      const nuevaImagen = await ImagenService.updateImagenInspeccionPcpVh60(data);
+      if (nuevaImagen?.data) {
+        setImagen(nuevaImagen.data);
+      }
+      return nuevaImagen?.data;
+    } catch (error) {
+      console.error("Error al cargar la imagen :", error);
+      throw error;
+    }
+  };
+  const updateImagenInspeccionDv1 = async (data) => {
+    try {
+      const nuevaImagen = await ImagenService.updateImagenInspeccionPcpDv1(data);
+      if (nuevaImagen?.data) {
+        setImagen(nuevaImagen.data);
+      }
+      return nuevaImagen?.data;
+    } catch (error) {
+      console.error("Error al cargar la imagen :", error);
+      throw error;
+    }
+  };
+  const updateImagenInspeccionMiniG = async (data) => {
+    try {
+      const nuevaImagen = await ImagenService.updateImagenInspeccionPcpMiniG(data);
+      if (nuevaImagen?.data) {
+        setImagen(nuevaImagen.data);
+      }
+      return nuevaImagen?.data;
+    } catch (error) {
+      console.error("Error al cargar la imagen :", error);
+      throw error;
+    }
+  };
+  const updateImagenInspeccionCougar = async (data) => {
+    try {
+      const nuevaImagen = await ImagenService.updateImagenInspeccionPcpCougar(data);
+      if (nuevaImagen?.data) {
+        setImagen(nuevaImagen.data);
+      }
+      return nuevaImagen?.data;
+    } catch (error) {
+      console.error("Error al cargar la imagen :", error);
+      throw error;
+    }
+  };
   const updateImagenInspeccion = async (imagenId, data) => {
     try {
       const response = await ImagenService.updateImagen(imagenId, data);
@@ -172,7 +270,66 @@ const useImagenData = (imagenId, reset, modeloEquipo) => {
       throw err;
     }
   };
-  return { imagen, loading, error, newImagenRecepcion, newImagenInspeccionVh60, newImagenInspeccionDv1, newImagenInspeccionCougar, newImagenInspeccionMiniG, newImagenInspeccionUcl, newImagenInspeccionGenerico, updateImagenRecepcion, updateImagenInspeccion };
+
+  //ENSAYO>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+  const updateImagenEnsayoVh60 = async (data) => {
+    try {
+      const nuevaImagen = await ImagenService.updateImagenEnsayoPcpVh60(data);
+      if (nuevaImagen?.data) {
+        setImagen(nuevaImagen.data);
+      }
+      return nuevaImagen?.data;
+    } catch (error) {
+      console.error("Error al cargar la imagen :", error);
+      throw error;
+    }
+  };
+  const updateImagenEnsayoDv1 = async (data) => {
+    try {
+      const nuevaImagen = await ImagenService.updateImagenEnsayoPcpDv1(data);
+      if (nuevaImagen?.data) {
+        setImagen(nuevaImagen.data);
+      }
+      return nuevaImagen?.data;
+    } catch (error) {
+      console.error("Error al cargar la imagen :", error);
+      throw error;
+    }
+  };
+  const updateImagenEnsayoMiniG = async (data) => {
+    try {
+      const nuevaImagen = await ImagenService.updateImagenEnsayoPcpMiniG(data);
+      if (nuevaImagen?.data) {
+        setImagen(nuevaImagen.data);
+      }
+      return nuevaImagen?.data;
+    } catch (error) {
+      console.error("Error al cargar la imagen :", error);
+      throw error;
+    }
+  };
+  const updateImagenEnsayoCougar = async (data) => {
+    try {
+      const nuevaImagen = await ImagenService.updateImagenEnsayoPcpCougar(data);
+      if (nuevaImagen?.data) {
+        setImagen(nuevaImagen.data);
+      }
+      return nuevaImagen?.data;
+    } catch (error) {
+      console.error("Error al cargar la imagen :", error);
+      throw error;
+    }
+  };
+
+
+
+
+  return { imagen, loading, error,
+     newImagenRecepcion, newImagenInspeccionVh60, newImagenInspeccionDv1, newImagenInspeccionCougar, newImagenInspeccionMiniG, newImagenInspeccionUcl, newImagenInspeccionGenerico, newImagenSalida,
+     newImagenEnsayoVh60, newImagenEnsayoDv1, newImagenEnsayoCougar, newImagenEnsayoMiniG,
+     updateImagenRecepcion, updateImagenInspeccionVh60, updateImagenInspeccionDv1, updateImagenInspeccionCougar, updateImagenInspeccionMiniG, updateImagenInspeccion,
+     updateImagenEnsayoVh60, updateImagenEnsayoDv1, updateImagenEnsayoCougar, updateImagenEnsayoMiniG};
 };
 
 export default useImagenData;

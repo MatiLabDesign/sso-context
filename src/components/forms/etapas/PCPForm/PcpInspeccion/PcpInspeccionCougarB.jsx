@@ -44,7 +44,7 @@ const PcpInspeccionCougarB = () => {
     if (!inspeccionIdGuardada) return; // usar el ID real
 
     try {
-      const response = await ImagenService.getImagenByInspeccionVh60Id(inspeccionIdGuardada);
+      const response = await ImagenService.getImagenByInspeccionCougarId(inspeccionIdGuardada);
       setImagenesGuardadas(response.data || []); // si no hay datos, usar array vacío
     } catch (error) {
       console.error("Error al obtener las imágenes:", error);
@@ -91,7 +91,7 @@ const PcpInspeccionCougarB = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion, updateInspeccionCougar } = useInspeccionData(inspeccionId, reset);
 
   useEffect(() => {
     if (inspeccionActual) {
@@ -174,7 +174,7 @@ const PcpInspeccionCougarB = () => {
         });
 
         if (result.isConfirmed) {
-          await updateInspeccion(inspeccionId, data);
+          await updateInspeccionCougar(inspeccionId, data);
           console.log("✅ Inspección actualizada correctamente:", data);
           const updatedOt = {
             ...otActual,

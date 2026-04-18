@@ -9,6 +9,8 @@ import useEnsayoData from "../../../../../hooks/useEnsayoData";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { INSPECCION_PCPDV1C_ITEMS } from "../../../../../constants/INSPECCION_PCPDV1_ITEMS";
 import Swal from "sweetalert2";
+import ImagenService from "../../../../../services/ImagenService";
+
 
 const PcpInspeccionDv1C = () => {
   const {
@@ -330,7 +332,7 @@ const PcpInspeccionDv1C = () => {
       {INSPECCION_PCPDV1C_ITEMS.sistemaHidraulicoPcpDV1.map((item) => (
         <div className="item-section" key={item.label}>
           <div className="item-tittle">
-            <h4 className="item-title">{item.label}</h4>
+            <h4 className="item-title2">{item.label}</h4>
           </div>
           <div className="item-tittle">
             <label className="form-label">Ok</label>
@@ -383,7 +385,7 @@ const PcpInspeccionDv1C = () => {
         <div className="item-section" key={itemKey}>
           <div className="item-field">
             <div className="item-tittle">
-              <h4 className="item-title">{itemKey.label}</h4>
+              <h4 className="item-title2">{itemKey.label}</h4>
             </div>
             <div className="item-tittle">
               <label className="form-label-1">Ok</label>

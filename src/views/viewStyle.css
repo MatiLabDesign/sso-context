@@ -1,3 +1,13 @@
-/* .container{
-    background-color: #9ea7b3;
-} */
+.header{
+    display: flex;
+}
+
+.linea{
+    border: solid 0,5px #155a40;
+    margin: 0px 25px;
+    margin-top: 25px;
+}
+
+.content{
+    height: 100vh;
+}

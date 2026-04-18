@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useOrdenData from "../../../../hooks/useOrdenData";
 import Swal from "sweetalert2";
-import { IMAGEN } from "../../../../config/routes/paths";
+import { IMAGEN, IMAGEN_SALIDA } from "../../../../config/routes/paths";
 
 const PcpSalida = () => {
   const numeroOrden = window.localStorage.getItem("numeroOT");
@@ -149,7 +149,7 @@ const PcpSalida = () => {
               ) : (
                 <div key={index} className="imagen-prueba">
                   <Link
-                    to={IMAGEN}
+                    to={IMAGEN_SALIDA}
                     className="boton-agregar-imagen"
                   >
                     +
