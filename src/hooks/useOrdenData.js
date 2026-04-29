@@ -38,13 +38,13 @@ const useOrdenData = (ordenId) => {
     fetchAllOts();
   }, []); // Se ejecuta solo una vez
 
-  const updateOt = (ordenId, data) => {
+  const updateOt = async (ordenId, data) => {
       try {
-        const response = OtService.updateOt(ordenId, data);
+        const response = await OtService.updateOt(ordenId, data);
         setOtActual(response.data);
         return response;
       } catch (err) {
-        setError("Error al actualizar la recepción");
+        setError("Error al actualizar la OT");
         throw err;
       }
     };

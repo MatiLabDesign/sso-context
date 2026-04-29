@@ -97,13 +97,13 @@ const GenericoRecepcion = () => {
       otActual?.inspeccionPcpVh60?.id ||
       otActual?.inspeccionPcpDV1?.id ||
       otActual?.inspeccionPcpMiniG?.id ||
-      otActual?.inspeccionPcpCoguar?.id
+      otActual?.inspeccionPcpCougar?.id
     ) {
       setInspeccionId(
         otActual?.inspeccionPcpVh60?.id ||
           otActual?.inspeccionPcpDV1?.id ||
           otActual?.inspeccionPcpMiniG?.id ||
-          otActual?.inspeccionPcpCoguar?.id
+          otActual?.inspeccionPcpCougar?.id
       );
     }
     console.log("este es el numeroooooo de iinssspeccion"+ {inspeccionId});
