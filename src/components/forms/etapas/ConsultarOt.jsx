@@ -25,7 +25,9 @@ const ConsultarOt = () => {
     5: `inspeccion${otActual?.equipo.tipoEquipo.tipo || ""}${
       otActual?.equipo.tipoEquipo.modelo || ""
     }C`,
-    6: `ensayo${otActual?.equipo.tipoEquipo.tipo || ""}`,
+    6: `ensayo${otActual?.equipo.tipoEquipo.tipo || ""}${
+      otActual?.equipo.tipoEquipo.modelo || ""
+    }A`,
     7: `ensayo${otActual?.equipo.tipoEquipo.tipo || ""}${
       otActual?.equipo.tipoEquipo.modelo || ""
     }B`,

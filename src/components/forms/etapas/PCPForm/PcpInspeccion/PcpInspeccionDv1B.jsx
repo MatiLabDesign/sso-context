@@ -71,7 +71,7 @@ const PcpInspeccionDv1B = () => {
     if (otActual) {
       console.log("✅ Datos recibidos:", otActual);
 
-      if (otActual.inspeccionPcpDV1 && otActual.inspeccionPcpDV1.id) {
+      if (otActual.inspeccionPcpDv1 && otActual.inspeccionPcpDv1.id) {
         // setInspecionId(otActual.inspeccionPcpVh60.id);
       } else {
         console.warn(
@@ -91,7 +91,7 @@ const PcpInspeccionDv1B = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccionDv1 } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccionDv1 } = useInspeccionData(inspeccionId, reset, modeloEquipo);
 
   useEffect(() => {
     if (inspeccionActual) {
@@ -274,8 +274,8 @@ const PcpInspeccionDv1B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpDv1.${item.ok}`)}
-                  checked={watch(`rodamientoPcpDv1.${item.ok}`)}
+                  {...register(`rodamientoPcpDV1.${item.ok}`)}
+                  checked={watch(`rodamientoPcpDV1.${item.ok}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -283,8 +283,8 @@ const PcpInspeccionDv1B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpDv1.${item.picado}`)}
-                  checked={watch(`rodamientoPcpDv1.${item.picado}`)}
+                  {...register(`rodamientoPcpDV1.${item.picado}`)}
+                  checked={watch(`rodamientoPcpDV1.${item.picado}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -292,8 +292,8 @@ const PcpInspeccionDv1B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpDv1.${item.laminado}`)}
-                  checked={watch(`rodamientoPcpDv1.${item.laminado}`)}
+                  {...register(`rodamientoPcpDV1.${item.laminado}`)}
+                  checked={watch(`rodamientoPcpDV1.${item.laminado}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -301,8 +301,8 @@ const PcpInspeccionDv1B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpDv1.${item.fallaEnJaula}`)}
-                  checked={watch(`rodamientoPcpDv1.${item.fallaEnJaula}`)}
+                  {...register(`rodamientoPcpDV1.${item.fallaEnJaula}`)}
+                  checked={watch(`rodamientoPcpDV1.${item.fallaEnJaula}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -310,14 +310,14 @@ const PcpInspeccionDv1B = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`rodamientoPcpDv1.${item.desgaste}`)}
-                  checked={watch(`rodamientoPcpDv1.${item.desgaste}`)}
+                  {...register(`rodamientoPcpDV1.${item.desgaste}`)}
+                  checked={watch(`rodamientoPcpDV1.${item.desgaste}`)}
                 />
               </div>
               <div className="item-tittle">
                 <input
                   className="form-input"
-                  {...register(`rodamientoPcpDv1.${item.esp}`)}
+                  {...register(`rodamientoPcpDV1.${item.esp}`)}
                   placeholder="Especificar"
                 />
               </div>

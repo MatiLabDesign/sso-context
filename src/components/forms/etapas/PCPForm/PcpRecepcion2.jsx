@@ -10,7 +10,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { IMAGEN } from "../../../../config/routes/paths";
 import ImagenService from "../../../../services/ImagenService";
 import useInspeccionData from "../../../../hooks/useInspeccionData";
-import inspeccionPcpDv1 from "../../../../data/inspeccionPCPDv1";
+// import inspeccionPcpDv1 from "../../../../data/inspeccionPCPDv1";
 import inspeccionPcpMiniG from "../../../../data/inspeccionPCPminiG";
 import inspeccionPcpCoguar from "../../../../data/inspeccionPCPCougar";
 

@@ -1,125 +1,65 @@
 import { useEffect, useState } from "react";
 import InspeccionService from "../services/InspeccionService";
 
-const useInspeccionData = (inspeccionId, reset) => {
+const useInspeccionData = (inspeccionId, reset, tipoEquipo) => {
   const [inspeccionActual, setInspeccionActual] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Obtener los datos de la inspección
+  // Obtener los datos de la inspección según el tipo de equipo
   useEffect(() => {
     const fetchInspeccionData = async () => {
       if (!inspeccionId) return;
+      if (!tipoEquipo) return; // Si no hay tipo, no hacer fetch
+      if (typeof reset !== "function") return; // Si no hay reset, no hacer fetch
 
       setLoading(true);
       try {
-        const response = await InspeccionService.getInspeccionVh60ById(inspeccionId);
-        if (response.data) {
+        let response;
+
+        switch (tipoEquipo) {
+          case "Vh60":
+          case "VH60":
+            response = await InspeccionService.getInspeccionVh60ById(inspeccionId);
+            break;
+          case "Dv1":
+          case "DV1":
+            response = await InspeccionService.getInspeccionDv1ById(inspeccionId);
+            break;
+          case "MiniG":
+          case "Minig":
+          case "miniG":
+            response = await InspeccionService.getInspeccionMinigById(inspeccionId);
+            break;
+          case "Cougar":
+          case "cougar":
+            response = await InspeccionService.getInspeccionCougarById(inspeccionId);
+            break;
+          case "Ucl":
+          case "UCL":
+            response = await InspeccionService.getInspeccionUclById(inspeccionId);
+            break;
+          default:
+            console.warn("⚠️ Tipo de equipo no reconocido para fetch:", tipoEquipo);
+            return;
+        }
+
+        if (response?.data) {
           setInspeccionActual(response.data);
           reset(response.data); // Rellena el formulario
         }
       } catch (error) {
-        setError("Error al obtener los datos de recepción");
-        console.error("Error al obtener los datos de recepción:", error);
+        setError("Error al obtener los datos de inspección");
+        console.error(`Error al obtener inspección (${tipoEquipo}):`, error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchInspeccionData();
-  }, [inspeccionId, reset]);
-
-  // Obtener los datos de la inspección
-  useEffect(() => {
-    const fetchInspeccionVh60Data = async () => {
-      if (!inspeccionId) return;
-
-      setLoading(true);
-      try {
-        const response = await InspeccionService.getInspeccionVh60ById(inspeccionId);
-        if (response.data) {
-          setInspeccionActual(response.data);
-          reset(response.data); // Rellena el formulario
-        }
-      } catch (error) {
-        setError("Error al obtener los datos de recepción");
-        console.error("Error al obtener los datos de recepción:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchInspeccionVh60Data();
-  }, [inspeccionId, reset]);
+  }, [inspeccionId, reset, tipoEquipo]);
 
 
-  useEffect(() => {
-    const fetchInspeccionDv1Data = async () => {
-      if (!inspeccionId) return;
-
-      setLoading(true);
-      try {
-        const response = await InspeccionService.getInspeccionDv1ById(inspeccionId);
-        if (response.data) {
-          setInspeccionActual(response.data);
-          reset(response.data); // Rellena el formulario
-        }
-      } catch (error) {
-        setError("Error al obtener los datos de recepción");
-        console.error("Error al obtener los datos de recepción:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchInspeccionDv1Data();
-  }, [inspeccionId, reset]);
-
-  useEffect(() => {
-    const fetchInspeccionMinigData = async () => {
-      if (!inspeccionId) return;
-
-      setLoading(true);
-      try {
-        const response = await InspeccionService.getInspeccionMinigById(inspeccionId);
-        if (response.data) {
-          setInspeccionActual(response.data);
-          reset(response.data); // Rellena el formulario
-        }
-      } catch (error) {
-        setError("Error al obtener los datos de recepción");
-        console.error("Error al obtener los datos de recepción:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchInspeccionMinigData();
-  }, [inspeccionId, reset]);
-  
-  useEffect(() => {
-    const fetchInspeccionCougarData = async () => {
-      if (!inspeccionId) return;
-
-      setLoading(true);
-      try {
-        const response = await InspeccionService.getInspeccionCougarById(inspeccionId);
-        if (response.data) {
-          setInspeccionActual(response.data);
-          reset(response.data); // Rellena el formulario
-        }
-      } catch (error) {
-        setError("Error al obtener los datos de recepción");
-        console.error("Error al obtener los datos de recepción:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchInspeccionCougarData();
-  }, [inspeccionId, reset]);
-
-  
   // Crear una nueva Inspección
   const newInspeccion = async (inspeccion, modeloEquipo) => {
     try {
@@ -269,4 +209,5 @@ const useInspeccionData = (inspeccionId, reset) => {
 };
 
 export default useInspeccionData;
+
 

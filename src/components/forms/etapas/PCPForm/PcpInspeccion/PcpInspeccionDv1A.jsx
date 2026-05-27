@@ -93,7 +93,7 @@ const PcpInspeccionDv1A = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion, updateInspeccionDv1 } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion, updateInspeccionDv1 } = useInspeccionData(inspeccionId, reset, modeloEquipo);
 
   useEffect(() => {
     if (inspeccionActual) {

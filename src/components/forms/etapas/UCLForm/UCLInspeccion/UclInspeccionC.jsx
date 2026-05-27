@@ -96,7 +96,7 @@ const UclInspeccionC = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccionUcl } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccionUcl } = useInspeccionData(inspeccionId, reset, tipoEquipo);
   const { newEnsayoUcl  } = useEnsayoData();
   useEffect(() => {
     if (inspeccionActual) {

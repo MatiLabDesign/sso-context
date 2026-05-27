@@ -10,7 +10,6 @@ import {
   INGRESOBM,
   INGRESOUCL,
   INSPECCIONBM,
-  PCP_ENSAYO,
   PCP_ENSAYO_COUGAR_A,
   PCP_ENSAYO_COUGAR_B,
   PCP_ENSAYO_DV1_A,
@@ -121,7 +120,7 @@ export const EtapasRoutes = () => {
 
       <Route path={PCP_RECEPCION} element={<PcpRecepcion />} />
 
-      <Route path={PCP_ENSAYO} element={<PcpEnsayoVH60A />} />
+      {/* <Route path={PCP_ENSAYO} element={<PcpEnsayoVH60A />} /> */}
       <Route path={PCP_ENSAYO_VH60_A} element={<PcpEnsayoVH60A />} />
       <Route path={PCP_ENSAYO_VH60_B} element={<PcpEnsayoVH60B />} />
       <Route path={PCP_ENSAYO_DV1_A} element={<PcpEnsayoDv1A />} />

@@ -99,7 +99,7 @@ const GenericoInspeccion = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion } = useInspeccionData(inspeccionId, reset, tipoEquipo);
 
   useEffect(() => {
     if (inspeccionActual) {

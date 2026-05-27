@@ -30,7 +30,7 @@ const PcpInspeccionVH60B = () => {
   const ordenId = localStorage.getItem("ordenId");
   const recepcionId = localStorage.getItem("recepcionId");
   const tipoEquipo = localStorage.getItem("tipoEquipo");
-  const modeloEquipo = localStorage.getItem("modelo");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
    const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -91,7 +91,7 @@ const PcpInspeccionVH60B = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion, updateInspeccionVh60 } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion, updateInspeccionVh60 } = useInspeccionData(inspeccionId, reset, modeloEquipo);
 
   useEffect(() => {
     if (inspeccionActual) {

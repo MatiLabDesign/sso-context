@@ -11,6 +11,8 @@ const OrdenList = () => {
   const [ots, setOts] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate(); // Hook para navegar
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
 
   useEffect(() => {
     OtService.getAllOt()
@@ -62,7 +64,7 @@ const OrdenList = () => {
         case '4':
           console.log("Navegando a ENSAYOCP");
           console.log(etapaActual);
-          navigate("/dashboard/etapa/ensayoPCP"); // Redirigir a componente PCP Etapa 4
+          navigate(`/dashboard/etapa/ensayo${tipoEquipo}${modeloEquipo}A`); // Redirigir a componente PCP Etapa 4
           break;
         case '5':
           navigate(SALIDAPCP); // Redirigir a componente PCP Etapa 5

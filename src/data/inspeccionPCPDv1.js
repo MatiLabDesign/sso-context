@@ -117,11 +117,11 @@ const inspeccionPcpDv1 = {
   },
   poleaPcpDV1: {
   ok: false,
-  deformado: false,
-  grietas: false,
-  fisurado: false,
-  picado: false,
-  observacion: ""
+  fisura: false,
+  poros: false,
+  disenoInadecuado: false,
+  numeroTrazabilidad: false,
+  especificar: ""
   }
  };
  export default inspeccionPcpDv1;

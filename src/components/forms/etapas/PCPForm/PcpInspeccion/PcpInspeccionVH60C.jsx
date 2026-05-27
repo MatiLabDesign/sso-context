@@ -31,8 +31,8 @@ const PcpInspeccionVH60C = () => {
   const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
   const ordenId = localStorage.getItem("ordenId");
   const recepcionIdGuardada = localStorage.getItem("recepcionId");
-  const tipoDeEquipoGuardada = localStorage.getItem("tipoEquipo");
-  const modeloGuardada = localStorage.getItem("modelo");
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
    const inspeccionId = localStorage.getItem("inspeccionId");
    const ensayoId = localStorage.getItem("ensayoVh60Id");
 
@@ -94,7 +94,7 @@ const PcpInspeccionVH60C = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccionVh60 } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccionVh60 } = useInspeccionData(inspeccionId, reset, modeloEquipo);
   const { newEnsayoVh60  } = useEnsayoData();
   useEffect(() => {
     if (inspeccionActual) {
@@ -117,8 +117,8 @@ const PcpInspeccionVH60C = () => {
   const handleImagenClick = (index, e) => {
     e.preventDefault();
 
-    localStorage.setItem("inspeccionId", inspeccionId);
-    localStorage.setItem("imagenIndex", index);
+    // localStorage.setItem("inspeccionId", inspeccionId);
+    // localStorage.setItem("imagenIndex", index);
 
     // Obtener descripción si existe en imagenesGuardadas
     const descripcion =
@@ -255,7 +255,7 @@ if (!ensayoExisteEnOt) {
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
           if (modeloEquipoActual && tipoEquipoActual) {
             navigate(
-              `/dashboard/etapa/ensayo${tipoEquipoActual}`
+              `/dashboard/etapa/ensayo${tipoEquipo}${modeloEquipo}A`
             );
           } else {
             console.error("❌ Error: Modelo de equipo no definido.");
@@ -273,7 +273,7 @@ if (!ensayoExisteEnOt) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/dashboard/etapa/ensayoPCP`);
+    navigate(`/dashboard/etapa/ensayo${tipoEquipo}${modeloEquipo}A`);
   };
 
   const handleClickA = (e) => {

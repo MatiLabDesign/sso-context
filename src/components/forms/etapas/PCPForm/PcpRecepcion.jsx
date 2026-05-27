@@ -27,9 +27,9 @@ const PcpRecepcion = () => {
   const modeloEquipo = localStorage.getItem("modeloEquipo");
 
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  const normalizeModelo = (value) => (value ? value.toLowerCase().trim() : "");
+  // const normalizeModelo = (value) => (value ? value.toLowerCase().trim() : "");
 
-  const modelo = normalizeModelo(modeloEquipo);
+  // const modelo = normalizeModelo(modeloEquipo);
 
   // const [recepcionId, setRecepcionId] = useState(null);
   const recepcionId = localStorage.getItem("recepcionId");
@@ -100,20 +100,20 @@ const PcpRecepcion = () => {
   // }, [otActual]);
 
   useEffect(() => {
-  if (!otActual || !tipoEquipo || !modeloEquipo) return;
+    if (!otActual || !tipoEquipo || !modeloEquipo) return;
 
-  const inspeccionKey = `inspeccion${tipoEquipo}${modeloEquipo}`;
+    const inspeccionKey = `inspeccion${tipoEquipo}${modeloEquipo}`;
 
-  const inspeccionId = otActual?.[inspeccionKey]?.id;
+    const inspeccionId = otActual?.[inspeccionKey]?.id;
 
-  console.log("Estos son los datos de la Inspeccion construida:", inspeccionKey, tipoEquipo, modeloEquipo);
+    console.log("Estos son los datos de la Inspeccion construida:", inspeccionKey, tipoEquipo, modeloEquipo);
 
-  if (inspeccionId) {
-    setInspeccionId(inspeccionId);
-  }
+    if (inspeccionId) {
+      setInspeccionId(inspeccionId);
+    }
 
-  console.log("inspeccionId:", inspeccionId);
-}, [otActual, tipoEquipo, modeloEquipo]);
+    console.log("inspeccionId:", inspeccionId);
+  }, [otActual, tipoEquipo, modeloEquipo]);
 
   const etapaSiguiente = 3;
   const etapaInspeccion = 4;
@@ -131,7 +131,7 @@ const PcpRecepcion = () => {
   const handleImagenClick = (index, e) => {
     e.preventDefault();
 
-    localStorage.setItem("recepcionId", recepcionId);
+    // localStorage.setItem("recepcionId", recepcionId);
     localStorage.setItem("imagenIndex", index);
     localStorage.setItem(
       "imgRecepcionId",
@@ -196,9 +196,6 @@ const PcpRecepcion = () => {
           await updateRecepcion(recepcionId, data);
 
           if (!inspeccionId) {
-            // Solo crear si NO hay una inspección existente
-            // const nuevaInspeccion = await newInspeccion(data, modelo);
-            // const nuevaInspeccionId = nuevaInspeccion?.id;
             const createNewInspeccion = {
               Vh60: newInspeccionVh60,
               Dv1: newInspeccionDv1,
@@ -216,19 +213,17 @@ const PcpRecepcion = () => {
             const nuevaInspeccion = await creator(data);
             const nuevaInspeccionId = nuevaInspeccion?.id;
 
-            localStorage.setItem("inspeccionId", nuevaInspeccionId);
 
             if (nuevaInspeccionId) {
-              
+
               const inspeccionKeys = {
                 Vh60: "inspeccionPcpVh60",
                 Dv1: "inspeccionPcpDV1",
-                Minig: "inspeccionPcpMiniG",
+                MiniG: "inspeccionPcpMiniG",
                 Cougar: "inspeccionPcpCougar",
               };
 
               const inspeccionKey = inspeccionKeys[modeloEquipo];
-              // const inspeccionKey = `inspeccionPcp${modeloEquipo}`;
 
               const updatedOt = {
                 ...otActual,
@@ -237,6 +232,9 @@ const PcpRecepcion = () => {
               };
 
               localStorage.setItem("inspeccionId", nuevaInspeccionId);
+
+
+              // localStorage.setItem("inspeccionId", nuevaInspeccionId);
               // localStorage.removeItem("NOinspeccionId")
 
               await updateOt(ordenId, updatedOt);

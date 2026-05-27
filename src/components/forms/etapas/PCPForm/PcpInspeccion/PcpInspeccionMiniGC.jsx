@@ -94,6 +94,7 @@ const PcpInspeccionMinigC = () => {
   const { inspeccionActual, updateInspeccion, updateInspeccionMinig } = useInspeccionData(
     inspeccionId,
     reset,
+    modeloEquipo,
   );
   const { newEnsayoMinig } = useEnsayoData();
   useEffect(() => {
@@ -252,7 +253,7 @@ const PcpInspeccionMinigC = () => {
           //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
           //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
           if (modeloEquipoActual && tipoEquipoActual) {
-            navigate(`/dashboard/etapa/ensayo${tipoEquipoActual}`);
+            navigate(`/dashboard/etapa/ensayo${tipoEquipoActual}${modeloEquipoActual}A`);
           } else {
             console.error("❌ Error: Modelo de equipo no definido.");
           }

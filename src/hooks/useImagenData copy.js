@@ -50,7 +50,6 @@ const useImagenData = (imagenId, reset, modeloEquipo) => {
     }
   };
 
-  //INSPECCION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   const imagenServices = {
   Vh60: ImagenService.createImagenInspeccionPcpVh60,
@@ -58,6 +57,7 @@ const useImagenData = (imagenId, reset, modeloEquipo) => {
   MiniG: ImagenService.createImagenInspeccionPcpMiniG,
   Cougar: ImagenService.createImagenInspeccionPcpCougar,
 };
+  //INSPECCION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const newImagenInspeccion = async (modeloEquipo, data) => {
   try {
     const serviceFn = imagenServices[modeloEquipo];

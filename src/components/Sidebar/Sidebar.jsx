@@ -18,13 +18,14 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const limpiarLocalStorage = () => {
-  localStorage.removeItem("ordenId");
-  localStorage.removeItem("recepcionId");
-  localStorage.removeItem("inspeccionId");
-  localStorage.removeItem("ensayoId");
-  localStorage.removeItem("tipoEquipo");
-  localStorage.removeItem("modeloEquipo");
-};
+    const clavesAConservar = ["authenticated"];
+
+    Object.keys(localStorage).forEach((key) => {
+      if (!clavesAConservar.includes(key)) {
+        localStorage.removeItem(key);
+      }
+    });
+  };
 
   return (
     <div className={style.menu_container}>

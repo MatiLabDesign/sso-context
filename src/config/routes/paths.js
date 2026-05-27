@@ -57,7 +57,7 @@ export const PCP_INSPECCION_COUGAR_A = '/dashboard/etapa/inspeccionPcpCougarA';
 export const PCP_INSPECCION_COUGAR_B = '/dashboard/etapa/inspeccionPcpCougarB';
 export const PCP_INSPECCION_COUGAR_C = '/dashboard/etapa/inspeccionPcpCougarC';
 
-export const PCP_ENSAYO = '/dashboard/etapa/ensayoPcp';
+// export const PCP_ENSAYO = '/dashboard/etapa/ensayoPcp';
 export const PCP_ENSAYO_VH60_A = '/dashboard/etapa/ensayoPcpVh60A';
 export const PCP_ENSAYO_VH60_B = '/dashboard/etapa/ensayoPcpVh60B';
 

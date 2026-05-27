@@ -24,6 +24,8 @@ const GenericoEnsayo = () => {
 
   const ordenId = localStorage.getItem("ordenId");
   const ensayoId = localStorage.getItem("ensayoId");
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
 
   const navigate = useNavigate();
   const { otActual, updateOt } = useOrdenData(ordenId);
@@ -145,7 +147,7 @@ useEffect(() => {
         <button
           type="button"
           className="form-button-2"
-          onClick={() => navigate(`/dashboard/etapa/inspeccionPCPVh60C`)}
+          onClick={() => navigate(`/dashboard/etapa/inspeccion${tipoEquipo}${modeloEquipo}C`)}
         >
           <FaArrowLeft />
         </button>
@@ -153,7 +155,7 @@ useEffect(() => {
         <button
           type="button"
           className="form-button-2"
-          onClick={() => navigate(`/dashboard/etapa/ensayoPCPVh60B`)}
+          onClick={() => navigate(`/dashboard/etapa/ensayo${tipoEquipo}${modeloEquipo}B`)}
         >
           <FaArrowRight />
         </button>

@@ -38,9 +38,9 @@ const useOrdenData = (ordenId) => {
     fetchAllOts();
   }, []); // Se ejecuta solo una vez
 
-  const updateOt = async (ordenId, data) => {
+  const updateOt = (ordenId, data) => {
       try {
-        const response = await OtService.updateOt(ordenId, data);
+        const response = OtService.updateOt(ordenId, data);
         setOtActual(response.data);
         return response;
       } catch (err) {

@@ -93,7 +93,7 @@ const PcpInspeccionVH60A = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion, updateInspeccionVh60 } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion, updateInspeccionVh60 } = useInspeccionData(inspeccionId, reset, modeloEquipo);
 
   useEffect(() => {
     if (inspeccionActual) {
@@ -117,8 +117,8 @@ const PcpInspeccionVH60A = () => {
     e.preventDefault();
 
     // localStorage.setItem("inspeccionId", inspeccionId);
-    localStorage.setItem("imagenIndex", index);
-    localStorage.setItem("imgInspeccionId", otActual.inspeccionPcpVh60.imagenesVH60[index].id);
+    // localStorage.setItem("imagenIndex", index);
+    // localStorage.setItem("imgInspeccionId", otActual.inspeccionPcpVh60.imagenesVH60[index].id);
 
     // Obtener descripción si existe en imagenesGuardadas
     const descripcion =
@@ -223,7 +223,7 @@ const PcpInspeccionVH60A = () => {
     }
 
     const imagenGuardada = imagenesGuardadas[index];
-    localStorage.setItem("imgInspeccionId", index + 1);
+    // localStorage.setItem("imgInspeccionId", index + 1);
 
     if (imagenGuardada?.url) {
       const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";

@@ -92,7 +92,7 @@ const PcpInspeccionCougarC = () => {
   }, [inspeccionId]);
 
   const { inspeccionActual, updateInspeccion, updateInspeccionCougar } =
-    useInspeccionData(inspeccionId, reset);
+    useInspeccionData(inspeccionId, reset, modeloEquipo);
   const { newEnsayoCougar } = useEnsayoData();
   useEffect(() => {
     if (inspeccionActual) {
@@ -250,7 +250,7 @@ const PcpInspeccionCougarC = () => {
           //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
           //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
           if (modeloEquipoActual && tipoEquipoActual) {
-            navigate(`/dashboard/etapa/ensayo${tipoEquipoActual}`);
+            navigate(`/dashboard/etapa/ensayo${tipoEquipoActual}${modeloEquipoActual}A`);
           } else {
             console.error("❌ Error: Modelo de equipo no definido.");
           }
@@ -303,7 +303,7 @@ const PcpInspeccionCougarC = () => {
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">Inspección Cougar C</h3>
+      <h3 className="form-title">Inspección {tipoEquipo} {modeloEquipo} C</h3>
 
       {/* Campo para comentario */}
       <div className="form-group">
@@ -331,7 +331,7 @@ const PcpInspeccionCougarC = () => {
       {INSPECCION_PCPCOUGARC_ITEMS.sistemaHidraulicoPcpCoguar.map((item) => (
         <div className="item-section" key={item.label}>
           <div className="item-tittle">
-            <h4 className="item-title">{item.label}</h4>
+            <h4 className="item-title2">{item.label}</h4>
           </div>
           <div className="item-tittle">
             <label className="form-label">Ok</label>
@@ -384,7 +384,7 @@ const PcpInspeccionCougarC = () => {
         <div className="item-section" key={itemKey}>
           <div className="item-field">
             <div className="item-tittle">
-              <h4 className="item-title">{itemKey.label}</h4>
+              <h4 className="item-title2">{itemKey.label}</h4>
             </div>
             <div className="item-tittle">
               <label className="form-label-1">Ok</label>

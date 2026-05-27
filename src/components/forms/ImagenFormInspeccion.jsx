@@ -13,15 +13,15 @@ const ImagenFormInspeccion = () => {
     handleSubmit,
   } = useForm();
 
-  const modeloEquipo =  window.localStorage.getItem("modeloEquipo");
-  const tipoEquipo =  window.localStorage.getItem("tipoEquipo");
+  const modeloEquipo = window.localStorage.getItem("modeloEquipo");
+  const tipoEquipo = window.localStorage.getItem("tipoEquipo");
   const inspeccionId = window.localStorage.getItem("inspeccionId");
   const navigate = useNavigate();
   const [imagen, setImagen] = useState(null);
   const [urlTemporal, setUrlTemporal] = useState(null);
   const inputRef = useRef();
 
-  const { newImagenInspeccionVh60, newImagenInspeccionDv1, newImagenInspeccionCougar, newImagenInspeccionMiniG, newImagenInspeccionUcl, newImagenInspeccionGenerico, updateImagenInspeccion } = useImagenData(imagen);
+  const { newImagenInspeccion, newImagenInspeccionVh60, newImagenInspeccionDv1, newImagenInspeccionCougar, newImagenInspeccionMiniG, newImagenInspeccionUcl, newImagenInspeccionGenerico, updateImagenInspeccion } = useImagenData(imagen);
 
   const handleImagenChange = (file) => {
     setImagen(file);
@@ -38,7 +38,7 @@ const ImagenFormInspeccion = () => {
   const onSubmit = async (data) => {
     console.log("📤 Datos del formulario:", data);
     console.log("🖼 Imagen cargada:", imagen);
-    
+
     try {
       if (!imagen) {
         Swal.fire({
@@ -53,41 +53,42 @@ const ImagenFormInspeccion = () => {
 
       // Crear FormData para enviar la imagen y datos
       const formData = new FormData();
-      
+
       // Adjuntar la imagen
       formData.append("file", imagen);
       // También enviar los datos como campos individuales en caso de que el backend los espere así
       formData.append("descripcion", data.descripcion || "");
       formData.append("publicar", data.publicar ? "true" : "false");
-      formData.append("inspeccionId", imgInspeccionId || null);
-      formData.append("inspeccionPcpVh60Id", inspeccionId);
-      
-      
+      formData.append("inspeccionId", inspeccionId || null);
+      // formData.append("inspeccionPcpVh60Id", inspeccionId);
+
+
       // Enviar al backend ----ARREGLADO
-      const response = await newImagenInspeccionVh60(formData);
-      
+      // const response = await newImagenInspeccionVh60(formData);
+      const response = await newImagenInspeccion(modeloEquipo, formData);
+
       console.log("✅ Imagen guardada exitosamente:", response.data);
-      
+
       Swal.fire({
         title: "Éxito",
         text: "Imagen guardada exitosamente",
         icon: "success",
         confirmButtonText: "Aceptar",
-        confirmButtonColor: "#059080",  
+        confirmButtonColor: "#059080",
       });
-      
+
       // Limpiar el formulario
       setImagen(null);
       setUrlTemporal(null);
 
-      
-      
+
+
       // Navegar a la página de recepción PCP
-      navigate("/dashboard/etapa/inspeccionPcpvh60A");
-      
+      navigate(`/dashboard/etapa/inspeccionPcp${modeloEquipo}A`);
+
     } catch (error) {
       console.error("❌ Error al guardar la imagen:", error);
-      
+
       Swal.fire({
         title: "Error",
         text: "Error al guardar la imagen: " + (error.response?.data || error.message),
@@ -123,7 +124,7 @@ const ImagenFormInspeccion = () => {
             type="text"
             {...register("descripcion",
               //  { required: true }
-              )}
+            )}
           />
           {errors.descripcion && <p className="error">La descripción es requerida</p>}
         </div>

@@ -95,7 +95,7 @@ const PcpInspeccionCougarA = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion, updateInspeccionCougar } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion, updateInspeccionCougar } = useInspeccionData(inspeccionId, reset, "Cougar");
 
   useEffect(() => {
     if (inspeccionActual) {

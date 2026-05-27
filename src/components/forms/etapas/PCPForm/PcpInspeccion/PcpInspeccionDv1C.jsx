@@ -90,10 +90,7 @@ const PcpInspeccionDv1C = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccionDv1 } = useInspeccionData(
-    inspeccionId,
-    reset,
-  );
+  const { inspeccionActual, updateInspeccionDv1 } = useInspeccionData(inspeccionId, reset, modeloEquipo);
   const { newEnsayoDv1 } = useEnsayoData();
   useEffect(() => {
     if (inspeccionActual) {
@@ -251,7 +248,7 @@ const PcpInspeccionDv1C = () => {
           //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
           //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
           if (modeloEquipoActual && tipoEquipoActual) {
-            navigate(`/dashboard/etapa/ensayo${tipoEquipoActual}`);
+            navigate(`/dashboard/etapa/ensayo${tipoEquipoActual}${modeloEquipoActual}A`);
           } else {
             console.error("❌ Error: Modelo de equipo no definido.");
           }
@@ -268,7 +265,7 @@ const PcpInspeccionDv1C = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/dashboard/etapa/ensayo${tipoEquipo}`);
+    navigate(`/dashboard/etapa/ensayo${tipoEquipo}${modeloEquipo}A`);
   };
 
   const handleClickA = (e) => {
@@ -339,8 +336,8 @@ const PcpInspeccionDv1C = () => {
             <input
               type="checkbox"
               className="radio-input"
-              {...register(`sistemaHidraulicoPcpDv1.${item.ok}`)}
-              checked={watch(`sistemaHidraulicoPcpDv1.${item.ok}`)}
+              {...register(`sistemaHidraulicoPcpDV1.${item.ok}`)}
+              checked={watch(`sistemaHidraulicoPcpDV1.${item.ok}`)}
             />
           </div>
           <div className="item-tittle">
@@ -348,8 +345,8 @@ const PcpInspeccionDv1C = () => {
             <input
               type="checkbox"
               className="radio-input"
-              {...register(`sistemaHidraulicoPcpDv1.${item.fuga}`)}
-              checked={watch(`sistemaHidraulicoPcpDv1.${item.fuga}`)}
+              {...register(`sistemaHidraulicoPcpDV1.${item.fuga}`)}
+              checked={watch(`sistemaHidraulicoPcpDV1.${item.fuga}`)}
             />
           </div>
           <div className="item-tittle">
@@ -357,8 +354,8 @@ const PcpInspeccionDv1C = () => {
             <input
               type="checkbox"
               className="radio-input"
-              {...register(`sistemaHidraulicoPcpDv1.${item.roto}`)}
-              checked={watch(`sistemaHidraulicoPcpDv1.${item.roto}`)}
+              {...register(`sistemaHidraulicoPcpDV1.${item.roto}`)}
+              checked={watch(`sistemaHidraulicoPcpDV1.${item.roto}`)}
             />
           </div>
           <div className="item-tittle">
@@ -366,14 +363,14 @@ const PcpInspeccionDv1C = () => {
             <input
               type="checkbox"
               className="radio-input"
-              {...register(`sistemaHidraulicoPcpDv1.${item.eficiencia}`)}
-              checked={watch(`sistemaHidraulicoPcpDv1.${item.eficiencia}`)}
+              {...register(`sistemaHidraulicoPcpDV1.${item.eficiencia}`)}
+              checked={watch(`sistemaHidraulicoPcpDV1.${item.eficiencia}`)}
             />
           </div>
           <div className="item-tittle">
             <input
               className="form-input"
-              {...register(`sistemaHidraulicoPcpDv1.${item.esp}`)}
+              {...register(`sistemaHidraulicoPcpDV1.${item.esp}`)}
               placeholder="Especificar"
             />
           </div>
@@ -381,19 +378,19 @@ const PcpInspeccionDv1C = () => {
       ))}
 
       <h3>Polea</h3>
-      {INSPECCION_PCPDV1C_ITEMS.poleaPcpDV1.map((itemKey) => (
-        <div className="item-section" key={itemKey}>
+      {INSPECCION_PCPDV1C_ITEMS.poleaPcpDV1.map((item) => (
+        <div className="item-section" key={item}>
           <div className="item-field">
             <div className="item-tittle">
-              <h4 className="item-title2">{itemKey.label}</h4>
+              <h4 className="item-title2">{item.label}</h4>
             </div>
             <div className="item-tittle">
               <label className="form-label-1">Ok</label>
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`poleaPcpDv1.${itemKey.ok}`)}
-                checked={watch(`poleaPcpDv1.${itemKey.ok}`)}
+                {...register(`poleaPcpDV1.${item.ok}`)}
+                checked={watch(`poleaPcpDV1.${item.ok}`)}
               />
             </div>
             <div className="item-tittle">
@@ -401,8 +398,8 @@ const PcpInspeccionDv1C = () => {
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`poleaPcpDv1.${itemKey.fisura}`)}
-                checked={watch(`poleaPcpDv1.${itemKey.fisura}`)}
+                {...register(`poleaPcpDV1.${item.fisura}`)}
+                checked={watch(`poleaPcpDV1.${item.fisura}`)}
               />
             </div>
             <div className="item-tittle">
@@ -410,8 +407,8 @@ const PcpInspeccionDv1C = () => {
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`poleaPcpDv1.${itemKey.poros}`)}
-                checked={watch(`poleaPcpDv1.${itemKey.poros}`)}
+                {...register(`poleaPcpDV1.${item.poros}`)}
+                checked={watch(`poleaPcpDV1.${item.poros}`)}
               />
             </div>
             <div className="item-tittle">
@@ -419,8 +416,8 @@ const PcpInspeccionDv1C = () => {
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`poleaPcpDv1.${itemKey.diametroInad}`)}
-                checked={watch(`poleaPcpDv1.${itemKey.diametroInad}`)}
+                {...register(`poleaPcpDV1.${item.disenoInadecuado}`)}
+                checked={watch(`poleaPcpDV1.${item.disenoInadecuado}`)}
               />
             </div>
             <div className="item-tittle">
@@ -428,15 +425,15 @@ const PcpInspeccionDv1C = () => {
               <input
                 className="radio-input"
                 type="checkbox"
-                {...register(`poleaPcpDv1.${itemKey.numTraz}`)}
-                checked={watch(`poleaPcpDv1.${itemKey.numTraz}`)}
+                {...register(`poleaPcpDV1.${item.numeroTrazabilidad}`)}
+                checked={watch(`poleaPcpDV1.${item.numeroTrazabilidad}`)}
               />
             </div>
 
             <div className="item-tittle">
               <input
                 className="form-input"
-                {...register(`poleaPcpDv1.${itemKey.esp}`)}
+                {...register(`poleaPcpDV1.${item.esp}`)}
                 placeholder="Especificar"
               />
             </div>

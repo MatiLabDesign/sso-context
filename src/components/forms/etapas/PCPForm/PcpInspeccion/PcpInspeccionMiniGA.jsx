@@ -31,7 +31,7 @@ const PcpInspeccionMiniGA = () => {
   const ordenId = localStorage.getItem("ordenId");
   const recepcionId = localStorage.getItem("recepcionId");
   const tipoEquipo = localStorage.getItem("tipoEquipo");
-  const modeloEquipo = localStorage.getItem("modelo");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
    const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -93,7 +93,7 @@ const PcpInspeccionMiniGA = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion, updateInspeccionMinig } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion, updateInspeccionMinig } = useInspeccionData(inspeccionId, reset, modeloEquipo);
 
   useEffect(() => {
     if (inspeccionActual) {
@@ -239,7 +239,7 @@ const PcpInspeccionMiniGA = () => {
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">Inspección Mini G</h3>
+      <h3 className="form-title">Inspección {tipoEquipo} {modeloEquipo}</h3>
 
       <div className="form-group">
         <div className="label-input">

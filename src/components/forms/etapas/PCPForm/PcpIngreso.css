@@ -1,25 +1,186 @@
-.cliente_container{
-    display: flex;
-}
-.equipo_container{
-    display: flex;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-
-.cliente_element{
-    display: flex;
+/* ── Contenedor principal ── */
+.view_container {
+  max-width: 620px;
+  margin: 24px auto;
+  padding: 0 16px;
+  font-family: 'Inter', sans-serif;
 }
 
-p{
-    margin-right: 30px;
+/* ── Tarjeta de sección (Cliente / Equipo) ── */
+.section-card {
+  background: #f0f4f4;
+  border-radius: 14px;
+  border: 1px solid #e8ecef;
+  padding: 0;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
-.cliente_title{
-    font-weight: 700;
-    color: rgb(95, 95, 95);
+/* ── Header de sección ── */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px 12px;
+  border-left: 3.5px solid #1e8c6b;
+  margin: 0;
 }
 
-.view_container{
-    margin-left: 25px;
+.section-header-icon {
+  color: #1e8c6b;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
 }
 
+.section-header h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.2px;
+}
+
+/* ── Grid de campos ── */
+.fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 6px 18px 18px;
+}
+
+/* ── Campo individual ── */
+.field-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #ececec;
+  border: 1px solid #eef0f2;
+  border-radius: 10px;
+  padding: 12px 14px;
+  /* min-height: 56px; */
+}
+
+.field-icon {
+  color: #1e8c6b;
+  font-size: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.field-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.field-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #888888;
+  margin: 0;
+}
+
+.field-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0;
+  word-break: break-word;
+}
+
+/* ── Badge de etapa ── */
+.etapa-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #fef8e8;
+  border: 1px solid #f5e6b8;
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #8a6d1b;
+}
+
+.etapa-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #e8a317;
+}
+
+/* ── Campo que ocupa toda la fila ── */
+.field-card.full-width {
+  grid-column: 1 / -1;
+  max-width: calc(50% - 5px);
+}
+
+/* ── Botón de acción ── */
+.form_recepcion {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.btn-comenzar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1e8c6b;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 26px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  box-shadow: 0 2px 8px rgba(30, 140, 107, 0.2);
+}
+
+.btn-comenzar:hover {
+  background: #177a5d;
+  box-shadow: 0 4px 14px rgba(30, 140, 107, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-comenzar:active {
+  transform: translateY(0);
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+}
+
+/* ── Skeleton de carga ── */
+.field-value.loading {
+  color: #bbbbbb;
+  font-style: italic;
+}
+
+/* ── Responsive ── */
+@media (max-width: 560px) {
+  .fields-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .field-card.full-width {
+    max-width: 100%;
+  }
+
+  .view_container {
+    padding: 0 8px;
+  }
+}

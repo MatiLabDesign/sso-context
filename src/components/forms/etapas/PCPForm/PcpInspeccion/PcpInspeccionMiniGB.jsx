@@ -32,7 +32,7 @@ const PcpInspeccionMiniGB = () => {
   const ordenId = localStorage.getItem("ordenId");
   const recepcionId = localStorage.getItem("recepcionId");
   const tipoEquipo = localStorage.getItem("tipoEquipo");
-  const modeloEquipo = localStorage.getItem("modelo");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
    const inspeccionId = localStorage.getItem("inspeccionId");
 
   //Logica para ver el tipo y el modelo del equipo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -93,7 +93,7 @@ const PcpInspeccionMiniGB = () => {
     }
   }, [inspeccionId]);
 
-  const { inspeccionActual, updateInspeccion, updateInspeccionMinig } = useInspeccionData(inspeccionId, reset);
+  const { inspeccionActual, updateInspeccion, updateInspeccionMinig } = useInspeccionData(inspeccionId, reset, "MiniG");
 
   useEffect(() => {
     if (inspeccionActual) {
@@ -211,7 +211,7 @@ const PcpInspeccionMiniGB = () => {
   };
 
   const dataImagen = () => {
-    localStorage.setItem("inspeccionImagenMiniGId", inspeccionId);
+    // localStorage.setItem("inspeccionImagenMiniGId", inspeccionId);
     navigate(IMAGEN_INSPECCION);
   };
 
@@ -263,7 +263,70 @@ const PcpInspeccionMiniGB = () => {
       </div>
       <div className="lista-container">
         <h3>Rodamientos</h3>
-        {INSPECCION_PCPMINIGB_ITEMS.rodamientoPcpMiniG.map((item, index) => (
+        {INSPECCION_PCPMINIGB_ITEMS.rodamientoPcpMiniG.map((item) => (
+          <div className="item-section" key={item}>
+            <div className="item-field">
+              <div className="item-tittle">
+                <h4 className="item-title">{item.label}</h4>
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">Ok</label>
+                <input
+                  className="radio-input"
+                  type="checkbox"
+                  {...register(`rodamientoPcpMiniG.${item.ok}`)}
+                  checked={watch(`rodamientoPcpMiniG.${item.ok}`)}
+                />
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">Picado</label>
+                <input
+                  className="radio-input"
+                  type="checkbox"
+                  {...register(`rodamientoPcpMiniG.${item.picado}`)}
+                  checked={watch(`rodamientoPcpMiniG.${item.picado}`)}
+                />
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">Laminado</label>
+                <input
+                  className="radio-input"
+                  type="checkbox"
+                  {...register(`rodamientoPcpMiniG.${item.laminado}`)}
+                  checked={watch(`rodamientoPcpMiniG.${item.laminado}`)}
+                />
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">F.jaula</label>
+                <input
+                  className="radio-input"
+                  type="checkbox"
+                  {...register(`rodamientoPcpMiniG.${item.fallaEnJaula}`)}
+                  checked={watch(`rodamientoPcpMiniG.${item.fallaEnJaula}`)}
+                />
+              </div>
+              <div className="item-tittle">
+                <label className="form-label-1">Desgaste</label>
+                <input
+                  className="radio-input"
+                  type="checkbox"
+                  {...register(`rodamientoPcpMiniG.${item.desgaste}`)}
+                  checked={watch(`rodamientoPcpMiniG.${item.desgaste}`)}
+                />
+              </div>
+              <div className="item-tittle">
+                <input
+                  className="form-input"
+                  {...register(`rodamientoPcpMiniG.${item.esp}`)}
+                  placeholder="Especificar"
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+
+        <h3>Transmisión freno</h3>
+        {INSPECCION_PCPMINIGB_ITEMS.itemCuboPcpMiniG.map((item, index) => (
           <div className="item-section" key={index}>
             <div className="item-field">
               <div className="item-tittle">
@@ -288,75 +351,12 @@ const PcpInspeccionMiniGB = () => {
                 />
               </div>
               <div className="item-tittle">
-                <label className="form-label-1">Laminado</label>
-                <input
-                  className="radio-input"
-                  type="checkbox"
-                  {...register(`itemCuboPcpMiniG.${item.laminado}`)}
-                  checked={watch(`itemCuboPcpMiniG.${item.laminado}`)}
-                />
-              </div>
-              <div className="item-tittle">
-                <label className="form-label-1">F.jaula</label>
-                <input
-                  className="radio-input"
-                  type="checkbox"
-                  {...register(`itemCuboPcpMiniG.${item.fallaEnJaula}`)}
-                  checked={watch(`itemCuboPcpMiniG.${item.fallaEnJaula}`)}
-                />
-              </div>
-              <div className="item-tittle">
                 <label className="form-label-1">Desgaste</label>
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`itemCuboPcpMiniG.${item.desgaste}`)}
-                  checked={watch(`itemCuboPcpMiniG.${item.desgaste}`)}
-                />
-              </div>
-              <div className="item-tittle">
-                <input
-                  className="form-input"
-                  {...register(`itemCuboPcpMiniG.${item.esp}`)}
-                  placeholder="Especificar"
-                />
-              </div>
-            </div>
-          </div>
-        ))}
-
-        <h3>Transmisión freno</h3>
-        {INSPECCION_PCPMINIGB_ITEMS.itemCuboPcpMiniG.map((item, index) => (
-          <div className="item-section" key={index}>
-            <div className="item-field">
-              <div className="item-tittle">
-                <h4 className="item-title">{item.label}</h4>
-              </div>
-              <div className="item-tittle">
-                <label className="form-label-1">Ok</label>
-                <input
-                  className="radio-input"
-                  type="checkbox"
-                  {...register(`transmisionFrenoPcpVh60.${item.ok}`)}
-                  checked={watch(`transmisionFrenoPcpVh60.${item.ok}`)}
-                />
-              </div>
-              <div className="item-tittle">
-                <label className="form-label-1">Picado</label>
-                <input
-                  className="radio-input"
-                  type="checkbox"
-                  {...register(`transmisionFrenoPcpVh60.${item.picado}`)}
-                  checked={watch(`transmisionFrenoPcpVh60.${item.picado}`)}
-                />
-              </div>
-              <div className="item-tittle">
-                <label className="form-label-1">Desgaste</label>
-                <input
-                  className="radio-input"
-                  type="checkbox"
-                  {...register(`transmisionFrenoPcpVh60.${item.desgastado}`)}
-                  checked={watch(`transmisionFrenoPcpVh60.${item.desgastado}`)}
+                  {...register(`itemCuboPcpMiniG.${item.desgastado}`)}
+                  checked={watch(`itemCuboPcpMiniG.${item.desgastado}`)}
                 />
               </div>
               <div className="item-tittle">
@@ -364,14 +364,14 @@ const PcpInspeccionMiniGB = () => {
                 <input
                   className="radio-input"
                   type="checkbox"
-                  {...register(`transmisionFrenoPcpVh60.${item.roto}`)}
-                  checked={watch(`transmisionFrenoPcpVh60.${item.roto}`)}
+                  {...register(`itemCuboPcpMiniG.${item.roto}`)}
+                  checked={watch(`itemCuboPcpMiniG.${item.roto}`)}
                 />
               </div>
               <div className="item-tittle">
                 <input
                   className="form-input"
-                  {...register(`transmisionFrenoPcpVh60.${item.esp}`)}
+                  {...register(`itemCuboPcpMiniG.${item.esp}`)}
                   placeholder="Especificar"
                 />
               </div>

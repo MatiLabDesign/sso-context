@@ -12,6 +12,8 @@ import Swal from "sweetalert2";
 const PcpEnsayoVH60B = () => {
   const ordenId = localStorage.getItem("ordenId");
   const ensayoVh60Id = localStorage.getItem("ensayoId");
+  const tipoEquipo = localStorage.getItem("tipoEquipo");
+  const modeloEquipo = localStorage.getItem("modeloEquipo");
 
   const navigate = useNavigate();
 
@@ -105,7 +107,7 @@ const PcpEnsayoVH60B = () => {
     // });
 
     // 🔹 Navegación
-    navigate("/dashboard/etapa/salidaPCP");
+    navigate(`/dashboard/etapa/salida${tipoEquipo}`);
 
   } catch (error) {
     console.error("❌ Error al guardar ensayo:", error);
@@ -123,7 +125,7 @@ const PcpEnsayoVH60B = () => {
 
   return (
     <form className="recepcion-form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form-title">Ensayo PCP VH60 B</h3>
+      <h3 className="form-title">Ensayo {tipoEquipo} {modeloEquipo} B</h3>
 
       {/* Comentario + navegación */}
       <div className="form-group">
@@ -135,7 +137,7 @@ const PcpEnsayoVH60B = () => {
         <button
           type="button"
           className="form-button-2"
-          onClick={() => navigate("/dashboard/etapa/ensayoPCPVh60A")}
+          onClick={() => navigate(`/dashboard/etapa/ensayo${tipoEquipo}${modeloEquipo}A`)}
         >
           <FaArrowLeft />
         </button>
@@ -143,7 +145,7 @@ const PcpEnsayoVH60B = () => {
         <button
           type="button"
           className="form-button-2"
-          onClick={() => navigate("/dashboard/etapa/salidaPCP")}
+          onClick={() => navigate(`/dashboard/etapa/ensayo${tipoEquipo}${modeloEquipo}C`)}
         >
           <FaArrowRight />
         </button>

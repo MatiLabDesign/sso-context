@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import "./Etapas.css";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import useOrdenData from "../../../hooks/useOrdenData";
 
 const Etapas = () => {
   const ordenId = window.localStorage.getItem("ordenId");
+  const location = useLocation();
 
   const { allOts, otActual, updateOt, loading, error } = useOrdenData(ordenId);
 
@@ -34,7 +35,7 @@ const Etapas = () => {
     if (!loading) {
       fetchEtapasData();
     }
-  }, [otActual, loading]); // <-- Se agrega `otActual` y `loading` a las dependencias
+  }, [otActual, loading]);
 
   const etapasMap = {
     1: `ingreso${otActual?.equipo.tipoEquipo.tipo || ""}`,
@@ -44,46 +45,59 @@ const Etapas = () => {
     5: `salida${otActual?.equipo.tipoEquipo.tipo || ""}`,
   };
 
+  // Detectar el paso activo según la ruta actual
+  const pathKeywords = ["ingreso", "recepcion", "inspeccion", "ensayo", "salida"];
+  const currentPath = location.pathname.toLowerCase();
+  const activeStep =
+    pathKeywords.findIndex((keyword) => currentPath.includes(keyword)) + 1 || 1;
+
+  const steps = [
+    { id: 1, letter: "I", label: "Ingreso" },
+    { id: 2, letter: "R", label: "Recepción" },
+    { id: 3, letter: "I", label: "Inspección" },
+    { id: 4, letter: "E", label: "Ensayo" },
+    { id: 5, letter: "S", label: "Salida" },
+  ];
+
+  const getStepStatus = (stepId) => {
+    if (stepId < activeStep) return "completed";
+    if (stepId === activeStep) return "active";
+    return "pending";
+  };
+
   console.log(otActual);
 
   return (
     <div className="etapas-container">
-      {/* <h2>
-        {tipoEquipo} - {modeloEquipo} | OT N° {numeroOT}
-      </h2> */}
       <nav className="nav-container">
-        <Link to={etapasMap[1]}>
-          <div className="round-button">
-            <span className="etapa-name">I</span>
-          </div>
-        </Link>
-
-        <Link to={etapasMap[2]}>
-          <div className="round-button">
-            <span className="etapa-name">R</span>
-          </div>
-        </Link>
-
-        <Link to={etapasMap[3]}>
-          <div className="round-button">
-            <span className="etapa-name">I</span>
-          </div>
-        </Link>
-
-        <Link to={etapasMap[4]}>
-          <div className="round-button">
-            <span className="etapa-name">E</span>
-          </div>
-        </Link>
-
-        <Link to={etapasMap[5]}>
-          <div className="round-button">
-            <span className="etapa-name">S</span>
-          </div>
-        </Link>
+        {steps.map((step, index) => {
+          const status = getStepStatus(step.id);
+          return (
+            <div key={step.id} className="step-wrapper">
+              <div className="step-item">
+                <Link to={etapasMap[step.id]} className="step-link">
+                  <div className={`step-circle ${status}`}>
+                    {status === "completed" ? (
+                      <span className="step-icon">✓</span>
+                    ) : (
+                      <span className="step-icon">{step.letter}</span>
+                    )}
+                  </div>
+                </Link>
+                <span className={`step-label ${status}`}>{step.label}</span>
+              </div>
+              {index < steps.length - 1 && (
+                <div
+                  className={`step-connector ${
+                    step.id < activeStep ? "completed" : ""
+                  }`}
+                />
+              )}
+            </div>
+          );
+        })}
       </nav>
-      {/* <h2>{equipo} | OT N° {numeroOT}</h2> */}
-      {/* <h1>Hola manoma {tipoEquipo} - {modeloEquipo} -{marcaEquipo} - {etapaActual}</h1> */}
+
       <div className="etapas-forms">
         <Outlet />
       </div>
